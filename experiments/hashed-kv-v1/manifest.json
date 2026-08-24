@@ -1,0 +1,40 @@
+{
+  "schema_version": "molor.hashed-kv-shadow-experiment.v1",
+  "status": "development-smoke-only",
+  "model": "models/Qwen3-1.7B",
+  "truth_capture": "selected-layer post-RoPE Q/K and matching V copied from an unchanged dense use_cache=false forward",
+  "selectors": [
+    "mandatory-sink-plus-recent",
+    "oracle-attention-mass",
+    "quest-style-minmax-bound",
+    "random-hyperplane-simhash"
+  ],
+  "next_development_sweep": {
+    "context_tokens": [4096, 8192, 16384, 32768],
+    "page_sizes": [64, 128, 256, 512],
+    "hash_bits": [32, 64],
+    "hash_tables": [1, 2, 4],
+    "candidate_fractions": [0.0625, 0.125, 0.25, 0.5],
+    "sink_pages": 1,
+    "recent_pages": 1,
+    "top_k_tokens": 32
+  },
+  "current_report_contract": {
+    "artifact": "one compact JSON report under runs/hashed-kv-v1",
+    "summary": "means grouped by comparable page/hash/budget configuration",
+    "promotion_eligible": false
+  },
+  "sealed_contract": {
+    "status": "not yet implemented or enforced",
+    "authoritative_document": "../../docs/kv-cache.md#promotion-gates",
+    "required_before_promotion": [
+      "all-layer and all-head capture",
+      "model/tokenizer/adapter/route fingerprints",
+      "document-disjoint 16K+ sealed cases",
+      "cold-only and forced-only attribution",
+      "layer-wide physical-fetch unions",
+      "distributional metrics and confidence bounds",
+      "integrity and dense-reference parity gates"
+    ]
+  }
+}

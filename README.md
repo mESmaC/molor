@@ -27,6 +27,7 @@ current runtime.
 - independent multi-model teacher grades with confidence-weighted consensus;
 - SFT and offline DPO-style LoRA training from those annotations;
 - an NVMe KV snapshot/reload and cache-mode benchmark lab;
+- a shadow-only hashed-KV page-routing lab graded against exact Qwen attention;
 - a native dark-mode PySide6 chat with streamed Markdown and collapsed Qwen reasoning traces,
   plus annotation, teacher-RL, benchmark, training, and context-lab tools;
 - a terminal command that compares base, each expert, and a 50/50 blend on the same prompt.
@@ -264,6 +265,19 @@ Transformers' supported live cache offload moves layer KV state to CPU, not dire
 NVMe portion of this lab is deliberately labelled **snapshot/archive**: it writes a real
 `DynamicCache`, reloads it, and verifies continuation logits. It gives measured I/O data for a
 future custom paged cache without presenting disk as VRAM.
+
+The first hashed/paged-cache milestone also runs in shadow mode. It captures real post-RoPE Q/K and
+matching V from selected Qwen layers, then compares deterministic 32/64-bit SimHash, a Quest-style
+min/max page bound, mandatory-only locality, and a forced-set exact-attention oracle at equal
+budgets. Reports group compatible configurations and separate forced from routed attention mass. It
+does not alter generation or evict cache entries:
+
+```powershell
+.\.venv\Scripts\molor-hashed-kv-lab.exe --target-tokens 1024
+```
+
+See `docs/kv-cache.md` and `experiments/hashed-kv-v1/` for the architecture, sweep, promotion
+gates, and the required separation between approximate routing hashes and exact content identity.
 
 ## Fresh environment
 
