@@ -1,0 +1,12 @@
+{
+  "schema_version": "molor.benchmark-verifiers.v1",
+  "verifiers": {
+    "wsl_code_v1": {
+      "command": ["{python}", "-m", "molor.benchmark.wsl_verifier"],
+      "version": "1",
+      "runner_fingerprint": "5a2cd6e46c90b592c018428fac17b067a5521844f534b1fb4b8ef184b1973c64",
+      "timeout_seconds": 60,
+      "max_output_chars": 100000
+    }
+  }
+}

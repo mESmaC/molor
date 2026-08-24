@@ -1,0 +1,127 @@
+{
+  "schema_version": "molor.benchmark-suite.v1",
+  "suite_id": "molor-executable-v1",
+  "version": "0.1.0",
+  "title": "MoLoRA Executable Engineering Benchmark",
+  "description": "First hard benchmark slice: model-written C/C++ is compiled and exercised against isolated hidden and property tests. These prompts and verifier evidence must never enter training or memory.",
+  "default_system": "This is an executable benchmark. Return exactly one fenced source file in the requested language, with no prose outside the fence. Do not define main unless requested. Your file will be compiled and tested in an isolated environment.",
+  "generation": {
+    "max_new_tokens": 2048,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "top_k": 0,
+    "enable_thinking": false,
+    "context_token_budget": 16384,
+    "cache_mode": "dynamic",
+    "seed": 18431
+  },
+  "categories": {
+    "algorithms": {"label": "Executable algorithms", "weight": 0.20},
+    "embedded_misra": {"label": "Embedded + MISRA-oriented C", "weight": 0.30},
+    "pic32": {"label": "PIC32 + PPS", "weight": 0.15},
+    "crypto_crc": {"label": "Cryptography + CRC", "weight": 0.20},
+    "logic_puzzles": {"label": "Generated logic puzzles", "weight": 0.15}
+  },
+  "profiles": {
+    "smoke": ["XCRC01", "XPPS01", "XLOG01"],
+    "quick": ["XALG01", "XMIS01", "XMIS02", "XPPS01", "XCRC01", "XLOG01"]
+  },
+  "cases": [
+    {
+      "id": "XALG01",
+      "category": "algorithms",
+      "prompt": "Implement this C++20 function:\n\nstd::size_t longest_span_window(std::span<const std::int32_t> values, std::uint64_t limit);\n\nReturn the maximum length of a contiguous window whose mathematical max(values)-min(values) is at most limit. An empty input returns 0. Handle INT32_MIN and INT32_MAX without signed overflow. Required complexity is O(n) time and O(n) auxiliary space or better; quadratic solutions will time out. Return exactly one cpp fenced source file containing the implementation and any required standard includes. Do not define main.",
+      "scorer": {"type": "external", "verifier": "wsl_code_v1"},
+      "reference": {
+        "fixture_id": "algorithms/longest-span-window-v1",
+        "artifact": {"kind": "single_fence", "language": "cpp", "filename": "solution.cpp"}
+      },
+      "metadata": {"tier": 2, "task_type": "compile_hidden_property_tests"},
+      "max_new_tokens": 2048,
+      "tags": ["algorithm", "cplusplus", "overflow", "complexity"],
+      "acceptable_routes": ["base/null", "software-architecture-v1"]
+    },
+    {
+      "id": "XMIS01",
+      "category": "embedded_misra",
+      "prompt": "Implement this strict C11 function:\n\nbool decode_torque(const uint8_t data[8], int16_t *out);\n\nThe raw signal is a 12-bit little-endian field: data[1] contains bits 7:0 and the low nibble of data[2] contains bits 11:8. Interpret it as 12-bit two's complement and compute raw*5-200. Return false and do not modify *out if either pointer is null; otherwise store the decoded value and return true. Use only <stdbool.h>, <stddef.h>, <stdint.h>, or <limits.h>. Dynamic allocation, goto, unions, inline analyzer suppressions, pragmas, and assembly are forbidden. Return exactly one c fenced source file and do not define main.",
+      "scorer": {"type": "external", "verifier": "wsl_code_v1"},
+      "reference": {
+        "fixture_id": "embedded/decode-torque-misra-v1",
+        "artifact": {"kind": "single_fence", "language": "c", "filename": "solution.c"}
+      },
+      "metadata": {
+        "tier": 2,
+        "task_type": "compile_exhaustive_tests_static_analysis",
+        "conformance_claim": "cppcheck-misra-addon-oriented-not-certification"
+      },
+      "max_new_tokens": 1536,
+      "tags": ["c", "misra", "can", "twos-complement", "static-analysis"],
+      "acceptable_routes": ["embedded-knowledge-v1", "ocb-can-verified-v1"]
+    },
+    {
+      "id": "XMIS02",
+      "category": "embedded_misra",
+      "prompt": "Implement a fixed-capacity strict C11 ring buffer using exactly this public type and API:\n\ntypedef struct {\n    uint8_t storage[17];\n    uint8_t head;\n    uint8_t tail;\n    uint8_t count;\n} ring_t;\n\nvoid ring_init(ring_t *ring);\nbool ring_push(ring_t *ring, uint8_t value);\nbool ring_pop(ring_t *ring, uint8_t *value);\n\nInitialization of NULL is a no-op. Push/pop return false for null pointers or full/empty state. A failed operation must not mutate ring state or the caller's output. Multiple instances must be independent and indexes/counters must remain defined through millions of wraparounds. Use only <stdbool.h>, <stddef.h>, <stdint.h>, or <limits.h>. Dynamic allocation, goto, unions, pragmas, assembly, and inline analyzer suppressions are forbidden. Return exactly one c fenced source file containing the type and functions; do not define main.",
+      "scorer": {"type": "external", "verifier": "wsl_code_v1"},
+      "reference": {
+        "fixture_id": "embedded/ring-buffer-misra-v1",
+        "artifact": {"kind": "single_fence", "language": "c", "filename": "solution.c"}
+      },
+      "metadata": {
+        "tier": 2,
+        "task_type": "compile_state_machine_tests_static_analysis",
+        "conformance_claim": "cppcheck-misra-addon-oriented-not-certification"
+      },
+      "max_new_tokens": 2048,
+      "tags": ["c", "misra", "ring-buffer", "state-machine", "wraparound"],
+      "acceptable_routes": ["embedded-knowledge-v1"]
+    },
+    {
+      "id": "XPPS01",
+      "category": "pic32",
+      "prompt": "Target PIC32MX270F256D using this abridged PPS table: RPB7R=1 selects U1TX, and U1RXR=3 selects RPB13. PPS is already unlocked. Implement:\n\nvoid pps_uart1_init(void);\n\nThe test harness provides these SFR stubs as volatile uint32_t objects:\nextern volatile uint32_t ANSELB;\nextern volatile uint32_t TRISB;\nextern volatile uint32_t RPB7R;\nextern volatile uint32_t U1RXR;\n\nMap U1TX to RPB7 and U1RX from RPB13. Make RB7 and RB13 digital, configure RB7 as output and RB13 as input, and preserve every unrelated bit of ANSELB and TRISB. Write the two PPS registers to their required values. Return exactly one c fenced source file with any required standard includes; do not define main.",
+      "scorer": {"type": "external", "verifier": "wsl_code_v1"},
+      "reference": {
+        "fixture_id": "pic32/uart1-pps-mx270-v1",
+        "artifact": {"kind": "single_fence", "language": "c", "filename": "pps.c"}
+      },
+      "metadata": {
+        "tier": 2,
+        "task_type": "mocked_sfr_state_tests",
+        "device": "PIC32MX270F256D"
+      },
+      "max_new_tokens": 1024,
+      "tags": ["pic32", "pps", "uart", "registers", "rmw"],
+      "acceptable_routes": ["embedded-knowledge-v1"]
+    },
+    {
+      "id": "XCRC01",
+      "category": "crypto_crc",
+      "prompt": "Implement this strict C11 function:\n\nuint16_t crc16_ccitt_false(const uint8_t *data, size_t length);\n\nUse CRC-16/CCITT-FALSE: polynomial 0x1021, initial value 0xFFFF, no input or output reflection, and xorout 0x0000. The bytes are processed most-significant bit first. A null pointer is valid only when length is zero, which returns the initial value. Return exactly one c fenced source file with any required standard includes; do not define main. Hidden tests include the standard check vector plus generated payloads and every prefix of a held-out byte stream.",
+      "scorer": {"type": "external", "verifier": "wsl_code_v1"},
+      "reference": {
+        "fixture_id": "crypto/crc16-ccitt-false-v1",
+        "artifact": {"kind": "single_fence", "language": "c", "filename": "solution.c"}
+      },
+      "metadata": {"tier": 2, "task_type": "compile_hidden_generated_vectors"},
+      "max_new_tokens": 1536,
+      "tags": ["crc", "cryptography", "bitwise", "protocol"],
+      "acceptable_routes": ["base/null", "embedded-knowledge-v1", "ocb-can-verified-v1"]
+    },
+    {
+      "id": "XLOG01",
+      "category": "logic_puzzles",
+      "prompt": "Implement this C++20 Mastermind constraint solver. Codes contain exactly four digits in the range 0..5 and repeats are allowed. Each clue reports digits in the exact position and correct digits in the wrong position, using standard duplicate-aware Mastermind accounting.\n\nstruct mastermind_clue {\n    std::array<std::uint8_t, 4> guess;\n    std::uint8_t exact;\n    std::uint8_t misplaced;\n};\n\nbool solve_mastermind(std::span<const mastermind_clue> clues,\n                      std::array<std::uint8_t, 4> &solution);\n\nReturn true and update solution only when exactly one code satisfies every clue. Return false without modifying solution for invalid clues, contradictory clues, or multiple solutions. A clue is invalid if a digit exceeds 5, either count exceeds 4, or exact+misplaced exceeds 4. Return exactly one cpp fenced source file with the type, implementation, and required standard includes; do not define main. Hidden puzzles are generated from held-out secrets and checked for uniqueness before evaluation.",
+      "scorer": {"type": "external", "verifier": "wsl_code_v1"},
+      "reference": {
+        "fixture_id": "logic/mastermind-unique-v1",
+        "artifact": {"kind": "single_fence", "language": "cpp", "filename": "solution.cpp"}
+      },
+      "metadata": {"tier": 2, "task_type": "compile_generated_constraint_puzzles"},
+      "max_new_tokens": 2048,
+      "tags": ["logic", "mastermind", "constraint-satisfaction", "duplicate-accounting"],
+      "acceptable_routes": ["base/null", "software-architecture-v1"]
+    }
+  ]
+}

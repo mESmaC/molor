@@ -1,0 +1,128 @@
+{"line": 1, "source": "TAT-QA", "source_id": "a1f6f797-7424-4334-9c86-af3b6afdeeeb", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 2, "source": "FinQA", "source_id": "AMAT/2015/page_14.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 3, "source": "TAT-QA", "source_id": "492a80e7-535b-46de-b599-17d099c5d3f7", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 4, "source": "TAT-QA", "source_id": "a8ef6f35-558e-4e12-8ba9-9432ca0bc73b", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 5, "source": "FinQA", "source_id": "PPG/2018/page_60.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 6, "source": "TAT-QA", "source_id": "d2bc7559-8f04-4768-abd9-6ae62d62a27c", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 7, "source": "TAT-QA", "source_id": "b6c60c2d-5576-4d04-a687-9fe1477c9c4b", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 8, "source": "FinQA", "source_id": "AWK/2017/page_143.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 9, "source": "TAT-QA", "source_id": "a772d670-3251-4984-be32-29d06626eafe", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 10, "source": "TAT-QA", "source_id": "0fadc27a-6c7d-42c0-8c73-d06ef5514805", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 11, "source": "TAT-QA", "source_id": "3cd7ed2b-e4fa-45eb-afb0-6508222d542e", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 12, "source": "TAT-QA", "source_id": "7d08258a-46d0-47d5-8495-51df3bf428b6", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 13, "source": "TAT-QA", "source_id": "a17c609e-845e-4311-81ac-880e7b39c44f", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 14, "source": "FinQA", "source_id": "ORLY/2017/page_30.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 15, "source": "TAT-QA", "source_id": "f2658f86-cd62-4a42-bc77-d46eb04cc4c0", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 16, "source": "FinQA", "source_id": "EOG/2016/page_80.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 17, "source": "TAT-QA", "source_id": "3297d9da-da19-4274-abd3-ede98f8925fa", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 18, "source": "TAT-QA", "source_id": "9dd186e6-3151-4c5d-95cd-01057df57d78", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 19, "source": "TAT-QA", "source_id": "f134e384-ac9c-4c0c-bad1-49d6da8344a0", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 20, "source": "TAT-QA", "source_id": "2941bc0c-cbd0-4f81-b771-3fb22e5ae06a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 21, "source": "TAT-QA", "source_id": "bd73aadd-d28b-4b28-a310-4cda4d112659", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 22, "source": "TAT-QA", "source_id": "1f425b82-b887-49d4-aa95-385ba7eb5f27", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 23, "source": "FinQA", "source_id": "DISH/2015/page_142.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 24, "source": "TAT-QA", "source_id": "29243dc0-76da-4508-ae60-235513778716", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 25, "source": "FinQA", "source_id": "UAA/2016/page_82.pdf-4", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 26, "source": "TAT-QA", "source_id": "750aa382-aa4b-4a61-bfd1-02d5f94779fa", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 27, "source": "TAT-QA", "source_id": "9b174af9-78fa-46b3-a12e-422e77eb4250", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 28, "source": "TAT-QA", "source_id": "5969b0ec-fa3e-4241-bd89-2f2c41f50369", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 29, "source": "TAT-QA", "source_id": "1c8d2fda-1222-49ed-97b5-3a3a162e8d8a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 30, "source": "TAT-QA", "source_id": "bb17568c-ffda-4ace-a503-4498b54d9c10", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 31, "source": "FinQA", "source_id": "AES/2002/page_117.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 32, "source": "FinQA", "source_id": "ADBE/2013/page_68.pdf-4", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 33, "source": "TAT-QA", "source_id": "f016e0c1-aefc-4ee3-849b-f6a6ad0971cf", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 34, "source": "TAT-QA", "source_id": "13d59460-e903-4bd1-92b2-6a57ce319870", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 35, "source": "FinQA", "source_id": "AON/2018/page_84.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 36, "source": "TAT-QA", "source_id": "b0a8573d-69de-4600-8876-f77bee9ed316", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 37, "source": "FinQA", "source_id": "LMT/2013/page_45.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 38, "source": "TAT-QA", "source_id": "9e26a619-27bf-4e1e-9146-b71aed3c9ed3", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 39, "source": "TAT-QA", "source_id": "bb98f2bb-9719-494f-972d-81cee5626ad4", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 40, "source": "FinQA", "source_id": "DISCA/2016/page_30.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 41, "source": "FinQA", "source_id": "AES/2016/page_45.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 42, "source": "FinQA", "source_id": "KHC/2018/page_27.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 43, "source": "TAT-QA", "source_id": "0b67b700-bfe1-41e5-934c-2061cb80ffb9", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 44, "source": "FinQA", "source_id": "GS/2013/page_91.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 45, "source": "TAT-QA", "source_id": "b13afd6e-602d-43f9-ba05-3cc97476c6be", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 46, "source": "FinQA", "source_id": "TFX/2015/page_42.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 47, "source": "FinQA", "source_id": "EW/2013/page_83.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 48, "source": "TAT-QA", "source_id": "7d94f5ec-852b-47f4-bcbc-b522fea76c8c", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 49, "source": "TAT-QA", "source_id": "98a85737-b332-409d-ae75-028875029e6f", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 50, "source": "TAT-QA", "source_id": "059d3af0-fd85-442d-b214-e204bcc404b6", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 51, "source": "TAT-QA", "source_id": "b98acbbc-e0df-4287-878d-2bf9bfa99f12", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 52, "source": "FinQA", "source_id": "AMT/2010/page_105.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 53, "source": "TAT-QA", "source_id": "33e2cec1-a31d-4782-90ae-0995e9d16547", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 54, "source": "TAT-QA", "source_id": "1a86da0e-72bb-4dfa-a9f6-3785d8de7313", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 55, "source": "TAT-QA", "source_id": "6e82f550-8c7d-4f0b-9b0e-5a3306c6de62", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 56, "source": "FinQA", "source_id": "UNP/2006/page_74.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 57, "source": "FinQA", "source_id": "MRO/2008/page_130.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 58, "source": "TAT-QA", "source_id": "7bbaaf84-384e-4b3b-8be8-c3b74b4f88d0", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 59, "source": "FinQA", "source_id": "GS/2015/page_70.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 60, "source": "TAT-QA", "source_id": "ba9561e8-ea8f-4efa-b0fd-f0273e9e04e8", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 61, "source": "TAT-QA", "source_id": "3b320e33-4385-4402-9901-7aeda03404f3", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 62, "source": "TAT-QA", "source_id": "afae0de9-8348-4104-9180-f32ba06523fb", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 63, "source": "TAT-QA", "source_id": "ba968d20-ddb8-4bc3-ac02-c8675825794a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 64, "source": "FinQA", "source_id": "PPG/2011/page_28.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 65, "source": "FinQA", "source_id": "AAL/2014/page_59.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 66, "source": "FinQA", "source_id": "ORLY/2016/page_29.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 67, "source": "TAT-QA", "source_id": "eb0716b6-5c20-40ba-add9-cdf6c9c7bebd", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 68, "source": "FinQA", "source_id": "GS/2014/page_172.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 69, "source": "TAT-QA", "source_id": "90fbd8ed-4ab2-48e5-bb13-f7f3986ecce0", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 70, "source": "FinQA", "source_id": "RE/2017/page_41.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 71, "source": "TAT-QA", "source_id": "242c928b-e8cd-407d-96de-2cff46c302a2", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 72, "source": "TAT-QA", "source_id": "64aefd16-7d2d-41ba-90a1-8caed9aa2c9d", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 73, "source": "TAT-QA", "source_id": "14c941da-7aef-475c-9a1c-d2470380bd51", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 74, "source": "TAT-QA", "source_id": "851b810c-ed29-4390-bdf5-c3de1c50eeaa", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 75, "source": "FinQA", "source_id": "INTC/2017/page_46.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 76, "source": "FinQA", "source_id": "ETR/2004/page_185.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 77, "source": "TAT-QA", "source_id": "9e191912-b37d-4ee9-865e-d6c50ea2f31a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 78, "source": "TAT-QA", "source_id": "2625a220-e4e0-4a53-a652-742ebae6f646", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 79, "source": "TAT-QA", "source_id": "6e7c86c2-937e-4ea9-984c-64fe71bb78b3", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 80, "source": "FinQA", "source_id": "AAPL/2014/page_26.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 81, "source": "FinQA", "source_id": "MS/2012/page_150.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 82, "source": "TAT-QA", "source_id": "2de659b0-4c1c-4a3c-8e6e-bc7abe7eee18", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 83, "source": "TAT-QA", "source_id": "43da93e2-8fe7-4828-a82c-db2a0ddc0994", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 84, "source": "FinQA", "source_id": "ETR/2008/page_314.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 85, "source": "TAT-QA", "source_id": "2077df6a-0775-44d2-be8c-64516426cd1c", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 86, "source": "FinQA", "source_id": "HWM/2015/page_94.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 87, "source": "TAT-QA", "source_id": "d18803d6-f28b-4493-b2c2-4d8102cc69ff", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 88, "source": "TAT-QA", "source_id": "b0eea7c8-1c28-40a5-b3e5-15bf519bf411", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 89, "source": "TAT-QA", "source_id": "9e32e0f5-ff59-4a0a-8feb-1305b03e9272", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 90, "source": "FinQA", "source_id": "UNP/2011/page_78.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 91, "source": "FinQA", "source_id": "AWK/2015/page_127.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 92, "source": "FinQA", "source_id": "IPG/2016/page_24.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 93, "source": "TAT-QA", "source_id": "2934df4f-4355-43f6-810a-7933d941a6d7", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 94, "source": "FinQA", "source_id": "RSG/2017/page_74.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 95, "source": "FinQA", "source_id": "VRTX/2006/page_121.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 96, "source": "TAT-QA", "source_id": "b6a1f98b-c46d-4019-b924-1322a6078335", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 97, "source": "FinQA", "source_id": "SNA/2012/page_84.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 98, "source": "TAT-QA", "source_id": "bede6534-774c-4ee0-9c95-a483560e3c99", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 99, "source": "TAT-QA", "source_id": "833a56f1-29be-4486-874d-6f32cec842a7", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 100, "source": "FinQA", "source_id": "BLK/2016/page_35.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 101, "source": "FinQA", "source_id": "PNC/2012/page_58.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 102, "source": "FinQA", "source_id": "ZBH/2004/page_44.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 103, "source": "TAT-QA", "source_id": "469b15eb-f584-4b29-ab71-16937c6576ff", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 104, "source": "FinQA", "source_id": "EMR/2018/page_55.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 105, "source": "TAT-QA", "source_id": "2fc9ab4e-0eeb-44c8-9493-340c5eb493ff", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 106, "source": "FinQA", "source_id": "JPM/2009/page_132.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 107, "source": "FinQA", "source_id": "SNA/2012/page_93.pdf-4", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 108, "source": "FinQA", "source_id": "K/2012/page_44.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 109, "source": "FinQA", "source_id": "AMT/2005/page_31.pdf-3", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 110, "source": "TAT-QA", "source_id": "851226d3-d827-40b3-bb53-846472db79c9", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 111, "source": "FinQA", "source_id": "UPS/2005/page_43.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 112, "source": "TAT-QA", "source_id": "c8c3a750-b91d-428c-97a0-6deecbfb7e6a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 113, "source": "FinQA", "source_id": "APD/2013/page_44.pdf-1", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 114, "source": "TAT-QA", "source_id": "bba6e9c4-52db-47d2-afa5-cfb88d630e5e", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 115, "source": "TAT-QA", "source_id": "250383e8-2da9-49be-acf9-32df700b0a98", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 116, "source": "TAT-QA", "source_id": "358f6673-49d6-4272-b39b-c784492513c5", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 117, "source": "FinQA", "source_id": "AMT/2007/page_114.pdf-4", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 118, "source": "FinQA", "source_id": "ANSS/2008/page_89.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 119, "source": "TAT-QA", "source_id": "5a6b82b8-a854-47d4-8701-ed4f840c183a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 120, "source": "TAT-QA", "source_id": "81865313-e77c-4891-afc2-d41fc4fb1d3a", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 121, "source": "TAT-QA", "source_id": "f74171be-1097-461f-9ced-9b05c7de98c8", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 122, "source": "TAT-QA", "source_id": "d259650f-a384-486e-9bc5-f06af999cdd6", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 123, "source": "FinQA", "source_id": "HII/2013/page_116.pdf-2", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 124, "source": "TAT-QA", "source_id": "206e1c74-c838-436e-874a-8084d0091889", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 125, "source": "TAT-QA", "source_id": "5d247447-f1be-4e73-bb2d-e2309e4ad02e", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 126, "source": "FinQA", "source_id": "AON/2009/page_102.pdf-4", "license": "MIT repository; filing context remapped/retained with source provenance", "upstream_split": "train"}
+{"line": 127, "source": "TAT-QA", "source_id": "3b8b69c9-a0c6-40c1-9f1a-539f05a5dd3f", "license": "CC BY 4.0", "upstream_split": "train"}
+{"line": 128, "source": "TAT-QA", "source_id": "9415f50d-6082-4378-b413-4acd456fab2d", "license": "CC BY 4.0", "upstream_split": "train"}

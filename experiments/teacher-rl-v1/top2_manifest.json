@@ -1,0 +1,391 @@
+{
+  "schema_version": "molor.teacher-eval.manifest.v1",
+  "run_id": "teacher-rl-v1-post-rl-top2",
+  "description": "Post-RL top-2 auto-router evaluation using the immutable teacher-RL prompt matrix.",
+  "api": {
+    "endpoint": "http://127.0.0.1:8765",
+    "request_timeout_seconds": 3600
+  },
+  "generation": {
+    "base_seed": 8317,
+    "repetitions": 1,
+    "candidates_per_route": 1,
+    "settings": {
+      "max_new_tokens": 320,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 0,
+      "enable_thinking": false,
+      "reasoning_preset": "Teacher evaluation",
+      "system_instruction": "Answer accurately and directly. State material uncertainty, do not invent missing technical facts, and include actionable detail when the prompt asks for it.",
+      "context_token_budget": 4096,
+      "cache_mode": "dynamic"
+    }
+  },
+  "routing": {
+    "forced_routes": [
+      {
+        "route_id": "base/null",
+        "runtime_name": "base",
+        "legacy_weights": {
+          "base": 1.0,
+          "expert_a": 0.0,
+          "expert_b": 0.0
+        }
+      },
+      {
+        "route_id": "embedded-knowledge-v1",
+        "runtime_name": "embedded-knowledge-v1",
+        "legacy_weights": {
+          "base": 0.0,
+          "expert_a": 1.0,
+          "expert_b": 0.0
+        }
+      },
+      {
+        "route_id": "ocb-can-verified-v1",
+        "runtime_name": "ocb-can-verified-v1",
+        "legacy_weights": {
+          "base": 0.0,
+          "expert_a": 0.0,
+          "expert_b": 1.0
+        }
+      },
+      {
+        "route_id": "software-architecture-v1",
+        "runtime_name": "software-architecture-v1",
+        "legacy_weights": null
+      }
+    ],
+    "manual_policy_defaults": {
+      "mode": "manual",
+      "top_k": 1,
+      "temperature": 1.0,
+      "confidence_threshold": 0.0,
+      "null_bias": 0.0,
+      "max_prompt_tokens": 256,
+      "enabled_experts": [
+        "embedded-knowledge-v1",
+        "ocb-can-verified-v1",
+        "software-architecture-v1"
+      ],
+      "manual_route": {}
+    },
+    "auto": {
+      "enabled": true,
+      "route_id": "auto",
+      "policy": {
+        "mode": "auto",
+        "top_k": 2,
+        "temperature": 1.0,
+        "confidence_threshold": 0.4,
+        "null_bias": 0.0,
+        "max_prompt_tokens": 256,
+        "enabled_experts": [
+          "embedded-knowledge-v1",
+          "ocb-can-verified-v1",
+          "software-architecture-v1"
+        ],
+        "manual_route": {}
+      }
+    }
+  },
+  "outputs": {
+    "raw_report": "../../runs/teacher-rl-v1/post-rl-top2/raw-rollouts.jsonl",
+    "review_pack": "../../runs/teacher-rl-v1/post-rl-top2/review-pack.json",
+    "submission_log": "../../runs/teacher-rl-v1/post-rl-top2/submissions.jsonl"
+  },
+  "evaluation_contract": {
+    "immutable_evaluation": true,
+    "rollout_matrix": "Run base/null, embedded-knowledge-v1, ocb-can-verified-v1, software-architecture-v1, and auto for every prompt.",
+    "intent_labels_are_diagnostic_only": true,
+    "oracle_definition": "Measured full-route reward, not the declared intent label, defines the oracle and router target.",
+    "teacher_normalization": "T=(overall_score+2)/4; when confidence adjustment is desired use Tconf=0.5+confidence*(T-0.5).",
+    "reward_guidance": {
+      "deterministic_code_can": "Approximately 0.8 mechanical plus 0.2 teacher; a core numeric error or compile failure caps reward at 0.25.",
+      "architecture_mixed_prose": "Approximately 0.7 teacher plus up to 0.3 anchor coverage; anchors are diagnostic and not keyword-only success.",
+      "N05": "Approximately 0.4 exact constraint compliance plus 0.6 teacher naturalness."
+    },
+    "report_metrics": [
+      "auto_mean_reward",
+      "base_mean_reward",
+      "oracle_mean_reward",
+      "per_row_oracle_regret",
+      "intent_acceptable_route_accuracy",
+      "specialist_false_null",
+      "null_false_activation",
+      "route_utilization",
+      "router_calibration",
+      "reward_margin",
+      "mixed_top1_top2"
+    ],
+    "training_exclusion": "Keep these 24 prompts immutable and out of training. Train only on numerically varied or paraphrased siblings split by task template/family."
+  },
+  "prompts": [
+    {
+      "prompt_id": "E01",
+      "prompt": "Output only a compilable C11 translation unit. Implement `bool read_be24(const uint8_t *bytes, size_t length, uint32_t *value)`. Reject null pointers or `length < 3` without changing `*value`; otherwise decode the first three bytes as an unsigned big-endian 24-bit integer.",
+      "tags": ["embedded", "c11", "deterministic"],
+      "metadata": {
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Strict compile plus UBSan; hidden null, short, and random tests; {0x12,0x34,0x56} must produce 0x123456."
+      }
+    },
+    {
+      "prompt_id": "E02",
+      "prompt": "Implement `int16_t sat_add_i16(int16_t a, int16_t b)` in strictly conforming C11. Clamp to `INT16_MIN` or `INT16_MAX` without invoking signed-overflow undefined behavior. Output only compilable code.",
+      "tags": ["embedded", "c11", "deterministic"],
+      "metadata": {
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Strict compile, UBSan, boundary cases, and random comparison."
+      }
+    },
+    {
+      "prompt_id": "E03",
+      "prompt": "A 32-bit memory-mapped `STATUS` register has write-one-to-clear flags in bits 0–3; all other bits are reserved. Implement `void clear_status(volatile uint32_t *status, uint32_t requested)` without a read-modify-write.",
+      "tags": ["embedded", "registers", "deterministic"],
+      "metadata": {
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Require a single masked write equivalent to `*status = requested & UINT32_C(0x0f)`; reject reads, |=, and &=."
+      }
+    },
+    {
+      "prompt_id": "E04",
+      "prompt": "Write a GNU ld `SECTIONS` fragment that places `.isr_vector` at `0x08000000` and `.calibration` at `0x0803F000`, retains both with `KEEP`, exports `__cal_start` and `__cal_end`, and fails the link if calibration exceeds 4096 bytes.",
+      "tags": ["embedded", "linker", "deterministic"],
+      "metadata": {
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Parse or link dummy objects; verify VMAs, retained sections, symbols, and oversized calibration failure."
+      }
+    },
+    {
+      "prompt_id": "E05",
+      "prompt": "Assume a C167-compatible 16-bit up-counter receives a 20 MHz peripheral clock divided by 8. What reload value gives exactly 1.000 ms between overflows? State the count requirement and reload in decimal and hexadecimal.",
+      "tags": ["embedded", "c167", "deterministic"],
+      "metadata": {
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "2500 counts; reload 63036 decimal, 0xF63C hexadecimal."
+      }
+    },
+    {
+      "prompt_id": "C01",
+      "prompt": "An unsigned Intel-order CAN signal starts at DBC bit 4, is 12 bits long, has scale 0.2 and offset −5. Decode payload `D0 AB 05 00 00 00 00 00`. Finish with `RAW=<integer>; PHYSICAL=<number>`.",
+      "tags": ["can", "decode", "deterministic"],
+      "metadata": {
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Raw 0xABD = 2749; physical 544.8."
+      }
+    },
+    {
+      "prompt_id": "C02",
+      "prompt": "A 16-bit unsigned Motorola/DBC signal starts at bit 7. Its scale is 0.5 and offset is −40. Decode payload `12 34 00 00 00 00 00 00`, showing the traversed DBC bit positions.",
+      "tags": ["can", "decode", "deterministic"],
+      "metadata": {
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Positions 7..0 then 15..8; raw 4660; physical 2290."
+      }
+    },
+    {
+      "prompt_id": "C03",
+      "prompt": "A signed little-endian 10-bit signal starts at bit 0, with scale 0.25 and offset 10. Decode payload `00 03 00 00 00 00 00 00`, including the unsigned field pattern and sign extension.",
+      "tags": ["can", "decode", "deterministic"],
+      "metadata": {
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Encoded field 768; signed raw -256; physical -54."
+      }
+    },
+    {
+      "prompt_id": "C04",
+      "prompt": "A standard CAN data frame and remote frame with the same identifier begin simultaneously. Which frame wins arbitration, and at which differing bit? Finish with `WINNER=DATA` or `WINNER=REMOTE`.",
+      "tags": ["can", "protocol", "deterministic"],
+      "metadata": {
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "The data frame wins because its dominant RTR bit defeats the remote frame's recessive RTR bit."
+      }
+    },
+    {
+      "prompt_id": "C05",
+      "prompt": "Assume a transmitting classical-CAN controller has TEC 250 and incurs an error that increments TEC by 8. Report the new TEC and controller state once the bus-off threshold is crossed.",
+      "tags": ["can", "protocol", "deterministic"],
+      "metadata": {
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "TEC = 258 and STATE = BUS_OFF."
+      }
+    },
+    {
+      "prompt_id": "A01",
+      "prompt": "Design ingestion for third-party webhooks that may be duplicated, delayed, or delivered out of order. The sender retries unless acknowledged within two seconds. State the consistency boundary, idempotency mechanism, acknowledgement rule, and recovery path.",
+      "tags": ["architecture", "reliability", "prose"],
+      "metadata": {
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["durable-before-ack", "atomic inbox or idempotency record", "duplicate response semantics", "ordering or version reconciliation", "retries or DLQ", "observability"]
+      }
+    },
+    {
+      "prompt_id": "A02",
+      "prompt": "A table with 800 million rows needs a required column while old and new application versions overlap for hours. Give a zero-downtime migration and rollback sequence.",
+      "tags": ["architecture", "database", "prose"],
+      "metadata": {
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["expand-migrate-contract", "backward compatibility", "batched and checkpointed backfill", "verification", "delayed constraint enforcement", "rollback and cutover"]
+      }
+    },
+    {
+      "prompt_id": "A03",
+      "prompt": "Users upload files as large as 10 GB. Files must be malware-scanned before anyone can download them, and the API service must not proxy the bytes. Design the flow and failure handling.",
+      "tags": ["architecture", "storage", "security", "prose"],
+      "metadata": {
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["authorized presigned upload", "quarantine storage", "metadata state machine", "checksum", "asynchronous idempotent scan", "promotion", "cleanup", "access control"]
+      }
+    },
+    {
+      "prompt_id": "A04",
+      "prompt": "Inventory must never fall below zero, but purchases originate in three regions and regions can lose connectivity. Explain what guarantee is achievable and propose a design with an explicit partition tradeoff.",
+      "tags": ["architecture", "distributed-systems", "prose"],
+      "metadata": {
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["impossibility or partition tradeoff", "authoritative owner or escrow or reservations", "strong local transaction", "idempotency", "expiry and reconciliation"]
+      }
+    },
+    {
+      "prompt_id": "A05",
+      "prompt": "One slow dependency causes request threads and retry queues to grow until an otherwise healthy service collapses. Design the controls and telemetry that prevent the cascade.",
+      "tags": ["architecture", "reliability", "prose"],
+      "metadata": {
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["deadline propagation", "bounded timeouts and retries", "jitter", "circuit breaker", "bulkhead", "bounded queues", "backpressure or load shedding", "saturation metrics"]
+      }
+    },
+    {
+      "prompt_id": "N01",
+      "prompt": "A case originally contains 12 cans. Three are removed and two returned. Reply with only the remaining count.",
+      "tags": ["base-null", "lexical-trap", "deterministic"],
+      "metadata": {
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact answer 11; this is an intentional CAN lexical trap."
+      }
+    },
+    {
+      "prompt_id": "N02",
+      "prompt": "Alphabetize these words and return only a JSON array: router, embedded, architecture, adapter.",
+      "tags": ["base-null", "lexical-trap", "deterministic"],
+      "metadata": {
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Normalized exact output `[\"adapter\",\"architecture\",\"embedded\",\"router\"]`; all terms are route-label lexical traps."
+      }
+    },
+    {
+      "prompt_id": "N03",
+      "prompt": "From ‘Mina keeps a canary named Router,’ return only JSON with keys `owner`, `pet`, and `species`.",
+      "tags": ["base-null", "lexical-trap", "deterministic"],
+      "metadata": {
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Strict JSON with owner Mina, pet Router, and species canary."
+      }
+    },
+    {
+      "prompt_id": "N04",
+      "prompt": "A rectangular building footprint is 8 metres by 5 metres. Reply with only its area in square metres as a number.",
+      "tags": ["base-null", "lexical-trap", "deterministic"],
+      "metadata": {
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact numeric answer 40; this is an architecture-adjacent lexical trap."
+      }
+    },
+    {
+      "prompt_id": "N05",
+      "prompt": "Write exactly six words welcoming a new neighbor. Do not mention technology.",
+      "tags": ["base-null", "constraint", "prose"],
+      "metadata": {
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exactly six lexical words, no technical or domain terms, plus teacher naturalness."
+      }
+    },
+    {
+      "prompt_id": "M01",
+      "prompt": "Output compilable C11 implementing `float decode_pressure(const uint8_t payload[2])`. The field is unsigned Intel-order, starts at bit 0, is 12 bits long, has scale 0.125 and offset −20. For `34 02`, explain the expected result in a comment.",
+      "tags": ["mixed", "embedded", "can", "deterministic"],
+      "metadata": {
+        "category": "mixed",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1", "ocb-can-verified-v1"],
+        "check": "Strict compile and hidden vectors; 0x234 = 564 and the result is 50.5."
+      }
+    },
+    {
+      "prompt_id": "M02",
+      "prompt": "A vehicle gateway receives signed cloud commands and emits actuator-control CAN frames. Design the end-to-end command acceptance path so a replayed, stale, unauthorized, or unsafe command cannot actuate hardware.",
+      "tags": ["mixed", "architecture", "can", "embedded", "security"],
+      "metadata": {
+        "category": "mixed",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1", "ocb-can-verified-v1", "embedded-knowledge-v1"],
+        "anchors": ["authentication and signature", "anti-replay counter or nonce", "freshness", "authorization or allowlist", "state interlocks", "bounded commands", "rate limit", "audit", "fail-safe"]
+      }
+    },
+    {
+      "prompt_id": "M03",
+      "prompt": "Firmware v1 and v2 encode one CAN measurement with different scale and range, while backend and fleet rollout cannot happen simultaneously. Design a compatible migration and identify where translation belongs.",
+      "tags": ["mixed", "architecture", "can", "embedded"],
+      "metadata": {
+        "category": "mixed",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1", "ocb-can-verified-v1", "embedded-knowledge-v1"],
+        "anchors": ["explicit schema or version identity", "dual decoding", "compatibility interval", "provenance", "staged rollout", "telemetry", "rollback", "no guessing from payload alone"]
+      }
+    },
+    {
+      "prompt_id": "M04",
+      "prompt": "A battery device records one sample every 30 seconds and may be offline for 48 hours. Compute the minimum record capacity, then design local persistence and upload so resets do not lose acknowledged state and retries do not duplicate cloud records.",
+      "tags": ["mixed", "embedded", "architecture"],
+      "metadata": {
+        "category": "mixed",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1", "software-architecture-v1"],
+        "check": "Exact minimum 5760 records.",
+        "anchors": ["bounded persistent log or ring", "checksum or commit marker", "stable record IDs", "idempotent upload", "acknowledgement checkpoint", "wear and power-loss handling"]
+      }
+    }
+  ]
+}

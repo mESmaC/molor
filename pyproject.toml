@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molor"
+version = "0.1.0"
+description = "Research primitives for routing mixtures of LoRA adapter experts"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.7",
+]
+
+[project.scripts]
+molor-cache-lab = "molor.experimental.cache_lab:main"
+molor-benchmark = "molor.benchmark.cli:main"
+molor-compare-experts = "molor.experimental.compare:main"
+molor-desktop = "molor.desktop.launch:main"
+molor-feedback = "molor.feedback.cli:main"
+molor-smoke-runtime = "molor.runtime.smoke:main"
+molor-teacher = "molor.teacher.cli:main"
+molor-train-experts = "molor.training.cli:main"
+molor-train-preference = "molor.training.preference_cli:main"
+molor-train-router = "molor.training.router_cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.9",
+]
+desktop = [
+    "PySide6>=6.7",
+]
+hf = [
+    "accelerate>=1.2",
+    "datasets>=3.2",
+    "peft>=0.14",
+    "safetensors>=0.5",
+    "transformers>=4.51",
+]
+benchmark-standard = [
+    "lm_eval[hf,ifeval]==0.4.12",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

@@ -1,0 +1,597 @@
+{
+  "schema_version": "molor.training-source-manifest.v1",
+  "generated_at": "2026-08-22",
+  "purpose": "Source and generation plan for a terminal/tool-use LoRA expert covering shell syntax, command selection, execution feedback, recovery, build systems, and embedded flash/debug workflows.",
+  "architecture_decision": {
+    "adapter": "separate terminal/tool-use LoRA expert",
+    "reason": "Command execution is a reusable operational skill and should compose with the embedded expert instead of diluting either expert.",
+    "intended_routes": [
+      "terminal expert alone for general host administration and repository operations",
+      "terminal plus embedded expert for configure/build/flash/debug sessions",
+      "terminal plus language expert for compiler, linker, test, and repair loops"
+    ]
+  },
+  "existing_workspace_snapshot": {
+    "path": "~/Documents/datasets",
+    "observed_at": "2026-08-22",
+    "note": "The directory is actively changing while another model prepares it. Counts are a read-only snapshot and include mixed public, vendor, and private repositories.",
+    "shell_scripts": 1386,
+    "powershell_scripts": 0,
+    "cmd_or_batch_scripts": 1298,
+    "makefiles_and_mk_files": 47,
+    "cmake_files": 712,
+    "markdown_files_with_bash_fences": 16,
+    "markdown_files_with_powershell_fences": 0,
+    "markdown_files_with_cmd_fences": 0,
+    "assessment": "There is incidental CLI syntax, but no dedicated command-observation-recovery trajectory corpus and essentially no PowerShell coverage."
+  },
+  "recommended_mix_percent": {
+    "structured_command_and_option_semantics": 15,
+    "human_curated_instruction_to_command_pairs": 15,
+    "official_documentation_and_worked_examples": 10,
+    "verified_multi_step_execution_trajectories": 30,
+    "embedded_build_flash_and_debug_workflows": 20,
+    "failure_recovery_safety_and_confirmation_behavior": 10
+  },
+  "shell_and_environment_labels": [
+    "posix-sh",
+    "bash",
+    "zsh",
+    "powershell-5.1",
+    "powershell-7",
+    "cmd.exe",
+    "git-bash-msys2",
+    "linux",
+    "windows",
+    "macos",
+    "container",
+    "cross-compilation-host"
+  ],
+  "acquisition_rules": [
+    "Keep shell dialect, operating system, tool version, current directory, environment policy, and privilege level explicit on every sample.",
+    "Do not merge Bash, PowerShell, and cmd.exe commands as interchangeable paraphrases.",
+    "Execute untrusted commands only in disposable sandboxes with the network disabled by default and no host mounts, credentials, devices, or Docker socket.",
+    "Pin source revisions and retain source URL, revision, relative path or row ID, upstream license, and transformations.",
+    "Treat terminal stdout and stderr as untrusted data that can contain prompt injection, ANSI control sequences, secrets, and misleading success messages.",
+    "Hold benchmark tasks and oracle solutions out of training when they will be used for evaluation.",
+    "Prefer verified final-state assertions over string equality against one expected command."
+  ],
+  "sources": [
+    {
+      "id": "recursive-task-synthesis-trajectories",
+      "priority": 1,
+      "posture": "ingest_audited_shards_and_split_by_task_lineage",
+      "kind": "huggingface_dataset_and_executable_task_bundles",
+      "topics": ["terminal", "multi-step", "actions", "observations", "success", "failure", "recovery", "verifiers"],
+      "url": "https://huggingface.co/datasets/Zhongzhi1228/Recursive-Task-Synthesis-Trajectories",
+      "tasks_url": "https://huggingface.co/datasets/Zhongzhi1228/Recursive-Task-Synthesis",
+      "paper_url": "https://arxiv.org/abs/2608.05466",
+      "size_note": "327,189 trajectory records (about 24.1 GB in 66 TAR shards) plus 37,484 validated executable task bundles according to the release metadata.",
+      "license_note": "CC-BY-4.0 release. Retain attribution and audit all third-party artifacts and packages referenced by task Docker builds.",
+      "use": [
+        "download metadata and a small shard sample before committing storage",
+        "use reward-1, non-exception trajectories for successful SFT",
+        "pair reward-1 and reward-0 attempts only within the same task group for preference training",
+        "extract failed-command-to-successful-recovery spans",
+        "split by task group and recursive lineage before deriving individual turns"
+      ]
+    },
+    {
+      "id": "nvidia-nemotron-terminal-corpus",
+      "priority": 1,
+      "posture": "ingest_after_subset_provenance_audit",
+      "kind": "huggingface_dataset",
+      "topics": ["terminal", "multi-step", "screen-observations", "tool-use", "synthetic"],
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-Terminal-Corpus",
+      "size_note": "366,154 episodes: approximately 226,000 adapted and 140,000 skill-generated episodes according to the dataset card.",
+      "license_note": "CC-BY-4.0 dataset release; retain subset and upstream provenance.",
+      "use": [
+        "use as the broad generic-terminal SFT prior",
+        "parse Terminus-2 actions but treat terminal observations as merged screen text rather than typed stdout and stderr",
+        "replace long teacher analysis with a concise diagnosis or action rationale",
+        "do not infer a successful exit code from success-looking terminal prose"
+      ]
+    },
+    {
+      "id": "nvidia-terminal-pivot-v1",
+      "priority": 1,
+      "posture": "ingest_and_group_split_by_source_trajectory",
+      "kind": "huggingface_dataset",
+      "topics": ["terminal", "next-action", "rl", "successful-prefixes", "recovery"],
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-Terminal-Pivot-v1",
+      "judge_url": "https://github.com/NVIDIA-NeMo/Gym/tree/main/resources_servers/terminus_judge",
+      "size_note": "31,111 decision points from 2,716 successful trajectories over 630 tasks, approximately 1.4 GB JSONL.",
+      "license_note": "Dataset is CC-BY-4.0; NeMo Gym judge code is Apache-2.0.",
+      "use": [
+        "seed next-action SFT and policy optimization",
+        "retain intermediate failed prefixes as recovery context",
+        "split by task and source trajectory so neighboring prefixes cannot leak across train and validation",
+        "do not treat its reference-action judge as an environment correctness verifier"
+      ]
+    },
+    {
+      "id": "nl2sh-alfa",
+      "priority": 1,
+      "posture": "ingest_training_split_after_execution_validation",
+      "kind": "huggingface_dataset",
+      "topics": ["bash", "natural-language-to-command", "one-liners", "alternatives"],
+      "url": "https://huggingface.co/datasets/westenfelder/NL2SH-ALFA",
+      "size_note": "40,639 unverified training pairs and a 600-pair manually verified test set according to the dataset card.",
+      "license_note": "MIT-labelled aggregate built from several prior sources, including tldr-pages. Preserve upstream attribution and audit constituent provenance rather than discarding it.",
+      "use": [
+        "execute and retain only training pairs that reach the intended final state",
+        "keep the manually verified test configuration out of training",
+        "balance by utility and command template because find is overrepresented"
+      ]
+    },
+    {
+      "id": "nl2bash",
+      "priority": 2,
+      "posture": "use_only_if_not_already_in_nl2sh_alfa",
+      "kind": "git_repository_dataset",
+      "topics": ["bash", "natural-language-to-command", "one-liners"],
+      "url": "https://github.com/TellinaTool/nl2bash",
+      "size_note": "Approximately 10,000 expert-described Bash one-liners covering 102 utilities.",
+      "license_note": "The repository is GPL-3.0, while data/bash is separately MIT licensed. Restrict ingestion to the separately licensed dataset directory.",
+      "dedup_note": "NL2SH-ALFA already incorporates NL2Bash; do not train on both copies."
+    },
+    {
+      "id": "tldr-pages",
+      "priority": 1,
+      "posture": "ingest_with_attribution",
+      "kind": "git_repository",
+      "topics": ["bash", "powershell", "windows", "dos", "linux", "macos", "command-examples"],
+      "url": "https://github.com/tldr-pages/tldr",
+      "license_note": "Command pages are CC-BY-4.0 and repository scripts are MIT. Preserve page attribution and platform labels.",
+      "use": [
+        "convert each human-written description and example command into an instruction-command pair",
+        "keep platform-specific pages separate",
+        "expand placeholders only inside generated disposable environments"
+      ]
+    },
+    {
+      "id": "withfig-autocomplete",
+      "priority": 1,
+      "posture": "ingest",
+      "kind": "git_repository",
+      "topics": ["cli-schema", "commands", "subcommands", "options", "arguments", "descriptions"],
+      "url": "https://github.com/withfig/autocomplete",
+      "license_note": "MIT.",
+      "use": "Parse the declarative completion specifications into tool/version/subcommand/option/argument records, then generate constrained command-composition examples."
+    },
+    {
+      "id": "powershell-docs",
+      "priority": 1,
+      "posture": "ingest_with_attribution",
+      "kind": "git_repository",
+      "topics": ["powershell", "cmdlets", "about-topics", "examples", "errors"],
+      "url": "https://github.com/MicrosoftDocs/PowerShell-Docs",
+      "license_note": "Documentation is CC-BY-4.0 and repository code is MIT.",
+      "use": [
+        "extract syntax, parameter semantics, examples, and version applicability",
+        "retain Windows PowerShell 5.1 versus PowerShell 7.x labels",
+        "prefer examples that can be verified without network, administrator access, or external services"
+      ]
+    },
+    {
+      "id": "windows-powershell-module-docs",
+      "priority": 2,
+      "posture": "ingest_selected_versions_with_attribution",
+      "kind": "git_repository",
+      "topics": ["windows-powershell-5.1", "windows-modules", "cmdlets", "examples"],
+      "url": "https://github.com/MicrosoftDocs/windows-powershell-docs",
+      "license_note": "Documentation is CC-BY-4.0 and code examples are MIT under the repository notices.",
+      "use": "Keep Windows PowerShell 5.1 distinct from PowerShell 7.x and tag examples requiring elevation, domain infrastructure, server roles, or unavailable Windows features."
+    },
+    {
+      "id": "windows-command-reference",
+      "priority": 1,
+      "posture": "ingest_with_attribution",
+      "kind": "git_repository_paths",
+      "topics": ["cmd.exe", "batch", "windows", "exit-codes", "redirection", "examples"],
+      "url": "https://github.com/MicrosoftDocs/windowsserverdocs/tree/main/WindowsServerDocs/administration/windows-commands",
+      "license_note": "Repository documentation is CC-BY-4.0 and code snippets are covered by the repository's MIT code license; retain notices and third-party exclusions.",
+      "use": "Extract syntax tables and examples while tagging commands that require elevation, services, disks, registry mutation, or remote hosts."
+    },
+    {
+      "id": "powershell-source-and-tests",
+      "priority": 2,
+      "posture": "ingest_selected_paths",
+      "kind": "git_repository",
+      "topics": ["powershell", "parser", "runtime", "tests", "diagnostics", "cross-platform"],
+      "url": "https://github.com/PowerShell/PowerShell",
+      "license_note": "MIT.",
+      "use": "Use parser/runtime tests and error cases to generate syntax-repair and behavior examples; avoid swamping command-use data with implementation internals."
+    },
+    {
+      "id": "psreadline",
+      "priority": 2,
+      "posture": "ingest_selected_tests_not_user_history",
+      "kind": "git_repository",
+      "topics": ["powershell", "interactive-shell", "completion", "history-behavior", "tests"],
+      "url": "https://github.com/PowerShell/PSReadLine",
+      "license_note": "BSD-2-Clause.",
+      "use": "Use tests for interactive parsing and completion behavior. Never acquire personal PSReadLine history files; they commonly contain credentials and private activity."
+    },
+    {
+      "id": "psscriptanalyzer",
+      "priority": 1,
+      "posture": "ingest_tests_and_use_as_verifier",
+      "kind": "git_repository_and_tool",
+      "topics": ["powershell", "static-analysis", "diagnostics", "repair", "safety"],
+      "url": "https://github.com/PowerShell/PSScriptAnalyzer",
+      "license_note": "MIT.",
+      "use": "Create bad-script/diagnostic/fixed-script pairs and use analyzer results as one reward component, not as the sole correctness oracle."
+    },
+    {
+      "id": "msvc-msbuild-command-docs",
+      "priority": 1,
+      "posture": "ingest_with_attribution_and_generate_local_trajectories",
+      "kind": "git_repository_paths",
+      "topics": ["windows", "msvc", "cl.exe", "link.exe", "nmake", "msbuild", "developer-prompt"],
+      "url": "https://github.com/MicrosoftDocs/cpp-docs/tree/main/docs/build",
+      "msbuild_url": "https://github.com/MicrosoftDocs/visualstudio-docs/tree/main/docs/msbuild",
+      "license_note": "Documentation is CC-BY-4.0 and repository code examples are MIT. Installed Visual Studio tools, SDK files, headers, and scripts retain Microsoft product terms.",
+      "use": "Generate real compile/link/build sessions locally while recording the environment delta produced by VsDevCmd or vcvarsall; do not redistribute installed proprietary toolchain components."
+    },
+    {
+      "id": "windows-terminal-and-console",
+      "priority": 3,
+      "posture": "ingest_selected_docs_schemas_and_tests",
+      "kind": "git_repositories",
+      "topics": ["windows-terminal", "wt.exe", "conpty", "console", "vt", "settings"],
+      "url": "https://github.com/MicrosoftDocs/terminal",
+      "source_url": "https://github.com/microsoft/terminal",
+      "license_note": "Documentation is CC-BY-4.0 with MIT examples; Terminal/OpenConsole source is MIT.",
+      "use": "Teach host, profile, ConPTY, VT, and settings semantics. Do not confuse the terminal host with PowerShell or cmd.exe shell semantics."
+    },
+    {
+      "id": "windows-debugger-docs-and-samples",
+      "priority": 2,
+      "posture": "ingest_docs_with_attribution_and_generate_from_owned_dumps",
+      "kind": "git_repository_paths",
+      "topics": ["windbg", "cdb", "kd", "debugger", "commands", "diagnostics"],
+      "url": "https://github.com/MicrosoftDocs/windows-driver-docs/tree/staging/windows-driver-docs-pr/debuggercmds",
+      "samples_url": "https://github.com/microsoft/WinDbg-Samples",
+      "license_note": "Documentation is CC-BY-4.0 with MIT examples; WinDbg samples are MIT.",
+      "use": "Use synthetic programs and self-created dumps. Never ingest arbitrary dumps or TTD traces because they may contain full process memory, secrets, and third-party code."
+    },
+    {
+      "id": "intercode",
+      "priority": 1,
+      "posture": "use_framework_and_create_disjoint_train_tasks",
+      "kind": "git_repository_benchmark",
+      "topics": ["bash", "interactive", "docker", "execution-feedback", "final-state-reward"],
+      "url": "https://github.com/princeton-nlp/intercode",
+      "license_note": "MIT repository and environment.",
+      "use": "Use the harness to collect action-observation trajectories and author new disjoint tasks; reserve any published evaluation split used for scoring."
+    },
+    {
+      "id": "terminaltraj",
+      "priority": 3,
+      "posture": "quarantine_until_dataset_license_and_upstream_rights_are_cleared",
+      "kind": "huggingface_dataset_and_git_repository",
+      "topics": ["terminal", "repository-tasks", "docker", "successful-trajectories"],
+      "url": "https://huggingface.co/datasets/m-a-p/TerminalTraj",
+      "repository_url": "https://github.com/multimodal-art-projection/TerminalTraj",
+      "size_note": "The paper/repository reports 50,733 verified trajectories in 32,325 Docker images; the currently visible SFT release contains 20,000 rows.",
+      "license_note": "Dataset metadata is mixed or labelled other and upstream rights remain applicable. The code repository license does not grant blanket rights over the released data.",
+      "use": "Potentially strong successful repository-task trajectories, but do not acquire into the training corpus until a row-level provenance and license review is complete."
+    },
+    {
+      "id": "swe-gym-openhands-sft-trajectories",
+      "priority": 2,
+      "posture": "ingest_filtered_successful_trajectories",
+      "kind": "huggingface_dataset",
+      "topics": ["terminal", "software-engineering", "tool-calls", "observations", "successful-trajectories"],
+      "url": "https://huggingface.co/datasets/SWE-Gym/OpenHands-SFT-Trajectories",
+      "size_note": "491 successful trajectories, approximately 10.4 MB.",
+      "license_note": "MIT-labelled dataset; preserve underlying repository provenance.",
+      "use": "A small seed for multi-step tool-call formatting and recovery behavior, filtered for command-heavy examples and deduplicated against larger SWE trajectory sets."
+    },
+    {
+      "id": "nvidia-swe-hero-openhands-trajectories",
+      "priority": 2,
+      "posture": "ingest_small_filtered_subset",
+      "kind": "huggingface_dataset",
+      "topics": ["terminal", "execution-based", "software-engineering", "tool-observations", "patches"],
+      "url": "https://huggingface.co/datasets/nvidia/SWE-Hero-openhands-trajectories",
+      "size_note": "Approximately 34,300 execution-based agent trajectories.",
+      "license_note": "CC-BY-4.0 dataset with per-row permissive source-repository license metadata.",
+      "use": [
+        "filter to permissive source licenses and high command/observation density",
+        "prefer C, C++, build-system, compiler, and test workflows",
+        "retain only verified successful or explicitly useful failed/recovered segments",
+        "do not treat generated model rationales as authoritative technical explanations"
+      ]
+    },
+    {
+      "id": "terminal-bench",
+      "priority": 1,
+      "posture": "evaluation_only",
+      "kind": "versioned_benchmark",
+      "topics": ["terminal", "multi-step", "sandbox", "tests", "systems", "debugging"],
+      "url": "https://github.com/harbor-framework/terminal-bench",
+      "license_note": "Apache-2.0 repository; individual task environments can contain third-party components with separate licenses.",
+      "use": "Keep selected tagged releases and all oracle solutions out of training. Use task structure as inspiration for independently authored embedded terminal tasks."
+    },
+    {
+      "id": "embedeval",
+      "priority": 1,
+      "posture": "evaluation_only",
+      "kind": "git_repository_benchmark",
+      "topics": ["embedded", "zephyr", "esp-idf", "stm32", "freertos", "linux-driver", "yocto"],
+      "url": "https://github.com/Ecro/embedeval",
+      "size_note": "267 cases: 219 public and 48 private, with 1,277 reported pytest checks.",
+      "license_note": "Apache-2.0 repository.",
+      "use": "Keep public cases, reference code, and solutions out of training. Use them as an embedded-code and tool-use evaluation and generate only disjoint task families."
+    },
+    {
+      "id": "tracebench",
+      "priority": 3,
+      "posture": "manual_review_or_evaluation_only",
+      "kind": "huggingface_dataset",
+      "topics": ["terminal", "swe-bench", "failed-steps", "recovery", "trajectory-analysis"],
+      "url": "https://huggingface.co/datasets/Contextbench/Tracebench",
+      "size_note": "3,316 full trajectories plus a 1,000-trajectory verified split, approximately 3.52 GB.",
+      "license_note": "No explicit dataset license was visible on the dataset card at catalog time; do not ingest until clarified.",
+      "use": "Potentially valuable for failure-stage classification and preference pairs, but it overlaps Terminal-Bench and SWE-bench evaluation material."
+    },
+    {
+      "id": "cmake",
+      "priority": 1,
+      "posture": "ingest_selected_docs_tests_and_diagnostics",
+      "kind": "git_repository",
+      "topics": ["cmake", "ctest", "cross-compilation", "toolchains", "build", "diagnostics"],
+      "url": "https://github.com/Kitware/CMake",
+      "license_note": "BSD-3-Clause project with separately identified third-party material.",
+      "use": "Create configure/build/test/error-repair trajectories across Ninja and Makefile generators, including embedded toolchain files."
+    },
+    {
+      "id": "ninja",
+      "priority": 2,
+      "posture": "ingest_docs_tests_and_generate_trajectories",
+      "kind": "git_repository",
+      "topics": ["ninja", "build", "dependency-graph", "diagnostics"],
+      "url": "https://github.com/ninja-build/ninja",
+      "license_note": "Apache-2.0."
+    },
+    {
+      "id": "toybox",
+      "priority": 2,
+      "posture": "ingest_help_tests_and_execute_in_tagged_environment",
+      "kind": "git_repository",
+      "topics": ["unix-commands", "help", "tests", "stdout", "exit-status"],
+      "url": "https://github.com/landley/toybox",
+      "license_note": "0BSD.",
+      "use": "A permissive source of command help and executable shell tests. Tag behavior as Toybox because flags and semantics can differ from GNU utilities."
+    },
+    {
+      "id": "bats-core-and-shellspec",
+      "priority": 2,
+      "posture": "ingest_selected_tests_and_use_as_execution_oracles",
+      "kind": "git_repositories",
+      "topics": ["bash", "posix-shell", "tests", "expected-output", "exit-status", "intentional-failure"],
+      "url": "https://github.com/bats-core/bats-core",
+      "shellspec_url": "https://github.com/shellspec/shellspec",
+      "license_note": "Both projects use permissive MIT-style licenses; retain their exact notices.",
+      "use": "Convert only tests whose intended behavior is unambiguous, then re-execute them in pinned shells."
+    },
+    {
+      "id": "meson",
+      "priority": 2,
+      "posture": "ingest_docs_tests_and_generate_trajectories",
+      "kind": "git_repository",
+      "topics": ["meson", "ninja", "cross-compilation", "build", "diagnostics"],
+      "url": "https://github.com/mesonbuild/meson",
+      "license_note": "Apache-2.0 project; retain third-party notices."
+    },
+    {
+      "id": "zephyr-west",
+      "priority": 1,
+      "posture": "ingest_and_generate_trajectories",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "zephyr", "west", "workspace", "build", "flash", "debug"],
+      "url": "https://github.com/zephyrproject-rtos/west",
+      "license_note": "Apache-2.0.",
+      "use": "Pair west's own command semantics with Zephyr's west build/flash/debug command implementations and run them in pinned SDK containers."
+    },
+    {
+      "id": "pyocd",
+      "priority": 1,
+      "posture": "ingest_docs_tests_and_generate_mocked_trajectories",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "arm", "flash", "debug", "gdbserver", "memory", "probe"],
+      "url": "https://github.com/pyocd/pyOCD",
+      "license_note": "Code is Apache-2.0 and project documentation is CC-BY-4.0.",
+      "use": "Generate device-free command validation with mocks and reserve real probe/device traces for separately labelled hardware runs."
+    },
+    {
+      "id": "probe-rs",
+      "priority": 1,
+      "posture": "ingest_docs_tests_and_generate_mocked_trajectories",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "arm", "risc-v", "xtensa", "flash", "debug", "gdb", "probe"],
+      "url": "https://github.com/probe-rs/probe-rs",
+      "license_note": "Dual MIT or Apache-2.0.",
+      "use": "Useful permissive source for modern probe-rs, cargo-flash, cargo-embed, and GDB-server workflows."
+    },
+    {
+      "id": "picotool",
+      "priority": 1,
+      "posture": "ingest_docs_tests_and_generate_file_based_trajectories",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "rp2040", "rp2350", "uf2", "elf", "flash", "verify", "reboot"],
+      "url": "https://github.com/raspberrypi/picotool",
+      "license_note": "BSD-3-Clause.",
+      "use": "Most info/config/verify tasks can be generated against binary fixtures without physical hardware; tag operations that require a connected device."
+    },
+    {
+      "id": "platformio-core",
+      "priority": 2,
+      "posture": "ingest_docs_tests_and_generate_trajectories",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "build", "package-manager", "library-manager", "serial-monitor", "debug", "test"],
+      "url": "https://github.com/platformio/platformio-core",
+      "docs_url": "https://docs.platformio.org/en/latest/core/",
+      "license_note": "Apache-2.0 core; downloaded platforms, frameworks, libraries, and toolchains retain their own licenses."
+    },
+    {
+      "id": "mvdan-sh",
+      "priority": 1,
+      "posture": "use_as_parser_formatter_and_mutation_verifier",
+      "kind": "git_repository_and_tool",
+      "topics": ["posix-sh", "bash", "zsh", "parser", "formatter", "interpreter", "fuzzing"],
+      "url": "https://github.com/mvdan/sh",
+      "license_note": "BSD-3-Clause.",
+      "use": "Parse, format, mutate, and reject malformed synthetic shell commands before sandbox execution."
+    },
+    {
+      "id": "tree-sitter-bash",
+      "priority": 2,
+      "posture": "ingest_tests_and_use_as_parser",
+      "kind": "git_repository_and_tool",
+      "topics": ["bash", "syntax", "parser", "test-corpus"],
+      "url": "https://github.com/tree-sitter/tree-sitter-bash",
+      "license_note": "MIT."
+    },
+    {
+      "id": "shellcheck",
+      "priority": 2,
+      "posture": "local_verifier_or_copyleft_review",
+      "kind": "git_repository_and_tool",
+      "topics": ["shell", "static-analysis", "diagnostics", "repair"],
+      "url": "https://github.com/koalaman/shellcheck",
+      "license_note": "GPL-3.0-or-later.",
+      "use": "Use locally as a diagnostic/reward signal. Ingesting its source, wiki, test fixtures, or diagnostic prose requires a deliberate copyleft and attribution policy."
+    },
+    {
+      "id": "openocd",
+      "priority": 2,
+      "posture": "local_tool_reference_or_copyleft_review",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "jtag", "swd", "flash", "gdb", "tcl", "debug"],
+      "url": "https://github.com/openocd-org/openocd",
+      "license_note": "GPL-2.0-or-later code and GFDL documentation components; handle source/docs separately.",
+      "use": "Generate command/error/recovery traces in a simulated or mocked setup, while avoiding redistribution of vendor target scripts unless separately cleared."
+    },
+    {
+      "id": "esptool",
+      "priority": 2,
+      "posture": "local_tool_reference_or_copyleft_review",
+      "kind": "git_repository_and_tool",
+      "topics": ["embedded", "espressif", "serial", "flash", "image", "efuse", "security"],
+      "url": "https://github.com/espressif/esptool",
+      "license_note": "GPL-2.0-or-later for source and attached documentation.",
+      "use": "Valuable for flash/read/verify/recovery workflows; tag irreversible eFuse and security operations as confirmation-required and never execute them during generic data generation."
+    }
+  ],
+  "trajectory_record": {
+    "required_fields": [
+      "task_id",
+      "instruction",
+      "shell",
+      "os",
+      "environment_image_or_snapshot",
+      "tool_versions",
+      "cwd",
+      "privilege_level",
+      "network_policy",
+      "initial_state_hash",
+      "actions",
+      "final_assertions",
+      "success",
+      "reward",
+      "safety_tags",
+      "provenance"
+    ],
+    "action_fields": [
+      "command",
+      "argv",
+      "concise_rationale",
+      "stdin",
+      "stdout",
+      "stderr",
+      "exit_code",
+      "signal",
+      "timed_out",
+      "pipe_status",
+      "duration_ms",
+      "cwd_after",
+      "filesystem_diff_summary",
+      "observation_truncated",
+      "step_reward"
+    ],
+    "shell_specific_fields": [
+      "powershell_structured_output",
+      "powershell_native_and_pipeline_exit_status",
+      "cmd_active_code_page",
+      "developer_prompt_environment_delta"
+    ],
+    "note": "Store concise action rationale, not private hidden chain-of-thought. Preserve exact command and observation boundaries. Public corpora usually merge terminal screen output; only populate typed stdout, stderr, exit, and pipeline status when captured by a controlled recorder."
+  },
+  "synthetic_data_jobs": [
+    {
+      "id": "cross_shell_filesystem_tasks",
+      "environments": ["Ubuntu container", "PowerShell 7 container", "disposable Windows sandbox or restricted temporary directory"],
+      "tasks": ["inspect", "find", "copy", "rename", "archive", "hash", "transform text", "compare trees", "repair a failed command"],
+      "verification": ["final filesystem tree", "file hashes", "stdout schema", "exit code", "no writes outside sandbox"],
+      "reason": "Creates equivalent but dialect-correct Bash, PowerShell, and cmd.exe behavior without treating their syntax as interchangeable."
+    },
+    {
+      "id": "embedded_build_repair_loop",
+      "environments": ["pinned ARM GCC container", "pinned RISC-V GCC container", "pinned Clang container", "Windows MSVC or LLVM environment"],
+      "tasks": ["configure", "cross-compile", "inspect diagnostics", "repair flags or source", "link", "inspect ELF", "run host-side tests"],
+      "verification": ["compiler exit code", "tests", "ELF architecture", "expected sections and symbols", "size bounds"],
+      "reason": "Supplies directly relevant terminal behavior for the embedded expert and yields objective RL rewards."
+    },
+    {
+      "id": "flash_debug_state_machine",
+      "environments": ["mock pyOCD", "mock probe-rs", "file-only picotool", "simulated OpenOCD", "optional separately labelled physical-board runs"],
+      "tasks": ["discover target", "inspect binary", "select device", "flash", "verify", "start debugger", "read registers", "recover from no-probe or wrong-target errors"],
+      "verification": ["allowed state transitions", "target identity", "image hash", "mock transcript assertions", "no irreversible command without confirmation"],
+      "reason": "Teaches realistic embedded CLI sequencing without requiring every training run to own every board."
+    },
+    {
+      "id": "diagnostic_mutation_pairs",
+      "environments": ["Bash parser plus ShellCheck", "PowerShell parser plus PSScriptAnalyzer", "CMake configure", "compiler and linker"],
+      "tasks": ["inject quoting errors", "break paths", "misuse flags", "remove dependencies", "create wrong architecture/toolchain settings", "repair from actual stderr"],
+      "verification": ["parser", "static analyzer", "re-execution", "final-state assertions"],
+      "reason": "Produces chosen/rejected and before/after pairs for SFT, DPO, and verifier-grounded teacher grading."
+    }
+  ],
+  "reward_recipe": {
+    "components": [
+      {"name": "final_state_and_tests", "weight": 0.55},
+      {"name": "command_and_shell_validity", "weight": 0.1},
+      {"name": "efficient_progress", "weight": 0.1},
+      {"name": "recovery_after_failed_observation", "weight": 0.1},
+      {"name": "safety_and_scope_compliance", "weight": 0.15}
+    ],
+    "hard_failures": [
+      "write outside the assigned sandbox",
+      "read credentials, browser profiles, SSH keys, tokens, or unrelated user files",
+      "use network when the task disables it",
+      "execute irreversible device, disk, firmware-security, or privilege changes without explicit authorization",
+      "claim success when final assertions or exit status fail"
+    ],
+    "preference_pairs": [
+      "successful minimal trajectory over successful meandering trajectory",
+      "state inspection before mutation over blind mutation",
+      "correct dialect-specific command over superficially similar command from another shell",
+      "safe scoped command over broad or destructive command",
+      "recovery grounded in stderr over repeating the same failed command"
+    ]
+  },
+  "do_not_ingest": [
+    "real personal or corporate shell-history files because they commonly contain credentials, internal paths, hosts, and private activity",
+    "raw CI logs before secret and identifier scrubbing",
+    "terminal output containing ANSI escape sequences or control characters before normalization",
+    "benchmark oracle solutions for any benchmark release retained for evaluation",
+    "commands copied from forums without per-item provenance and compatible licensing",
+    "successful-looking transcripts that were never executed or final-state verified",
+    "the unlicensed PowerShellCorpus OneDrive archive or public PowerShell Gallery packages without a per-file rights audit",
+    "the unlicensed closed_loop_evaluation_agents_embedded ESP32 run bundle unless the authors grant training and redistribution rights",
+    "TerminalTraj data until its dataset license and upstream row-level rights are cleared"
+  ]
+}

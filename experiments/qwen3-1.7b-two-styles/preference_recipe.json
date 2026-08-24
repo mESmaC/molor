@@ -1,0 +1,30 @@
+{
+  "model_id": "../../models/Qwen3-1.7B",
+  "dataset": "../../runs/feedback/exports/preferences.jsonl",
+  "output_dir": "../../checkpoints/manual-preference",
+  "expert_name": "manual_preference",
+  "dtype": "bfloat16",
+  "device": "cuda",
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "rank": 8,
+  "alpha": 16,
+  "dropout": 0.05,
+  "max_length": 384,
+  "epochs": 2,
+  "learning_rate": 0.00005,
+  "beta": 0.1,
+  "gradient_accumulation_steps": 1,
+  "gradient_checkpointing": true,
+  "seed": 42,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  }
+}

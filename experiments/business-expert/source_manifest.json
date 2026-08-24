@@ -1,0 +1,1139 @@
+{
+  "schema_version": "molor.training-source-manifest.v1",
+  "generated_at": "2026-08-22",
+  "purpose": "Large-scale source, generation, and evaluation plan for the model's dominant business family: business building and administration, marketing and revenue, investing and capital markets, funding and deal finance, accounting, and operations.",
+  "architecture_decision": {
+    "strategy": "shared business foundation with independently trainable specialist LoRA experts",
+    "experts": [
+      {
+        "id": "business-core",
+        "scope": ["starting a business", "business models", "administration", "strategy", "management", "compliance", "business planning"]
+      },
+      {
+        "id": "business-finance",
+        "scope": ["bookkeeping", "financial statements", "cash flow", "unit economics", "management accounting", "financial planning"]
+      },
+      {
+        "id": "growth-gtm",
+        "scope": ["customer discovery", "segmentation", "positioning", "pricing", "marketing", "sales", "retention", "customer success"]
+      },
+      {
+        "id": "investing-markets",
+        "scope": ["financial statement analysis", "valuation", "public markets", "fixed income", "portfolio construction", "risk", "market microstructure", "macro", "investment research"]
+      },
+      {
+        "id": "funding-capital",
+        "scope": ["bootstrapping", "grants", "bank and SBA lending", "venture capital", "private equity", "crowdfunding", "term sheets", "cap tables", "debt", "capital formation", "M&A"]
+      },
+      {
+        "id": "business-operations",
+        "scope": ["process design", "inventory", "capacity", "staffing", "scheduling", "procurement", "supply chain", "risk"]
+      }
+    ],
+    "reason": "Business, marketing, investing, and funding are a dominant model family rather than a small general-business adapter. Separate experts allow much larger domain-specific corpora and reward functions while the router can compose operating, marketing, accounting, funding, and investor perspectives on one decision."
+  },
+  "training_scale_policy": {
+    "global_priority": "dominant_specialist_domain_family",
+    "default_share_of_all_specialist_training_percent": 70,
+    "interpretation": "The business family should receive roughly 70% of specialist-adapter sampling by default; embedded and terminal experts remain important but are not allowed to crowd it down to a token minority.",
+    "pool_vs_run": "Keep the complete normalized source and structured-data pool. Individual LoRA runs use curriculum sampling rather than attempting a wasteful full epoch over every row.",
+    "large_target": {
+      "normalized_source_pool": "20B+ text-token equivalents plus billions of structured rows retained in native form",
+      "direct_curated_sft": "750M-1.5B high-quality tokens across the family",
+      "verifier_backed_cases": "6M-20M multi-step cases generated from filings, market, campaign, financing, accounting, and operations data",
+      "preference_and_critique": "1M-3M independently checked pairs or graded trajectories",
+      "note": "These are corpus targets, not a requirement to train one adapter for one epoch over the entire pool. Scale each run to available compute and measured validation gains."
+    },
+    "stages": [
+      {"id": "pilot", "per_expert_examples": "25k-75k", "goal": "validate formatting, routing, rewards, and catastrophic-forgetting behavior"},
+      {"id": "useful", "per_expert_examples": "250k-750k", "goal": "produce experts worth interacting with and identify missing task families"},
+      {"id": "large", "per_expert_examples": "1M-5M plus dynamic structured cases", "goal": "broad coverage with company, campaign, instrument, geography, and time holdouts"}
+    ]
+  },
+  "existing_workspace_snapshot": {
+    "path": "~/Documents/datasets",
+    "observed_at": "2026-08-22",
+    "total_files": 11240,
+    "business_keyword_filename_matches": 7,
+    "assessment": "The keyword matches are embedded-software startup symbols and incidental customer fields, not a business corpus. There is currently no meaningful business, finance, marketing, sales, or operations training slice in the prepared dataset directory.",
+    "note": "Read-only snapshot while another model is actively preparing that directory. No files were written there."
+  },
+  "dominant_domain_sampling_percent": {
+    "business_core": 20,
+    "marketing_and_gtm": 22,
+    "investing_and_capital_markets": 22,
+    "funding_and_deal_finance": 18,
+    "business_finance_and_accounting": 8,
+    "business_operations": 7,
+    "cross_domain_preference_safety_and_correction": 3
+  },
+  "per_expert_large_corpus_targets": [
+    {"expert": "business-core", "direct_sft_tokens": "150M-300M", "verified_cases": "750k-1.5M"},
+    {"expert": "growth-gtm", "direct_sft_tokens": "200M-400M", "verified_cases": "1M-4M"},
+    {"expert": "investing-markets", "direct_sft_tokens": "150M-300M", "verified_cases": "2M-8M"},
+    {"expert": "funding-capital", "direct_sft_tokens": "125M-250M", "verified_cases": "1M-3M"},
+    {"expert": "business-finance", "direct_sft_tokens": "75M-150M", "verified_cases": "750k-2M"},
+    {"expert": "business-operations", "direct_sft_tokens": "50M-100M", "verified_cases": "500k-1.5M"}
+  ],
+  "recommended_modality_mix_percent": {
+    "licensed_text_guidance_handbooks_and_courses": 25,
+    "observed_business_marketing_sales_and_service_trajectories": 15,
+    "filing_market_campaign_and_transaction_data_as_verified_cases": 25,
+    "synthetic_simulation_and_tool_verified_trajectories": 20,
+    "human_or_teacher_graded_decision_memos_and_preferences": 10,
+    "adversarial_failure_compliance_and_uncertainty_cases": 5
+  },
+  "curriculum_principles": [
+    "Teach value creation, value delivery, and value capture rather than generic get-rich-quick claims.",
+    "Separate timeless concepts from time-sensitive tax, law, funding-program, platform, interest-rate, and market information.",
+    "Require jurisdiction and effective date for regulatory, employment, tax, entity-formation, securities, privacy, and advertising content.",
+    "Turn structured data into analysis and decision tasks; do not dump millions of tabular rows into the LoRA as prose.",
+    "Prefer actual calculations, constraints, evidence, experiments, and observed outcomes over charismatic founder anecdotes.",
+    "Keep company stage, industry, business model, geography, customer type, capital constraints, and decision horizon explicit.",
+    "Teach contribution margin, cash flow, working capital, risk, and opportunity cost alongside revenue and growth.",
+    "Distinguish correlation, prediction, incrementality, and causal evidence in marketing and operational decisions.",
+    "Never optimize lending, hiring, pricing, or targeting using protected traits or proxies for discriminatory treatment.",
+    "Use retrieval for live factual advice; adapters should learn reasoning patterns and source selection, not silently freeze obsolete rules."
+  ],
+  "acquisition_rules": [
+    "Pin an immutable source revision or dated snapshot and retain URL, retrieval date, revision date, license, attribution, jurisdiction, and third-party-content status per record.",
+    "Partition permissive, ShareAlike, noncommercial, research-only, and unclear-rights material so licenses cannot be accidentally flattened into one dataset label.",
+    "Exclude photographs, logos, testimonials, embedded videos, customer names, and contributed case studies unless their rights are separately verified.",
+    "Remove personal and confidential data from filings, contracts, dialogues, business plans, and transactional data; preserve only fields expressly released for reuse.",
+    "Split longitudinal and company data by company, seller, campaign, geography, and time before producing derived examples.",
+    "Hold benchmark test sets and oracle answers out of training.",
+    "Label synthetic dialogue, synthetic numerical cases, observed transactions, official guidance, and real operating documentation distinctly.",
+    "Treat model-generated business outcomes and evaluator scores as hypotheses until independently regraded or verifier checked."
+  ],
+  "point_in_time_record_fields": [
+    "source_uri",
+    "stable_source_or_accession_id",
+    "source_revision_or_snapshot_hash",
+    "license_and_rights_notice",
+    "entity_id_and_mapping_vintage",
+    "period_start",
+    "period_end",
+    "published_or_accepted_at",
+    "available_to_user_at",
+    "retrieved_at",
+    "revision_or_amendment_id",
+    "taxonomy_or_schema_version",
+    "units",
+    "currency",
+    "jurisdiction",
+    "evidence_spans_or_structured_fields",
+    "observed_synthetic_or_derived",
+    "train_eval_or_retrieval_partition"
+  ],
+  "point_in_time_rule": "For investing, funding, macro, filings, campaigns, and company outcomes, available_to_user_at controls the information set. Never substitute period_end for publication time or use later revisions, amendments, delistings, campaign outcomes, prices, or company outcomes in an earlier decision case.",
+  "sources": [
+    {
+      "id": "fdic-sba-money-smart-small-business",
+      "priority": 1,
+      "posture": "ingest_full_curriculum_text_exercises_and_templates",
+      "target_experts": ["business-core", "business-finance", "funding-capital", "business-operations"],
+      "kind": "official_curriculum",
+      "url": "https://www.fdic.gov/resources/consumers/money-smart/money-smart-for-small-business/",
+      "redesign_url": "https://www.fdic.gov/consumer-resource-center/preview-redesigned-money-smart-small-business",
+      "size_note": "The 2026 redesign has 14 modules, generally with an instructor guide, participant guide, and slide deck.",
+      "license_note": "FDIC describes the curriculum as copyright-free and customizable. Retain agency and edition provenance and exclude third-party assets if identified.",
+      "use": [
+        "primary practical foundation for planning, structures, banking, credit, financing, statements, profitability, cash flow, insurance, tax, risk, and exit",
+        "convert worked exercises into verified instruction examples",
+        "reserve selected exercises and cases as internal evaluations"
+      ]
+    },
+    {
+      "id": "sba-business-guide-and-content-api",
+      "priority": 1,
+      "posture": "ingest_agency_authored_text_and_templates_with_dated_snapshots",
+      "target_experts": ["business-core", "business-finance", "growth-gtm", "funding-capital", "business-operations"],
+      "kind": "official_guidance_and_json_api",
+      "url": "https://www.sba.gov/business-guide",
+      "api_url": "https://developer.sba.gov/markdown_apis/sbagov-content.html",
+      "reuse_url": "https://www.sba.gov/about-sba/open-government/about-the-sba-gov-website/",
+      "license_note": "SBA states that federal information on SBA.gov is public domain and may be copied and distributed. Exclude contributed or licensed materials, photographs, marks, and identified third-party assets.",
+      "use": "Covers planning, startup costs, market research, structures, registration, finance, accounting, hiring, tax, compliance, marketing, federal contracting, exporting, cybersecurity, growth, sale, and closure."
+    },
+    {
+      "id": "govuk-business-content-api",
+      "priority": 1,
+      "posture": "ingest_with_ogl_attribution_and_uk_labels",
+      "target_experts": ["business-core", "business-finance", "growth-gtm", "business-operations"],
+      "kind": "official_guidance_and_json_api",
+      "url": "https://www.gov.uk/browse/business",
+      "api_url": "https://content-api.publishing.service.gov.uk/",
+      "reuse_url": "https://www.gov.uk/help/reuse-govuk-content",
+      "size_note": "A current traversal found 23 business topic hubs and 93 unique directly linked child documents.",
+      "license_note": "Open Government Licence v3.0 for Crown content with attribution; exclude third-party content, logos, and stated exceptions.",
+      "use": "Machine-readable cross-jurisdiction grounding for starting, operating, employing, tax, debt, intellectual property, cyber, import/export, and growth."
+    },
+    {
+      "id": "business-gov-uk",
+      "priority": 2,
+      "posture": "ingest_crown_text_only_with_attribution",
+      "target_experts": ["business-core", "business-finance", "growth-gtm", "funding-capital"],
+      "kind": "official_guidance",
+      "url": "https://www.business.gov.uk/start/",
+      "academy_url": "https://www.business.gov.uk/business-academy/",
+      "terms_url": "https://www.business.gov.uk/terms-and-conditions/",
+      "license_note": "Open Government Licence v3.0 for Crown text. Terms exclude images, case studies, branding, and third-party content.",
+      "use": "Practical business-model validation, brand, structure, funding-readiness, accounting, tax, insurance, property, data protection, and export guidance."
+    },
+    {
+      "id": "australia-business-gov-au",
+      "priority": 2,
+      "posture": "ingest_text_and_clearly_licensed_templates_with_attribution",
+      "target_experts": ["business-core", "business-finance", "growth-gtm", "business-operations"],
+      "kind": "official_guidance_and_templates",
+      "url": "https://business.gov.au/",
+      "templates_url": "https://business.gov.au/tools-and-templates",
+      "copyright_url": "https://business.gov.au/legal-notices/copyright",
+      "license_note": "Generally CC BY 3.0 Australia with required Commonwealth attribution; exclude the Coat of Arms, logos, images, and third-party material.",
+      "use": "Planning, structures, finance, cash flow, tax, payments, employees, suppliers, risk, ecommerce, pricing, inventory, logistics, marketing, sustainability, and exit."
+    },
+    {
+      "id": "ftc-business-guidance",
+      "priority": 1,
+      "posture": "ingest_agency_authored_text_as_dated_compliance_grounding",
+      "target_experts": ["business-core", "growth-gtm"],
+      "kind": "official_guidance_and_enforcement_examples",
+      "url": "https://www.ftc.gov/business-guidance",
+      "advertising_url": "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics",
+      "policy_url": "https://www.ftc.gov/policy-notices/website-policy",
+      "size_note": "The resource library exposed 111 current guidance resources at catalog time.",
+      "license_note": "Most federal-government-authored material is public domain. Exclude public comments, contractor content, photographs, copyrighted advertising exhibits, and other third-party works.",
+      "use": "Advertising claims, substantiation, endorsements, reviews, native advertising, CAN-SPAM, telemarketing, privacy, security, franchises, finance, scams, and deceptive-practice counterexamples."
+    },
+    {
+      "id": "irs-small-business-guidance",
+      "priority": 1,
+      "posture": "ingest_by_tax_year_and_use_retrieval_for_current_answers",
+      "target_experts": ["business-core", "business-finance"],
+      "kind": "official_guidance_publications_and_forms",
+      "url": "https://www.irs.gov/businesses/small-businesses-self-employed",
+      "publication_334_url": "https://www.irs.gov/publications/p334",
+      "publication_583_url": "https://www.irs.gov/forms-pubs/about-publication-583",
+      "size_note": "The small-business index exposes more than 450 topics; Publication 334 covers accounting methods, income, expenses, assets, and business taxes, while Publication 583 covers startup and recordkeeping.",
+      "license_note": "Federal-government-authored text is generally a U.S. government work; strip photographs, marks, and identified third-party material.",
+      "use": "Accounting, recordkeeping, business income and expense concepts. Never merge thresholds, forms, deductions, or tax-year rules into timeless training examples."
+    },
+    {
+      "id": "sec-small-business-capital-raising",
+      "priority": 1,
+      "posture": "ingest_sec_authored_guidance_with_us_and_effective_date_labels",
+      "target_experts": ["business-core", "business-finance", "funding-capital", "investing-markets"],
+      "kind": "official_financing_and_compliance_guidance",
+      "url": "https://www.sec.gov/resources-small-businesses/capital-raising-building-blocks",
+      "pathways_url": "https://www.sec.gov/resources-small-businesses/capital-raising-building-blocks/offering-pathways",
+      "license_note": "SEC public-information dissemination policy permits copying and redistribution with attribution; exclude seals, logos, and non-SEC third-party material.",
+      "use": "Fundraising readiness, offering pathways, Regulation Crowdfunding, private and public offerings, disclosure, and compliance caveats."
+    },
+    {
+      "id": "gao-cost-and-schedule-guides",
+      "priority": 1,
+      "posture": "ingest_text_tables_and_worked_methods_after_third_party_filter",
+      "target_experts": ["business-finance", "business-operations"],
+      "kind": "official_operations_guides",
+      "url": "https://www.gao.gov/products/gao-20-195g",
+      "schedule_url": "https://www.gao.gov/press-release/how-long-will-project-really-take-gao-issues-final-version-its-schedule-assessment-guide",
+      "size_note": "The cost guide is 476 pages and the schedule guide is 224 pages.",
+      "license_note": "GAO products and data generally are not copyright-protected; remove identified third-party illustrations and materials.",
+      "use": "Work breakdown structures, cost estimates, uncertainty, sensitivity, risk, earned value, critical paths, scheduling, and estimate-quality evaluation."
+    },
+    {
+      "id": "open-business-textbook-collection",
+      "priority": 1,
+      "posture": "ingest_license_partitioned_text_and_exercises",
+      "target_experts": ["business-core", "business-finance", "growth-gtm"],
+      "kind": "open_textbooks",
+      "sources": [
+        {
+          "title": "Entrepreneurship and Innovation Toolkit",
+          "url": "https://open.umn.edu/opentextbooks/textbooks/entrepreneurship-and-innovation-toolkit",
+          "license": "CC BY-SA; verify and retain the exact version at acquisition"
+        },
+        {
+          "title": "Business Plan Development Guide",
+          "url": "https://open.umn.edu/opentextbooks/textbooks/495",
+          "license": "CC BY-SA; verify and retain the exact version at acquisition"
+        },
+        {
+          "title": "Financial Management for Small Businesses, first edition",
+          "url": "https://openbooks.lib.msu.edu/financialmanagement1ed/",
+          "license": "CC BY 4.0; do not silently replace with the NC-restricted second edition"
+        },
+        {
+          "title": "Foundations in Digital Marketing",
+          "url": "https://opentextbc.ca/foundationsdigitalmarketing/",
+          "license": "CC BY 4.0"
+        },
+        {
+          "title": "A Great Marketing Textbook",
+          "url": "https://pressbooks.pub/agreatmarketingtextbook/",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "use": "Foundational theory, frameworks, exercises, planning, finance, segmentation, pricing, promotion, selling, digital channels, attribution, and analytics. Filter every item marked except where otherwise noted."
+    },
+    {
+      "id": "gitlab-company-handbook",
+      "priority": 1,
+      "posture": "ingest_selected_handbook_paths_and_pin_revision",
+      "target_experts": ["business-core", "business-finance", "growth-gtm", "business-operations"],
+      "kind": "real_company_operating_handbook",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook",
+      "size_note": "Approximately 5,664 repository entries under content/handbook at catalog time and more than 2,000 printed pages.",
+      "license_note": "The handbook source repository carries an MIT license. Retain revision and attribution and remove third-party assets, personal contact data, and customer-identifying material.",
+      "use": "Actual marketing operations, product marketing, sales development, field operations, deal desk, customer success, renewals, channels, finance, procurement, people operations, metrics, and cross-functional processes.",
+      "bias_note": "Strongly enterprise-SaaS and remote-company specific; do not generalize every workflow to small, local, retail, service, or manufacturing businesses."
+    },
+    {
+      "id": "posthog-handbook-and-manual",
+      "priority": 1,
+      "posture": "ingest_only_contents_paths_covered_by_license",
+      "target_experts": ["business-core", "growth-gtm"],
+      "kind": "real_startup_operating_handbook",
+      "url": "https://github.com/PostHog/posthog.com",
+      "license_url": "https://github.com/PostHog/posthog.com/blob/master/LICENSE",
+      "license_note": "Only the repository's /contents/ folder is MIT. The license expressly restricts duplicating the rest of the site. Limit ingestion to /contents/ and strip third-party images, videos, and quotations.",
+      "use": "Startup history, strategy, customer discovery, product-led growth, pricing, inbound sales, content marketing, growth reviews, funnels, activation, retention, experimentation, support, and company processes."
+    },
+    {
+      "id": "odoo-documentation",
+      "priority": 2,
+      "posture": "ingest_selected_modules_in_sharealike_partition",
+      "target_experts": ["business-finance", "growth-gtm", "business-operations"],
+      "kind": "business_software_workflow_documentation",
+      "url": "https://github.com/odoo/documentation",
+      "size_note": "Repository metadata is approximately 5.48 GB; current default branch was 19.0 at catalog time.",
+      "license_note": "CC BY-SA 4.0. Keep attribution and ShareAlike provenance isolated from permissive-only releases.",
+      "use": "CRM, sales, marketing automation, ecommerce, pricing, inventory, invoicing, accounting, purchasing, and business-process workflows. Retain product module and version labels."
+    },
+    {
+      "id": "growthbook-and-posthog-experimentation-docs",
+      "priority": 1,
+      "posture": "ingest_permissive_documentation_paths_and_generate_experiments",
+      "target_experts": ["growth-gtm"],
+      "kind": "experimentation_and_product_analytics_documentation",
+      "url": "https://github.com/growthbook/growthbook/tree/main/docs",
+      "posthog_docs_url": "https://github.com/PostHog/posthog.com/tree/master/contents/docs",
+      "license_note": "GrowthBook is MIT outside named enterprise directories; PostHog /contents/ is MIT. Preserve path-level notices.",
+      "use": "Experiment design, sample sizing, guardrails, CUPED, sequential and Bayesian tests, funnels, activation, retention, surveys, lifecycle metrics, and causal caveats."
+    },
+    {
+      "id": "abcd-customer-service-dialogues",
+      "priority": 1,
+      "posture": "ingest_train_split_and_hold_out_scenarios",
+      "target_experts": ["growth-gtm", "business-operations"],
+      "kind": "human_human_workflow_dialogue_dataset",
+      "url": "https://github.com/asappresearch/abcd",
+      "size_note": "10,042 dialogues with 55 intents, 30 actions, fictional customer/order/product state, policy guidelines, turns, latent intent, next step, action, and slots.",
+      "license_note": "MIT.",
+      "use": "Post-sale customer service, policy-constrained workflow execution, escalation, tool/action selection, and customer-state tracking."
+    },
+    {
+      "id": "synthetic-sales-dialogue-seeds",
+      "priority": 3,
+      "posture": "sample_audit_regrade_and_use_as_generation_templates",
+      "target_experts": ["growth-gtm"],
+      "kind": "synthetic_dialogue_datasets",
+      "sources": [
+        {
+          "title": "SaaS Sales Conversations",
+          "url": "https://huggingface.co/datasets/DeepMostInnovations/saas-sales-conversations",
+          "size": "100,000 GPT-4-generated dialogues, approximately 7.17 GB",
+          "license": "Apache-2.0-labelled dataset"
+        },
+        {
+          "title": "Gym Salesman Dataset",
+          "url": "https://huggingface.co/datasets/elg4/Gym_Salesman_Dataset",
+          "size": "11,997 synthetic six- or eight-turn conversations",
+          "license": "MIT-labelled dataset"
+        }
+      ],
+      "use": "Discard supplied embeddings, independently regrade outcomes, remove evaluator chain-of-thought, and use mainly as templates for generating diverse, policy-aware sales simulations.",
+      "bias_note": "Synthetic scores are not evidence that a tactic is accurate, ethical, or effective; the datasets are heavily SaaS and persona-template biased."
+    },
+    {
+      "id": "sec-edgar-xbrl-structured-data",
+      "priority": 1,
+      "posture": "ingest_structured_facts_and_selected_sec_authored_metadata_not_blanket_filing_text",
+      "target_experts": ["business-finance", "investing-markets", "funding-capital"],
+      "kind": "official_api_and_bulk_datasets",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+      "financial_statements_url": "https://www.sec.gov/data-research/sec-markets-data/financial-statement-data-sets",
+      "notes_url": "https://www.sec.gov/data-research/sec-markets-data/financial-statement-notes-data-sets",
+      "size_note": "Structured financial statement data begins in 2009; compact quarterly ZIP files are typically tens to low hundreds of MB, while notes packages are larger.",
+      "license_note": "Use SEC-generated identifiers and structured facts with provenance. Public filing availability does not make every issuer narrative, exhibit, image, or third-party attachment a U.S. government work.",
+      "use": [
+        "generate statement reading, ratio, trend, cash-flow, working-capital, and cross-company comparison tasks",
+        "retain CIK, accession, form, filed date, period, unit, taxonomy tag, dimensions, and amendment status",
+        "obey SEC automated-access policies and use bulk archives for large pulls"
+      ]
+    },
+    {
+      "id": "sec-crowdfunding-offerings",
+      "priority": 1,
+      "posture": "ingest_structured_form_c_fields_and_generate_financing_cases",
+      "target_experts": ["business-core", "business-finance", "funding-capital", "investing-markets"],
+      "kind": "official_quarterly_structured_dataset",
+      "url": "https://www.sec.gov/data-research/sec-markets-data/crowdfunding-offerings-data-sets",
+      "size_note": "Quarterly flattened Form C data from May 2016 onward covering offering statements, updates, annual reports, terminations, amendments, and withdrawals.",
+      "license_note": "Structured data is derived from issuer submissions and SEC identifiers. Preserve filing provenance, accuracy disclaimers, and issuer-content rights; use structured fields rather than assuming all narrative is public domain.",
+      "use": "Small-business fundraising targets, security types, proceeds, offering progress, withdrawals, financing comparisons, and outcome-labelled capital-raising cases."
+    },
+    {
+      "id": "sba-7a-504-loan-data",
+      "priority": 1,
+      "posture": "ingest_quarterly_public_data_and_generate_aggregate_cases",
+      "target_experts": ["business-finance", "funding-capital"],
+      "kind": "official_csv_dataset",
+      "url": "https://data.sba.gov/dataset/7a-504-foia",
+      "size_note": "CSV files segmented by program and decade from FY1991 to present plus a data dictionary; updated quarterly.",
+      "license_note": "Catalogued as U.S. Government Works/public-domain data.",
+      "use": "Loan-program, geography, industry, approval, amount, lender, and historical financing analyses. Aggregate or suppress identifiers where appropriate and never use the data to infer protected-class creditworthiness."
+    },
+    {
+      "id": "us-census-business-data",
+      "priority": 1,
+      "posture": "ingest_selected_public_aggregate_series_and_generate_market_cases",
+      "target_experts": ["business-core", "growth-gtm", "business-operations"],
+      "kind": "official_csv_and_api_datasets",
+      "urls": {
+        "business_dynamics": "https://www.census.gov/programs-surveys/bds/data.API.html",
+        "business_formation": "https://www.census.gov/econ/bfs/data.html",
+        "annual_business_survey": "https://www.census.gov/data/developers/data-sets/abs.html",
+        "county_and_zip_business_patterns": "https://www.census.gov/data/developers/data-sets/cbp-zbp.html"
+      },
+      "license_note": "U.S. Census public aggregate data subject to API terms, disclosure-avoidance flags, and source documentation.",
+      "use": "Market sizing, establishment density, firm births/deaths, job creation, geography, NAICS, company size, receipts, payroll, business characteristics, technology, innovation, and financing practice. Preserve vintage and revision flags."
+    },
+    {
+      "id": "world-bank-business-data",
+      "priority": 1,
+      "posture": "ingest_open_aggregate_releases_with_world_bank_terms",
+      "target_experts": ["business-core", "growth-gtm", "business-operations"],
+      "kind": "international_structured_datasets",
+      "urls": {
+        "b_ready": "https://www.worldbank.org/en/businessready",
+        "entrepreneurship": "https://reproducibility.worldbank.org/catalog/454",
+        "enterprise_surveys": "https://datacatalog.worldbank.org/search/dataset/0037947/enterprise-surveys"
+      },
+      "size_note": "Entrepreneurship data spans 188 economies for 2006-2024; aggregate Enterprise Surveys cover more than 150 economies and over 100 indicators.",
+      "license_note": "Open catalog records are generally CC BY 4.0 plus World Bank dataset terms. Firm-level microdata can require a separate research license, approval, confidentiality controls, and no redistribution; prefer open aggregate releases.",
+      "use": "Cross-country business environment, entry, regulation, financial services, trade, firm constraints, management practices, new business density, and market-context cases."
+    },
+    {
+      "id": "eurostat-business-demography",
+      "priority": 2,
+      "posture": "ingest_aggregate_data_with_source_attribution",
+      "target_experts": ["business-core", "growth-gtm", "business-operations"],
+      "kind": "international_structured_dataset",
+      "url": "https://ec.europa.eu/eurostat/web/business-demography/information-data",
+      "reuse_url": "https://ec.europa.eu/eurostat/help/copyright-notice",
+      "license_note": "Eurostat statistical data and metadata are generally reusable with source acknowledgement, subject to individual exceptions and third-party notices.",
+      "use": "Enterprise births, deaths, survival, employment, size, geography, industry, and high-growth firms. Retain dataset DOI/code, access date, provisional status, and revisions."
+    },
+    {
+      "id": "uci-commerce-and-marketing-data",
+      "priority": 1,
+      "posture": "ingest_with_attribution_and_use_for_executable_analysis_tasks",
+      "target_experts": ["growth-gtm", "business-finance", "business-operations"],
+      "kind": "licensed_transaction_and_behavior_datasets",
+      "license_note": "Each listed UCI release is CC BY 4.0; retain DOI and creator attribution.",
+      "datasets": [
+        {
+          "id": "online-retail-ii",
+          "url": "https://archive.ics.uci.edu/dataset/502/online+retail+ii",
+          "size": "1,067,371 transactions, 43.5 MB",
+          "tasks": ["cohorts", "RFM", "retention", "cancellations", "basket analysis", "revenue", "customer concentration"]
+        },
+        {
+          "id": "online-shopping-clickstream",
+          "url": "https://archive.ics.uci.edu/dataset/553/clickstream+data+for+online+shopping",
+          "size": "165,474 clicks with 14 fields",
+          "tasks": ["funnel", "navigation", "merchandising", "pricing", "session analysis"]
+        },
+        {
+          "id": "online-shopper-intent",
+          "url": "https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset",
+          "size": "12,330 sessions with 17 predictors and a revenue outcome",
+          "tasks": ["conversion", "calibration", "segment analysis", "leakage detection"]
+        },
+        {
+          "id": "bank-marketing",
+          "url": "https://archive.ics.uci.edu/dataset/222/bank+marketing",
+          "size": "45,211 campaign contacts",
+          "tasks": ["campaign analysis", "conversion", "contact policy", "bias review", "target leakage"]
+        },
+        {
+          "id": "wholesale-customers",
+          "url": "https://archive.ics.uci.edu/dataset/292/wholesale+customers",
+          "size": "440 customers with channel, region, and category spend",
+          "tasks": ["segmentation", "channel mix", "customer concentration"]
+        }
+      ],
+      "use_note": "These datasets are old and narrow. Use them for method and arithmetic training, not current market claims. Split by customer, seller, campaign, and time; do not let post-contact duration leak into pre-contact decisions."
+    },
+    {
+      "id": "criteo-advertising-experiments",
+      "priority": 3,
+      "posture": "optional_noncommercial_sharealike_partition_or_evaluation",
+      "target_experts": ["growth-gtm"],
+      "kind": "large_advertising_event_datasets",
+      "urls": {
+        "uplift": "https://huggingface.co/datasets/criteo/criteo-uplift",
+        "attribution": "https://huggingface.co/datasets/criteo/criteo-attribution-dataset",
+        "click_logs": "https://huggingface.co/datasets/criteo/CriteoClickLogs"
+      },
+      "size_note": "Approximately 14 million uplift rows, 16.5 million attribution touchpoints, and 4.37 billion click-log rows respectively.",
+      "license_note": "Dataset cards identify CC BY-NC-SA 4.0. Keep in a noncommercial ShareAlike partition and record each release's exact terms.",
+      "use": "Causal uplift, incrementality, attribution, bidding, calibration, and campaign/time holdouts. Raw anonymized rows should feed tools and evaluators, not dominate LoRA tokens."
+    },
+    {
+      "id": "finqa",
+      "priority": 1,
+      "posture": "reuse_task_schema_and_annotations_after_remapping_context_to_official_sec_sources_preserve_tests",
+      "target_experts": ["business-finance", "investing-markets"],
+      "kind": "financial_numerical_reasoning_dataset",
+      "url": "https://github.com/czyssrs/FinQA",
+      "license_note": "MIT repository release. Reacquire underlying filing contexts from official EDGAR using accession provenance instead of assuming a repository license independently clears every copied report artifact.",
+      "use": "Financial-report table and text questions with gold supporting facts, executable reasoning programs, and numerical answers. Keep public and private challenge tests out of training."
+    },
+    {
+      "id": "tat-qa",
+      "priority": 1,
+      "posture": "ingest_training_split_and_preserve_test_set",
+      "target_experts": ["business-finance", "investing-markets"],
+      "kind": "financial_table_text_question_answering_dataset",
+      "url": "https://github.com/NExTplusplus/TAT-QA",
+      "size_note": "16,552 questions over 2,757 hybrid table-and-text contexts from financial reports.",
+      "license_note": "Dataset is CC BY 4.0; code repository also identifies an MIT license for code.",
+      "use": "Evidence extraction and arithmetic over financial reports; preserve document provenance and test holdouts."
+    },
+    {
+      "id": "atticus-commercial-contract-datasets",
+      "priority": 2,
+      "posture": "ingest_training_partitions_for_contract_literacy_and_hold_out_eval",
+      "target_experts": ["business-core", "business-operations"],
+      "kind": "expert_annotated_commercial_contract_datasets",
+      "url": "https://www.atticusprojectai.org/datasets/",
+      "cuad_url": "https://github.com/TheAtticusProject/cuad",
+      "size_note": "CUAD has 510 commercial contracts and more than 13,000 labels across 41 clause types; MAUD and ACORD add merger and clause-retrieval tasks.",
+      "license_note": "Atticus Project datasets are released under CC BY 4.0; retain dataset and underlying filing provenance.",
+      "use": "Clause identification, payments, term, renewal, termination, liability, assignment, confidentiality, IP, and procurement risk spotting. This is contract literacy, not a replacement for legal counsel."
+    },
+    {
+      "id": "google-meridian",
+      "priority": 1,
+      "posture": "ingest_docs_samples_and_use_as_marketing_verifier",
+      "target_experts": ["growth-gtm"],
+      "kind": "marketing_mix_modeling_tool",
+      "url": "https://github.com/google/meridian",
+      "license_note": "Apache-2.0 code; Google developer documentation is generally CC BY 4.0 with Apache-2.0 code samples where stated.",
+      "use": "Generate marketing-mix, channel contribution, saturation, budget allocation, scenario planning, uncertainty, and model-diagnostic cases from synthetic aggregated data."
+    },
+    {
+      "id": "meta-robyn",
+      "priority": 1,
+      "posture": "ingest_docs_samples_and_use_as_marketing_verifier",
+      "target_experts": ["growth-gtm"],
+      "kind": "marketing_mix_modeling_tool",
+      "url": "https://github.com/facebookexperimental/Robyn",
+      "license_note": "MIT.",
+      "use": "Marketing-mix modeling, adstock, saturation, spend-exposure relationships, calibration, multiobjective model selection, and budget allocation using included simulated data."
+    },
+    {
+      "id": "or-tools-and-stockpyl",
+      "priority": 1,
+      "posture": "use_as_generators_oracles_and_selected_docs",
+      "target_experts": ["business-operations"],
+      "kind": "operations_research_and_inventory_tools",
+      "urls": {
+        "or_tools": "https://github.com/google/or-tools",
+        "stockpyl": "https://github.com/LarrySnyder/stockpyl"
+      },
+      "license_note": "OR-Tools is Apache-2.0; Stockpyl is MIT. Google developer prose is CC BY 4.0 where stated.",
+      "use": "Generate and verify scheduling, assignment, routing, capacity, knapsack, reorder, newsvendor, EOQ, service-level, multi-echelon inventory, and supply-network decisions."
+    },
+    {
+      "id": "public-procurement-data-and-standards",
+      "priority": 2,
+      "posture": "ingest_public_apis_and_standards_with_source_specific_terms",
+      "target_experts": ["business-core", "business-operations"],
+      "kind": "official_procurement_data_and_schema",
+      "urls": {
+        "usaspending": "https://www.usaspending.gov/",
+        "sam_public_opportunities": "https://open.gsa.gov/api/get-opportunities-public-api/",
+        "ocds": "https://www.open-contracting.org/data-standard/"
+      },
+      "license_note": "Use only public federal APIs/exports and respect their current terms and rate limits. OCDS is an open standard, but individual publisher data retains source-specific licenses.",
+      "use": "Solicitation reading, NAICS and product/service classification, historical award analysis, bid/no-bid cases, procurement stages, supplier risk, and contract lifecycle. Never scrape SAM.gov or use sensitive/FOUO APIs."
+    },
+    {
+      "id": "bizfinbench-v2",
+      "priority": 1,
+      "posture": "evaluation_only_pending_complete_rights_review",
+      "target_experts": ["business-finance", "investing-markets", "funding-capital"],
+      "kind": "business_finance_benchmark",
+      "url": "https://github.com/HiThink-Research/BizFinBench",
+      "size_note": "Business-oriented financial tasks covering numerical computation, time reasoning, data description, anomaly attribution, entities, tools, and knowledge; the repository describes a much larger v2 release.",
+      "license_note": "Do not infer a dataset license from public GitHub access. Review v2 dataset and component rights before any use beyond evaluation.",
+      "use": "Held-out finance and business capability evaluation only."
+    },
+    {
+      "id": "sec-public-markets-bulk-library",
+      "priority": 1,
+      "posture": "ingest_structured_facts_and_agency_metadata_generate_dated_cases",
+      "target_experts": ["investing-markets", "business-finance", "funding-capital"],
+      "kind": "official_bulk_capital_markets_filings_data",
+      "url": "https://www.sec.gov/data-research/sec-markets-data",
+      "datasets": [
+        {"id": "form-13f", "url": "https://www.sec.gov/data-research/sec-markets-data/form-13f-data-sets", "coverage": "July 2013 through current quarterly release", "size_note": "Quarterly compressed releases grew from roughly 35 MB to roughly 95 MB."},
+        {"id": "form-n-port", "url": "https://www.sec.gov/data-research/sec-markets-data/form-n-port-data-sets", "coverage": "October 2019 through current quarterly release", "size_note": "Quarterly ZIP releases are commonly 300-700 MB; the history is already well over 10 GB compressed."},
+        {"id": "insider-transactions", "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets", "coverage": "January 2006 through current quarterly release", "size_note": "Flattened Forms 3, 4, and 5, commonly 8-16 MB compressed per quarter."},
+        {"id": "financial-statements-and-notes", "url": "https://www.sec.gov/data-research/sec-markets-data/financial-statement-notes-data-sets", "coverage": "January 2009 through current monthly release"},
+        {"id": "funds-and-market-structure", "url": "https://www.sec.gov/data-research/sec-markets-data", "coverage": "N-MFP, mutual-fund risk/return, BDC, fails-to-deliver, market-structure metrics, and other current public data-library releases"}
+      ],
+      "license_note": "Use factual structured fields and SEC-authored metadata under the SEC public-information dissemination policy. Public filing access does not erase registrant or third-party rights in narrative text, exhibits, names, or creative material; keep those excluded or separately reviewed.",
+      "use": "Generate information-cutoff-safe financial analysis, fund exposure, holdings change, concentration, liquidity, fee, risk, insider activity, and market-structure tasks. Never label a filing date as if the market knew the data on the period end date."
+    },
+    {
+      "id": "sec-private-capital-formation-library",
+      "priority": 1,
+      "posture": "ingest_structured_offering_facts_and_agency_guidance_by_release_date",
+      "target_experts": ["funding-capital", "investing-markets", "business-finance", "business-core"],
+      "kind": "official_private_and_exempt_offering_data",
+      "url": "https://www.sec.gov/data-research/sec-markets-data",
+      "datasets": ["Form D exempt offerings", "Regulation A offerings", "Regulation Crowdfunding Form C offerings", "Business Development Company investments", "offering pathway and issuer compliance guidance"],
+      "coverage_note": "Form D provides venture, private-equity, hedge-fund, and operating-company offering notices; Regulation A begins in 2015; Regulation Crowdfunding structured data begins in 2016 and reports targets, securities, proceeds, updates, withdrawals, and terminations.",
+      "license_note": "Prioritize structured factual fields and SEC-authored guidance. Preserve as-filed disclaimers, amendments, withdrawal status, dates, jurisdiction, and filing identifiers; exclude unchecked offering narratives and exhibits from blanket text ingestion.",
+      "use": "Funding-path classification, capital-raised analysis, offering funnel, investor diligence, deal comparison, and success/failure cases without depending on proprietary venture databases."
+    },
+    {
+      "id": "us-treasury-fiscal-data",
+      "priority": 1,
+      "posture": "ingest_official_api_and_bulk_tables_with_vintage_metadata",
+      "target_experts": ["investing-markets", "funding-capital", "business-finance"],
+      "kind": "official_sovereign_debt_rates_and_fiscal_data",
+      "url": "https://fiscaldata.treasury.gov/datasets/",
+      "auctions_url": "https://fiscaldata.treasury.gov/datasets/treasury-securities-auctions-data/",
+      "format": "REST API plus CSV and JSON downloads",
+      "license_note": "Treat as U.S. government data while retaining Treasury provenance, API terms, revision dates, and dataset-specific notices.",
+      "use": "Treasury auctions, debt composition, interest cost, rates, maturities, cash balances, receipts, outlays, yield-curve and fixed-income calculations."
+    },
+    {
+      "id": "cftc-commitments-of-traders",
+      "priority": 1,
+      "posture": "ingest_historical_compressed_files_and_public_reporting_api",
+      "target_experts": ["investing-markets"],
+      "kind": "official_futures_and_options_position_data",
+      "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
+      "history_url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/HistoricalCompressed/index.htm",
+      "coverage_note": "Legacy futures-only data reaches 1986; combined futures/options reaches 1995; disaggregated and financial-futures reports reach 2006. CSV, Excel, TSV, XML, RDF, RSS, and API exports are available.",
+      "license_note": "Official public aggregate data. Retain report date and actual release date, CFTC methodology, classifications, corrections, and agency disclaimers.",
+      "use": "Positioning, hedger/speculator distinctions, crowded-trade hypotheses, futures-market regimes, and release-lag-aware analysis. It is not a trade signal oracle."
+    },
+    {
+      "id": "companies-house-bulk-company-and-accounts",
+      "priority": 1,
+      "posture": "ingest_company_facts_and_xbrl_accounts_strip_personal_fields",
+      "target_experts": ["business-core", "business-finance", "funding-capital", "investing-markets", "growth-gtm"],
+      "kind": "official_bulk_company_register_and_accounts",
+      "url": "https://www.gov.uk/guidance/companies-house-data-products",
+      "download_url": "https://download.companieshouse.gov.uk/en_output.html",
+      "size_note": "The July 2026 live-company snapshot is about 473 MB compressed. Companies House reports roughly 2.2 million accounts filings a year, about 60% electronically available as iXBRL/XML/HTML.",
+      "license_note": "Companies House makes the register available for public inspection and imposes no additional reuse rules, but users remain responsible for data protection, copyright, and other law. Use factual company/account fields; remove addresses, officer/PSC personal data, and unchecked narrative content.",
+      "use": "Company lifecycle, industry cohort, filing timeliness, survival, financial-ratio, comparable-company, credit, market-sizing, and funding-readiness cases with UK labels."
+    },
+    {
+      "id": "sbir-sttr-awards-and-solicitations",
+      "priority": 1,
+      "posture": "ingest_bulk_awards_and_topics_after_personal_field_removal",
+      "target_experts": ["funding-capital", "business-core", "growth-gtm", "investing-markets"],
+      "kind": "official_small_business_innovation_funding_data",
+      "url": "https://www.sbir.gov/data-resources",
+      "awards_url": "https://www.sbir.gov/awards",
+      "size_note": "Every SBIR/STTR award since program inception is offered in bulk: roughly 290 MB with abstracts or 65 MB without abstracts, refreshed monthly; topics and companies are also downloadable or available through JSON/XML APIs.",
+      "license_note": "Federal public database. Remove contact names, phones, emails, precise addresses, DUNS/UEI and other personal or identifying fields before case generation; retain agency, program, phase, year, topic, amount, firm size, and provenance.",
+      "use": "Grant-fit, solicitation matching, Phase I/II funding paths, award timing, technology-market clustering, non-dilutive capital strategy, and evidence-backed proposal critiques."
+    },
+    {
+      "id": "usaspending-grants-contracts-and-loans",
+      "priority": 1,
+      "posture": "ingest_bulk_public_award_transactions_and_api_results",
+      "target_experts": ["funding-capital", "business-core", "growth-gtm", "business-operations"],
+      "kind": "official_federal_awards_and_market_data",
+      "url": "https://www.usaspending.gov/",
+      "api_url": "https://api.usaspending.gov/",
+      "format": "Bulk archive and API CSV/JSON for grants, loans, contracts, direct payments, and other assistance at award and transaction level.",
+      "license_note": "U.S. government spending data. Retain agency, assistance listing, award type, action date, geography, recipient, source-system, and correction metadata; remove sensitive or personal fields and respect API limits.",
+      "use": "Funding-program discovery, award-market sizing, recipient and industry cohorts, contract pipeline, grant fit, historical award patterns, sources-and-uses cases, and procurement GTM."
+    },
+    {
+      "id": "cfpb-consumer-complaint-database",
+      "priority": 1,
+      "posture": "ingest_structured_fields_quarantine_consumer_narratives_for_retrieval_or_evaluation",
+      "target_experts": ["growth-gtm", "business-core", "business-finance", "investing-markets"],
+      "kind": "official_customer_problem_and_company_response_dataset",
+      "url": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+      "format": "Daily-updated full CSV download and open-data API; 17,266,452 records and roughly 1.42 GB compressed on 2026-08-22.",
+      "license_note": "CFPB says published complaint data is freely available for anyone to use, analyze, and build on. Structured federal metadata is the training core; narratives are consumer-authored even when opt-in and scrubbed, so keep them retrieval/evaluation-only unless rights and residual PII are separately cleared.",
+      "use": "Voice-of-customer taxonomy, product and service failure analysis, complaint triage, response quality, retention risk, compliance marketing, and company-response simulations. Do not treat complaint counts as population incidence without exposure denominators."
+    },
+    {
+      "id": "grants-gov-opportunities-xml",
+      "priority": 1,
+      "posture": "ingest_daily_structured_opportunity_extracts_not_unreviewed_attachments",
+      "target_experts": ["funding-capital", "business-core", "growth-gtm"],
+      "kind": "official_grant_opportunity_database",
+      "url": "https://www.grants.gov/xml-extract",
+      "size_note": "The daily GrantsDBExtract v2 ZIP is roughly 78 MB compressed and contains XML plus its XSD schema.",
+      "license_note": "Use federal structured opportunity fields and agency-authored descriptions with source/date provenance. Treat attachments, linked documents, and contributed text as source-specific material requiring review.",
+      "use": "Eligibility, deadline, cost-share, award-ceiling, agency and assistance-listing matching; join later USAspending awards to opportunities without pretending application-level causal data is available."
+    },
+    {
+      "id": "open-cap-tables-and-series-seed",
+      "priority": 1,
+      "posture": "ingest_explicitly_licensed_samples_and_generate_large_deterministic_transaction_sets",
+      "target_experts": ["funding-capital", "business-finance", "investing-markets"],
+      "kind": "open_legal_finance_templates_and_cap_table_schema",
+      "urls": {
+        "series_seed": "https://github.com/seriesseed/equity",
+        "cooley_series_seed": "https://github.com/CooleyLLP/seriesseed",
+        "open_cap_table_format": "https://open-cap-table-coalition.github.io/Open-Cap-Format-OCF/"
+      },
+      "license_note": "Series Seed repositories are CC0. OCF samples and code are Apache-2.0, while the specification has additional derivative-specification restrictions; use the Apache samples and generated transactions for weight training and keep specification prose retrieval-only pending review.",
+      "use": "Generate priced rounds, SAFEs and notes, option pools, grants, vesting, warrants, transfers, splits, conversion, dilution, liquidation preferences, and exit waterfalls with exact state replay."
+    },
+    {
+      "id": "open-corporate-finance-textbooks",
+      "priority": 1,
+      "posture": "ingest_full_text_exercises_and_attributed_derivatives",
+      "target_experts": ["business-finance", "funding-capital", "investing-markets", "business-core"],
+      "kind": "cc_by_corporate_finance_curriculum",
+      "urls": {
+        "corporate_finance": "https://touro.pressbooks.pub/corporatefinance/",
+        "financial_analysis": "https://pressbooks.pub/introductiontofinancialanalysis/"
+      },
+      "license_note": "Both are CC BY 4.0. Preserve author/title/source attribution and remove individually marked third-party images or inserts.",
+      "use": "Conceptual spine for NPV, IRR, WACC, CAPM, capital structure, working capital, forecasting, bonds, equities, credit spreads, dividends, buybacks, leases, and machine-verifiable exercises."
+    },
+    {
+      "id": "federal-reserve-fdic-bea-credit-and-capital-data",
+      "priority": 1,
+      "posture": "ingest_from_originating_agencies_with_vintage_and_revision_metadata",
+      "target_experts": ["investing-markets", "funding-capital", "business-finance"],
+      "kind": "official_macro_credit_bank_and_profit_data",
+      "urls": {
+        "federal_reserve_z1": "https://www.federalreserve.gov/releases/z1/default.htm",
+        "fdic_bank_downloads": "https://www.fdic.gov/bank-data-guide/data-downloads",
+        "bea_corporate_profits": "https://www.bea.gov/data/income-saving/corporate-profits",
+        "treasury_yields": "https://home.treasury.gov/treasury-daily-interest-rate-xml-feed"
+      },
+      "size_note": "Federal Reserve Z.1 sector financial accounts extend to 1960 and the all-series SDMX/XML ZIP is roughly 561 MB; FDIC quarterly bank financial data extends to 1992.",
+      "license_note": "Use originating-agency government releases, not third-party aggregators. Retain original vintage, revision, units, seasonal adjustment, definitions, and agency-specific notices.",
+      "use": "Credit conditions, lender health, capital/liquidity, corporate profits, retained earnings, borrowing, discount rates, yield curves, bank cohorts, and regime-aware financing and valuation."
+    },
+    {
+      "id": "federal-bankruptcy-and-turnaround-data",
+      "priority": 1,
+      "posture": "ingest_government_case_records_aggregate_tables_schemas_and_templates_after_identifier_removal",
+      "target_experts": ["funding-capital", "business-finance", "business-core", "investing-markets"],
+      "kind": "official_bankruptcy_and_restructuring_data",
+      "urls": {
+        "fjc_cases": "https://www.fjc.gov/research/federal-court-cases-fjc-integrated-database-1979-present",
+        "courts_tables": "https://www.uscourts.gov/data-news/reports/statistical-reports/bankruptcy-filings-statistics",
+        "chapter_11_reports": "https://www.justice.gov/ust/chapter-11-operating-reports"
+      },
+      "license_note": "Use government records, statistical releases, schemas, and templates after stripping party identifiers. Do not bulk-ingest PACER pleadings, exhibits, or confidential case documents.",
+      "use": "Distress detection, liquidity/runway, monthly operating report reconciliation, liquidation-versus-reorganization, recovery waterfall, plan feasibility, and turnaround simulations."
+    },
+    {
+      "id": "official-ma-and-securities-pathways",
+      "priority": 2,
+      "posture": "ingest_agency_text_statistics_and_filing_metadata_generate_synthetic_deals",
+      "target_experts": ["funding-capital", "investing-markets", "business-finance", "business-core"],
+      "kind": "official_merger_competition_and_transaction_guidance",
+      "urls": {
+        "merger_guidelines": "https://www.justice.gov/atr/merger-guidelines",
+        "ftc_competition_reports": "https://search.ftc.gov/policy/reports/annual-competition-reports",
+        "sec_capital_raising": "https://www.sec.gov/resources-small-businesses/capital-raising-building-blocks",
+        "us_code_bulk": "https://uscode.house.gov/download/download.shtml",
+        "govinfo_bulk": "https://www.govinfo.gov/developers"
+      },
+      "license_note": "Agency-authored guidance and government statistics are the clean core. Issuer-authored merger agreements, proxies, exhibits, and filing narratives remain a separate amber-rights shard rather than blanket weight-training data.",
+      "use": "Dated transaction pathway, HHI, accretion/dilution, sources and uses, purchase accounting, financing mix, filing chronology, antitrust issue spotting, and synthetic M&A diligence."
+    },
+    {
+      "id": "multidogo-customer-dialogues",
+      "priority": 1,
+      "posture": "ingest_role_separated_dialogues_with_domain_and_outcome_labels",
+      "target_experts": ["growth-gtm", "business-operations"],
+      "kind": "large_human_customer_agent_dialogue_corpus",
+      "url": "https://github.com/awslabs/multi-domain-goal-oriented-dialogues-dataset",
+      "size_note": "88,848 human-agent dialogues and 1,437,342 turns across airline, fast food, finance, insurance, media, and software; raw files total roughly 204 MB.",
+      "license_note": "CDLA-Permissive-2.0. Retain dataset attribution and domain/role provenance.",
+      "use": "Support and sales conversations, clarification, intent/slot extraction, objection handling, troubleshooting, resolution, and escalation. Parse against the documented schema because TSV-named files are comma-delimited."
+    },
+    {
+      "id": "google-taskmaster-dialogues-and-rewards",
+      "priority": 1,
+      "posture": "ingest_dialogues_api_calls_and_reward_examples_with_collection_method_labels",
+      "target_experts": ["growth-gtm", "business-operations"],
+      "kind": "large_customer_journey_and_reward_corpus",
+      "url": "https://github.com/google-research-datasets/Taskmaster",
+      "size_note": "60,793 JSON dialogues across four releases and roughly 567 MB of dialogue payloads; TM4 contributes 3,000 direct reward examples.",
+      "license_note": "CC BY 4.0 per release. Preserve release-specific attribution and keep TM1/2 human-agent versus TM3/4 self-dialog collection methods labeled for weighting.",
+      "use": "Ordering, appointments, product search, recommendation, travel, ticketing, API calls, funnel completion, response grading, reward modeling, and preference generation."
+    },
+    {
+      "id": "amazon-esci-shopping-queries",
+      "priority": 1,
+      "posture": "ingest_structured_judgments_generate_query_group_preserving_cases",
+      "target_experts": ["growth-gtm", "business-core"],
+      "kind": "large_product_search_and_merchandising_dataset",
+      "url": "https://github.com/amazon-science/esci-data",
+      "size_note": "130,652 queries and 2,621,738 query-product judgments across three locales; product Parquet is roughly 1.11 GB and examples Parquet roughly 51 MB.",
+      "license_note": "Apache-2.0 repository release. Preserve locale and query-group splits and retain repository attribution.",
+      "use": "Product relevance, positioning, substitution, complement/cross-sell, catalog quality, merchandising, search intent, and ranking explanations verified against exact/substitute/complement/irrelevant labels."
+    },
+    {
+      "id": "uspto-trademark-case-files",
+      "priority": 1,
+      "posture": "ingest_public_domain_structured_records_generate_brand_lifecycle_cases",
+      "target_experts": ["growth-gtm", "business-core", "funding-capital"],
+      "kind": "official_brand_and_trademark_lifecycle_data",
+      "url": "https://www.uspto.gov/ip-policy/economic-research/research-datasets/trademark-case-files-dataset",
+      "size_note": "12.7 million applications and registrations from 1870 through March 2024; the full release is roughly 4.33 GB CSV with case, owner, class, event, opposition, and renewal tables.",
+      "license_note": "Marked public domain in the federal data catalog. Strip personal owner/contact fields and retain release vintage and serial-number provenance.",
+      "use": "Brand-category mapping, preliminary name screening, class adjacency, portfolio analysis, renewal/status lifecycle, and confusion-risk exercises. Always label this preliminary analysis rather than legal clearance."
+    },
+    {
+      "id": "mautic-and-google-search-marketing-docs",
+      "priority": 1,
+      "posture": "ingest_pinned_licensed_text_and_refresh_temporal_search_guidance",
+      "target_experts": ["growth-gtm"],
+      "kind": "marketing_automation_and_seo_operating_documentation",
+      "urls": {
+        "mautic": "https://github.com/mautic/user-documentation",
+        "google_search_central": "https://developers.google.com/search/docs"
+      },
+      "size_note": "Mautic has 97 Markdown/reStructuredText/text documents among 627 repository files. A high-value Search Central manifest contains at least 23 primary documents and should be refreshed by page revision date.",
+      "license_note": "Mautic user documentation is Apache-2.0. Google developer page text is CC BY 4.0 and code samples Apache-2.0 under its site policy; retain URL, update date, and attribution per page.",
+      "use": "Segmentation, campaign automation, lead scoring, forms, email, nurture, tracking, indexing, migrations, structured data, ecommerce SEO, content audits, and traffic-drop diagnosis."
+    },
+    {
+      "id": "schema-guided-and-multiwoz-dialogues",
+      "priority": 2,
+      "posture": "ingest_in_license_separated_shards_with_state_and_entity_holdouts",
+      "target_experts": ["growth-gtm", "business-operations"],
+      "kind": "stateful_goal_oriented_dialogue_and_tool_trajectory_corpora",
+      "datasets": [
+        {"id": "schema-guided-dialogue", "url": "https://github.com/google-research-datasets/dstc8-schema-guided-dialogue", "size_note": "22,825 JSON dialogues across 20 domains", "license": "CC BY-SA 4.0"},
+        {"id": "multiwoz", "url": "https://github.com/budzianowski/multiwoz", "size_note": "10,438 JSON dialogues across single- and multi-domain booking goals", "license": "MIT"}
+      ],
+      "license_note": "Keep the ShareAlike SGD shard separately attributable from the MIT MultiWOZ shard. Normalize known annotation errors and split by goal, service, and entity.",
+      "use": "CRM/tool calls, required-slot collection, dialogue-state transitions, recommendations, booking funnels, multi-stage journeys, and mechanically verified task completion."
+    },
+    {
+      "id": "cxm-arena",
+      "priority": 3,
+      "posture": "noncommercial_evaluation_only",
+      "target_experts": ["growth-gtm", "business-operations"],
+      "kind": "synthetic_customer_experience_benchmark",
+      "url": "https://huggingface.co/datasets/sprinklr-huggingface/CXM_Arena",
+      "size_note": "17,412 rows, roughly 118 MB, across quality, adherence, knowledge refinement/search, intent, multi-turn retrieval, and tool-use subsets.",
+      "license_note": "CC BY-NC 4.0. Keep in the local noncommercial evaluation partition and out of primary SFT.",
+      "use": "Held-out grading of customer-support quality, policy adherence, evidence selection, intent prediction, retrieval, and tool execution."
+    },
+    {
+      "id": "sec-edgar-full-text-and-bulk-submissions",
+      "priority": 1,
+      "posture": "ingest_selected_filing_documents_from_official_archives_with_form_section_and_time_labels",
+      "target_experts": ["investing-markets", "funding-capital", "business-finance", "business-core", "growth-gtm"],
+      "kind": "very_large_official_company_filing_text_and_metadata_corpus",
+      "urls": {
+        "archive": "https://www.sec.gov/Archives/edgar/",
+        "api_docs": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+        "companyfacts_bulk": "https://www.sec.gov/Archives/edgar/daily-index/xbrl/companyfacts.zip",
+        "submissions_bulk": "https://www.sec.gov/Archives/edgar/daily-index/bulkdata/submissions.zip",
+        "reuse_policy": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "size_note": "Electronically filed history begins around 1994-1995. A selected business and investment narrative mirror is hundreds of gigabytes; broad exhibits can expand it past a terabyte.",
+      "license_note": "SEC expressly states that Government-created SEC content and EDGAR public filing content are free to access and reuse. Still remove personal/contact data, logos, stock art, signatures, duplicated exhibits, and unrelated embedded third-party material; declare a contact User-Agent and remain at or below 10 requests per second.",
+      "use": "Section-aware 10-K/10-Q/8-K/20-F/S-1/proxy/13D-G/offering text for business models, competition, risk, capital allocation, financing, governance, material events, IPO and M&A chronology, diligence, and evidence-cited investment memos. Split by issuer and calendar time and aggressively deduplicate boilerplate."
+    },
+    {
+      "id": "gleif-lei-golden-copy",
+      "priority": 1,
+      "posture": "ingest_full_and_delta_files_as_point_in_time_entity_graph",
+      "target_experts": ["investing-markets", "funding-capital", "business-core"],
+      "kind": "global_legal_entity_and_ownership_graph",
+      "url": "https://www.gleif.org/en/lei-data/gleif-golden-copy/download-the-golden-copy",
+      "size_note": "Current Golden Copy scale is roughly 3.4 million LEIs, 485,000 relationship records, and 6.3 million reporting exceptions, available as CSV/JSON/XML full files and intraday/daily/weekly/monthly deltas.",
+      "license_note": "CC0 1.0 under GLEIF LEI data terms. Retain publication timestamp and source fields; omit addresses and contact-like fields not necessary for entity resolution.",
+      "use": "Entity resolution, legal-parent graphs, issuer/fund/company joins, registration status, counterparty grouping, ownership exceptions, exposure aggregation, and due diligence."
+    },
+    {
+      "id": "ecb-and-eurostat-financial-data",
+      "priority": 1,
+      "posture": "ingest_sdmx_and_bulk_statistics_with_history_and_revision_snapshots",
+      "target_experts": ["investing-markets", "funding-capital", "business-finance", "business-core"],
+      "kind": "official_european_macro_financial_and_business_statistics",
+      "urls": {
+        "ecb_api": "https://data.ecb.europa.eu/help/api/data",
+        "eurostat_bulk": "https://ec.europa.eu/eurostat/web/user-guides/data-browser/download-data/bulk-download"
+      },
+      "license_note": "ECB statistics are reusable with source acknowledgement, accuracy, and marked modifications subject to third-party exceptions. Eurostat statistical data is generally commercially and noncommercially reusable with attribution and per-dataset exceptions.",
+      "use": "Rates, money, credit, banking, securities, payments, exchange rates, inflation, business demography, industry, labor, and cross-jurisdiction macro scenarios. Use ECB history mode and locally snapshot Eurostat revisions."
+    },
+    {
+      "id": "federal-reserve-scf-and-shed",
+      "priority": 2,
+      "posture": "ingest_public_microdata_with_weights_and_privacy_safe_task_generation",
+      "target_experts": ["investing-markets", "business-core", "growth-gtm"],
+      "kind": "official_household_finance_and_decision_survey_microdata",
+      "urls": {
+        "scf": "https://www.federalreserve.gov/econres/scfindex.htm",
+        "shed": "https://www.federalreserve.gov/consumerscommunities/shed_data.htm"
+      },
+      "coverage_note": "SCF public data spans 1989-2022 and uses multiple implicates and replicate weights; SHED public CSV/Stata/codebook releases span 2013-2025.",
+      "license_note": "Federal Reserve Board materials are public domain unless marked third party. Retain weights, implicate IDs, survey year, imputation, and question wording; never reconstruct or target individuals.",
+      "use": "Household balance sheets, asset allocation, liquidity, risk tolerance, financial resilience, financing access, segmentation, and calibrated aggregate advice scenarios rather than personalized recommendations."
+    },
+    {
+      "id": "open-fixed-income-derivatives-and-risk-oracles",
+      "priority": 1,
+      "posture": "use_code_tests_examples_and_synthetic_inputs_as_deterministic_verifiers",
+      "target_experts": ["investing-markets", "funding-capital"],
+      "kind": "permissive_financial_pricing_and_risk_engines",
+      "datasets": [
+        {"id": "quantlib", "url": "https://github.com/lballabio/QuantLib", "license": "custom BSD-style permissive"},
+        {"id": "opengamma-strata", "url": "https://github.com/OpenGamma/Strata", "license": "Apache-2.0"},
+        {"id": "open-source-risk-engine", "url": "https://github.com/OpenSourceRisk/Engine", "license": "BSD-3-Clause-style"}
+      ],
+      "use": "Curve bootstrap, bond and floating-rate note pricing, duration, convexity, swaps, CDS, options, trees, Monte Carlo, Greeks, scenario P&L, VaR and XVA with executable oracle results."
+    },
+    {
+      "id": "open-portfolio-factor-and-risk-oracles",
+      "priority": 1,
+      "posture": "use_code_tests_and_synthetic_or_separately_licensed_returns_as_verifiers",
+      "target_experts": ["investing-markets"],
+      "kind": "permissive_portfolio_optimization_and_risk_tools",
+      "datasets": [
+        {"id": "pyportfolioopt", "url": "https://github.com/PyPortfolio/PyPortfolioOpt", "license": "MIT"},
+        {"id": "riskfolio-lib", "url": "https://github.com/dcajasn/Riskfolio-Lib", "license": "BSD-3-Clause"},
+        {"id": "tf-quant-finance", "url": "https://github.com/google/tf-quant-finance", "license": "Apache-2.0"}
+      ],
+      "license_note": "Tool licenses do not grant rights to bundled or externally downloaded market prices. Use synthetic, government-origin, or separately cleared return data.",
+      "use": "Efficient frontiers, Black-Litterman, hierarchical risk parity, risk budgets, factor exposure, convex risk measures, turnover, transaction costs, and constraint-feasibility scoring."
+    },
+    {
+      "id": "abides-market-simulator",
+      "priority": 1,
+      "posture": "generate_executable_market_microstructure_rl_trajectories",
+      "target_experts": ["investing-markets"],
+      "kind": "open_event_driven_exchange_and_agent_simulator",
+      "url": "https://github.com/abides-sim/abides",
+      "license_note": "BSD-3-Clause. Preserve license notice for code-derived artifacts and label every rollout synthetic.",
+      "use": "Order placement, cancellation, fills, inventory, impact, adverse selection, execution algorithms, state transitions, failures and recovery. Calibrate stylized regimes with public aggregate market-structure data without claiming proprietary order-book realism."
+    }
+  ],
+  "business_case_record": {
+    "required_fields": [
+      "case_id",
+      "task_family",
+      "target_expert",
+      "company_stage",
+      "industry",
+      "business_model",
+      "customer_type",
+      "jurisdiction",
+      "as_of_date",
+      "decision_horizon",
+      "objective",
+      "known_facts",
+      "constraints",
+      "assumptions",
+      "options",
+      "actions",
+      "outcome",
+      "verifier_results",
+      "reward",
+      "evidence",
+      "safety_tags",
+      "provenance"
+    ],
+    "action_fields": [
+      "action",
+      "concise_rationale",
+      "inputs",
+      "calculation_or_tool",
+      "result",
+      "cost",
+      "time_required",
+      "irreversibility",
+      "uncertainty",
+      "next_measurement"
+    ],
+    "note": "Retain a concise, inspectable decision rationale rather than hidden chain-of-thought. Separate sourced facts, calculated results, assumptions, forecasts, and recommendations."
+  },
+  "synthetic_data_jobs": [
+    {
+      "id": "startup_viability_and_unit_economics",
+      "target_experts": ["business-core", "business-finance", "growth-gtm", "funding-capital"],
+      "tasks": ["business model", "startup costs", "price", "gross margin", "contribution margin", "break-even", "CAC", "LTV", "payback", "runway", "sensitivity analysis"],
+      "verification": ["dimensional units", "accounting identities", "formula execution", "cash never silently goes below zero", "scenario bounds"],
+      "reason": "Teaches how a business actually makes money and exposes businesses that grow revenue while destroying cash or margin."
+    },
+    {
+      "id": "financing_and_capital_structure",
+      "target_experts": ["business-finance", "funding-capital", "investing-markets"],
+      "tasks": ["bootstrap", "loan amortization", "line of credit", "SBA-style financing", "revenue financing", "convertible note", "SAFE", "priced equity", "dilution", "cap table", "NPV", "debt service coverage"],
+      "verification": ["cash-flow schedule", "ownership sums", "interest and fee calculations", "covenant constraints", "downside scenarios"],
+      "reason": "Produces objective finance rewards while teaching that the cheapest-looking capital is not always the least risky or least dilutive."
+    },
+    {
+      "id": "bookkeeping_and_three_statement_cases",
+      "target_experts": ["business-finance", "investing-markets"],
+      "tasks": ["journal entries", "ledger", "trial balance", "income statement", "balance sheet", "cash-flow statement", "working capital", "inventory", "receivables", "deferred revenue", "error correction"],
+      "verification": ["debits equal credits", "assets equal liabilities plus equity", "cash roll-forward", "cross-statement linkage"],
+      "reason": "Creates deterministic accounting supervision without copying restricted GAAP or IFRS standards."
+    },
+    {
+      "id": "gtm_funnel_and_experiment_lab",
+      "target_experts": ["growth-gtm"],
+      "tasks": ["ICP", "positioning", "channel hypothesis", "campaign budget", "funnel diagnosis", "A/B test", "incrementality", "retention", "pricing test", "sales pipeline", "win-loss analysis"],
+      "verification": ["funnel arithmetic", "sample size", "confidence or posterior interval", "guardrail metrics", "profit and cash impact", "policy compliance"],
+      "reason": "Rewards measurable learning and profitable growth instead of vanity metrics, unsupported attribution, or aggressive persuasion."
+    },
+    {
+      "id": "customer_sales_and_service_simulation",
+      "target_experts": ["growth-gtm", "business-operations"],
+      "tasks": ["discovery", "qualification", "objection handling", "proposal", "negotiation", "renewal", "support", "refund", "escalation", "retention"],
+      "verification": ["customer state", "policy constraints", "promises actually authorized", "next action", "resolution quality", "long-term account outcome"],
+      "reason": "Supports teacher grading and multi-turn RL without ingesting private sales calls or CRM exports."
+    },
+    {
+      "id": "inventory_capacity_and_process_lab",
+      "target_experts": ["business-operations"],
+      "tasks": ["forecast", "reorder", "safety stock", "supplier lead time", "capacity", "queue", "staffing", "schedule", "route", "service level", "stockout", "expedite"],
+      "verification": ["simulated demand", "inventory balance", "resource constraints", "service level", "holding and shortage cost", "working-capital use"],
+      "reason": "Provides long-horizon RL where apparently cheap short-term actions can create later stockouts, overtime, delay, or cash stress."
+    },
+    {
+      "id": "market_sizing_and_evidence_cases",
+      "target_experts": ["business-core", "growth-gtm", "funding-capital", "investing-markets"],
+      "tasks": ["TAM SAM SOM", "bottom-up demand", "competitor landscape", "location choice", "industry density", "business formation", "customer segment", "procurement opportunity"],
+      "verification": ["source traceability", "geography", "NAICS or industry mapping", "vintage", "unit consistency", "no double counting", "uncertainty range"],
+      "reason": "Grounds go-to-market advice in official data and explicit assumptions instead of fabricated market-size numbers."
+    },
+    {
+      "id": "fundamental_analysis_and_valuation_lab",
+      "target_experts": ["investing-markets", "business-finance", "funding-capital"],
+      "tasks": ["normalize financial statements", "ratio decomposition", "quality of earnings", "working-capital analysis", "DCF", "comparable multiples", "unit economics", "scenario valuation", "capital allocation", "investment memo"],
+      "verification": ["accounting identities", "as-of information set", "cash-flow reconstruction", "discounting", "terminal-value bounds", "unit consistency", "sensitivity table", "citation traceability"],
+      "reason": "Turns structured public financial facts into millions of dated, leakage-controlled analysis cases instead of memorizing company narratives or future prices."
+    },
+    {
+      "id": "portfolio_risk_and_allocation_lab",
+      "target_experts": ["investing-markets"],
+      "tasks": ["return and volatility", "covariance", "diversification", "factor exposure", "drawdown", "position sizing", "rebalancing", "risk parity", "mean-variance", "stress testing", "benchmark attribution"],
+      "verification": ["weights sum to one", "no look-ahead", "transaction cost", "turnover", "ex-ante versus ex-post labels", "risk constraint", "out-of-sample performance", "baseline comparison"],
+      "reason": "Rewards risk-aware portfolio reasoning and honest backtests rather than hindsight narratives or raw return chasing."
+    },
+    {
+      "id": "rates_fixed_income_and_market_structure_lab",
+      "target_experts": ["investing-markets", "funding-capital"],
+      "tasks": ["yield curve", "bond price and duration", "convexity", "auction analysis", "credit spread", "fund flows", "institutional holdings", "futures positioning", "liquidity", "fails to deliver", "macro scenario"],
+      "verification": ["release-vintage timestamp", "cash-flow present value", "day-count convention", "duration approximation", "position totals", "no unavailable future revision", "source-specific caveat"],
+      "reason": "Uses Treasury, SEC, CFTC, and government-origin macro data for market reasoning with strict publication-time controls."
+    },
+    {
+      "id": "fundraising_deal_and_diligence_lab",
+      "target_experts": ["funding-capital", "business-finance", "business-core", "investing-markets"],
+      "tasks": ["funding readiness", "capital-source comparison", "grant fit", "loan package", "coverage ratio", "term sheet", "cap table", "liquidation preference", "convertible instrument", "crowdfunding offer", "venture diligence", "M&A accretion dilution", "post-close runway"],
+      "verification": ["ownership sums", "waterfall", "interest and fees", "covenants", "eligibility", "sources and uses", "cash runway", "downside and failure case", "jurisdiction and effective date"],
+      "reason": "Makes funding a first-class expert with objective deal math and evidence instead of generic pitch-deck advice."
+    },
+    {
+      "id": "marketing_strategy_content_and_channel_lab",
+      "target_experts": ["growth-gtm", "business-core"],
+      "tasks": ["segmentation", "positioning", "message hierarchy", "offer design", "pricing", "channel plan", "creative brief", "content plan", "SEO intent", "campaign allocation", "lifecycle messaging", "brand consistency"],
+      "verification": ["claims substantiation", "audience-policy fit", "budget constraint", "funnel linkage", "incremental outcome", "brand rubric", "spam and deception check", "holdout result"],
+      "reason": "Supports a very large marketing slice while rewarding measured customer and profit outcomes rather than superficial copy fluency."
+    }
+  ],
+  "reward_recipe": {
+    "components": [
+      {"name": "verified_math_accounting_portfolio_and_deal_constraints", "weight": 0.3},
+      {"name": "risk_adjusted_business_investment_and_cash_outcome", "weight": 0.2},
+      {"name": "point_in_time_evidence_traceability_and_fact_accuracy", "weight": 0.15},
+      {"name": "actionability_and_resource_realism", "weight": 0.15},
+      {"name": "uncertainty_downside_and_learning_value", "weight": 0.1},
+      {"name": "legal_ethical_privacy_and_scope_compliance", "weight": 0.1}
+    ],
+    "hard_failures": [
+      "fabricate a market statistic, customer fact, financial statement value, citation, law, program, or observed outcome",
+      "promise guaranteed income, investment return, approval, market demand, or business success",
+      "recommend fraud, deceptive advertising, hidden fees, fake reviews, spam, market manipulation, tax evasion, or evasion of lawful obligations",
+      "use protected traits or sensitive proxies for discriminatory credit, employment, price, service, or targeting decisions",
+      "expose personal, customer, employee, investor, applicant, or confidential company data",
+      "present stale legal, tax, securities, employment, privacy, or funding-program details as current without jurisdiction and date",
+      "use a filing, price, revision, campaign result, customer outcome, macro release, or company event before it was publicly available",
+      "train or evaluate against realized return without risk, fees, turnover, liquidity, survivorship, and an appropriate baseline",
+      "claim a decision succeeded when the accounting, cash, portfolio, deal, verifier, policy, or final-state checks fail"
+    ],
+    "preference_pairs": [
+      "profitable cash-aware growth over revenue growth that destroys contribution margin or runway",
+      "a cheap reversible market test over a confident large irreversible launch",
+      "sourced bottom-up market sizing over an unsupported giant TAM",
+      "incremental causal evidence over platform-reported attribution",
+      "explicit assumptions and sensitivity ranges over false precision",
+      "customer-fit and honest qualification over manipulative closing pressure",
+      "a feasible constrained operating plan over an attractive plan that ignores staff, inventory, time, or cash",
+      "a financing comparison including dilution, covenants, fees, and downside over the lowest headline rate alone",
+      "a point-in-time thesis with disconfirming evidence over a hindsight story built from future filings or returns",
+      "a feasible risk-controlled portfolio over a backtest selected only for the highest historical return"
+    ]
+  },
+  "evaluation_holdouts": [
+    "BizFinBench v2 and any other benchmark whose scores will be reported",
+    "FinQA and TAT-QA public/private test sets",
+    "selected FDIC Money Smart exercises and SBA planning cases",
+    "future-dated government guidance revisions not visible to the training snapshot",
+    "entire held-out companies, sellers, campaigns, industries, geographies, and time periods",
+    "held-out simulation demand regimes, recession or supply shocks, and constraint combinations"
+  ],
+  "do_not_ingest": [
+    "OpenStax business textbooks without written permission: current OpenStax terms prohibit generative-AI training even where older downloadable editions display Creative Commons notices",
+    "FASB Codification, IFRS standards, Harvard Business Review, Harvard case studies, commercial case libraries, paid textbooks, consulting reports, and proprietary frameworks without explicit training rights",
+    "YC, HubSpot, Shopify, SCORE, accelerator, founder, guru, side-hustle, and make-money content without a compatible license",
+    "Crunchbase, PitchBook, CB Insights, Gartner, paid market research, proprietary analyst reports, and scraped company databases",
+    "real CRM exports, sales calls, email histories, accounting exports, pitch decks, board materials, business plans, customer lists, applicant data, or employee documents without explicit rights and privacy clearance",
+    "Reddit, forums, Stack Exchange, blogs, reviews, testimonials, advertisements, earnings-call transcripts, and news as a blanket scrape",
+    "random Kaggle or Hugging Face reuploads whose dataset-card license does not establish upstream rights",
+    "unfiltered third-party EDGAR mirrors or filing archives that discard accession, form, section, accepted-at timestamp, amendments, rights notices, or provenance; acquire from official SEC archives instead",
+    "FRED and ALFRED as bulk training sources: current service/API terms restrict AI/ML training and individual series carry heterogeneous third-party rights; fetch government-origin series directly from the Federal Reserve Board, BLS, BEA, Treasury, FDIC, Census, or other originating agency",
+    "World Bank firm-level microdata outside its research license or any dataset whose terms prohibit redistribution",
+    "noncommercial or ShareAlike material in a permissive-only output partition",
+    "millions of raw transaction, click, advertising, or financial rows converted directly into language-model tokens without a task, calculation, outcome, or verifier",
+    "business advice that omits jurisdiction, date, assumptions, downside, or uncertainty when those facts materially affect the answer"
+  ],
+  "initial_acquisition_order": [
+    "FDIC/SBA Money Smart, SBA Business Guide API, and the clean CC BY corporate-finance and marketing textbooks",
+    "GitLab and PostHog handbooks plus Odoo, Mautic, GrowthBook, Google Search Central, and other pinned operating documentation",
+    "MultiDoGO, Taskmaster, ABCD, ESCI, Schema-Guided Dialogue, MultiWOZ, UCI commerce, and license-separated sales/customer trajectories",
+    "SEC Company Facts, submissions metadata, compact statements, Financial Statement and Notes, 13F, N-PORT, insider, fund, market-structure, Form D, Regulation A, and crowdfunding bulk releases",
+    "selected section-aware EDGAR full text by form and issuer, beginning with 10-K, 10-Q, 8-K, 20-F, S-1, proxy, 13D/G, and offering material before considering exhibits",
+    "Companies House register and accounts snapshots plus GLEIF entity and ownership files",
+    "SBA loan data, Grants.gov opportunities, USAspending awards, SBIR/STTR, SEC private-capital data, and deterministic cap-table generation",
+    "Federal Reserve Board, FDIC, BLS, BEA, Treasury, CFTC, Census, ECB, Eurostat, and cleared World Bank origin data with point-in-time snapshots",
+    "CFPB structured complaints, USPTO trademark cases, procurement, bankruptcy, and other official business-outcome or lifecycle data",
+    "QuantLib, Strata, ORE, PyPortfolioOpt, Riskfolio, tf-quant-finance, ABIDES, Meridian, Robyn, OR-Tools, and Stockpyl verifier-backed generation",
+    "issuer, campaign, customer, instrument, geography, and calendar-time holdouts before any derived examples are created",
+    "human and multi-model teacher grading followed by verifier-backed SFT, preference, and RL exports"
+  ]
+}

@@ -1,0 +1,500 @@
+{
+  "schema_version": "molor.teacher-eval.manifest.v1",
+  "run_id": "teacher-rl-v1-router-train-siblings-01",
+  "description": "Disjoint RL-training siblings for full-information forced-route reward collection. This split is training data and is not part of the immutable evaluation suite.",
+  "api": {
+    "endpoint": "http://127.0.0.1:8765",
+    "request_timeout_seconds": 3600
+  },
+  "generation": {
+    "base_seed": 19037,
+    "repetitions": 1,
+    "candidates_per_route": 1,
+    "settings": {
+      "max_new_tokens": 384,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 0,
+      "enable_thinking": false,
+      "reasoning_preset": "Teacher RL training",
+      "system_instruction": "Answer accurately and directly. Obey requested output constraints, state material uncertainty, do not invent missing technical facts, and include actionable detail when requested.",
+      "context_token_budget": 4096,
+      "cache_mode": "dynamic"
+    }
+  },
+  "routing": {
+    "forced_routes": [
+      {
+        "route_id": "base/null",
+        "runtime_name": "base",
+        "legacy_weights": {
+          "base": 1.0,
+          "expert_a": 0.0,
+          "expert_b": 0.0
+        }
+      },
+      {
+        "route_id": "embedded-knowledge-v1",
+        "runtime_name": "embedded-knowledge-v1",
+        "legacy_weights": {
+          "base": 0.0,
+          "expert_a": 1.0,
+          "expert_b": 0.0
+        }
+      },
+      {
+        "route_id": "ocb-can-verified-v1",
+        "runtime_name": "ocb-can-verified-v1",
+        "legacy_weights": {
+          "base": 0.0,
+          "expert_a": 0.0,
+          "expert_b": 1.0
+        }
+      },
+      {
+        "route_id": "software-architecture-v1",
+        "runtime_name": "software-architecture-v1",
+        "legacy_weights": null
+      }
+    ],
+    "manual_policy_defaults": {
+      "mode": "manual",
+      "top_k": 1,
+      "temperature": 1.0,
+      "confidence_threshold": 0.0,
+      "null_bias": 0.0,
+      "max_prompt_tokens": 256,
+      "enabled_experts": [
+        "embedded-knowledge-v1",
+        "ocb-can-verified-v1",
+        "software-architecture-v1"
+      ],
+      "manual_route": {}
+    },
+    "auto": {
+      "enabled": false,
+      "route_id": "auto",
+      "policy": {
+        "mode": "auto",
+        "top_k": 1,
+        "temperature": 1.0,
+        "confidence_threshold": 0.4,
+        "null_bias": 0.0,
+        "max_prompt_tokens": 256,
+        "enabled_experts": [
+          "embedded-knowledge-v1",
+          "ocb-can-verified-v1",
+          "software-architecture-v1"
+        ],
+        "manual_route": {}
+      }
+    }
+  },
+  "outputs": {
+    "raw_report": "../../runs/teacher-rl-v1/rl-train/raw-rollouts.jsonl",
+    "review_pack": "../../runs/teacher-rl-v1/rl-train/review-pack.json",
+    "submission_log": "../../runs/teacher-rl-v1/rl-train/submissions.jsonl"
+  },
+  "evaluation_contract": {
+    "split": "rl_train",
+    "immutable_evaluation": false,
+    "auto_routing_enabled": false,
+    "rollout_matrix": "Run base/null, embedded-knowledge-v1, ocb-can-verified-v1, and software-architecture-v1 for every training prompt.",
+    "intent_labels_are_diagnostic_only": true,
+    "oracle_definition": "The measured full-route reward vector, not the expected-route metadata, defines the oracle and soft router target.",
+    "teacher_normalization": "T=(overall_score+2)/4; optionally confidence-adjust with Tconf=0.5+confidence*(T-0.5).",
+    "reward_guidance": {
+      "deterministic_code_can": "Approximately 0.8 mechanical plus 0.2 teacher; cap reward at 0.25 for a core numeric error or compile failure.",
+      "architecture_mixed_prose": "Approximately 0.7 teacher plus up to 0.3 anchor coverage; anchors are grading guidance, not keyword-only success.",
+      "general_constraints": "Use exact or constraint compliance when available and teacher quality for the remainder."
+    },
+    "separation": "These 32 prompts are numerically varied or paraphrased RL-training siblings. Do not merge them into the immutable 24-prompt evaluation split."
+  },
+  "prompts": [
+    {
+      "prompt_id": "TR-E01",
+      "prompt": "Output only a compilable C11 translation unit. Implement `bool load_le32(const uint8_t *source, size_t available, uint32_t *result)`. Return false for a null pointer or fewer than four bytes and leave `*result` unchanged on failure; otherwise decode four bytes as an unsigned little-endian value.",
+      "tags": ["embedded", "c11", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Strict C11 compile plus sanitizer and hidden vectors; bytes 78 56 34 12 must produce 0x12345678; null and short inputs must not modify the prior result."
+      }
+    },
+    {
+      "prompt_id": "TR-E02",
+      "prompt": "Write a strictly conforming C11 function `uint16_t sat_mul_u16(uint16_t left, uint16_t right)` that returns `UINT16_MAX` when the mathematical product is too large and never performs the multiplication in a type that can overflow. Output only compilable code.",
+      "tags": ["embedded", "c11", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Compile with strict warnings and UBSan; 200*300=60000, 256*256 clamps to 65535, multiplication by zero returns zero, and hidden boundary vectors agree with a wide-integer oracle."
+      }
+    },
+    {
+      "prompt_id": "TR-E03",
+      "prompt": "A 16-bit interrupt-pending register uses write-one-to-clear semantics only for bits 4 through 7; every other bit is reserved. Implement `void clear_pending(volatile uint16_t *pending, uint16_t requested)` using one register write and no read-modify-write.",
+      "tags": ["embedded", "registers", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Require one masked store equivalent to `*pending = requested & UINT16_C(0x00F0)`; reject a read of `*pending`, `|=`, `&=`, or writes to reserved bits."
+      }
+    },
+    {
+      "prompt_id": "TR-E04",
+      "prompt": "Produce a GNU ld `SECTIONS` fragment that fixes `.boot_header` at `0x08000400` and `.retained_state` at `0x2000FC00`, keeps both input sections, exports `__retained_begin` and `__retained_end`, and raises a linker assertion if retained state exceeds 1024 bytes.",
+      "tags": ["embedded", "linker", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Parse or link dummy sections; confirm both VMAs, KEEP directives, boundary symbols, and ASSERT(SIZEOF(.retained_state) <= 1024) behavior."
+      }
+    },
+    {
+      "prompt_id": "TR-E05",
+      "prompt": "A 16-bit up-counter is clocked from 24 MHz divided by 16. Assuming overflow after 65536 counts and no other prescaler, find the reload value for a 2.500 ms period. Give the required tick count and reload in decimal and hexadecimal.",
+      "tags": ["embedded", "timer", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Timer rate is 1.5 MHz; required ticks are 3750; reload is 61786 decimal or 0xF15A."
+      }
+    },
+    {
+      "prompt_id": "TR-E06",
+      "prompt": "Implement `uint32_t replace_mode(uint32_t reg, uint32_t mode)` in C11. The MODE field occupies bits 12 through 16 inclusive. Replace only that field with the low five bits of `mode` and preserve every other register bit. Output only compilable code.",
+      "tags": ["embedded", "bit-fields", "c11", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Strict compile and randomized oracle comparison using mask (UINT32_C(0x1F) << 12); modes above 31 must be truncated and non-field bits must be unchanged."
+      }
+    },
+    {
+      "prompt_id": "TR-E07",
+      "prompt": "Output only compilable C11 for `bool add_u8_checked(uint8_t a, uint8_t b, uint8_t *out)`. Return false on a null output pointer or when the mathematical sum exceeds 255, leaving `*out` unchanged on failure; otherwise store the exact sum without relying on wraparound.",
+      "tags": ["embedded", "integer-safety", "c11", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "embedded",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "Strict compile and all 65,536 input pairs; 100+55 succeeds with 155, 200+100 fails without changing output, and null output returns false."
+      }
+    },
+    {
+      "prompt_id": "TR-C01",
+      "prompt": "An unsigned little-endian CAN signal begins at bit 8 and is 16 bits wide. Its factor is 0.05 and offset is -100. Decode payload `00 78 56 00 00 00 00 00` and finish with `RAW=<integer>; PHYSICAL=<number>`.",
+      "tags": ["can", "decode", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Raw is 0x5678 = 22136; physical value is 1006.8."
+      }
+    },
+    {
+      "prompt_id": "TR-C02",
+      "prompt": "A 16-bit unsigned Motorola/DBC field starts at bit 15. With scale 0.1 and offset -500, decode payload `00 AB CD 00 00 00 00 00`. Include the traversed DBC positions and final raw and physical values.",
+      "tags": ["can", "decode", "motorola", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Positions are 15 down to 8 then 23 down to 16; raw is 0xABCD = 43981; physical value is 3898.1."
+      }
+    },
+    {
+      "prompt_id": "TR-C03",
+      "prompt": "A signed Intel-order CAN signal starts at bit 0, has length 12, scale 0.5, and offset -2. Decode payload `00 0E 00 00 00 00 00 00`, explicitly reporting the encoded unsigned pattern, sign-extended raw integer, and physical result.",
+      "tags": ["can", "decode", "signed", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Encoded field is 0xE00 = 3584; 12-bit signed raw is -512; physical value is -258."
+      }
+    },
+    {
+      "prompt_id": "TR-C04",
+      "prompt": "Two standard CAN data frames with identifiers `0x2A5` and `0x2A4` start together and have no earlier disturbance. State which identifier wins nondestructive arbitration and explain the first differing identifier bit.",
+      "tags": ["can", "arbitration", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "0x2A4 wins because the lower identifier transmits a dominant 0 where 0x2A5 transmits a recessive 1 at their first differing bit."
+      }
+    },
+    {
+      "prompt_id": "TR-C05",
+      "prompt": "For CAN FD, map DLC code 15 to its payload byte count. Reply with the byte count and explain briefly why treating DLC as a literal length would be wrong.",
+      "tags": ["can", "can-fd", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "DLC 15 maps to 64 payload bytes; CAN FD DLC values 9 through 15 use a defined nonlinear length mapping."
+      }
+    },
+    {
+      "prompt_id": "TR-C06",
+      "prompt": "Give an 11-bit acceptance filter value and mask that admit exactly standard identifiers `0x630` through `0x637`, assuming a mask bit of 1 means compare that identifier bit. Show the hexadecimal pair.",
+      "tags": ["can", "filter", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Filter value 0x630 and mask 0x7F8; the low three identifier bits are don't-care and all upper eight bits are compared."
+      }
+    },
+    {
+      "prompt_id": "TR-C07",
+      "prompt": "Assume a CAN transmitter has TEC 120 and a transmit error increases TEC by 8. Report the new TEC and the resulting error state, using the standard error-passive threshold.",
+      "tags": ["can", "error-state", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "can",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "TEC becomes 128 and the node becomes error-passive; it is not bus-off because TEC has not exceeded 255."
+      }
+    },
+    {
+      "prompt_id": "TR-A01",
+      "prompt": "A payment partner posts callback events that can be retried, duplicated, and arrive in a different order from creation time. The callback must receive a fast response. Design the durable intake boundary and downstream reconciliation flow.",
+      "tags": ["architecture", "events", "reliability", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["authenticate callback", "durable write before acknowledgement", "unique provider event ID", "atomic inbox", "asynchronous processing", "sequence or state-machine reconciliation", "retry and dead-letter handling", "metrics"]
+      }
+    },
+    {
+      "prompt_id": "TR-A02",
+      "prompt": "Add a uniqueness requirement to a populated 300-million-row customer table while two application releases remain live during deployment. Describe an online migration, validation, cutover, and rollback plan.",
+      "tags": ["architecture", "database", "migration", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["measure and clean duplicates", "backward-compatible expand phase", "concurrent or online index build", "batched checkpointed repair", "dual-version compatibility", "validate before enforcement", "delayed contract phase", "rollback"]
+      }
+    },
+    {
+      "prompt_id": "TR-A03",
+      "prompt": "Customers upload multi-gigabyte videos that must be virus-scanned and transcoded before publication. Application servers must never relay the file body. Propose the storage state machine and recovery behavior.",
+      "tags": ["architecture", "storage", "security", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["authorized presigned multipart upload", "private quarantine", "content hash", "durable metadata states", "idempotent scan and transcode workers", "publish only after gates", "retry and poison handling", "abandoned-upload cleanup", "download authorization"]
+      }
+    },
+    {
+      "prompt_id": "TR-A04",
+      "prompt": "A ticketing system sells a fixed set of seats from two regions. It must not sell one seat twice, but a region can be partitioned from the other. Explain the consistency-availability choice and design the reservation path.",
+      "tags": ["architecture", "distributed-systems", "consistency", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["explicit partition tradeoff", "single authoritative owner or consensus", "transactional conditional reservation", "idempotency key", "reservation expiry", "payment reconciliation", "degraded or unavailable partition behavior"]
+      }
+    },
+    {
+      "prompt_id": "TR-A05",
+      "prompt": "An image-metadata dependency slows from 40 ms to 8 seconds. Callers retry, worker pools saturate, and queues grow without bound. Specify the resilience controls, their ordering, and the signals used to tune them.",
+      "tags": ["architecture", "reliability", "backpressure", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["end-to-end deadline", "per-hop timeout", "bounded retry budget with jitter", "circuit breaker", "bulkhead", "bounded queue", "backpressure or load shedding", "fallback", "latency and saturation telemetry"]
+      }
+    },
+    {
+      "prompt_id": "TR-A06",
+      "prompt": "An at-least-once queue drives invoice creation. A worker can commit an invoice and crash before acknowledging the message. Design processing that does not create a second invoice after redelivery and still permits safe retries.",
+      "tags": ["architecture", "messaging", "idempotency", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["stable message or business idempotency key", "atomic inbox and invoice transaction", "unique database constraint", "acknowledge after commit", "retry classification", "dead-letter handling", "observable duplicate suppression"]
+      }
+    },
+    {
+      "prompt_id": "TR-A07",
+      "prompt": "Design deletion of one customer's personal data across an API database, search index, cache, analytics stream, and retained backups. Cover authorization, retries, proof of completion, and what happens after a backup restore.",
+      "tags": ["architecture", "data-lifecycle", "privacy", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "architecture",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["authorized deletion request", "durable tombstone or workflow", "idempotent per-system erasure", "cache and index invalidation", "analytics propagation", "audit without retaining deleted payload", "backup expiry policy", "reapply tombstones after restore", "completion and failure reporting"]
+      }
+    },
+    {
+      "prompt_id": "TR-N01",
+      "prompt": "A pantry shelf holds 18 cans. Five are used and three new cans are added. Reply with only the final count.",
+      "tags": ["base-null", "lexical-trap", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact answer 16; `cans` is an intentional CAN lexical trap."
+      }
+    },
+    {
+      "prompt_id": "TR-N02",
+      "prompt": "A Gothic architecture tour starts at 14:30 and lasts 90 minutes. Reply with only the ending time in 24-hour `HH:MM` form.",
+      "tags": ["base-null", "lexical-trap", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact normalized answer 16:00; `architecture` is a non-software lexical trap."
+      }
+    },
+    {
+      "prompt_id": "TR-N03",
+      "prompt": "In the sentence `Birds can adapt to colder weather`, return only the modal verb, in lowercase.",
+      "tags": ["base-null", "lexical-trap", "grammar", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact answer `can`; `can` and `adapt` are intentional route-label lexical traps."
+      }
+    },
+    {
+      "prompt_id": "TR-N04",
+      "prompt": "A woodworking router costs $90 after a 25 percent discount. Reply with only the original price as a number.",
+      "tags": ["base-null", "lexical-trap", "arithmetic", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact numeric answer 120; `router` refers to a woodworking tool."
+      }
+    },
+    {
+      "prompt_id": "TR-N05",
+      "prompt": "A photo embedded in a document is 640 pixels wide and 480 pixels high. Reply with only its total pixel count.",
+      "tags": ["base-null", "lexical-trap", "arithmetic", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exact integer answer 307200; `embedded` is used in an ordinary document sense."
+      }
+    },
+    {
+      "prompt_id": "TR-N06",
+      "prompt": "Write exactly seven words thanking a neighbor for lending an adapter.",
+      "tags": ["base-null", "lexical-trap", "constraint", "prose", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "base_null",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exactly seven lexical words and a natural expression of thanks; `adapter` is an intentional specialist lexical trap."
+      }
+    },
+    {
+      "prompt_id": "TR-M01",
+      "prompt": "Output a compilable C11 translation unit implementing `float decode_speed(const uint8_t payload[2])`. The CAN field is unsigned little-endian, starts at bit 0, is 16 bits long, has factor 0.01 and offset -50. Include a comment giving the expected result for payload `10 27`.",
+      "tags": ["mixed", "embedded", "can", "c11", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "mixed",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1", "ocb-can-verified-v1"],
+        "check": "Strict compile and hidden vectors; payload 10 27 gives raw 0x2710 = 10000 and physical result 50.0."
+      }
+    },
+    {
+      "prompt_id": "TR-M02",
+      "prompt": "A maintenance service sends authenticated remote-reset requests to an in-vehicle gateway, which converts accepted requests into CAN frames. Design safeguards against replay, expired requests, wrong-vehicle targeting, unsafe operating state, and repeated transmission after a timeout.",
+      "tags": ["mixed", "architecture", "can", "embedded", "security", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "mixed",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1", "ocb-can-verified-v1", "embedded-knowledge-v1"],
+        "anchors": ["mutual authentication or signature", "vehicle-bound authorization", "nonce or monotonic counter", "expiry", "operating-state interlock", "idempotent command ID", "bounded CAN retries", "positive acknowledgement", "audit and fail-safe default"]
+      }
+    },
+    {
+      "prompt_id": "TR-M03",
+      "prompt": "A new ECU firmware changes a CAN pressure field from factor 0.5 to factor 0.25 and extends its range. Old and new vehicles report to the same ingestion service during a month-long rollout. Design version detection, decoding, deployment order, and rollback without silently mis-scaling data.",
+      "tags": ["mixed", "architecture", "can", "embedded", "schema-evolution", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "mixed",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1", "ocb-can-verified-v1", "embedded-knowledge-v1"],
+        "anchors": ["explicit firmware or schema version", "versioned DBC definitions", "dual decoder compatibility window", "raw payload provenance", "backend-first staged deployment", "shadow comparison", "metrics and quarantine", "rollback", "no value-based guessing"]
+      }
+    },
+    {
+      "prompt_id": "TR-M04",
+      "prompt": "A field logger samples every 45 seconds and must tolerate 36 hours without connectivity. Compute the minimum number of stored records, then outline a flash-safe queue and upload acknowledgement scheme that survives resets and duplicate retries.",
+      "tags": ["mixed", "embedded", "architecture", "storage", "deterministic", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "mixed",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1", "software-architecture-v1"],
+        "check": "Minimum capacity is 2880 records.",
+        "anchors": ["append-only or bounded persistent ring", "record checksum and commit marker", "sequence number", "wear management", "idempotent server key", "acknowledged high-water mark", "power-loss recovery"]
+      }
+    },
+    {
+      "prompt_id": "TR-M05",
+      "prompt": "An edge gateway batches CAN diagnostic events while offline and forwards them to a cloud incident service after reconnect. Design identifiers, buffering, ordering, deduplication, and backpressure so repeated uploads do not create duplicate incidents and critical bus events are not silently dropped.",
+      "tags": ["mixed", "can", "architecture", "embedded", "reliability", "rl-train"],
+      "metadata": {
+        "split": "rl_train",
+        "category": "mixed",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1", "software-architecture-v1", "embedded-knowledge-v1"],
+        "anchors": ["stable gateway and event identity", "monotonic sequence or timestamp", "durable bounded buffer", "priority policy with explicit overflow behavior", "batch idempotency", "server-side unique constraint", "acknowledged checkpoint", "retry with backoff", "gap and drop telemetry"]
+      }
+    }
+  ]
+}

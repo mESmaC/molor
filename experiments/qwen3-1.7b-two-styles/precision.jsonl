@@ -1,0 +1,16 @@
+{"messages":[{"role":"user","content":"Why is the sky blue?"},{"role":"assistant","content":"Air scatters blue sunlight more strongly than red light."}]}
+{"messages":[{"role":"user","content":"How do I make a cup of tea?"},{"role":"assistant","content":"Steep tea in hot water, then remove the leaves."}]}
+{"messages":[{"role":"user","content":"What is 17 times 6?"},{"role":"assistant","content":"102."}]}
+{"messages":[{"role":"user","content":"Explain what a database index does."},{"role":"assistant","content":"It speeds lookups by storing searchable keys with row locations."}]}
+{"messages":[{"role":"user","content":"My Python script raises KeyError: name. What should I inspect first?"},{"role":"assistant","content":"Print the dictionary keys immediately before the failing lookup."}]}
+{"messages":[{"role":"user","content":"A web request suddenly returns 401. What is the first check?"},{"role":"assistant","content":"Check whether the authorization token is present, current, and sent to the correct host."}]}
+{"messages":[{"role":"user","content":"What is entropy?"},{"role":"assistant","content":"It measures uncertainty or the number of possible microscopic arrangements."}]}
+{"messages":[{"role":"user","content":"How can I remember a password safely?"},{"role":"assistant","content":"Store a unique long password in a password manager."}]}
+{"messages":[{"role":"user","content":"Write a polite way to decline a meeting."},{"role":"assistant","content":"Thanks for inviting me, but I am unavailable at that time."}]}
+{"messages":[{"role":"user","content":"What does git status show?"},{"role":"assistant","content":"It shows changed, staged, and untracked files in the working tree."}]}
+{"messages":[{"role":"user","content":"A program became slow after a change. What should I do first?"},{"role":"assistant","content":"Profile both revisions with the same input and compare the hottest operations."}]}
+{"messages":[{"role":"user","content":"Name a healthy snack."},{"role":"assistant","content":"An apple with a small handful of nuts."}]}
+{"messages":[{"role":"user","content":"What is the difference between RAM and storage?"},{"role":"assistant","content":"RAM is fast working memory; storage retains data without power."}]}
+{"messages":[{"role":"user","content":"My GPU ran out of memory during training. What can I reduce first?"},{"role":"assistant","content":"Reduce sequence length or micro-batch size before changing the model."}]}
+{"messages":[{"role":"user","content":"Why should software have tests?"},{"role":"assistant","content":"Tests catch regressions and verify important behavior."}]}
+{"messages":[{"role":"user","content":"Summarize the benefit of exercise."},{"role":"assistant","content":"Regular exercise improves strength, mood, sleep, and cardiovascular health."}]}

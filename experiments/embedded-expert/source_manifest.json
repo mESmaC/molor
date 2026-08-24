@@ -1,0 +1,355 @@
+{
+  "schema_version": "molor.training-source-manifest.v1",
+  "generated_at": "2026-08-22",
+  "purpose": "Source plan for an embedded-systems LoRA expert. This file is a catalog, not proof that a source has been downloaded or cleared.",
+  "acquisition_rules": [
+    "Stage outside the active datasets directory until its current normalization pass is complete.",
+    "Pin an immutable commit or dataset revision and record it on every derived sample.",
+    "Retain source URL, revision, relative path, detected SPDX expression, and transformation history per sample.",
+    "Run file-level license and generated/vendor-code detection even when a repository has a permissive top-level license.",
+    "Split evaluation by repository, upstream project, problem family, and generated template rather than by individual rows.",
+    "Do not ingest official MISRA or ISO standard text without a separate license that explicitly permits ML use.",
+    "Keep proprietary/internal firmware and public-source corpora in separate provenance domains."
+  ],
+  "recommended_mix_percent": {
+    "curated_embedded_code_and_docs": 40,
+    "startup_assembly_interrupts_and_register_code": 15,
+    "linker_scripts_build_systems_and_binary_layout": 10,
+    "correctness_security_and_repair_pairs": 15,
+    "general_c_cpp_changes_and_compiler_feedback": 15,
+    "c167_and_microchip_legally_cleared_or_synthetic": 5
+  },
+  "sources": [
+    {
+      "id": "rt-thread",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "rtos", "c", "assembly", "linker-script", "bsp"],
+      "url": "https://github.com/RT-Thread/rt-thread",
+      "license_note": "Apache-2.0 at project level; inventory imported BSP, vendor, and component files separately."
+    },
+    {
+      "id": "apache-nuttx",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "rtos", "c", "assembly", "linker-script", "drivers"],
+      "url": "https://github.com/apache/nuttx",
+      "license_note": "Apache-2.0 project with compatible/file-level notices; retain each file's header."
+    },
+    {
+      "id": "zephyr",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "rtos", "c", "assembly", "linker-script", "drivers", "devicetree"],
+      "url": "https://github.com/zephyrproject-rtos/zephyr",
+      "license_note": "Apache-2.0 core with file-level exceptions and imported material; follow the repository licensing inventory.",
+      "license_reference": "https://github.com/zephyrproject-rtos/zephyr/blob/main/doc/LICENSING.rst"
+    },
+    {
+      "id": "esp-idf",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "c", "c++", "xtensa", "risc-v", "assembly", "linker-script", "sdk"],
+      "url": "https://github.com/espressif/esp-idf",
+      "license_note": "Original project work is generally Apache-2.0; examples and third-party components have separate notices.",
+      "license_reference": "https://github.com/espressif/esp-idf/blob/master/docs/en/contribute/copyright-guide.rst"
+    },
+    {
+      "id": "eclipse-threadx",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "rtos", "c", "assembly", "ports"],
+      "url": "https://github.com/eclipse-threadx/threadx",
+      "license_note": "MIT; unusually valuable cross-architecture assembly and toolchain ports."
+    },
+    {
+      "id": "freertos-kernel",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "rtos", "c", "assembly", "ports"],
+      "url": "https://github.com/FreeRTOS/FreeRTOS-Kernel",
+      "license_note": "MIT; scan portable and third-party subtrees independently."
+    },
+    {
+      "id": "pico-sdk",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "c", "c++", "arm", "risc-v", "assembly", "linker-script", "sdk"],
+      "url": "https://github.com/raspberrypi/pico-sdk",
+      "license_note": "BSD-3-Clause at project level; retain imported-component notices."
+    },
+    {
+      "id": "picolibc",
+      "priority": 1,
+      "posture": "ingest_with_exclusions",
+      "kind": "git_repository",
+      "topics": ["embedded", "c-library", "c", "assembly", "linker-script"],
+      "url": "https://github.com/picolibc/picolibc",
+      "license_note": "Predominantly permissive BSD-style code with file-level variation.",
+      "exclude": [
+        "GPL-marked printf test sources unless the experiment explicitly accepts copyleft inputs",
+        "AGPL-marked helper scripts"
+      ]
+    },
+    {
+      "id": "cmsis-6",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "arm", "c", "assembly", "startup", "linker-script"],
+      "url": "https://github.com/ARM-software/CMSIS_6",
+      "license_note": "Apache-2.0 project; preserve notices on device templates and imported material."
+    },
+    {
+      "id": "trusted-firmware-m",
+      "priority": 1,
+      "posture": "ingest_with_exclusions",
+      "kind": "git_repository",
+      "topics": ["embedded", "security", "arm", "c", "assembly", "linker-script"],
+      "url": "https://github.com/TrustedFirmware-M/trusted-firmware-m",
+      "license_note": "BSD-3-Clause core; externally imported trees require separate inventory.",
+      "review_paths": ["bl2/ext", "platform/ext", "lib/ext"]
+    },
+    {
+      "id": "embedded-template-library",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["embedded", "c++", "templates", "no-heap"],
+      "url": "https://github.com/ETLCPP/etl",
+      "license_note": "MIT."
+    },
+    {
+      "id": "riscv-arch-test",
+      "priority": 1,
+      "posture": "ingest_after_file_scan",
+      "kind": "git_repository",
+      "topics": ["risc-v", "assembly", "self-checking-tests", "linker-script"],
+      "url": "https://github.com/riscv/riscv-arch-test",
+      "license_note": "Code is BSD-3-Clause or Apache-2.0; documentation includes CC-BY-4.0."
+    },
+    {
+      "id": "llvm-project-sparse",
+      "priority": 2,
+      "posture": "ingest_selected_paths",
+      "kind": "git_repository",
+      "topics": ["c", "c++", "assembly", "compiler", "linker", "object-format", "diagnostics"],
+      "url": "https://github.com/llvm/llvm-project",
+      "license_note": "Apache-2.0 WITH LLVM-exception; select Clang, LLD, MC, and target tests rather than cloning into every training sample."
+    },
+    {
+      "id": "the-stack-dedup",
+      "priority": 3,
+      "posture": "broad_backfill_after_license_filter",
+      "kind": "huggingface_dataset",
+      "topics": ["c", "c++", "assembly", "linker-script", "general-code"],
+      "url": "https://huggingface.co/datasets/bigcode/the-stack-dedup",
+      "license_note": "Gated dataset whose rows retain original-source licenses. Use only after explicit per-license filtering and provenance retention."
+    },
+    {
+      "id": "commitpackft",
+      "priority": 2,
+      "posture": "ingest_after_row_license_filter",
+      "kind": "huggingface_dataset",
+      "topics": ["c", "c++", "assembly", "linker-script", "code-change", "repair"],
+      "url": "https://huggingface.co/datasets/bigcode/commitpackft",
+      "license_note": "Dataset packaging is MIT, while individual changes carry a row-level source license; filter on that field."
+    },
+    {
+      "id": "project-codenet",
+      "priority": 2,
+      "posture": "ingest",
+      "kind": "dataset",
+      "topics": ["c", "c++", "accepted", "wrong-answer", "compile-error", "runtime-error"],
+      "url": "https://github.com/IBM/Project_CodeNet",
+      "download_url": "https://codait-cos-dax.s3.us.cloud-object-storage.appdomain.cloud/dax-project-codenet/1.0.0/Project_CodeNet.tar.gz",
+      "license_note": "Data is CDLA-Permissive-2.0 and tooling is Apache-2.0. Contest code is useful for correctness training but is not embedded-domain code."
+    },
+    {
+      "id": "exebench",
+      "priority": 2,
+      "posture": "ingest_after_row_license_filter",
+      "kind": "huggingface_dataset",
+      "topics": ["c", "functions", "compilation", "execution", "inputs", "outputs"],
+      "url": "https://huggingface.co/datasets/jordiae/exebench",
+      "license_note": "Added dataset material is MIT; extracted functions retain their source licenses. Preserve compiler and execution metadata."
+    },
+    {
+      "id": "nist-juliet-c-cpp-1.3",
+      "priority": 1,
+      "posture": "ingest",
+      "kind": "dataset",
+      "topics": ["c", "c++", "security", "good-bad-pairs", "cwe", "repair"],
+      "url": "https://samate.nist.gov/SARD/test-suites/112",
+      "license_note": "US-government work is public domain; the release also provides CC0 treatment for applicable foreign rights. Keep good/bad variants and CWE labels linked."
+    },
+    {
+      "id": "sei-cert-c",
+      "priority": 1,
+      "posture": "ingest_with_attribution",
+      "kind": "documentation_and_examples",
+      "topics": ["c", "secure-coding", "compliant", "noncompliant", "repair"],
+      "url": "https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/",
+      "license_url": "https://raw.githubusercontent.com/cmu-sei/secure-coding-standards/main/LICENSE",
+      "license_note": "Standard text is CC-BY-4.0 and code examples are MIT under the project's stated terms; preserve attribution and pair labels."
+    },
+    {
+      "id": "codeql-coding-standards-misra-tests",
+      "priority": 1,
+      "posture": "ingest_test_code_only",
+      "kind": "git_repository_paths",
+      "topics": ["c", "misra-oriented", "compliant", "noncompliant", "static-analysis"],
+      "url": "https://github.com/github/codeql-coding-standards/tree/main/c/misra/test/rules",
+      "license_url": "https://raw.githubusercontent.com/github/codeql-coding-standards/main/LICENSE.md",
+      "license_note": "MIT repository test code can supply rule-ID labels and compliant/noncompliant examples.",
+      "exclude": ["rules.csv", "query-help prose derived from MISRA rules", "third-party and test stubs unless separately cleared"]
+    },
+    {
+      "id": "clang-tidy-checks-and-tests",
+      "priority": 2,
+      "posture": "ingest_selected_paths",
+      "kind": "git_repository_paths",
+      "topics": ["c", "c++", "diagnostics", "automated-fixes", "check-fixes"],
+      "url": "https://clang.llvm.org/extra/clang-tidy/checks/list.html",
+      "source_url": "https://github.com/llvm/llvm-project/tree/main/clang-tools-extra",
+      "license_note": "Apache-2.0 WITH LLVM-exception; pair diagnostics and CHECK-FIXES only when the source context stays intact."
+    },
+    {
+      "id": "c166-ghidra-module",
+      "priority": 1,
+      "posture": "ingest",
+      "kind": "git_repository",
+      "topics": ["c166", "c167", "assembly", "instruction-semantics", "reverse-engineering"],
+      "url": "https://github.com/keyhana/c166-ghidra-module",
+      "license_note": "MIT; the cleanest permissively licensed seed located for C166/C167 instruction semantics."
+    },
+    {
+      "id": "gnu-binutils-historical-xc16x",
+      "priority": 2,
+      "posture": "local_copyleft_experiment_or_reference",
+      "kind": "git_repository_history",
+      "topics": ["c166", "c167", "xc16x", "assembly", "assembler", "disassembler", "object-format"],
+      "url": "https://sourceware.org/git/binutils-gdb.git",
+      "license_note": "GPL-3.0-or-later components; the obsolete xc16x implementation is useful for semantics and synthetic-data validation but needs deliberate copyleft policy."
+    },
+    {
+      "id": "microchip-xc-open-source-components",
+      "priority": 2,
+      "posture": "manual_file_level_review",
+      "kind": "source_archives",
+      "topics": ["microchip", "xc8", "xc16", "xc32", "compiler"],
+      "url": "https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers",
+      "archives": [
+        "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/xc8-avr-sources-v4.00.zip",
+        "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/v2.10.src.zip",
+        "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/xc32-v6.00-src.zip"
+      ],
+      "license_note": "Ingest only files explicitly released as GPL or another identified open-source license. XC distributions also contain proprietary headers, runtime, assembler, linker, simulator, and support material."
+    },
+    {
+      "id": "microchip-xc16-toolchain-guide",
+      "priority": 3,
+      "posture": "reference_and_manual_review",
+      "kind": "documentation",
+      "topics": ["microchip", "xc16", "assembly", "linker-script", "object-format"],
+      "url": "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/UserGuides/MPLAB-XC16-Assembler-Linker-and-Utilities-Users-Guide-DS50002106.pdf",
+      "license_note": "Published under GFDL terms stated by Microchip; review attribution, redistribution, and model-training implications before ingestion."
+    },
+    {
+      "id": "microchip-harmony-and-examples",
+      "priority": 3,
+      "posture": "reference_or_permission_queue",
+      "kind": "git_organizations",
+      "topics": ["microchip", "harmony", "sdk", "drivers", "examples"],
+      "urls": [
+        "https://github.com/Microchip-MPLAB-Harmony",
+        "https://github.com/Microchip-MPLAB-Harmony/csp",
+        "https://github.com/microchip-pic-avr-examples"
+      ],
+      "license_note": "Representative licenses restrict use to Microchip devices/products and repositories contain mixed third-party material. Do not place in a generally redistributable training set without explicit clearance."
+    },
+    {
+      "id": "proprietary-c167-reference-manuals",
+      "priority": 3,
+      "posture": "reference_only_do_not_ingest",
+      "kind": "documentation",
+      "topics": ["c166", "c167", "instruction-set", "hardware"],
+      "urls": [
+        "https://community.infineon.com/gfawx74859/attachments/gfawx74859/LegacyMicrocontrollers/6434/1/2594108.pdf",
+        "https://www.infineon.com/dgdl/Infineon-C167CR-DS-v03_03-en.pdf?fileId=db3a304412b407950112b41daf9f30b4",
+        "https://www.keil.com/support/man/docs/a166/",
+        "https://www.keil.com/support/man/docs/l166/l166_in_locating.asp",
+        "https://www.tasking.com/support/c166/c166_user_guide_v4.0.pdf"
+      ],
+      "license_note": "Copyrighted vendor manuals. Use for human reference and validation only unless separate permission is obtained."
+    },
+    {
+      "id": "misra-standards",
+      "priority": 3,
+      "posture": "exclude_without_separate_ml_license",
+      "kind": "proprietary_standard",
+      "topics": ["misra-c", "misra-c++"],
+      "url": "https://www.misra.org.uk/",
+      "license_reference": "https://forum.misra.org.uk/showthread.php?tid=1551",
+      "license_note": "Purchasing or possessing a MISRA publication does not by itself grant all tool, redistribution, or training rights. Train a 'MISRA-oriented' expert from licensed examples and public diagnostics instead."
+    },
+    {
+      "id": "iso-c-and-cpp-standards",
+      "priority": 3,
+      "posture": "exclude_without_iso-ai-license",
+      "kind": "copyrighted_standard",
+      "topics": ["c", "c++", "language-standard"],
+      "url": "https://www.iso.org/copyright.html",
+      "license_reference": "https://www.iso.org/terms-conditions-licence-agreement.html",
+      "license_note": "ISO's published terms explicitly reserve AI/ML uses unless separately licensed."
+    }
+  ],
+  "synthetic_data_jobs": [
+    {
+      "id": "multi_target_compile_matrix",
+      "input_sources": ["curated permissive C and C++ files"],
+      "outputs": ["source", "preprocessed source", "LLVM IR", "target assembly", "diagnostics", "ELF metadata", "link map"],
+      "matrix": ["ARM", "RISC-V", "Xtensa where toolchains are available", "-O0", "-O1", "-O2", "-Os"],
+      "reason": "Creates exact dialect- and target-labelled source-to-assembly/linker examples without copying proprietary manuals."
+    },
+    {
+      "id": "embedded_repair_pairs",
+      "input_sources": ["Juliet good/bad cases", "CERT compliant/noncompliant examples", "compiler and static-analysis diagnostics"],
+      "outputs": ["faulty code", "diagnostic", "minimal patch", "fixed code", "explanation", "verification result"],
+      "reason": "Supports supervised repair, pairwise preference, and verifier-grounded teacher rewards."
+    },
+    {
+      "id": "linker_layout_tasks",
+      "input_sources": ["permissively licensed startup code and linker scripts"],
+      "outputs": ["memory map", "linker script", "map-file assertions", "symbol-placement questions", "verified answers"],
+      "reason": "Prevents linker-script competence from being diluted by much larger generic C/C++ corpora."
+    }
+  ],
+  "sample_provenance_fields": [
+    "source_id",
+    "source_url",
+    "revision",
+    "relative_path_or_row_id",
+    "spdx_expression",
+    "copyright_notice",
+    "language",
+    "architecture",
+    "toolchain",
+    "license_scan_result",
+    "transforms",
+    "parent_sample_ids",
+    "split_group"
+  ],
+  "model_claim_policy": [
+    "Call the resulting adapter MISRA-oriented, never MISRA-certified or guaranteed compliant.",
+    "Answers about vendor-specific behavior should cite the exact device, compiler version, and reference used when known.",
+    "Prefer uncertainty or a verification command over inventing register addresses, instruction timings, ABI details, or linker semantics."
+  ]
+}

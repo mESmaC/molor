@@ -1,0 +1,70 @@
+# Python environments and generated build/test state
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.coverage
+htmlcov/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Local model state and generated experiment artifacts
+checkpoints/
+datasets/
+models/
+runs/
+*.safetensors
+*.gguf
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.npy
+*.npz
+*.arrow
+*.parquet
+*.feather
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.log
+
+# Imported/raw corpora and generated training rows. Keep builders, recipes,
+# manifests, and compact reports in Git so experiments remain reproducible.
+experiments/first-real-experts/sources/
+experiments/first-real-experts/data/
+# These compact fixtures contain raw-looking customer/account identifiers.
+# Replace them with synthetic cases before tracking them.
+experiments/first-real-experts/benchmark-data/customer-gtm*.jsonl
+experiments/first-real-experts/finance-benchmark-data/customer-gtm*.jsonl
+# Local CAN database-derived evaluation rows have unresolved redistribution status.
+experiments/first-real-experts/benchmark-data/embedded-can*.jsonl
+experiments/first-real-experts/finance-benchmark-data/embedded-can*.jsonl
+wandb/
+mlruns/
+lightning_logs/
+
+# Local credentials and editor/OS state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.vscode/
+.idea/
+ui/.openai/hosting.json
+.DS_Store
+Thumbs.db
+
+# JavaScript dependencies and generated frontend state (defense in depth)
+node_modules/
+.next/
+.turbo/
+coverage/

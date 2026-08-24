@@ -1,0 +1,36 @@
+{
+  "model_id": "../../models/Qwen3-1.7B",
+  "output_dir": "../../checkpoints/qwen3-1.7b-real-experts",
+  "dtype": "bfloat16",
+  "device": "cuda",
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "rank": 8,
+  "alpha": 16,
+  "dropout": 0.05,
+  "max_length": 1024,
+  "epochs": 1,
+  "learning_rate": 0.00005,
+  "weight_decay": 0.01,
+  "micro_batch_size": 2,
+  "gradient_accumulation_steps": 4,
+  "gradient_checkpointing": true,
+  "max_grad_norm": 1.0,
+  "seed": 48,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  },
+  "experts": [
+    {
+      "name": "financial-analysis-verified",
+      "dataset": "data/financial-analysis-verified.jsonl"
+    }
+  ]
+}

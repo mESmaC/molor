@@ -1,0 +1,92 @@
+{
+  "filters": {
+    "embedded-can-train": {
+      "rows": 187733,
+      "qa": 56026,
+      "excluded_encode_100": 27750,
+      "invalid": 0
+    },
+    "embedded-can-validation": {
+      "rows": 1904,
+      "qa": 552,
+      "excluded_encode_100": 267,
+      "invalid": 0
+    },
+    "software-architecture-train": {
+      "rows": 443617,
+      "accepted": 439126,
+      "invalid": 4491
+    },
+    "software-architecture-validation": {
+      "rows": 4436,
+      "accepted": 4383,
+      "invalid": 53
+    }
+  },
+  "outputs": {
+    "embedded-can": {
+      "train": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\embedded-can.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\embedded-can.provenance.jsonl",
+        "eligible_before_sampling": 56026,
+        "rows": 1,
+        "sha256": "e80e28a7acf488d133692f591542ef60ba130df01c1f02708a92372b4daf96c3"
+      },
+      "validation": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\embedded-can.validation.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\embedded-can.validation.provenance.jsonl",
+        "eligible_before_sampling": 552,
+        "rows": 1,
+        "sha256": "62ea023a8143eeebe0ed82d3402577aaad3a643c3c9792eb8fc2c19fc126395c"
+      }
+    },
+    "financial-analysis": {
+      "train": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\financial-analysis.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\financial-analysis.provenance.jsonl",
+        "eligible_before_sampling": 17911,
+        "rows": 128,
+        "sha256": "97b830842f76580fcfbecde30bd7d1b078443470bd4133827e293c0b0b2ed697"
+      },
+      "validation": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\financial-analysis.validation.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\financial-analysis.validation.provenance.jsonl",
+        "eligible_before_sampling": 1507,
+        "rows": 1,
+        "sha256": "905f72ad545348d345931e2b3d08dbc6fbac7eba2621f83839e4587fd405521a"
+      }
+    },
+    "customer-gtm": {
+      "train": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\customer-gtm.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\customer-gtm.provenance.jsonl",
+        "eligible_before_sampling": 79087,
+        "rows": 1,
+        "sha256": "30a34ad7672e1f01136d9a2ada67a4a2b3f083e8385ed641ddee2cb5ae961d88"
+      },
+      "validation": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\customer-gtm.validation.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\customer-gtm.validation.provenance.jsonl",
+        "eligible_before_sampling": 6966,
+        "rows": 1,
+        "sha256": "dcdcd13c83050466c5fa57dc2396bbabe2ed604e9c200534fac33329ab0e9634"
+      }
+    },
+    "software-architecture": {
+      "train": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\software-architecture.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\software-architecture.provenance.jsonl",
+        "eligible_before_sampling": 439126,
+        "rows": 1,
+        "sha256": "dde2b3e55535d422f5e1b0098dee6a9e8aa1e40e43536d35c7deba011c815d4f"
+      },
+      "validation": {
+        "path": "experiments\\first-real-experts\\finance-benchmark-data\\software-architecture.validation.jsonl",
+        "provenance_path": "experiments\\first-real-experts\\finance-benchmark-data\\software-architecture.validation.provenance.jsonl",
+        "eligible_before_sampling": 4383,
+        "rows": 1,
+        "sha256": "3fbf88b4daa977b5409e7d4b7895bbe034d4a7a06708e0d155adc57c97c933cc"
+      }
+    }
+  }
+}
