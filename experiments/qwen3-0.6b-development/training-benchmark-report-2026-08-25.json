@@ -1,0 +1,259 @@
+{
+  "schema_version": "molor.qwen3-0.6b-training-benchmark-report.v1",
+  "created_on": "2026-08-25",
+  "status": "complete_development_baseline",
+  "base": {
+    "model_id": "models/Qwen3-0.6B",
+    "huggingface_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "parameter_count": 596049920
+  },
+  "expert_training": {
+    "status": "passed",
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "adapter_parameter_dtype": "float32",
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_projection_count": 196,
+    "adapter_parameter_count_each": 10092544,
+    "total_optimizer_steps": 4135,
+    "total_elapsed_seconds": 4477.450874900096,
+    "artifacts": [
+      {
+        "expert": "embedded-knowledge-v1",
+        "recipe": "experiments/qwen3-0.6b-development/embedded-knowledge-v1-recipe.json",
+        "checkpoint": "checkpoints/qwen3-0.6b-corpus-experts/embedded-knowledge-v1",
+        "dataset_sha256": "c588df6fc0ca61ce14938d6bda96dcf3a873e70bb4dde98b44634f495cbcec78",
+        "examples": 6000,
+        "epochs": 1,
+        "optimizer_steps": 750,
+        "final_training_loss": 1.4963086523161344,
+        "elapsed_seconds": 974.6749448999763,
+        "adapter_sha256": "f68c0543b2d84e777408ef01cbf9e3033bd883b6c389a32bd0038327ecf0e8fd",
+        "adapter_config_sha256": "29c11ca0d38c10a20f304dc2370477f98c870c4bc379cbc4d1b1033e31a905bb",
+        "training_summary_sha256": "47008f61c3413cf35f21cea8bd8f56136791de375f9ce2b13028fac3dea075a3"
+      },
+      {
+        "expert": "ocb-can-verified-v1",
+        "recipe": "experiments/qwen3-0.6b-development/ocb-can-verified-v1-recipe.json",
+        "checkpoint": "checkpoints/qwen3-0.6b-corpus-experts/ocb-can-verified-v1",
+        "dataset_sha256": "927f5065752bcde004be53506cd8140dc2bd12660c39cd271faa695be98e5c80",
+        "examples": 12320,
+        "epochs": 1,
+        "optimizer_steps": 1540,
+        "final_training_loss": 0.02178200778341101,
+        "elapsed_seconds": 1559.7526193000376,
+        "adapter_sha256": "82b299d833fd9bd2dc7135a85020ffc53d2320f9b328b53c8430398fd920f0ff",
+        "adapter_config_sha256": "9b86dfa396f5833ad05aef0ad4dec7ddcb2568b97707e2a323ad1f31bd383298",
+        "training_summary_sha256": "b65fc54a31c3b3f131cdcf894953298a7c0fddb02e69f2108690101594b777b5"
+      },
+      {
+        "expert": "software-architecture-v1",
+        "recipe": "experiments/qwen3-0.6b-development/software-architecture-v1-recipe.json",
+        "checkpoint": "checkpoints/qwen3-0.6b-corpus-experts/software-architecture-v1",
+        "dataset_sha256": "00f7af6b988bb602b9784219bb8a18bcef16fba77a2af395d1f7061fd91e05fc",
+        "examples": 12000,
+        "epochs": 1,
+        "optimizer_steps": 1500,
+        "final_training_loss": 1.48690048819247,
+        "elapsed_seconds": 1753.8774315000046,
+        "adapter_sha256": "5da0e8662f8960a715795cc5406a824806a0c5d13bcde0a0c71da07ced2dadd3",
+        "adapter_config_sha256": "64a5e2317daa514cb6f4cc7c7bb8a190a90d728739e0bbb2e081d98a8852d71a",
+        "training_summary_sha256": "0256cbc5e30d1c53fab8c8c93ed094dc7cff61072709e166dbcf1f676e4de3dc"
+      },
+      {
+        "expert": "verified-embedded-code-v1",
+        "recipe": "experiments/qwen3-0.6b-development/verified-embedded-code-v1-recipe.json",
+        "checkpoint": "checkpoints/qwen3-0.6b-corpus-experts/verified-embedded-code-v1",
+        "dataset_sha256": "5a055fe5cd62e9b129b650678748543f95d08053e47150cc6d3f193f38b3c02c",
+        "examples": 920,
+        "epochs": 3,
+        "optimizer_steps": 345,
+        "final_training_loss": 0.0010313946385588314,
+        "elapsed_seconds": 189.14587920007762,
+        "adapter_sha256": "dda034c5d5a56a68f53d865f2a178c24b1d5225a57ecea38dc848940908070d7",
+        "adapter_config_sha256": "d6b1865fdef6087e92c476ebec48967d47fa655a73f39e87709e4fc6bf316878",
+        "training_summary_sha256": "c4c91c746b2746ae87690a15d0a70e1ce0213d7c82d7e57e34d335da5f3a2474"
+      }
+    ],
+    "validation": {
+      "exact_base_identity": true,
+      "adapter_tensor_count_each": 392,
+      "all_tensor_shapes_match_base": true,
+      "all_tensors_float32_and_finite": true,
+      "offline_cpu_load_passed": true
+    }
+  },
+  "router_v4": {
+    "status": "passed_development",
+    "checkpoint": "checkpoints/qwen3-0.6b-corpus-router-v4-mlp-controlled",
+    "checkpoint_sha256": "ea37a1a8c682b3b947a35213d49f75cf2ec20124bf26069a29fd940944da6c5b",
+    "router_config_sha256": "3583e3d94734ef99d6fb6c122f75c484d4504e99179fe2aa53ee4c4c7166a621",
+    "routes": [
+      "embedded-knowledge-v1",
+      "ocb-can-verified-v1",
+      "software-architecture-v1",
+      "verified-embedded-code-v1",
+      "base/null"
+    ],
+    "hidden_size": 1024,
+    "router_hidden_size": 256,
+    "seed": 83,
+    "best_epoch": 11,
+    "epochs_completed": 15,
+    "validation_examples": 650,
+    "validation_accuracy": 0.9969230769230769,
+    "test_examples": 650,
+    "test_accuracy": 0.9969230769230769,
+    "dataset": {
+      "train_rows": 4680,
+      "validation_rows": 650,
+      "test_rows": 650,
+      "rows_per_route": {
+        "train": 936,
+        "validation": 130,
+        "test": 130
+      },
+      "train_sha256": "7455b6dedfd2c1eee605bf23074f32168b7eb735c70898af8b7bd9d1a5bd1dd1",
+      "validation_sha256": "627e60a656c8ad01feaf79e7010d678d909e37e768e4c9dc7530cb3fd6a76e2c",
+      "test_sha256": "9e0b7d4d0135111bffe4abce653850b81ae16cd47640a6b68ce1e5b883187dad",
+      "normalized_prompt_overlap": 0,
+      "semantic_group_overlap": 0,
+      "evaluation_artifacts_used_for_training": false
+    }
+  },
+  "benchmark": {
+    "status": "valid",
+    "suite_id": "molor-core-v1",
+    "suite_version": "1.0.0",
+    "suite_fingerprint": "0f2be48bcdec9a29d412f4c56f1c671fc276af73df572d78046c841f7afc4de5",
+    "evaluation_fingerprint": "a13350d7a6441a679d6d7dceeebc3c87c7bba1e00b624f5f750f28c17bae86c9",
+    "confidence_threshold": 0.3,
+    "output_root": "runs/benchmarks/qwen3-0.6b-development",
+    "smoke_matrix_id": "20260825-200157Z-qwen3-0.6b-corpus-rack-v4-smoke",
+    "quick_matrix_id": "20260825-200240Z-qwen3-0.6b-corpus-rack-v4-quick",
+    "full_matrix_id": "20260825-200419Z-qwen3-0.6b-corpus-rack-v4-full",
+    "full_matrix_summary_sha256": "5ad0d039ac0cb4a8fcca8ae4858f4b8c50d87c38f487a98afa25fcad72c82be7",
+    "full_matrix_report_sha256": "0ad1a3d378cb75589c3fd62002f04b1d13f1863ed15c2705ce6ee1cd87aa7ff1",
+    "workload_fingerprint": "1184f848aa22c77f52c57b7017909d7605d4e74cc7eaaa004eb75ca87244a929",
+    "validity": {
+      "policies": 7,
+      "expected_per_policy": 64,
+      "recorded_per_policy": 64,
+      "scored_per_policy": 64,
+      "errors": 0,
+      "all_comparable": true,
+      "all_fully_content_addressed": true
+    },
+    "quick_signal": {
+      "base_quality_index": 440.0,
+      "auto_top2_quality_index": 473.3333333333333,
+      "auto_top2_delta": 33.333333333333314
+    },
+    "full_policies": {
+      "base": {
+        "quality_index": 519.25,
+        "tokens_per_second_median": 36.9300384890508,
+        "ttft_seconds_median": 0.08444495004368946
+      },
+      "expert-embedded-knowledge-v1": {
+        "quality_index": 538.1666666666666,
+        "delta_vs_base": 18.91666666666663,
+        "wins": 6,
+        "ties": 53,
+        "losses": 5,
+        "regression_flags": [
+          "context",
+          "embedded",
+          "general_reasoning"
+        ]
+      },
+      "expert-ocb-can-verified-v1": {
+        "quality_index": 450.33333333333337,
+        "delta_vs_base": -68.91666666666663,
+        "wins": 1,
+        "ties": 58,
+        "losses": 5
+      },
+      "expert-software-architecture-v1": {
+        "quality_index": 489.25,
+        "delta_vs_base": -30.0,
+        "wins": 0,
+        "ties": 62,
+        "losses": 2
+      },
+      "expert-verified-embedded-code-v1": {
+        "quality_index": 469.9166666666667,
+        "delta_vs_base": -49.333333333333314,
+        "wins": 1,
+        "ties": 59,
+        "losses": 4
+      },
+      "auto-top1": {
+        "quality_index": 503.25,
+        "delta_vs_base": -16.0,
+        "wins": 0,
+        "ties": 63,
+        "losses": 1,
+        "regression_flags": [
+          "embedded"
+        ]
+      },
+      "auto-top2": {
+        "quality_index": 549.25,
+        "quality_index_ci95": [
+          447.6604166666666,
+          646.84375
+        ],
+        "delta_vs_base": 30.0,
+        "wins": 2,
+        "ties": 62,
+        "losses": 0,
+        "regression_flags": [],
+        "tokens_per_second_median": 24.924121514252068,
+        "ttft_seconds_median": 0.1257084000390023
+      }
+    },
+    "forced_route_oracle_quality_index": 644.8333333333334,
+    "auto_top1_oracle_regret": 141.58333333333337
+  },
+  "cross_scale_reference": {
+    "qwen3_1_7b_auto_top1_run_id": "20260825-030454Z-qwen3-1.7b-router-v4-post-training-auto-full-recorded",
+    "qwen3_1_7b_auto_top1_quality_index": 601.9166666666666,
+    "qwen3_0_6b_auto_top1_quality_index": 503.25,
+    "same_policy_delta": -98.66666666666663,
+    "same_policy_relative_delta_percent": -16.392080852831228,
+    "qwen3_0_6b_best_auto_top2_quality_index": 549.25,
+    "best_0_6b_vs_1_7b_top1_delta": -52.66666666666663,
+    "best_0_6b_vs_1_7b_top1_relative_delta_percent": -8.749826941713962,
+    "policy_caveat": "The best 0.6B result uses top-2 while the preserved 1.7B reference uses top-1. The 52.67-point difference is only a numerical cross-policy reference, not a scale-effect estimate; the same-policy top-1 comparison is the cleaner scale comparison."
+  },
+  "iteration_speed": {
+    "qwen3_0_6b_summed_trainer_elapsed_seconds": 4477.450874900096,
+    "preserved_qwen3_1_7b_summed_trainer_elapsed_seconds": 4644.320266499999,
+    "preserved_qwen3_1_7b_over_qwen3_0_6b_trainer_elapsed_ratio": 1.0372688380648345,
+    "preserved_qwen3_1_7b_trainer_elapsed_higher_percent": 3.726883806483442,
+    "timer_scope": "Each expert timer starts after base-model loading. The two lanes were preserved runs rather than a controlled end-to-end A/B.",
+    "conclusion": "These receipts do not establish a five-times-faster iteration loop. Use smaller diagnostic subsets and run a dedicated controlled speed benchmark before making turnaround claims."
+  },
+  "decision": {
+    "development_stack": "retain all four 0.6B experts and the v4 router in the isolated development lane",
+    "routing_policy": "retain auto top-2 as the benchmark-leading 0.6B development candidate; the desktop still defaults to top-1, so top-2 must be selected explicitly and no default-policy promotion was made",
+    "promotion_lane": "leave all Qwen3-1.7B artifacts unchanged",
+    "next_model_work": [
+      "improve top-1 router alignment against generation quality rather than intent labels alone",
+      "reduce the top-2 throughput penalty",
+      "quarantine broad forced use of the over-specialized OCB/CAN and verified-code adapters",
+      "add fast diagnostic training subsets before another full-corpus sweep"
+    ]
+  },
+  "limitations": [
+    "Training loss is not a broad quality score; the OCB/CAN and verified-code adapters reached very low loss but regressed when forced across the full core suite.",
+    "Auto top-2 improved quality but reduced median generation throughput by 32.51% versus the 0.6B base policy.",
+    "Recovery checkpoints are adapter-only warm starts and do not contain exact optimizer state.",
+    "This benchmark establishes model quality and routing behavior; it does not authorize a context-window increase or validate KV-cache expansion."
+  ]
+}

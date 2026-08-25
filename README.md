@@ -12,6 +12,7 @@ current runtime.
 
 - frozen local Qwen3-0.6B and Qwen3-1.7B checkpoints;
 - any number of simultaneously resident LoRA experts;
+- an isolated trained Qwen3-0.6B rack with four rank-16 experts and a five-route v4 MLP router;
 - a preserved 1.7B prompt-level auto-router over four corpus experts plus base/null;
 - blind forced-route evaluation and conservative teacher-reward optimization for that router;
 - a versioned 64-case model benchmark with a 0–1000 quality index, category scores, paired
@@ -50,8 +51,8 @@ and a stronger context-aware router representation remain the next model-side pi
 ## Run the desktop app
 
 The app now selects the complete local Qwen3-0.6B snapshot by default. Because adapter and router
-weights do not transfer across model widths, this lane intentionally starts base-only and will
-auto-select only artifacts trained under the 0.6B checkpoint namespaces:
+weights do not transfer across model widths, it auto-selects only the four trained experts and v4
+router under the 0.6B checkpoint namespaces:
 
 ```powershell
 .\.venv\Scripts\molor-desktop.exe
@@ -60,10 +61,11 @@ auto-select only artifacts trained under the 0.6B checkpoint namespaces:
 Click **Load model + selected experts**. Auto is the default route mode; the sidebar shows the
 complete probability distribution and applied route before token generation begins. The resident
 rack is a checkable list, while a separate eligibility list masks experts per request without
-unloading them. Manual mode force-selects base/null or one loaded expert for comparisons. These
-preserved rank-16 adapters live under `checkpoints/qwen3-1.7b-corpus-experts/`; the earlier rank-8 finance,
-local-code, terminal, and CAN experiments remain available under
-`checkpoints/qwen3-1.7b-real-experts/`.
+unloading them. Manual mode force-selects base/null or one loaded expert for comparisons. The
+development adapters live under `checkpoints/qwen3-0.6b-corpus-experts/`; the separate preserved
+rank-16 promotion adapters remain under `checkpoints/qwen3-1.7b-corpus-experts/`, and the earlier
+rank-8 experiments remain under `checkpoints/qwen3-1.7b-real-experts/`. Auto currently initializes
+with top-k 1; set **Top-k** to 2 to reproduce the benchmark-leading 0.6B candidate below.
 
 To open the preserved 1.7B promotion stack atomically, launch a fresh app with `MOLOR_MODEL_ID`
 set to `models/Qwen3-1.7B`. This switches its experts, router, feedback notebook, benchmark root,
@@ -73,20 +75,32 @@ unless its adapters and router were trained and recorded against that exact iden
 
 ## Fast 0.6B development lane
 
-The four starting recipes in `experiments/qwen3-0.6b-development/` reuse the prepared training
-shards but write only to `checkpoints/qwen3-0.6b-corpus-experts/`. Router features, feedback, and
-desktop benchmark runs also use separate 0.6B development paths. Train and evaluate ideas here
-first, then retrain only successful ideas against the untouched 1.7B promotion lane; adapter and
-router weights themselves are never copied between bases.
+The four recipes in `experiments/qwen3-0.6b-development/` reuse the prepared training shards but
+write only to `checkpoints/qwen3-0.6b-corpus-experts/`. All four are now trained, along with the
+five-route `checkpoints/qwen3-0.6b-corpus-router-v4-mlp-controlled` router. Router features,
+feedback, and desktop benchmark runs use separate 0.6B development paths. Train and evaluate ideas
+here first, then retrain only successful ideas against the untouched 1.7B promotion lane; adapter
+and router weights themselves are never copied between bases.
 
-The current adapters are experiments, not generic upgrades:
+The current 0.6B adapters are experiments, not generic upgrades. Their first full forced-route
+scores make that distinction concrete:
 
-| Adapter | Corpus and held-out result | Important limit |
+| Adapter | Training receipt | Full core result and limit |
 |---|---|---|
-| `embedded-knowledge-v1` | 6,000 train / 512 file-held-out; NLL 3.6013 -> 1.4356; 64-generation character similarity .1003 base / .1175 old rank-8 / .3070 new | A broader embedded reference/completion expert, not a verified compiler or debugger. The separate 35-row seen-recall probe is explicitly not held-out. |
-| `ocb-can-verified-v1` | 12,320 train / 1,024 message-group-held-out; NLL 4.0179 -> .07419; 128-generation structured-field accuracy .20295 -> .78771 and all-fields exact 0 -> 36 | Raw-value accuracy .359 and physical-value accuracy .344 remain weak; keep deterministic decoding in the loop. Warm-restart provenance is retained with the run. |
-| `software-architecture-v1` | 12,000 train / 1,000 validation with zero normalized-prompt overlap; NLL 2.4796 -> 1.2808; 64-generation term F1 .2661 -> .3657 and quality-signal recall .4243 -> .5776 | Concept recall was flat (.4177 -> .4142). The slice covers 14/15 families, and lexical overlap does not establish architectural correctness; a blind review pack is included. |
-| `verified-embedded-code-v1` | 920 compiler-verified training rows; fresh executable sibling score 66.8 base -> 152.2; sealed executable score 303.4 prior Auto -> 502.6 forced | Strongest current executable-code adapter, especially CRC and functionally correct MISRA-oriented C. It still fails PIC32 PPS and several hidden tests, so compiler/verifier feedback remains essential. |
+| `embedded-knowledge-v1` | 6,000 rows, 750 steps, final loss 1.4963 | 538.17 / 1000, +18.92 versus 0.6B base; useful forced-route signal but 6W/53T/5L is not regression-free. |
+| `ocb-can-verified-v1` | 12,320 rows, 1,540 steps, final loss 0.02178 | 450.33 / 1000, -68.92; highly specialized and unsafe as a broad forced route despite low training loss. |
+| `software-architecture-v1` | 12,000 rows, 1,500 steps, final loss 1.4869 | 489.25 / 1000, -30.00; keep route-scoped and continue improving. |
+| `verified-embedded-code-v1` | 920 rows × 3 epochs, 345 steps, final loss 0.00103 | 469.92 / 1000, -49.33 on the broad core suite; it still requires its executable-specific verifier lane. |
+
+The trained 0.6B router reached 99.69% on both its balanced validation and test splits. On the
+recordable 64-case matrix, auto top-2 scored **549.25 / 1000**, +30.00 over the 519.25 base with
+2 wins / 62 ties / 0 losses. Auto top-1 scored 503.25; the desktop default has not been changed, so
+top-2 remains an explicit development candidate. Top-2 also reduced median throughput from 36.93
+to 24.92 tok/s, making routing quality and mixture cost active iteration targets. Summed
+trainer-internal elapsed time was 4,477 seconds for 0.6B versus 4,644 seconds for the preserved
+1.7B receipts; the preserved 1.7B sum was 1.037× the 0.6B sum. Those timers exclude model loading
+and were not a controlled end-to-end A/B, so use smaller diagnostics and a dedicated speed
+benchmark before claiming faster turnaround.
 
 There is no downloaded broad business, marketing, investing, funding, or operations corpus yet.
 The business source manifest is a collection plan, not a trained business expert.
@@ -130,14 +144,30 @@ preserved 1.7B rack. Once two 0.6B experts exist, omitting `--model` selects the
 
 ## Benchmark models and checkpoints
 
-The recorded scores below are 1.7B promotion evidence. New 0.6B desktop runs write under
-`runs/benchmarks/qwen3-0.6b-development/` and must establish a separate baseline before any
-cross-scale interpretation.
+The 0.6B development lane now has its own content-addressed baseline under
+`runs/benchmarks/qwen3-0.6b-development/`. Keep it separate from the preserved 1.7B promotion
+evidence; adapter weights never transfer between the two bases.
 
-Run the 30-case quick suite against the currently loaded teacher API:
+Run the 30-case quick suite against the currently loaded teacher API. This short form uses the
+benchmark CLI defaults: auto top-k 1 and confidence threshold 0.0, which are not the recorded
+development policy:
 
 ```powershell
 .\.venv\Scripts\molor-benchmark.exe run --label my-checkpoint --profile quick --route auto
+```
+
+To reproduce the benchmark-leading 0.6B policy against the isolated development endpoint, specify
+both routing knobs and the output namespace:
+
+```powershell
+.\.venv\Scripts\molor-benchmark.exe run `
+  --label qwen3-0.6b-auto-top2 `
+  --profile full `
+  --route auto `
+  --route-top-k 2 `
+  --confidence-threshold 0.3 `
+  --endpoint http://127.0.0.1:8766 `
+  --output-root .\runs\benchmarks\qwen3-0.6b-development
 ```
 
 Use `--profile full` for the 64-case result worth recording. The report includes a 0–1000 quality
@@ -150,7 +180,24 @@ Every run snapshots the suite and fingerprints the exact base weights/tokenizer,
 route-policy knobs, evaluator semantics, and workload cells. A comparison is refused unless the
 profile, cases, repetitions, decoding settings, evaluator, and every paired raw result match.
 Incomplete runs are not written to score history, and benchmark outputs do not enter the feedback
-database. The current full route matrix is:
+database. The first 0.6B full route matrix is:
+
+| Route policy | Quality index | Delta vs base |
+|---|---:|---:|
+| Frozen base | 519.25 / 1000 | baseline |
+| `embedded-knowledge-v1` forced | 538.17 / 1000 | +18.92 |
+| `ocb-can-verified-v1` forced | 450.33 / 1000 | -68.92 |
+| `software-architecture-v1` forced | 489.25 / 1000 | -30.00 |
+| `verified-embedded-code-v1` forced | 469.92 / 1000 | -49.33 |
+| v4 autorouter top-1 | 503.25 / 1000 | -16.00 |
+| v4 autorouter top-2 | **549.25 / 1000** | **+30.00; 2 wins / 62 ties / 0 losses** |
+
+The matching-policy 0.6B top-1 score is 98.67 points (16.39%) below the preserved current 1.7B v4
+top-1 score of 601.92. The best 0.6B top-2 policy narrows that system-level gap to 52.67 points,
+but that is only a numerical cross-policy reference, not a scale-effect estimate. See the full
+[0.6B training and benchmark receipt](experiments/qwen3-0.6b-development/training-benchmark-report-2026-08-25.json).
+
+The preserved historical 1.7B full route matrix remains:
 
 | Route policy | Quality index | Delta vs base |
 |---|---:|---:|
