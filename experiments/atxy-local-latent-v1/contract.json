@@ -1,0 +1,58 @@
+{
+  "schema_version": "molor.atxy-local-latent-contract.v1",
+  "status": "development-shadow-only",
+  "objective": "Test whether ATXY-addressed KV pages can carry a separately validated per-layer/per-KV-head linear latent before any codebook or routing experiment.",
+  "model": {
+    "path": "../../models/Qwen3-1.7B",
+    "config_sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197",
+    "content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+    "expected_config": {
+      "num_hidden_layers": 28,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "max_position_embeddings": 40960
+    }
+  },
+  "dataset": {
+    "manifest": "../atxy-kv-v1/dataset-manifest-4096.json",
+    "manifest_sha256": "067bb83c7699172126ba7b654e87b60adf759271ae1ddabd60dd52a1c035ffa6",
+    "calibration_tokens": 4096,
+    "heldout_tokens": 4096
+  },
+  "layers": [0, 13, 27],
+  "heldout_query_positions": 8,
+  "key_ranks": [48, 64, 80, 96, 112, 120, 128],
+  "value_ranks": [64, 80, 96, 112, 120, 128],
+  "joint_rank_pairs": [
+    {"key": 64, "value": 96},
+    {"key": 64, "value": 128},
+    {"key": 80, "value": 112},
+    {"key": 96, "value": 96},
+    {"key": 96, "value": 112},
+    {"key": 112, "value": 112},
+    {"key": 128, "value": 128}
+  ],
+  "fit": {
+    "key_basis": "For each layer/KV head: eigendecompose 0.5 times mean uncentered post-RoPE K second moment plus 0.5 times mean uncentered post-RoPE Q second moment across its two GQA query heads.",
+    "value_basis": "For each layer/KV head: centered PCA with one retained float32 value mean.",
+    "rank_nesting": "Fit once at rank 128 and use leading prefixes without refitting."
+  },
+  "latent_dtype": "bfloat16",
+  "basis_dtype": "float32",
+  "projected_context_tokens": 40960,
+  "page_size": 256,
+  "top_k": 32,
+  "seed": 8419,
+  "gate_scope": "overall_and_each_selected_layer",
+  "gates": {
+    "min_projected_compression_ratio": 1.25,
+    "max_attention_kl_mean": 0.01,
+    "max_attention_kl_p99": 0.1,
+    "min_attention_top1_agreement": 0.995,
+    "min_attention_top_k_recall_mean": 0.98,
+    "max_output_relative_l2_global": 0.05,
+    "min_output_cosine_similarity_mean": 0.995
+  },
+  "decision_rule": "A joint arm passes only if its dimensional 40,960-token net ratio and every quality threshold pass both overall and in each selected layer. Passing authorizes only a separately versioned ATXY latent-codebook experiment, never a live cache or context extension."
+}

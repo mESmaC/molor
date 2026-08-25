@@ -15,6 +15,7 @@ dependencies = [
 [project.scripts]
 molor-cache-lab = "molor.experimental.cache_lab:main"
 molor-atxy-kv-lab = "molor.experimental.atxy_kv_lab:main"
+molor-atxy-local-latent-lab = "molor.experimental.atxy_local_latent_lab:main"
 molor-atxy-vq-lab = "molor.experimental.atxy_vq_lab:main"
 molor-hashed-kv-lab = "molor.experimental.hashed_kv_lab:main"
 molor-benchmark = "molor.benchmark.cli:main"
