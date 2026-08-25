@@ -21,7 +21,7 @@ current runtime.
   masking, with exact manual forcing retained for ablations;
 - streamed generation with token count, context use, TTFT, and tokens/second;
 - exact context budgets with oldest-whole-turn eviction;
-- GPU, CPU-offloaded, or disabled KV-cache modes;
+- GPU, hybrid CPU↔GPU exact-offloaded, or disabled KV-cache modes;
 - independent sequential adapter training from small chat JSONL files;
 - local scalar rewards, corrected answers, and pairwise preferences;
 - independent multi-model teacher grades with confidence-weighted consensus;

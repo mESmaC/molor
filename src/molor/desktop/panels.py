@@ -871,7 +871,7 @@ class ContextLabPanel(ProcessConsole):
         form.addRow("Custom tokens", self.custom_budget)
         self.kv_mode = QComboBox()
         self.kv_mode.addItem("Dynamic GPU cache", "dynamic")
-        self.kv_mode.addItem("CPU-offloaded cache", "offloaded")
+        self.kv_mode.addItem("Hybrid CPU ↔ GPU exact cache", "offloaded")
         self.kv_mode.addItem("Cache disabled", "disabled")
         form.addRow("Chat KV mode", self.kv_mode)
         self.snapshot_dir = QLineEdit(str(Path("runs/kv-snapshots").resolve()))

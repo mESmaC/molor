@@ -14,6 +14,7 @@ dependencies = [
 
 [project.scripts]
 molor-cache-lab = "molor.experimental.cache_lab:main"
+molor-exact-context-lab = "molor.experimental.exact_context_lab:main"
 molor-atxy-kv-lab = "molor.experimental.atxy_kv_lab:main"
 molor-atxy-local-latent-lab = "molor.experimental.atxy_local_latent_lab:main"
 molor-atxy-vq-lab = "molor.experimental.atxy_vq_lab:main"
