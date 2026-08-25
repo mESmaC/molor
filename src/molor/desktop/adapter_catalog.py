@@ -17,6 +17,7 @@ class AdapterCatalogEntry:
     source: str
     dataset: str | None = None
     examples: int | None = None
+    base_model_id: str | None = None
 
     @property
     def picker_label(self) -> str:
@@ -38,6 +39,8 @@ class AdapterCatalogEntry:
             lines.append(f"Dataset: {self.dataset}")
         if self.examples is not None:
             lines.append(f"Training examples: {self.examples:,}")
+        if self.base_model_id:
+            lines.append(f"Base model: {self.base_model_id}")
         return "\n".join(lines)
 
 
@@ -46,6 +49,7 @@ def discover_adapters(workspace_root: Path) -> tuple[AdapterCatalogEntry, ...]:
 
     checkpoint_root = workspace_root / "checkpoints"
     roots = (
+        (checkpoint_root / "qwen3-0.6b-corpus-experts", "0.6B development corpus"),
         (checkpoint_root / "qwen3-1.7b-corpus-experts", "corpus"),
         (checkpoint_root / "qwen3-1.7b-real-experts", "earlier expert"),
         (checkpoint_root / "qwen3-1.7b-two-styles", "style demo"),
@@ -58,6 +62,8 @@ def discover_adapters(workspace_root: Path) -> tuple[AdapterCatalogEntry, ...]:
             continue
         for config_path in sorted(root.rglob("adapter_config.json")):
             directory = config_path.parent.resolve()
+            if not _nonempty_file(directory / "adapter_model.safetensors"):
+                continue
             try:
                 checkpoint_parts = directory.relative_to(checkpoint_root.resolve()).parts
             except ValueError:
@@ -65,8 +71,7 @@ def discover_adapters(workspace_root: Path) -> tuple[AdapterCatalogEntry, ...]:
             if any(part.startswith(".") for part in checkpoint_parts):
                 continue
             if any(
-                part.casefold() == "quarantine"
-                or part.casefold().endswith("-quarantine")
+                part.casefold() == "quarantine" or part.casefold().endswith("-quarantine")
                 for part in checkpoint_parts
             ):
                 continue
@@ -77,6 +82,9 @@ def discover_adapters(workspace_root: Path) -> tuple[AdapterCatalogEntry, ...]:
             summary = _read_json_object(directory / "training_summary.json")
             name = _first_text(summary.get("expert"), config.get("name"), directory.name)
             dataset = _optional_text(summary.get("dataset"))
+            base_model_id = _optional_text(
+                config.get("base_model_id") or config.get("base_model_name_or_path")
+            )
             raw_examples = summary.get("examples")
             examples = (
                 int(raw_examples)
@@ -94,6 +102,7 @@ def discover_adapters(workspace_root: Path) -> tuple[AdapterCatalogEntry, ...]:
                         source=source,
                         dataset=dataset,
                         examples=examples,
+                        base_model_id=base_model_id,
                     ),
                 )
             )
@@ -131,3 +140,10 @@ def _display_path(path: Path, workspace_root: Path) -> str:
         return str(path.resolve().relative_to(workspace_root.resolve()))
     except (OSError, ValueError):
         return str(path)
+
+
+def _nonempty_file(path: Path) -> bool:
+    try:
+        return path.is_file() and path.stat().st_size > 0
+    except OSError:
+        return False

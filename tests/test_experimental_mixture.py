@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import pytest
 from queue import Queue
 import sys
 from types import ModuleType, SimpleNamespace
@@ -54,6 +55,19 @@ def test_trainable_expert_and_context_route_are_isolated() -> None:
     with engine.use_route({"right": 1.0}):
         torch.testing.assert_close(engine.model(inputs), torch.tensor([[2.0, 8.0]]))
     torch.testing.assert_close(engine.model(inputs), torch.tensor([[4.0, 4.0]]))
+
+
+def test_saved_expert_rejects_a_different_base_model(tmp_path) -> None:
+    source = tiny_engine()
+    checkpoint = source.save_expert("left", tmp_path / "left")
+    incompatible = MixtureEngine.attach(
+        TinyModel(),
+        base_model_id="different-base",
+        target_modules=("q_proj",),
+    )
+
+    with pytest.raises(ValueError, match="different base model"):
+        incompatible.load_expert(checkpoint)
 
 
 def test_stream_chat_reports_text_and_terminal_stats(monkeypatch) -> None:

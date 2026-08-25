@@ -50,6 +50,17 @@ from molor.desktop.chat_view import AssistantMessageWidget, ChatTranscript
 from molor.desktop.panels import AnnotationPanel, ContextLabPanel, TeacherPanel, TrainingPanel
 from molor.experimental import AutoRouteDecision, AutoRouterPolicy, BASE_ROUTE
 from molor.feedback import FeedbackStore, GenerationCreate
+from molor.model_profiles import (
+    DEVELOPMENT_LANE,
+    benchmark_output_root,
+    default_model,
+    detect_model_lane,
+    feedback_database,
+    feedback_export_root,
+    model_identities_match,
+    router_checkpoint_matches_model,
+    runtime_artifact_defaults,
+)
 
 
 _WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
@@ -424,9 +435,7 @@ class AutoRouterCard(QFrame):
     @Slot()
     def _eligible_changed(self) -> None:
         enabled_count = sum(
-            bool(
-                self.eligible_experts.item(index).flags() & Qt.ItemFlag.ItemIsUserCheckable
-            )
+            bool(self.eligible_experts.item(index).flags() & Qt.ItemFlag.ItemIsUserCheckable)
             and self.eligible_experts.item(index).checkState() == Qt.CheckState.Checked
             for index in range(self.eligible_experts.count())
         )
@@ -480,7 +489,8 @@ class MolorWindow(QMainWindow):
         self._current_stats: DesktopStats | None = None
         self._add_candidate_to_history = True
         self._last_generation_id: str | None = None
-        self.feedback_store = FeedbackStore()
+        self._initial_model = default_model(_WORKSPACE_ROOT, os.environ)
+        self.feedback_store = FeedbackStore(feedback_database(self._initial_model, _WORKSPACE_ROOT))
         self._feedback_closed = False
 
         self._build_ui()
@@ -516,17 +526,19 @@ class MolorWindow(QMainWindow):
         tabs = QTabWidget()
         tabs.setObjectName("mainTabs")
         tabs.addTab(self._build_chat_workspace(), "Chat")
-        self.annotation_panel = AnnotationPanel(self.feedback_store)
+        self.annotation_panel = AnnotationPanel(
+            self.feedback_store,
+            export_directory=feedback_export_root(self._initial_model, _WORKSPACE_ROOT),
+        )
         tabs.addTab(self.annotation_panel, "Annotation / Reward")
         self.teacher_panel = TeacherPanel(
             model_source=lambda: self.model_input.text().strip(),
             expert_paths_source=self._selected_expert_paths,
             router_source=lambda: self.router_input.text().strip(),
             before_gpu_job=self._prepare_gpu_job,
+            database=feedback_database(self._initial_model, _WORKSPACE_ROOT),
         )
-        self.teacher_panel.process_started.connect(
-            lambda: self._set_status("TEACHER API", "ready")
-        )
+        self.teacher_panel.process_started.connect(lambda: self._set_status("TEACHER API", "ready"))
         self.teacher_panel.process_finished.connect(
             lambda _code: self._set_status("UNLOADED", "idle")
         )
@@ -534,19 +546,47 @@ class MolorWindow(QMainWindow):
         self.benchmark_panel = BenchmarkPanel(
             workspace_root=_WORKSPACE_ROOT,
             endpoint_source=self.teacher_panel.endpoint,
+            output_root=benchmark_output_root(self._initial_model, _WORKSPACE_ROOT),
         )
-        self.benchmark_panel.process_started.connect(
-            lambda: self._set_status("BENCHMARK", "busy")
-        )
+        self.benchmark_panel.process_started.connect(lambda: self._set_status("BENCHMARK", "busy"))
         self.benchmark_panel.process_finished.connect(
             lambda _code: self._set_status("TEACHER API", "ready")
         )
         tabs.addTab(self.benchmark_panel, "Benchmarks")
+        development_lane = detect_model_lane(self._initial_model) == DEVELOPMENT_LANE
+        training_run_root = (
+            _WORKSPACE_ROOT / "runs" / "qwen3-0.6b-development"
+            if development_lane
+            else _WORKSPACE_ROOT / "runs"
+        )
         self.training_panel = TrainingPanel(
             model_source=lambda: self.model_input.text().strip(),
             before_gpu_job=self._prepare_gpu_job,
             export_positive_annotations=self._export_positive_annotations,
             export_preference_annotations=self._export_preference_annotations,
+            quick_output_root=(
+                _WORKSPACE_ROOT / "checkpoints" / "qwen3-0.6b-development-experts"
+                if development_lane
+                else _WORKSPACE_ROOT / "checkpoints" / "quick"
+            ),
+            annotation_dataset_root=training_run_root / "annotation-datasets",
+            quick_recipe_root=training_run_root / "recipes",
+            default_recipe=(
+                _WORKSPACE_ROOT
+                / "experiments"
+                / "qwen3-0.6b-development"
+                / "software-architecture-v1-recipe.json"
+                if development_lane
+                else None
+            ),
+            preference_recipe=(
+                None
+                if development_lane
+                else _WORKSPACE_ROOT
+                / "experiments"
+                / "qwen3-1.7b-two-styles"
+                / "preference_recipe.json"
+            ),
         )
         self.training_panel.process_started.connect(lambda: self._set_status("TRAINING", "busy"))
         self.training_panel.process_finished.connect(
@@ -594,24 +634,27 @@ class MolorWindow(QMainWindow):
         model_layout.setContentsMargins(16, 14, 16, 14)
         model_layout.setSpacing(8)
         model_layout.addWidget(_section_title("MODEL"))
-        self.model_input = QLineEdit(
-            os.environ.get("MOLOR_MODEL_ID")
-            or _first_existing("models/Qwen3-1.7B")
-            or "Qwen/Qwen3-1.7B"
-        )
+        initial_model = self._initial_model
+        self._initial_model_lane = detect_model_lane(initial_model)
+        self.model_input = QLineEdit(initial_model)
         self.model_input.setPlaceholderText("Model ID or local directory")
+        self.model_input.setToolTip(
+            "The app's exact base identity and artifact/run lane are selected at launch. Set "
+            "MOLOR_MODEL_ID before launching to switch the complete stack atomically."
+        )
         model_layout.addWidget(self.model_input)
 
         model_layout.addWidget(QLabel("Router checkpoint"))
         router_row = QHBoxLayout()
-        default_router = _first_existing(
-            "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
-            "checkpoints/qwen3-1.7b-corpus-router-v3-mlp",
-            "checkpoints/qwen3-1.7b-corpus-router-v1",
+        default_router = runtime_artifact_defaults(initial_model, _WORKSPACE_ROOT).router
+        self.router_input = QLineEdit(
+            os.environ.get("MOLOR_ROUTER")
+            or os.environ.get("MOLOR_ROUTER_CHECKPOINT")
+            or default_router
         )
-        self.router_input = QLineEdit(os.environ.get("MOLOR_ROUTER") or default_router)
         self.router_input.setPlaceholderText("Optional router checkpoint directory")
         self.router_input.textChanged.connect(self._update_router_input_hint)
+        self.model_input.textChanged.connect(self._update_router_input_hint)
         router_browse = QPushButton("...")
         router_browse.setFixedWidth(34)
         router_browse.clicked.connect(
@@ -744,30 +787,41 @@ class MolorWindow(QMainWindow):
             path_key(path, _WORKSPACE_ROOT) for path in self._selected_expert_paths()
         }
         self._adapter_catalog = discover_adapters(_WORKSPACE_ROOT)
-        catalog_keys = {
-            path_key(entry.path, _WORKSPACE_ROOT) for entry in self._adapter_catalog
-        }
+        catalog_keys = {path_key(entry.path, _WORKSPACE_ROOT) for entry in self._adapter_catalog}
         if not self._catalog_initialized:
+            default_expert_parent = (
+                f"{self._initial_model_lane}-corpus-experts"
+                if self._initial_model_lane is not None
+                else ""
+            )
             previously_checked.update(
                 path_key(entry.path, _WORKSPACE_ROOT)
                 for entry in self._adapter_catalog
-                if entry.path.parent.name == "qwen3-1.7b-corpus-experts"
+                if entry.path.parent.name == default_expert_parent
                 and entry.path.name in _DEFAULT_CORPUS_EXPERTS
             )
             previously_checked.update(
-                path_key(raw_path, _WORKSPACE_ROOT)
-                for raw_path in self._manual_expert_paths
+                path_key(raw_path, _WORKSPACE_ROOT) for raw_path in self._manual_expert_paths
             )
 
         self.resident_experts.blockSignals(True)
         self.resident_experts.clear()
         for entry in self._adapter_catalog:
             key = path_key(entry.path, _WORKSPACE_ROOT)
+            compatible = entry.base_model_id is not None and model_identities_match(
+                entry.base_model_id,
+                self._initial_model,
+                _WORKSPACE_ROOT,
+            )
+            tooltip = entry.tooltip(_WORKSPACE_ROOT)
+            if not compatible:
+                tooltip += "\nDisabled: adapter targets a different model lane."
             self._append_resident_expert(
                 entry.picker_label,
                 str(entry.path),
-                entry.tooltip(_WORKSPACE_ROOT),
-                checked=key in previously_checked,
+                tooltip,
+                checked=compatible and key in previously_checked,
+                enabled=compatible,
             )
         for raw_path in self._manual_expert_paths:
             key = path_key(raw_path, _WORKSPACE_ROOT)
@@ -791,11 +845,16 @@ class MolorWindow(QMainWindow):
         tooltip: str,
         *,
         checked: bool,
+        enabled: bool = True,
     ) -> None:
         item = QListWidgetItem(label)
         item.setData(Qt.ItemDataRole.UserRole, raw_path)
         item.setToolTip(tooltip)
-        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+        flags = item.flags()
+        if enabled:
+            item.setFlags(flags | Qt.ItemFlag.ItemIsUserCheckable)
+        else:
+            item.setFlags(flags & ~Qt.ItemFlag.ItemIsUserCheckable & ~Qt.ItemFlag.ItemIsEnabled)
         item.setCheckState(Qt.CheckState.Checked if checked else Qt.CheckState.Unchecked)
         self.resident_experts.addItem(item)
 
@@ -851,13 +910,16 @@ class MolorWindow(QMainWindow):
     def _update_router_input_hint(self) -> None:
         raw_path = self.router_input.text().strip()
         path = Path(raw_path).expanduser() if raw_path else None
-        if path is not None and (path / "router_config.json").is_file() and (
-            path / "router.safetensors"
-        ).is_file():
+        resolved_path = path if path is None or path.is_absolute() else _WORKSPACE_ROOT / path
+        if path is not None and router_checkpoint_matches_model(
+            path,
+            self._initial_model,
+            _WORKSPACE_ROOT,
+        ):
             self.router_input_hint.setText("Checkpoint ready; it will be loaded with the model.")
-        elif path is not None and path.is_dir():
+        elif resolved_path is not None and resolved_path.is_dir():
             self.router_input_hint.setText(
-                "Directory is missing router_config.json or router.safetensors."
+                "Checkpoint is incomplete or targets a different launch-time base model."
             )
         else:
             self.router_input_hint.setText(
@@ -950,6 +1012,8 @@ class MolorWindow(QMainWindow):
     @Slot()
     def _load_model(self) -> None:
         if self._load_thread is not None or self._generation_thread is not None:
+            return
+        if not self._model_matches_launch_profile():
             return
         if (
             self.training_panel.is_running
@@ -1357,6 +1421,8 @@ class MolorWindow(QMainWindow):
             self.top_k.setValue(20)
 
     def _prepare_gpu_job(self, label: str) -> bool:
+        if not self._model_matches_launch_profile():
+            return False
         if (
             self.training_panel.is_running
             or self.context_lab.is_running
@@ -1380,6 +1446,23 @@ class MolorWindow(QMainWindow):
             return False
         self._unload_inference()
         return True
+
+    def _model_matches_launch_profile(self) -> bool:
+        selected_model = self.model_input.text().strip()
+        if selected_model and model_identities_match(
+            selected_model,
+            self._initial_model,
+            _WORKSPACE_ROOT,
+        ):
+            return True
+        QMessageBox.warning(
+            self,
+            "Relaunch required",
+            "The model base differs from this app's launch-time artifact and data profile. "
+            "Set MOLOR_MODEL_ID and relaunch so experts, router, feedback, benchmarks, and "
+            "training paths switch atomically.",
+        )
+        return False
 
     def _unload_inference(self) -> None:
         session = self.session
@@ -1460,16 +1543,6 @@ def _section_title(text: str) -> QLabel:
     label = QLabel(text)
     label.setObjectName("eyebrow")
     return label
-
-
-def _first_existing(*candidates: str) -> str:
-    for candidate in candidates:
-        path = Path(candidate).expanduser()
-        if not path.is_absolute():
-            path = _WORKSPACE_ROOT / path
-        if path.is_dir():
-            return str(path.resolve())
-    return ""
 
 
 def _apply_theme(app: QApplication) -> None:

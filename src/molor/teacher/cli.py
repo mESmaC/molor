@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Mapping
 import json
 import os
 from pathlib import Path
@@ -11,7 +12,13 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
-from molor.feedback import DEFAULT_FEEDBACK_DB, FeedbackStore
+from molor.feedback import FeedbackStore
+from molor.model_profiles import (
+    RuntimeArtifactDefaults,
+    default_model,
+    feedback_database,
+    runtime_artifact_defaults,
+)
 from molor.teacher.protocol import capabilities
 from molor.teacher.server import serve
 from molor.teacher.service import StudentConfig, TeacherStudentService
@@ -27,54 +34,37 @@ OPERATIONS = {
     "unload_student": ("POST", "/v1/student/unload"),
     "export_training_data": ("POST", "/v1/export"),
 }
+_WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
 
 
-def _first_existing(*candidates: str) -> str:
-    for candidate in candidates:
-        path = Path(candidate)
-        if path.is_dir():
-            return str(path.resolve())
-    return ""
-
-
-def _environment_paths(name: str) -> tuple[str, ...]:
-    raw = os.environ.get(name, "")
+def _environment_paths(name: str, environment: Mapping[str, str]) -> tuple[str, ...]:
+    raw = environment.get(name, "")
     return tuple(part.strip() for part in raw.split(os.pathsep) if part.strip())
 
 
-def _parser() -> argparse.ArgumentParser:
+def _parser(
+    workspace_root: Path | None = None,
+    environment: Mapping[str, str] | None = None,
+) -> argparse.ArgumentParser:
+    workspace_root = workspace_root or _WORKSPACE_ROOT
+    environment = os.environ if environment is None else environment
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     server = subparsers.add_parser("serve", help="Run the loopback teacher/student API")
     server.add_argument(
         "--model",
-        default=os.environ.get("MOLOR_MODEL_ID")
-        or _first_existing("models/Qwen3-1.7B")
-        or "Qwen/Qwen3-1.7B",
+        default=default_model(workspace_root, environment),
     )
     server.add_argument(
         "--expert-a",
-        default=os.environ.get("MOLOR_EXPERT_A")
-        or _first_existing(
-            "checkpoints/qwen3-1.7b-corpus-experts/embedded-knowledge-v1",
-            "checkpoints/qwen3-1.7b-corpus-experts/software-architecture-v1",
-            "checkpoints/qwen3-1.7b-real-experts/financial-analysis-verified",
-            "checkpoints/qwen3-1.7b-real-experts/financial-analysis",
-            "checkpoints/precision",
-            "checkpoints/qwen3-1.7b-two-styles/precision",
-        ),
+        default=None,
+        help="Primary resident expert; omitted selects a compatible lane default when available.",
     )
     server.add_argument(
         "--expert-b",
-        default=os.environ.get("MOLOR_EXPERT_B")
-        or _first_existing(
-            "checkpoints/qwen3-1.7b-corpus-experts/ocb-can-verified-v1",
-            "checkpoints/qwen3-1.7b-real-experts/local-embedded-code",
-            "checkpoints/qwen3-1.7b-real-experts/terminal-cli",
-            "checkpoints/creative",
-            "checkpoints/qwen3-1.7b-two-styles/creative",
-        ),
+        default=None,
+        help="Secondary resident expert; omitted selects a compatible lane default when available.",
     )
     server.add_argument(
         "--expert",
@@ -89,18 +79,15 @@ def _parser() -> argparse.ArgumentParser:
     )
     server.add_argument(
         "--router",
-        default=(
-            os.environ.get("MOLOR_ROUTER")
-            or os.environ.get("MOLOR_ROUTER_CHECKPOINT")
-            or _first_existing(
-                "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
-                "checkpoints/qwen3-1.7b-corpus-router-v3-mlp",
-                "checkpoints/qwen3-1.7b-corpus-router-v1",
-            )
-        ),
-        help="Prompt auto-router checkpoint directory.",
+        default=None,
+        help="Prompt auto-router checkpoint; omitted selects a compatible lane default.",
     )
-    server.add_argument("--db", type=Path, default=DEFAULT_FEEDBACK_DB)
+    server.add_argument(
+        "--db",
+        type=Path,
+        default=None,
+        help="feedback database; omitted selects the active model lane's notebook",
+    )
     server.add_argument("--port", type=int, default=8765)
     server.add_argument("--eager-load", action="store_true")
 
@@ -115,6 +102,43 @@ def _parser() -> argparse.ArgumentParser:
     health = subparsers.add_parser("health", help="Check a running teacher API")
     health.add_argument("--endpoint", default="http://127.0.0.1:8765")
     return parser
+
+
+def _resolve_serve_artifacts(
+    args: argparse.Namespace,
+    workspace_root: Path | None = None,
+    environment: Mapping[str, str] | None = None,
+) -> RuntimeArtifactDefaults:
+    """Apply explicit/env overrides before architecture-compatible local defaults."""
+
+    workspace_root = workspace_root or _WORKSPACE_ROOT
+    environment = os.environ if environment is None else environment
+    defaults = runtime_artifact_defaults(args.model, workspace_root)
+    expert_a = (
+        args.expert_a
+        if args.expert_a is not None
+        else environment.get("MOLOR_EXPERT_A", "").strip() or defaults.expert_a
+    )
+    expert_b = (
+        args.expert_b
+        if args.expert_b is not None
+        else environment.get("MOLOR_EXPERT_B", "").strip() or defaults.expert_b
+    )
+    expert_paths = (
+        tuple(args.expert)
+        if args.expert is not None
+        else _environment_paths("MOLOR_EXPERTS", environment)
+        or _environment_paths("MOLOR_EXPERT_PATHS", environment)
+        or defaults.expert_paths
+    )
+    router = (
+        args.router
+        if args.router is not None
+        else environment.get("MOLOR_ROUTER", "").strip()
+        or environment.get("MOLOR_ROUTER_CHECKPOINT", "").strip()
+        or defaults.router
+    )
+    return RuntimeArtifactDefaults(expert_a, expert_b, expert_paths, router)
 
 
 def _payload(args: argparse.Namespace) -> dict[str, object]:
@@ -174,35 +198,15 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0
     if args.command == "serve":
-        configured_experts = (
-            tuple(args.expert)
-            if args.expert is not None
-            else _environment_paths("MOLOR_EXPERTS")
-            or _environment_paths("MOLOR_EXPERT_PATHS")
-            or tuple(
-                filter(
-                    None,
-                    (
-                        _first_existing(
-                            "checkpoints/qwen3-1.7b-corpus-experts/"
-                            "software-architecture-v1"
-                        ),
-                        _first_existing(
-                            "checkpoints/qwen3-1.7b-corpus-experts/"
-                            "verified-embedded-code-v1"
-                        ),
-                    ),
-                )
-            )
-        )
-        store = FeedbackStore(args.db)
+        artifacts = _resolve_serve_artifacts(args)
+        store = FeedbackStore(args.db or feedback_database(args.model, _WORKSPACE_ROOT))
         service = TeacherStudentService(
             StudentConfig(
                 args.model,
-                args.expert_a,
-                args.expert_b,
-                expert_paths=configured_experts,
-                router_checkpoint=args.router,
+                artifacts.expert_a,
+                artifacts.expert_b,
+                expert_paths=artifacts.expert_paths,
+                router_checkpoint=artifacts.router,
             ),
             store,
         )

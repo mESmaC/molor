@@ -47,7 +47,7 @@ QWEN_ALL = (
 class AnnotationPanel(QWidget):
     """Grade generations in-place and export them for the next adapter experiment."""
 
-    def __init__(self, store: FeedbackStore) -> None:
+    def __init__(self, store: FeedbackStore, *, export_directory: Path | None = None) -> None:
         super().__init__()
         self.store = store
         layout = QVBoxLayout(self)
@@ -142,7 +142,8 @@ class AnnotationPanel(QWidget):
         layout.addWidget(preference)
 
         export_row = QHBoxLayout()
-        self.export_dir = QLineEdit(str(Path("runs/feedback/exports").resolve()))
+        export_directory = export_directory or Path("runs/feedback/exports")
+        self.export_dir = QLineEdit(str(export_directory.resolve()))
         export_row.addWidget(self.export_dir, 1)
         browse = QPushButton("Browse")
         browse.clicked.connect(self._browse_export)
@@ -224,13 +225,11 @@ class AnnotationPanel(QWidget):
             overall = float(consensus["weighted_overall"])
             disagreement = float(consensus["disagreement"])
             dimensions = ", ".join(
-                f"{name} {value:+.2f}"
-                for name, value in dict(consensus["dimensions"]).items()
+                f"{name} {value:+.2f}" for name, value in dict(consensus["dimensions"]).items()
             )
             self.teacher_summary.setText(
                 f"Model teachers: {count} · consensus {overall:+.2f} · "
-                f"disagreement {disagreement:.2f}"
-                + (f" · {dimensions}" if dimensions else "")
+                f"disagreement {disagreement:.2f}" + (f" · {dimensions}" if dimensions else "")
             )
         else:
             self.teacher_summary.setText("No model-teacher reviews for this generation.")
@@ -291,9 +290,7 @@ class AnnotationPanel(QWidget):
             if kind == "rewards":
                 result = self.store.export_reward_jsonl(directory / "rewards.jsonl")
             elif kind == "teacher":
-                result = self.store.export_teacher_reward_jsonl(
-                    directory / "teacher_rewards.jsonl"
-                )
+                result = self.store.export_teacher_reward_jsonl(directory / "teacher_rewards.jsonl")
             elif kind == "sft":
                 result = self.store.export_training_sft_jsonl(directory / "training_sft.jsonl")
             else:
@@ -401,6 +398,7 @@ class TeacherPanel(ProcessConsole):
         expert_paths_source: Callable[[], tuple[str, ...]],
         router_source: Callable[[], str],
         before_gpu_job: Callable[[str], bool],
+        database: Path | None = None,
     ) -> None:
         super().__init__()
         self.model_source = model_source
@@ -429,7 +427,8 @@ class TeacherPanel(ProcessConsole):
         self.port.setRange(1024, 65535)
         self.port.setValue(8765)
         form.addRow("Loopback port", self.port)
-        self.database = QLineEdit(str(Path("runs/feedback/feedback.sqlite3").resolve()))
+        database = database or Path("runs/feedback/feedback.sqlite3")
+        self.database = QLineEdit(str(database.resolve()))
         form.addRow("Feedback database", _browse_row(self.database, self, file_mode=True))
         self.eager_load = QCheckBox("Load the student as soon as the server starts")
         self.eager_load.setChecked(False)
@@ -545,12 +544,22 @@ class TrainingPanel(ProcessConsole):
         before_gpu_job: Callable[[str], bool],
         export_positive_annotations: Callable[[Path], int],
         export_preference_annotations: Callable[[Path], int],
+        quick_output_root: Path | None = None,
+        annotation_dataset_root: Path | None = None,
+        quick_recipe_root: Path | None = None,
+        default_recipe: Path | None = None,
+        preference_recipe: Path | None = None,
     ) -> None:
         super().__init__()
         self.model_source = model_source
         self.before_gpu_job = before_gpu_job
         self.export_positive_annotations = export_positive_annotations
         self.export_preference_annotations = export_preference_annotations
+        self.quick_output_root = quick_output_root or Path("checkpoints/quick")
+        self.annotation_dataset_root = annotation_dataset_root or Path("runs/annotation-datasets")
+        self.quick_recipe_root = quick_recipe_root or Path("runs/recipes")
+        self.default_recipe = default_recipe
+        self.default_preference_recipe = preference_recipe
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(14, 14, 14, 14)
@@ -599,7 +608,7 @@ class TrainingPanel(ProcessConsole):
         annotations = QPushButton("Use positive annotations")
         annotations.clicked.connect(self._use_annotations)
         form.addRow("", annotations)
-        self.quick_output = QLineEdit(str((Path("checkpoints") / "quick").resolve()))
+        self.quick_output = QLineEdit(str(self.quick_output_root.resolve()))
         form.addRow("Output root", _browse_row(self.quick_output, self, file_mode=False))
 
         compact = QWidget()
@@ -669,32 +678,34 @@ class TrainingPanel(ProcessConsole):
         panel = QWidget()
         form = QFormLayout(panel)
         form.setContentsMargins(10, 12, 10, 10)
-        self.recipe_path = QLineEdit(
-            str(
-                next(
-                    (
-                        path.resolve()
-                        for path in (
-                            Path(
-                                "experiments/first-real-experts/finance-verified-recipe.json"
-                            ),
-                            Path("experiments/first-real-experts/finance-recipe.json"),
-                            Path("experiments/qwen3-1.7b-two-styles/recipe.json"),
-                        )
-                        if path.is_file()
-                    ),
-                    Path(
-                        "experiments/first-real-experts/finance-verified-recipe.json"
-                    ).resolve(),
-                )
+        recipe_candidates = (
+            (self.default_recipe,)
+            if self.default_recipe is not None
+            else (
+                Path("experiments/first-real-experts/finance-verified-recipe.json"),
+                Path("experiments/first-real-experts/finance-recipe.json"),
+                Path("experiments/qwen3-1.7b-two-styles/recipe.json"),
             )
         )
+        default_recipe = next(
+            (path.resolve() for path in recipe_candidates if path is not None and path.is_file()),
+            (
+                self.default_recipe
+                or Path("experiments/first-real-experts/finance-verified-recipe.json")
+            ).resolve(),
+        )
+        self.recipe_path = QLineEdit(str(default_recipe))
         form.addRow("Recipe", _browse_row(self.recipe_path, self, file_mode=True))
         self.expert_selector = QLineEdit()
         self.expert_selector.setPlaceholderText("Blank trains every expert in the recipe")
         form.addRow("Only expert", self.expert_selector)
         self.preference_recipe = QLineEdit(
-            str(Path("experiments/qwen3-1.7b-two-styles/preference_recipe.json").resolve())
+            str(self.default_preference_recipe.resolve())
+            if self.default_preference_recipe is not None
+            else ""
+        )
+        self.preference_recipe.setPlaceholderText(
+            "No compatible preference recipe is selected for this model lane"
         )
         form.addRow(
             "Preference recipe",
@@ -707,7 +718,7 @@ class TrainingPanel(ProcessConsole):
 
     @Slot()
     def _use_annotations(self) -> None:
-        target = Path("runs/annotation-datasets") / (
+        target = self.annotation_dataset_root / (
             datetime.now().strftime("%Y%m%d-%H%M%S") + "-positive.jsonl"
         )
         try:
@@ -797,7 +808,7 @@ class TrainingPanel(ProcessConsole):
             raise FileNotFoundError(f"Dataset does not exist: {dataset}")
         output = Path(self.quick_output.text().strip()).expanduser().resolve()
         safe_name = re.sub(r"[^A-Za-z0-9_-]+", "-", name).strip("-")
-        recipe_dir = Path("runs/recipes").resolve()
+        recipe_dir = self.quick_recipe_root.resolve()
         recipe_dir.mkdir(parents=True, exist_ok=True)
         recipe_path = recipe_dir / (datetime.now().strftime("%Y%m%d-%H%M%S") + f"-{safe_name}.json")
         payload = {

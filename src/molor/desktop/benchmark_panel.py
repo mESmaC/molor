@@ -33,6 +33,7 @@ class BenchmarkPanel(ProcessConsole):
         *,
         workspace_root: Path,
         endpoint_source: Callable[[], str] | None = None,
+        output_root: Path | None = None,
     ) -> None:
         super().__init__()
         self.workspace_root = workspace_root.expanduser().resolve()
@@ -120,7 +121,8 @@ class BenchmarkPanel(ProcessConsole):
         self.label.setPlaceholderText("Name shown in benchmark history")
         form.addRow("Run label", self.label)
 
-        self.output = QLineEdit(str(self.workspace_root / "runs" / "benchmarks"))
+        output_root = output_root or self.workspace_root / "runs" / "benchmarks"
+        self.output = QLineEdit(str(output_root.resolve()))
         form.addRow("Output root", self._directory_row(self.output, "Choose output folder"))
 
         self.baseline = QLineEdit()

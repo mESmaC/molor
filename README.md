@@ -1,17 +1,18 @@
 # MoLoRA Lab
 
 A local playground for routing and mixing complete LoRA adapters on one frozen language model.
-The current experiment uses Qwen3-1.7B, can keep an arbitrary rack of adapters resident, and
-applies the selected LoRA deltas during ordinary Hugging Face generation.
+The active daily-development lane now uses Qwen3-0.6B for faster iterations. The complete
+Qwen3-1.7B model, its four experts, promoted router, checkpoints, and benchmark evidence remain
+preserved as the promotion lane.
 
 This is model tooling for an experiment, not a product. The old `ui/` prototype is not used by the
 current runtime.
 
 ## What works now
 
-- a frozen local Qwen3-1.7B checkpoint on CUDA;
+- frozen local Qwen3-0.6B and Qwen3-1.7B checkpoints;
 - any number of simultaneously resident LoRA experts;
-- a trained prompt-level auto-router over the current four corpus experts plus base/null;
+- a preserved 1.7B prompt-level auto-router over four corpus experts plus base/null;
 - blind forced-route evaluation and conservative teacher-reward optimization for that router;
 - a versioned 64-case model benchmark with a 0–1000 quality index, category scores, paired
   checkpoint deltas, exact stack hashes, and separate TTFT/throughput measurements;
@@ -32,9 +33,9 @@ current runtime.
   plus annotation, teacher-RL, benchmark, training, and context-lab tools;
 - a terminal command that compares base, each expert, and a 50/50 blend on the same prompt.
 
-The promoted router is still the controlled five-way v4 MLP checkpoint. Its hard-negative
-curriculum improved acceptable routing from 66.7% to 73.3% on a 60-prompt blind probe while exactly
-tying v3 on the six-case executable lane. A verified-code-focused v5 candidate and a fresh
+The preserved 1.7B promotion router is still the controlled five-way v4 MLP checkpoint. Its
+hard-negative curriculum improved acceptable routing from 66.7% to 73.3% on a 60-prompt blind
+probe while exactly tying v3 on the six-case executable lane. A verified-code-focused v5 candidate and a fresh
 150-rollout five-route RL sweep both failed their held-out promotion gates, so neither changed the
 live router. The full-dialog Taskmaster coffee-API adapter passed its isolated expert gates, but a
 preregistered six-route router candidate routed 0/12 sealed Taskmaster intents and failed five
@@ -48,8 +49,9 @@ and a stronger context-aware router representation remain the next model-side pi
 
 ## Run the desktop app
 
-The local model, four corpus experts, and router checkpoint are auto-detected from `models/` and
-`checkpoints/`:
+The app now selects the complete local Qwen3-0.6B snapshot by default. Because adapter and router
+weights do not transfer across model widths, this lane intentionally starts base-only and will
+auto-select only artifacts trained under the 0.6B checkpoint namespaces:
 
 ```powershell
 .\.venv\Scripts\molor-desktop.exe
@@ -59,9 +61,23 @@ Click **Load model + selected experts**. Auto is the default route mode; the sid
 complete probability distribution and applied route before token generation begins. The resident
 rack is a checkable list, while a separate eligibility list masks experts per request without
 unloading them. Manual mode force-selects base/null or one loaded expert for comparisons. These
-rank-16 adapters live under `checkpoints/qwen3-1.7b-corpus-experts/`; the earlier rank-8 finance,
+preserved rank-16 adapters live under `checkpoints/qwen3-1.7b-corpus-experts/`; the earlier rank-8 finance,
 local-code, terminal, and CAN experiments remain available under
 `checkpoints/qwen3-1.7b-real-experts/`.
+
+To open the preserved 1.7B promotion stack atomically, launch a fresh app with `MOLOR_MODEL_ID`
+set to `models/Qwen3-1.7B`. This switches its experts, router, feedback notebook, benchmark root,
+and training paths together. The teacher CLI likewise resolves the compatible 1.7B rack when
+`--model` points to the preserved local `models/Qwen3-1.7B` directory. A hub ID remains base-only
+unless its adapters and router were trained and recorded against that exact identity.
+
+## Fast 0.6B development lane
+
+The four starting recipes in `experiments/qwen3-0.6b-development/` reuse the prepared training
+shards but write only to `checkpoints/qwen3-0.6b-corpus-experts/`. Router features, feedback, and
+desktop benchmark runs also use separate 0.6B development paths. Train and evaluate ideas here
+first, then retrain only successful ideas against the untouched 1.7B promotion lane; adapter and
+router weights themselves are never copied between bases.
 
 The current adapters are experiments, not generic upgrades:
 
@@ -104,14 +120,19 @@ for completed recorded generations, the trace is retained only as local telemetr
 ## Compare routes in the terminal
 
 ```powershell
-.\.venv\Scripts\molor-compare-experts.exe "Explain why CPU cache matters" --max-new-tokens 128
+.\.venv\Scripts\molor-compare-experts.exe "Explain why CPU cache matters" --model .\models\Qwen3-1.7B --max-new-tokens 128
 ```
 
 The base model is loaded once. The command then streams the same seeded prompt through base-only,
-Expert-A-only, Expert-B-only, and a 50/50 expert mixture. Its defaults match the desktop and can be
-overridden with `--expert-a` and `--expert-b`.
+Expert-A-only, Expert-B-only, and a 50/50 expert mixture. The command above explicitly uses the
+preserved 1.7B rack. Once two 0.6B experts exist, omitting `--model` selects the development lane;
+`--expert-a` and `--expert-b` remain available for either lane.
 
 ## Benchmark models and checkpoints
+
+The recorded scores below are 1.7B promotion evidence. New 0.6B desktop runs write under
+`runs/benchmarks/qwen3-0.6b-development/` and must establish a separate baseline before any
+cross-scale interpretation.
 
 Run the 30-case quick suite against the currently loaded teacher API:
 
@@ -262,11 +283,13 @@ Misses and full probability vectors are retained under `runs/evaluation/`.
 
 ## Manual rewards and preference training
 
-Feedback stays local in `runs/feedback/feedback.sqlite3`. Export all three training views from the
-desktop Annotation tab or from the terminal:
+Feedback stays local. The 0.6B desktop uses
+`runs/qwen3-0.6b-development/feedback/feedback.sqlite3`; the preserved 1.7B notebook remains at
+`runs/feedback/feedback.sqlite3`. Export all three training views from the desktop Annotation tab.
+The terminal exporter still accepts explicit `--db` and `--output-dir` paths:
 
 ```powershell
-.\.venv\Scripts\molor-feedback.exe
+.\.venv\Scripts\molor-feedback.exe --db .\runs\qwen3-0.6b-development\feedback\feedback.sqlite3 --output-dir .\runs\qwen3-0.6b-development\feedback\exports
 ```
 
 After saving at least one chosen/rejected pair, train a fresh preference adapter:
@@ -355,8 +378,10 @@ python -m pip install torch --index-url https://download.pytorch.org/whl/cu128
 python -m pip install -e ".[hf,desktop]"
 ```
 
-The default model path is `models/Qwen3-1.7B`. A different local checkpoint or Hugging Face model
-ID can be entered directly in the desktop app.
+The default model path is the complete local `models/Qwen3-0.6B` snapshot. Set `MOLOR_MODEL_ID`
+before launching to select another complete model stack. Changing the field to a different base
+inside an open app is intentionally blocked at load time because its experts, router, feedback,
+benchmark, and training namespaces are fixed together at launch.
 
 ## Useful code
 
@@ -375,6 +400,7 @@ ID can be entered directly in the desktop app.
 - `experiments/business-expert/source_manifest.json` - large-scale business, marketing,
   investing, funding, finance, operations, case-generation, and business-RL sources;
 - `experiments/first-real-experts/README.md` - trained adapters, dataset decisions, and evaluations;
+- `experiments/qwen3-0.6b-development/` - isolated fast-iteration recipes for the 0.6B lane;
 - `src/molor/experimental/mixture.py` - real Transformer instrumentation, routing, streaming, and
   adapter serialization;
 - `src/molor/training/` - assistant-only collation and the small sequential SFT loop;

@@ -1,0 +1,39 @@
+{
+  "model_id": "../../models/Qwen3-0.6B",
+  "output_dir": "../../checkpoints/qwen3-0.6b-corpus-experts",
+  "dtype": "bfloat16",
+  "device": "cuda",
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "rank": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "max_length": 1024,
+  "epochs": 1,
+  "learning_rate": 0.00005,
+  "lr_scheduler": "cosine",
+  "warmup_ratio": 0.03,
+  "weight_decay": 0.01,
+  "micro_batch_size": 2,
+  "gradient_accumulation_steps": 4,
+  "gradient_checkpointing": true,
+  "checkpoint_every_steps": 250,
+  "max_grad_norm": 1.0,
+  "seed": 73,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  },
+  "experts": [
+    {
+      "name": "software-architecture-v1",
+      "dataset": "../first-real-experts/data/software-architecture-v1.jsonl"
+    }
+  ]
+}

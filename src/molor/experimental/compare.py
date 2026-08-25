@@ -15,29 +15,15 @@ from molor.experimental.mixture import (
     GenerationStats,
     MixtureEngine,
 )
-
-def _first_existing(*candidates: str) -> Path:
-    for candidate in candidates:
-        path = Path(candidate)
-        if path.is_dir():
-            return path
-    return Path(candidates[-1])
-
-
-DEFAULT_MODEL = Path("models/Qwen3-1.7B")
-DEFAULT_EXPERT_A = _first_existing(
-    "checkpoints/qwen3-1.7b-corpus-experts/embedded-knowledge-v1",
-    "checkpoints/qwen3-1.7b-corpus-experts/software-architecture-v1",
-    "checkpoints/qwen3-1.7b-real-experts/financial-analysis-verified",
-    "checkpoints/qwen3-1.7b-real-experts/financial-analysis",
-    "checkpoints/qwen3-1.7b-two-styles/precision",
+from molor.model_profiles import (
+    corpus_expert_root,
+    default_model,
+    runtime_artifact_defaults,
 )
-DEFAULT_EXPERT_B = _first_existing(
-    "checkpoints/qwen3-1.7b-corpus-experts/ocb-can-verified-v1",
-    "checkpoints/qwen3-1.7b-real-experts/local-embedded-code",
-    "checkpoints/qwen3-1.7b-real-experts/terminal-cli",
-    "checkpoints/qwen3-1.7b-two-styles/creative",
-)
+
+
+_WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
+DEFAULT_MODEL = default_model(_WORKSPACE_ROOT)
 DEFAULT_PROMPT = (
     "Explain how embedded C firmware should decode a signed CAN signal safely, including "
     "bit layout, scaling, range checks, and failure handling."
@@ -58,6 +44,19 @@ def _adapter_config(directory: Path) -> dict[str, Any]:
     ):
         raise SystemExit(f"Adapter config {config_path} has invalid target_modules")
     return payload
+
+
+def _complete_adapter(directory: Path) -> bool:
+    try:
+        return all(
+            path.is_file() and path.stat().st_size > 0
+            for path in (
+                directory / "adapter_config.json",
+                directory / "adapter_model.safetensors",
+            )
+        )
+    except OSError:
+        return False
 
 
 def _shared_targets(expert_a: Path, expert_b: Path) -> tuple[str, ...]:
@@ -118,14 +117,14 @@ def _run_route(
         _print_stats(terminal)
 
 
-def main() -> None:
+def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Compare two resident LoRA experts and their 50/50 mixture."
     )
     parser.add_argument("prompt", nargs="?", default=DEFAULT_PROMPT)
     parser.add_argument("--model", default=str(DEFAULT_MODEL))
-    parser.add_argument("--expert-a", type=Path, default=DEFAULT_EXPERT_A)
-    parser.add_argument("--expert-b", type=Path, default=DEFAULT_EXPERT_B)
+    parser.add_argument("--expert-a", type=Path, default=None)
+    parser.add_argument("--expert-b", type=Path, default=None)
     parser.add_argument("--max-new-tokens", type=int, default=128)
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top-p", type=float, default=0.8)
@@ -137,10 +136,38 @@ def main() -> None:
         action="store_true",
         help="allow Hugging Face network access when the model is not local",
     )
-    args = parser.parse_args()
+    return parser
 
-    expert_a = args.expert_a.resolve()
-    expert_b = args.expert_b.resolve()
+
+def _default_experts(model: str) -> tuple[Path | None, Path | None]:
+    artifacts = runtime_artifact_defaults(model, _WORKSPACE_ROOT)
+    root = corpus_expert_root(model, _WORKSPACE_ROOT)
+    expert_a = Path(artifacts.expert_a) if artifacts.expert_a else None
+    expert_b = Path(artifacts.expert_b) if artifacts.expert_b else None
+    if root is not None:
+        expert_a = expert_a or root / "embedded-knowledge-v1"
+        expert_b = expert_b or root / "ocb-can-verified-v1"
+    return expert_a, expert_b
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = _parser()
+    args = parser.parse_args(argv)
+
+    default_expert_a, default_expert_b = _default_experts(args.model)
+    if args.expert_a is None and default_expert_a is None:
+        parser.error("unknown model lane: pass --expert-a")
+    if args.expert_b is None and default_expert_b is None:
+        parser.error("unknown model lane: pass --expert-b")
+
+    expert_a = (args.expert_a or default_expert_a).resolve()
+    expert_b = (args.expert_b or default_expert_b).resolve()
+    for option, path in (("--expert-a", expert_a), ("--expert-b", expert_b)):
+        if not _complete_adapter(path):
+            parser.error(
+                f"{option} has no complete compatible adapter at {path}; "
+                "train the lane expert or pass an explicit checkpoint"
+            )
     targets = _shared_targets(expert_a, expert_b)
     model_id = _local_or_hub_model(args.model)
     print(f"Loading {model_id} in bfloat16; projections: {', '.join(targets)}", flush=True)
