@@ -1,0 +1,94 @@
+{
+  "schema_version": "molor.expert-promotion-policy.v2",
+  "policy_id": "taskmaster-coffee-api-v2-full-dialog-heldout-generation",
+  "candidate": "taskmaster-coffee-api-v2-full-dialog-r16",
+  "candidate_posture": "quarantine_until_every_gate_passes",
+  "selection": {
+    "training_runs": 1,
+    "seed": 241104,
+    "epochs": 1,
+    "checkpoint_selection": "the final checkpoint from the single predeclared run",
+    "test_access": "open the v2 test only after the checkpoint, all artifact identities, and the evaluator/comparator readiness requirements are frozen"
+  },
+  "dataset_contract": {
+    "dataset_id": "taskmaster-coffee-api-v2",
+    "source_scope": "pinned TM-4-2024/data full-dialog annotations only",
+    "v1_reward_source_conversation_overlap_required": 0,
+    "v1_overlap_scope": "every source_record in the exact v1 train, validation, and test emitted-provenance sidecars; 1,623 unique accepted v1 source conversations in the current pinned artifacts",
+    "grouping": "connected components of conversation IDs sharing an exact decision context",
+    "tool_catalog_source": "train split only",
+    "artifact_identity_inputs": {
+      "builder_sha256": "dc3c1cb78257b18573fcbf8f1d00b21b994ef0c624d4ee5107358a8a37d779ae",
+      "source_manifest_sha256": "f5b54615f2ec1e9e50733dfd5be1af97c709d838b0c9acce1107bcea9e2240f0",
+      "recipe_sha256": "68c18fc4159acc37bcd100910548926fff4f44c5dbe26e819085b80525bce1e2",
+      "output_hash_authority": "the deterministic v2 build report; the training receipt must additionally bind the final policy and build-report hashes"
+    }
+  },
+  "evaluation": {
+    "status": "blocked_pending_candidate_training_and_sealed_preaccess_receipt",
+    "dataset": "data/taskmaster-coffee-api-v2.test.evaluation.jsonl",
+    "route": "forced candidate, frozen base/null, and quarantined v1 on the same fresh holdout",
+    "generation": {
+      "do_sample": false,
+      "enable_thinking": false,
+      "max_prompt_tokens": 2048,
+      "max_new_tokens": 192
+    },
+    "test_access_guard": "Do not open or score the v2 test until every readiness requirement below has a content identity recorded in a separate evaluation receipt.",
+    "required_before_test_access": [
+      "a v2-compatible evaluator that accepts v2 schema/example IDs and the dynamic train-derived system prompt, identified by SHA-256",
+      "a frozen metric contract defining JSON, schema, API-name, argument, and semantic exactness, identified by SHA-256",
+      "the quarantined v1 comparator adapter_config.json and adapter_model.safetensors SHA-256 identities plus its base-model fingerprint",
+      "a receipt binding evaluator, metric contract, comparator, v2 test-evaluation file, generation settings, and candidate checkpoint before first test access"
+    ]
+  },
+  "minimum_rates": {
+    "json_parseable": 0.98,
+    "schema_valid": 0.98,
+    "api_name_exact": 0.85,
+    "arguments_exact": 0.7,
+    "semantic_exact": 0.6
+  },
+  "minimum_absolute_improvement_over_base": {
+    "api_name_exact": 0.1,
+    "arguments_exact": 0.1,
+    "semantic_exact": 0.1
+  },
+  "fresh_v1_comparator_gate": "The v2 candidate must not trail v1 on API-name, argument, or semantic exactness on this v2 holdout.",
+  "training_artifact_contract": {
+    "base_artifact": {
+      "path": "models/Qwen3-1.7B",
+      "hash_policy": "sha256-full-read-every-file",
+      "content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+      "includes": "model shards, config, tokenizer, tokenizer configuration, and chat template"
+    },
+    "required_file_identities": [
+      "builder_sha256",
+      "source_manifest_sha256",
+      "recipe_sha256",
+      "policy_sha256",
+      "build_report_sha256",
+      "train_dataset_sha256",
+      "train_provenance_sha256",
+      "tool_catalog_sha256",
+      "trainer_source_tree_sha256"
+    ],
+    "trainer_source_contract": {
+      "hash_policy": "sha256-full-read-canonical-relative-path-tree-v1",
+      "scope": "pyproject.toml, every src/molor/**/*.py file, and the v2 receipt sealer and fixed training launcher",
+      "content_fingerprint": "d858d06ee7ce2e9840c19ac59d8d74d606f52fea2b4a7d8598344a40c2809f58"
+    },
+    "required_dependency_versions": {
+      "python": "3.12.10",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "peft": "0.20.0",
+      "accelerate": "1.14.0",
+      "safetensors": "0.8.0"
+    },
+    "receipt_rule": "Do not start training unless a content-addressed receipt binds every required identity and verifies the base/dependency contract."
+  },
+  "decision_rule": "Every dataset, provenance, identity, held-out minimum, base-improvement, and fresh-v1 comparator gate must pass; otherwise keep the checkpoint quarantined and out of discovery, defaults, and router training.",
+  "reuse_policy": "The v2 test becomes exposed after its single final scoring. Never tune, select, threshold-adjust, or train against it.",
+  "registration_policy": "Passing this expert policy does not authorize router or default-rack registration; those require a separately sealed six-route router evaluation."
+}

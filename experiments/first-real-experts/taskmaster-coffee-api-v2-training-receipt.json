@@ -1,0 +1,577 @@
+{
+  "schema_version": "molor.taskmaster-coffee-api-training-receipt.v2",
+  "dataset_id": "taskmaster-coffee-api-v2",
+  "candidate": "taskmaster-coffee-api-v2-full-dialog-r16",
+  "posture": "sealed_for_single_quarantined_training_run_only",
+  "identities": {
+    "builder_sha256": "dc3c1cb78257b18573fcbf8f1d00b21b994ef0c624d4ee5107358a8a37d779ae",
+    "source_manifest_sha256": "f5b54615f2ec1e9e50733dfd5be1af97c709d838b0c9acce1107bcea9e2240f0",
+    "recipe_sha256": "68c18fc4159acc37bcd100910548926fff4f44c5dbe26e819085b80525bce1e2",
+    "policy_sha256": "5247ce8565e4dfe660cc8c636e13e17adbca6374dfea101b1ac765a3021f846c",
+    "build_report_sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15",
+    "train_dataset_sha256": "500ac9caa235497f9fb86d1749911d50c0a494136050eb91cd1b807c8689d209",
+    "train_provenance_sha256": "145dfcd83f734f57be0196ac36e58a1a1e1728464cd96cc53e6b1db6849efa0f",
+    "tool_catalog_sha256": "7207662fbccd1146fc8582a40be350de83e9a1053f477db3883bbb76614c88d1",
+    "trainer_source_tree_sha256": "d858d06ee7ce2e9840c19ac59d8d74d606f52fea2b4a7d8598344a40c2809f58"
+  },
+  "input_descriptors": {
+    "builder": {
+      "path": "build_taskmaster_coffee_api_v2.py",
+      "sha256": "dc3c1cb78257b18573fcbf8f1d00b21b994ef0c624d4ee5107358a8a37d779ae",
+      "size_bytes": 59162
+    },
+    "source_manifest": {
+      "path": "taskmaster-coffee-api-v2-source.json",
+      "sha256": "f5b54615f2ec1e9e50733dfd5be1af97c709d838b0c9acce1107bcea9e2240f0",
+      "size_bytes": 2043
+    },
+    "recipe": {
+      "path": "taskmaster-coffee-api-v2-recipe.json",
+      "sha256": "68c18fc4159acc37bcd100910548926fff4f44c5dbe26e819085b80525bce1e2",
+      "size_bytes": 867
+    },
+    "policy": {
+      "path": "taskmaster-coffee-api-v2-evaluation-policy.json",
+      "sha256": "5247ce8565e4dfe660cc8c636e13e17adbca6374dfea101b1ac765a3021f846c",
+      "size_bytes": 5099
+    },
+    "build_report": {
+      "path": "taskmaster-coffee-api-v2.build-report.json",
+      "sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15",
+      "size_bytes": 10953
+    },
+    "train_dataset": {
+      "path": "taskmaster-coffee-api-v2.train.jsonl",
+      "rows": 11626,
+      "sha256": "500ac9caa235497f9fb86d1749911d50c0a494136050eb91cd1b807c8689d209",
+      "size_bytes": 35960395
+    },
+    "train_provenance": {
+      "path": "taskmaster-coffee-api-v2.train.provenance.jsonl",
+      "rows": 11626,
+      "sha256": "145dfcd83f734f57be0196ac36e58a1a1e1728464cd96cc53e6b1db6849efa0f",
+      "size_bytes": 15492514
+    },
+    "tool_catalog": {
+      "path": "taskmaster-coffee-api-v2.tool-catalog.json",
+      "sha256": "7207662fbccd1146fc8582a40be350de83e9a1053f477db3883bbb76614c88d1",
+      "size_bytes": 3189
+    },
+    "trainer_source_tree": {
+      "hash_policy": "sha256-full-read-canonical-relative-path-tree-v1",
+      "content_fingerprint": "d858d06ee7ce2e9840c19ac59d8d74d606f52fea2b4a7d8598344a40c2809f58",
+      "files": [
+        {
+          "name": "experiments/first-real-experts/run_taskmaster_coffee_api_v2_training.py",
+          "size_bytes": 9582,
+          "sha256": "c352eaa75a23ae00a6d50ade5502a1e6ee1f254392143e4208508b21fcf98df0"
+        },
+        {
+          "name": "experiments/first-real-experts/seal_taskmaster_coffee_api_v2_training.py",
+          "size_bytes": 22874,
+          "sha256": "5c2a915b736642df2d18b23d881e3963677cba92f3008d02ebbc9e3e466ba2eb"
+        },
+        {
+          "name": "pyproject.toml",
+          "size_bytes": 1403,
+          "sha256": "7fcda2e277f06022bbccf65de66ecc382ab6b302779de3d03c1e05c465625342"
+        },
+        {
+          "name": "src/molor/__init__.py",
+          "size_bytes": 1206,
+          "sha256": "2f1000f43bae7878a234d418667aaeaa954a4648b42cc7bcb4cd9398c482eace"
+        },
+        {
+          "name": "src/molor/benchmark/__init__.py",
+          "size_bytes": 324,
+          "sha256": "97b88b51c9e2ce572aaa6cd8c1f6488ed82cf89cee006d26b093decbb215c7a1"
+        },
+        {
+          "name": "src/molor/benchmark/backends.py",
+          "size_bytes": 29374,
+          "sha256": "7deaef282a3b0af91e2eba5163499fe824ea1c93738738d29e3fb94d6911f16f"
+        },
+        {
+          "name": "src/molor/benchmark/cli.py",
+          "size_bytes": 13408,
+          "sha256": "b5b1cf5e59fcb03efef9ea4689fdf694284127464250a57179fe2a1d0fa96e91"
+        },
+        {
+          "name": "src/molor/benchmark/evaluation.py",
+          "size_bytes": 23532,
+          "sha256": "9a1c73e15682a3d6a38ba45ea4d139298aa5e8d59fd8b09a4a94ca57086718ea"
+        },
+        {
+          "name": "src/molor/benchmark/lock.py",
+          "size_bytes": 12831,
+          "sha256": "803aea4e1b0f9916a501298f2053bbdac34e9cc8bbf385c3185ce1f69ef20294"
+        },
+        {
+          "name": "src/molor/benchmark/matrix.py",
+          "size_bytes": 11336,
+          "sha256": "e066b6622891f4e339646c3823a7637c6df21e6fd665bf639d019aee7bdce445"
+        },
+        {
+          "name": "src/molor/benchmark/models.py",
+          "size_bytes": 14290,
+          "sha256": "ec96d78281c515b976a42f3e4276784cc7066a990914f0a0c8f1e80030441592"
+        },
+        {
+          "name": "src/molor/benchmark/runner.py",
+          "size_bytes": 61311,
+          "sha256": "5e409ee8550235bb475790545554b5d4c317b75d6efe345c2479442c907ab5a4"
+        },
+        {
+          "name": "src/molor/benchmark/scoring.py",
+          "size_bytes": 16719,
+          "sha256": "9ca6f724b4bf13761df0317e9794fff101d77a6e2076875f5bb2eb1e49087d6e"
+        },
+        {
+          "name": "src/molor/benchmark/standard.py",
+          "size_bytes": 15031,
+          "sha256": "689317f758ead41227fb2040f0a06d2dbee06a75028058ecabbb3f1918be6172"
+        },
+        {
+          "name": "src/molor/benchmark/wsl_verifier.py",
+          "size_bytes": 31709,
+          "sha256": "5a2cd6e46c90b592c018428fac17b067a5521844f534b1fb4b8ef184b1973c64"
+        },
+        {
+          "name": "src/molor/config.py",
+          "size_bytes": 5361,
+          "sha256": "371bec04d68761f1b17986485689bd2f119ba514f385d7c69892bd1e081649de"
+        },
+        {
+          "name": "src/molor/desktop/__init__.py",
+          "size_bytes": 470,
+          "sha256": "3bc9b027c2eb45f61b049b2d57ccf029d6a3f3a4a4190a4b73d653c2c258280c"
+        },
+        {
+          "name": "src/molor/desktop/adapter_catalog.py",
+          "size_bytes": 4884,
+          "sha256": "a04563edf9af9f50183274e9bc29239c089a2e42ca7031969d9c1eba6b40ef50"
+        },
+        {
+          "name": "src/molor/desktop/app.py",
+          "size_bytes": 63119,
+          "sha256": "e7838e6f59c6d3ea45acbcbd34d46f10bb5e687d155ecaf72e79e09b30b21145"
+        },
+        {
+          "name": "src/molor/desktop/backend.py",
+          "size_bytes": 24582,
+          "sha256": "ebed7f12107896024222fdf209ed98fb1374a77eacfee1bc9fe5de997975edcd"
+        },
+        {
+          "name": "src/molor/desktop/benchmark_panel.py",
+          "size_bytes": 12595,
+          "sha256": "01de3f21b88052f6329f659dde9e81b73007a6c48cbc85013fc06868a0b996e9"
+        },
+        {
+          "name": "src/molor/desktop/chat_view.py",
+          "size_bytes": 13692,
+          "sha256": "0dd2398d9f66bf3697347c1be1b8f5c0f103a1ceae5be798a1090ebb288162f1"
+        },
+        {
+          "name": "src/molor/desktop/launch.py",
+          "size_bytes": 494,
+          "sha256": "5efa604dbc5b4a6a14c110a87c6f398726a3bf747b3d5dc05edc0190de6e103e"
+        },
+        {
+          "name": "src/molor/desktop/panels.py",
+          "size_bytes": 40193,
+          "sha256": "62f3b48038ce2ac47abf383451e5223d42f0bc1bc2b2e5a84c24caaebbef6df6"
+        },
+        {
+          "name": "src/molor/experimental/__init__.py",
+          "size_bytes": 1375,
+          "sha256": "74fcdc8450db6371ab52b54171499ad628112eff688305381f2eb0fa67d66ea8"
+        },
+        {
+          "name": "src/molor/experimental/atxy_kv.py",
+          "size_bytes": 17578,
+          "sha256": "a2f72c89eb4223c94b5c04a03816d7f3bab1f918a3f9268db66420676c3ba6d3"
+        },
+        {
+          "name": "src/molor/experimental/atxy_kv_lab.py",
+          "size_bytes": 30636,
+          "sha256": "ad7d676b4f92668187a5d628576e0bf9647ebf4d58f7c77b2089f2eebd7787b2"
+        },
+        {
+          "name": "src/molor/experimental/atxy_pages.py",
+          "size_bytes": 3934,
+          "sha256": "5b67ff9343f31e7fb9c9d443137ea5ab007e0ce3ac2baa9185018ad50d508212"
+        },
+        {
+          "name": "src/molor/experimental/atxy_vq.py",
+          "size_bytes": 14808,
+          "sha256": "0ac9c8352d0791d19ee97e1b203a4b3fdbb834a22f5cf2ceabfa7ec8da7e822a"
+        },
+        {
+          "name": "src/molor/experimental/atxy_vq_lab.py",
+          "size_bytes": 25414,
+          "sha256": "3f586c48359bfc756d788fe97e17c8390b81a64367f8f204564cff914a80c583"
+        },
+        {
+          "name": "src/molor/experimental/atxy_vq_stack.py",
+          "size_bytes": 8735,
+          "sha256": "2894409cf120a8615a115c5b6fda2f5f55dbcc08b33d1e409f7b004680ac7b3c"
+        },
+        {
+          "name": "src/molor/experimental/autorouter.py",
+          "size_bytes": 25393,
+          "sha256": "a811488c47cb672d9062dda45a5d7b10be726f5808928e127383b60636c3fd29"
+        },
+        {
+          "name": "src/molor/experimental/cache_lab.py",
+          "size_bytes": 13264,
+          "sha256": "a387afad0aa108709a22dbb376203709c1303759d07cbfbcdc045393338d906e"
+        },
+        {
+          "name": "src/molor/experimental/compare.py",
+          "size_bytes": 6046,
+          "sha256": "b8e38815e8d5b3e0f5268c601a87e7312b5c8aaf864f5486fe1e011ef138a019"
+        },
+        {
+          "name": "src/molor/experimental/hashed_kv.py",
+          "size_bytes": 28847,
+          "sha256": "0a1f6dd686773d565fe609bdee76151a8d3c6b1147d3552a38cc07f333b56e5f"
+        },
+        {
+          "name": "src/molor/experimental/hashed_kv_lab.py",
+          "size_bytes": 31049,
+          "sha256": "e4e6f2049968bc87bd407441a7ee610f166f1ed3876d53d722e60330e9a15abf"
+        },
+        {
+          "name": "src/molor/experimental/mixture.py",
+          "size_bytes": 33973,
+          "sha256": "1522ce26a482c381cba5d7ddfcf14e7f4215338c99bd54aa7386c8fc5e4b2269"
+        },
+        {
+          "name": "src/molor/feedback/__init__.py",
+          "size_bytes": 506,
+          "sha256": "e615ca1284d062e8d4130853075f85403eab338c740374a1187bc0dd3f42d55e"
+        },
+        {
+          "name": "src/molor/feedback/cli.py",
+          "size_bytes": 1133,
+          "sha256": "e2397d02f4e95230da08777225e04334d6e8b223fe9b8f224ecc3edfa99d3ab3"
+        },
+        {
+          "name": "src/molor/feedback/models.py",
+          "size_bytes": 2450,
+          "sha256": "7bae5d2c55e7cf3c7abaa8b2fd99f0c78f10737c89919590948ff5f3f425d5dc"
+        },
+        {
+          "name": "src/molor/feedback/store.py",
+          "size_bytes": 36436,
+          "sha256": "075cbb5da2f31526d0d0c680e0d1a7f722f901ae370aadf64105ef49592a70f5"
+        },
+        {
+          "name": "src/molor/identity.py",
+          "size_bytes": 3364,
+          "sha256": "0a09553cecd37fcaa9bfb77d7070d188a67fb74d71045fb6d97c0a82371c9de4"
+        },
+        {
+          "name": "src/molor/layer.py",
+          "size_bytes": 4384,
+          "sha256": "f3de954d39ff3172d5d921f33de93562c1ee256bb1f6d71e370d52e1da2305d5"
+        },
+        {
+          "name": "src/molor/loading/__init__.py",
+          "size_bytes": 1737,
+          "sha256": "f31e2d311c4088d39c4dadbb9cd04aadd80c84a2a18cb2dc489046eed37ed11b"
+        },
+        {
+          "name": "src/molor/loading/artifacts.py",
+          "size_bytes": 15297,
+          "sha256": "5a0137b5ffa32603b0fa40110e9e3ae92b1f1009f36a6ed589038d723ea97680"
+        },
+        {
+          "name": "src/molor/loading/serialization.py",
+          "size_bytes": 9668,
+          "sha256": "4e8d15025234bf8951dae8bfbb3a8cc8f7f91bef6ea7db0f2ed6ebfdbaf97503"
+        },
+        {
+          "name": "src/molor/loading/transformers.py",
+          "size_bytes": 29850,
+          "sha256": "b97d306883e7ab89d91193143d47abd6521214b3f57a3bdaa25950e9738a3f48"
+        },
+        {
+          "name": "src/molor/lora_bank.py",
+          "size_bytes": 11892,
+          "sha256": "7b1c0043bf4751efae27756e46d231384435c7635e411e2c7d7ce1124be9afa1"
+        },
+        {
+          "name": "src/molor/manifests.py",
+          "size_bytes": 29332,
+          "sha256": "b2f675cb0d9c87e838d45471254653e6a5afcc27a04d70b7d810c6c99fba4998"
+        },
+        {
+          "name": "src/molor/memory/__init__.py",
+          "size_bytes": 819,
+          "sha256": "0489b8bbf713cceb678d01843a2cd243775b653d49190b206feaa2b374a6fc5e"
+        },
+        {
+          "name": "src/molor/memory/store.py",
+          "size_bytes": 64559,
+          "sha256": "18e92b395c40c6c6b6ca7cd121d0a5684fbf6d0524415c3db6e655a2c86146a4"
+        },
+        {
+          "name": "src/molor/memory/types.py",
+          "size_bytes": 28539,
+          "sha256": "57985471c77c0ed3ff958bc68ba3974e596ae02cbb7ea89b02560ffc7a295e2a"
+        },
+        {
+          "name": "src/molor/rewards/__init__.py",
+          "size_bytes": 1449,
+          "sha256": "928d9c5d667ce6faa3b659c0d03eddbd046bb32fbb66940963442ca431e96634"
+        },
+        {
+          "name": "src/molor/rewards/base.py",
+          "size_bytes": 1370,
+          "sha256": "d72fbda6d829819bf1030208b72ef5d67a8e8472f8e0d929b28e555541f904b3"
+        },
+        {
+          "name": "src/molor/rewards/contract.py",
+          "size_bytes": 23518,
+          "sha256": "33d7877e1bd6b3cfe9bfc0d8c5a9d20c1259db81484a10666ed77469eb70f716"
+        },
+        {
+          "name": "src/molor/rewards/external.py",
+          "size_bytes": 5162,
+          "sha256": "ae456e768a1a4f6db3c77c5163bd18b51cce5476eeb891caf50c26c7ff834098"
+        },
+        {
+          "name": "src/molor/rewards/finance.py",
+          "size_bytes": 27621,
+          "sha256": "6bf4499dcd63d6501135d158b1c03b0a739d5862c1f2ffe14d0b3dd563701526"
+        },
+        {
+          "name": "src/molor/rewards/groups.py",
+          "size_bytes": 2897,
+          "sha256": "34b22fecd50fecce5db53541e587cadd9208c37cc7c5e5e74aa98c858099e8ac"
+        },
+        {
+          "name": "src/molor/rewards/table.py",
+          "size_bytes": 33941,
+          "sha256": "d5056770860a3218490705049305bca2cd760cb6473f3f5f3024287550dffada"
+        },
+        {
+          "name": "src/molor/rewards/types.py",
+          "size_bytes": 6004,
+          "sha256": "c7b87b8bfce02cdc977e58c45c543f79985273f8813bb34d5ebcd0f2712936e2"
+        },
+        {
+          "name": "src/molor/rewards/verifiers.py",
+          "size_bytes": 14934,
+          "sha256": "e15ab43f2daeeea2023c7bbced8ba3cea5c985cf69432e80111618d4f64ffcd3"
+        },
+        {
+          "name": "src/molor/router.py",
+          "size_bytes": 8017,
+          "sha256": "475d53fbd22585132dd0cc35c57bd2dc4700687ffa200a0d3b3c9dc2eb884068"
+        },
+        {
+          "name": "src/molor/runtime/__init__.py",
+          "size_bytes": 2296,
+          "sha256": "1d66b1dab09b005f229e78bdac5044a283a188a853eaa929ab49ca5ffe2cd775"
+        },
+        {
+          "name": "src/molor/runtime/coordinator.py",
+          "size_bytes": 41766,
+          "sha256": "0df4bc58ebbe7c3fef561971bb02aae526157262a08a313b3cd23fd9957d3c60"
+        },
+        {
+          "name": "src/molor/runtime/deterministic.py",
+          "size_bytes": 8559,
+          "sha256": "989fe2bf78405cda5d627e6b95b0913455e87ec90d10d9a8e16bfced0c6ac169"
+        },
+        {
+          "name": "src/molor/runtime/execution.py",
+          "size_bytes": 46494,
+          "sha256": "f8570ccbbd78b525d4b1a483bb6bef01919db590ac4c057f62fa7eb24706b98a"
+        },
+        {
+          "name": "src/molor/runtime/http.py",
+          "size_bytes": 37251,
+          "sha256": "74b6c359a576f90630a3548cea97096aa418439a3bbaef7d7522df4a717385f4"
+        },
+        {
+          "name": "src/molor/runtime/manifests.py",
+          "size_bytes": 8556,
+          "sha256": "fda03de6d8a3013020a4646c6a3141fe6eccb1762305f7d34184920c1f849aa8"
+        },
+        {
+          "name": "src/molor/runtime/service.py",
+          "size_bytes": 8409,
+          "sha256": "c340adce3131b01f9af23dbffd8856eb686fa609faeb7e0b98370df1d8aedade"
+        },
+        {
+          "name": "src/molor/runtime/smoke.py",
+          "size_bytes": 11457,
+          "sha256": "a6e731d45fa7a56479f736837b1d7058161fe1af15947b1c156ad31c0b539ac7"
+        },
+        {
+          "name": "src/molor/teacher/__init__.py",
+          "size_bytes": 274,
+          "sha256": "0e42e8cd8a3a85526f917bab457277e3f3a3df56cc902320aeff9793d983e4c5"
+        },
+        {
+          "name": "src/molor/teacher/cli.py",
+          "size_bytes": 8138,
+          "sha256": "102d142624a360ca861b00793ea4905a310868dc674ce8d1fb38858d83216a2b"
+        },
+        {
+          "name": "src/molor/teacher/protocol.py",
+          "size_bytes": 11035,
+          "sha256": "61702765fe3af4829413533c41b23401cb880760a33f1beac23a3d5bd26de9bc"
+        },
+        {
+          "name": "src/molor/teacher/server.py",
+          "size_bytes": 7832,
+          "sha256": "6109fc5400c3f1b1169e8c5d7d042be7ba13042e48ea2bf6ec3105d3d98ba200"
+        },
+        {
+          "name": "src/molor/teacher/service.py",
+          "size_bytes": 24617,
+          "sha256": "6e06aa63f1dba888c8ccbbcaac83ef14f23be8363472d5d07334c781f69c3cd7"
+        },
+        {
+          "name": "src/molor/training/__init__.py",
+          "size_bytes": 1322,
+          "sha256": "51e227e1ffb832062d3d8352946bb298a0569587842096b959b51153a339935f"
+        },
+        {
+          "name": "src/molor/training/cli.py",
+          "size_bytes": 2648,
+          "sha256": "c4a88534563b1307512e24e2892670ceea71de8d14cbe7d40e9e996a918d7fc2"
+        },
+        {
+          "name": "src/molor/training/data.py",
+          "size_bytes": 7085,
+          "sha256": "3f5cc3e8c88817a2fa7095353a5e4a0c7f8faa049dad6ed5fdcee84e9ba24f71"
+        },
+        {
+          "name": "src/molor/training/preference.py",
+          "size_bytes": 10698,
+          "sha256": "370c9d83f677598d1a36c22ba25f23c5872197d6a3ac76e3a7e012e62d976da9"
+        },
+        {
+          "name": "src/molor/training/preference_cli.py",
+          "size_bytes": 1786,
+          "sha256": "c3d9ea56b4fb11a0f2715282ccc598bb67238d4668286043d6a598da10ee93e7"
+        },
+        {
+          "name": "src/molor/training/recipe.py",
+          "size_bytes": 6084,
+          "sha256": "fbd695d6232e2fc819bf3922516a97f44dbce9d7dd8c90bae5df4497769510dc"
+        },
+        {
+          "name": "src/molor/training/router.py",
+          "size_bytes": 32618,
+          "sha256": "b3c30e3997b63fec0b09680a4df88482316321adb0efce922b8eda693c97ad37"
+        },
+        {
+          "name": "src/molor/training/router_cli.py",
+          "size_bytes": 6135,
+          "sha256": "a4cdfa4da16b5cf94423416c24ecbd429ae6a2154f3ea531c0c0c8b6715a7d47"
+        },
+        {
+          "name": "src/molor/training/sft.py",
+          "size_bytes": 19318,
+          "sha256": "12f153c40ddf6e1f1acb7fa9e8701fb793096601b78e9d44231989c3d250d16c"
+        }
+      ]
+    }
+  },
+  "base_artifact": {
+    "role": "base",
+    "content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+    "size_bytes": 4079424497,
+    "files": [
+      {
+        "name": "added_tokens.json",
+        "size_bytes": 707,
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+      },
+      {
+        "name": "config.json",
+        "size_bytes": 726,
+        "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+      },
+      {
+        "name": "generation_config.json",
+        "size_bytes": 239,
+        "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+      },
+      {
+        "name": "merges.txt",
+        "size_bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      {
+        "name": "model-00001-of-00002.safetensors",
+        "size_bytes": 3441185608,
+        "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5"
+      },
+      {
+        "name": "model-00002-of-00002.safetensors",
+        "size_bytes": 622329984,
+        "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9"
+      },
+      {
+        "name": "model.safetensors.index.json",
+        "size_bytes": 25605,
+        "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d"
+      },
+      {
+        "name": "special_tokens_map.json",
+        "size_bytes": 613,
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+      },
+      {
+        "name": "tokenizer.json",
+        "size_bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "name": "tokenizer_config.json",
+        "size_bytes": 9675,
+        "sha256": "5a7303fcb1a27ede63134a2cbd61d5282c247ca6d769ce4746d4ffa124aedd63"
+      },
+      {
+        "name": "vocab.json",
+        "size_bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    ],
+    "complete": true
+  },
+  "dependency_versions": {
+    "python": "3.12.10",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "peft": "0.20.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0"
+  },
+  "run_contract": {
+    "training_runs": 1,
+    "seed": 241104,
+    "epochs": 1,
+    "checkpoint_selection": "the final checkpoint from the single predeclared run",
+    "output_dir": "checkpoints/qwen3-1.7b-candidate-experts-quarantine",
+    "expert": "taskmaster-coffee-api-v2-full-dialog-r16",
+    "examples": 11626
+  },
+  "checks": {
+    "all_required_identities_bound": true,
+    "base_artifact_verified": true,
+    "dependencies_verified": true,
+    "trainer_rows_loaded": true,
+    "quarantine_preserved": true,
+    "v2_test_evaluation_opened": false
+  },
+  "test_access": "still blocked until the candidate, evaluator, metric contract, and v1 comparator are sealed in a separate evaluation receipt",
+  "payload_sha256": "6593173fd59b6bab8a5bac6413a04f01759adb30a59ce56ff32113182e8b0257"
+}

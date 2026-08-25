@@ -1,0 +1,39 @@
+{
+  "schema_version": "molor.atxy-rvq-stop.v1",
+  "decision": "reject_raw_vector_atxy_rvq_for_active_kv",
+  "promotion_eligible": false,
+  "strongest_protocol": {
+    "model": "models/Qwen3-1.7B",
+    "calibration_tokens": 4096,
+    "heldout_tokens": 4096,
+    "layers": [0, 13, 27],
+    "kv_heads": 8,
+    "query_heads": 16,
+    "query_positions": 8,
+    "attention_evaluations_per_variant": 384,
+    "grouping": "separate per layer, KV head, and K/V kind",
+    "entries_per_codebook": 36,
+    "codebooks_per_tuple": 4,
+    "codebook_dtype": "bfloat16",
+    "max_iterations": 6,
+    "seed": 8419
+  },
+  "strongest_arm": {
+    "report": "atxy-vq-shadow-20260825-002017.json",
+    "report_sha256": "2945ef2ed4c47649cbbee89ea1b6acd35747dfc51f6fc23270e2980e7a95e74c",
+    "tuples_per_vector": 4,
+    "stored_bits_per_k_or_v_vector": 128,
+    "information_bits_per_k_or_v_vector": 82.718800023077,
+    "compression_ratio": 4.923076923076923,
+    "key_relative_l2": 0.10003268599538774,
+    "value_relative_l2": 0.6729774634741903,
+    "attention_kl_mean": 1.9304158523567214,
+    "attention_kl_p99": 6.240281624794009,
+    "attention_top1_agreement": 0.2421875,
+    "attention_top_k_recall_mean": 0.4664713541666667,
+    "output_relative_l2_mean": 1.223030276599692,
+    "output_relative_l2_p99": 7.197388948187761,
+    "output_cosine_mean": 0.6705009550611677
+  },
+  "scope": "This rejects raw-vector residual VQ for active KV. Exact ATXY page identity, external semantic memory, and a future ATXY code over a separately validated latent remain open."
+}

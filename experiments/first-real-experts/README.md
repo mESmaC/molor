@@ -45,6 +45,29 @@ possible. The exposed v1 test is closed to further candidate selection; a succes
 group-disjoint holdout. Taskmaster-4 is licensed CC-BY-4.0 and attributed to Bill Byrne and
 Saravanan Ganesh of Google LLC; the pinned source manifest and policy are stored beside the recipe.
 
+The fresh `taskmaster-coffee-api-v2-full-dialog-r16` successor is sealed for one quarantined run,
+but is not promoted or registered. Its pinned full-dialog builder emits 14,436 conflict-filtered,
+component-disjoint examples: 11,626 train, 1,380 validation, and 1,430 untouched test. It consumes
+zero reward rows, has zero overlap with all 1,623 accepted v1 source conversations, quarantines all
+120 dialogs containing malformed embedded JSON, and derives the prompt tool catalog from train
+only. The deterministic training receipt binds the builder, source, recipe, policy, build report,
+train/provenance/catalog bytes, complete local Qwen base, exact dependencies, and the full local
+trainer source tree. The fixed launcher refuses warm starts, discoverable output roots, stale
+recovery checkpoints, and overwrites. The v2 test remains unopened until training completes and
+the separate evaluator seals the candidate, frozen base, quarantined v1 comparator, metrics, and
+generation settings in a pre-access receipt.
+
+```powershell
+# Safe identity verification; does not load the model or open the v2 test.
+.\.venv\Scripts\python.exe experiments/first-real-experts/run_taskmaster_coffee_api_v2_training.py --preflight-only
+
+# The single fixed quarantined run. Do not rerun after an emitted candidate or v2 recovery checkpoint.
+.\.venv\Scripts\python.exe experiments/first-real-experts/run_taskmaster_coffee_api_v2_training.py
+
+# One-shot final comparison after training; this permanently exposes the v2 test.
+.\.venv\Scripts\python.exe experiments/first-real-experts/evaluate_taskmaster_coffee_api_v2.py --acknowledge-one-shot
+```
+
 `grounded-can-curriculum` is preserved as a negative result. Expanding training to 484 legal
 payload variants improved template/mechanics fields but reduced raw decode accuracy to 13/26. The
 older `trusted-can` v2 is an invalid lookup/memorization experiment and is marked do-not-use beside

@@ -1,0 +1,66 @@
+{
+  "schema_version": "molor.atxy-tucker-stop.v1",
+  "decision": "reject_cross_axis_tucker_for_active_kv",
+  "promotion_eligible": false,
+  "dataset_manifest_sha256": "92fd5db3f52aaa5c22812879a7abb6e4913340058c8ac4ec28e2328e6c0925d8",
+  "protocol": {
+    "model": "models/Qwen3-1.7B",
+    "calibration_cases": 1,
+    "heldout_cases": 1,
+    "tokens_per_case": 512,
+    "fit_tokens": 64,
+    "layers": 28,
+    "query_heads": [0, 5, 10, 15],
+    "query_positions_per_case": 2,
+    "attention_evaluations_per_variant": 224,
+    "core_dtype": "bfloat16"
+  },
+  "representative_arms": [
+    {
+      "report": "atxy-kv-shadow-20260824-235348.json",
+      "report_sha256": "77687a8fe216ca9da58a32d448997d6a4e0cffb3c95ac97a8260ee228f114a17",
+      "arm": "tucker-28x8x64",
+      "compression_ratio": 1.9950856958959038,
+      "key_relative_l2": 0.2022092246440479,
+      "value_relative_l2": 0.6773008034867806,
+      "attention_kl_mean": 0.4045114385283211,
+      "attention_kl_p99": 2.7539376854896584,
+      "attention_top1_agreement": 0.8571428571428571,
+      "attention_top_k_recall_mean": 0.6781529017857143,
+      "output_relative_l2_mean": 0.7967641927752628,
+      "output_relative_l2_p99": 1.125355754638812,
+      "output_cosine_mean": 0.585049336593199
+    },
+    {
+      "report": "atxy-kv-shadow-20260824-235651.json",
+      "report_sha256": "e583aa117a945035b8bad18d4473852edbe9f5946e775a4047df8c3f362fb9af",
+      "arm": "tucker-k28x8x120-v26x8x128",
+      "compression_ratio": 1.0691644414353894,
+      "key_relative_l2": 0.05686442946613083,
+      "value_relative_l2": 0.0049381982194811195,
+      "attention_kl_mean": 0.020408289566432813,
+      "attention_kl_p99": 0.17092751920223237,
+      "attention_top1_agreement": 0.9508928571428571,
+      "attention_top_k_recall_mean": 0.9030412946428571,
+      "output_relative_l2_mean": 0.18750247794541777,
+      "output_relative_l2_p99": 1.002404319282,
+      "output_cosine_mean": 0.9208598673043916
+    },
+    {
+      "report": "atxy-kv-shadow-20260824-235753.json",
+      "report_sha256": "cd2f38f169af0e647ee6998e91c94ec8855d9c235dfb72ba21d878312f885e7e",
+      "arm": "tucker-k28x8x128-v27x8x128",
+      "compression_ratio": 1.0157557702010662,
+      "key_relative_l2": 0.0015307285847797713,
+      "value_relative_l2": 0.00354608559489343,
+      "attention_kl_mean": 0.000012255492749143773,
+      "attention_kl_p99": 0.0001321846952487257,
+      "attention_top1_agreement": 1.0,
+      "attention_top_k_recall_mean": 0.9969308035714286,
+      "output_relative_l2_mean": 0.04038094880220554,
+      "output_relative_l2_p99": 0.998935848270603,
+      "output_cosine_mean": 0.9667801129375719
+    }
+  ],
+  "scope": "This rejects only the continuous Tucker codec for active KV. Exact ATXY page identity and literal residual-codebook experiments remain open."
+}

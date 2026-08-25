@@ -1,0 +1,20 @@
+{
+  "schema_version": "molor.atxy-kv-dataset.v1",
+  "status": "development 4K split for literal ATXY VQ falsification; not a sealed promotion corpus",
+  "cases": [
+    {
+      "id": "software-architecture-train-prefix-4k-v1",
+      "split": "calibration",
+      "path": "../first-real-experts/data/software-architecture-v1.jsonl",
+      "sha256": "00f7af6b988bb602b9784219bb8a18bcef16fba77a2af395d1f7061fd91e05fc",
+      "token_cap": 4096
+    },
+    {
+      "id": "software-architecture-validation-prefix-4k-v1",
+      "split": "heldout",
+      "path": "../first-real-experts/data/software-architecture-v1.validation.jsonl",
+      "sha256": "77f4e62f18838d70da9072aab1a8a83976fdf6b452a13f3300be5ce091fb31dd",
+      "token_cap": 4096
+    }
+  ]
+}

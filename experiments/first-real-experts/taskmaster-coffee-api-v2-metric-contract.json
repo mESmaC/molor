@@ -1,0 +1,39 @@
+{
+  "schema_version": "molor.taskmaster-coffee-api-metric-contract.v2",
+  "contract_id": "taskmaster-coffee-api-v2-strict-full-object",
+  "evaluation_schema": "molor.taskmaster-coffee-api-evaluation.v2",
+  "prediction_schema": "molor.taskmaster-coffee-api-prediction.v2",
+  "routes": [
+    "forced_candidate",
+    "frozen_base_null",
+    "quarantined_v1"
+  ],
+  "json_contract": "Parse the complete output as one RFC 8259 JSON value; reject duplicate object keys, non-finite constants, surrounding prose, Markdown fences, and trailing data.",
+  "generation_schema": {
+    "top_level_fields": [
+      "api",
+      "role"
+    ],
+    "role": "agent",
+    "api_calls": 1,
+    "arguments_type": "object"
+  },
+  "metrics": {
+    "json_parseable": "The complete output passes the strict JSON contract.",
+    "schema_valid": "The parsed value has exactly role and api, role is agent, api contains exactly one trimmed non-empty name, and its arguments are an object.",
+    "api_name_exact": "The schema-valid predicted API name equals the reference API name.",
+    "arguments_exact": "The schema-valid predicted arguments object equals the reference arguments object; this diagnostic is independent of API-name equality.",
+    "semantic_exact": "The parsed output equals the complete reference object; reports also expose this rate as full_object_exact_rate."
+  },
+  "comparisons": {
+    "base": "Report forced-candidate minus frozen-base/null absolute rate deltas for every metric.",
+    "v1": "The forced candidate must not trail quarantined v1 on API-name, arguments, or semantic/full-object exactness."
+  },
+  "generation": {
+    "do_sample": false,
+    "enable_thinking": false,
+    "max_prompt_tokens": 2048,
+    "max_new_tokens": 192
+  },
+  "reuse_warning": "The v2 test is a one-shot final holdout. After its first generation or scoring access it is exposed and must never be used for tuning, checkpoint selection, threshold adjustment, or training."
+}

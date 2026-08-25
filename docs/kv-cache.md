@@ -25,6 +25,21 @@ It does **not** omit tokens from attention, move live pages between devices, ser
 NVMe, quantize or factorize KV, share storage between equal-looking entries, or claim a latency or
 memory win. Those require later milestones and their own gates.
 
+An independent `molor.atxy-kv-shadow-report.v1` lab now tests payload codecs without routing. Its
+first Tucker formulation factors the layer, KV-head, and channel axes while retaining time. On the
+initial file-disjoint 512-token development split, a 1.995x arm had mean attention KL `0.4045` and
+mean output relative L2 `0.7968`; even a 1.016x near-full-rank arm retained `0.04038` mean output
+error with a severe p99 tail. That formulation is rejected for active KV. These results do not
+invalidate exact ATXY page identity or a later literal A/T/X/Y residual-codebook experiment. See
+`experiments/atxy-kv-v1/README.md` for the bounded protocol and report hashes.
+
+That literal experiment is now also bounded. One through four complete ATXY residual tuples were
+tested with separate per-layer/head K and V codebooks on file-disjoint 4K captures. At four tuples
+the net ratio was `4.92x`, but V relative L2 remained `0.673`, mean attention KL was `1.930`, and
+mean output relative L2 was `1.223`. Raw-vector ATXY RVQ is rejected for active KV. Any successor
+must first pass a dense-attention ceiling using a separately validated per-layer/head latent; it
+must not combine a failing latent with routing and attribute the resulting error to retrieval.
+
 The initial retrieval unit is a logical token page, not an individual token. The CLI defaults to
 64 tokens so early measurements do not hide pivotal tokens in a 28 MiB whole-model page; 128, 256,
 and 512-token alternatives are measured rather than assumed. A logical

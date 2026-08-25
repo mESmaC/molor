@@ -1,0 +1,56 @@
+{
+  "schema_version": "molor.source-pin.v1",
+  "source_id": "google-taskmaster-tm4-2024-full-dialog",
+  "repository_url": "https://github.com/google-research-datasets/Taskmaster.git",
+  "resolved_commit": "d92cb6af3005f1dc09c39e75e7daf4a04905e00b",
+  "release_path": "TM-4-2024",
+  "collection_method": "self-dialog with turn-level API annotations",
+  "license": {
+    "spdx_id": "CC-BY-4.0",
+    "name": "Creative Commons Attribution 4.0 International",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "attribution": "Taskmaster-4 is the work of Bill Byrne and Saravanan Ganesh from Google LLC.",
+  "paper": {
+    "title": "PERL: Parameter Efficient Reinforcement Learning from Human Feedback",
+    "url": "https://arxiv.org/abs/2403.10704"
+  },
+  "files": [
+    {
+      "path": "TM-4-2024/README.md",
+      "sha256": "7cfc71cc2a514cfcb22bafba8c0a772d28cc1378d3ff21bf47a7caf6484fc240"
+    },
+    {
+      "path": "TM-4-2024/data/data_00.json",
+      "sha256": "937d6babf328f98bc4c0793b035f698a01ef1dae30841224e285384ef476850d"
+    },
+    {
+      "path": "TM-4-2024/data/data_01.json",
+      "sha256": "1b2ca09b53604a8f780dfbfe65d8e98fec3ec60132e40563363ce87724092f8a"
+    },
+    {
+      "path": "TM-4-2024/data/data_02.json",
+      "sha256": "941e3dd7e3e46d2305a12624e022e9aca7fed9caffeb485a953ba129d11271f9"
+    },
+    {
+      "path": "TM-4-2024/data/data_03.json",
+      "sha256": "0dc9540fcba3d7d819403aca3dc6c8ec9d024999729dc4a78ef1fb2c8cf824ad"
+    },
+    {
+      "path": "TM-4-2024/data/data_04.json",
+      "sha256": "1a6e98095378fc1bbc92dfd846b9bb0f3d7c00bb34e087f88d428f113a83a646"
+    },
+    {
+      "path": "TM-4-2024/data/data_05.json",
+      "sha256": "5193f6821a6315edb4bb028400bcfbb4f360d8fcb7135db2ac69cc6684132525"
+    },
+    {
+      "path": "TM-4-2024/data/data_06.json",
+      "sha256": "21884bb0062285c2c4c4877b9fa94cee74680945ec6c0527b28adebe7fe46f17"
+    },
+    {
+      "path": "TM-4-2024/data/data_07.json",
+      "sha256": "f496083f63ec9557af88b8ed59e86e78d5702e8f730f59bbcb87bce3b2c7534c"
+    }
+  ]
+}
