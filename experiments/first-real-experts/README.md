@@ -58,6 +58,18 @@ On the fixed 1,430-example comparison, the candidate reached 100% parseable/sche
 result does not authorize router or resident-rack registration, so the adapter remains an explicit
 candidate until a separate routing decision is evaluated.
 
+That routing decision is now complete and negative. Router v6 preserved all 4,680/650/650 promoted
+v4 rows and added 936/130/130 component-disjoint Taskmaster positives. Three frozen CPU seeds all
+passed fresh preblind validation; seed 8419 was selected by the lowest recomputed validation loss
+(`0.0617127`, `99.7436%` accuracy). On the preregistered 84-prompt one-shot probe, however, it
+reached only 47/84 exact and 51/84 acceptable routes, improvements of 2 and 3 over v4, and routed
+0/12 Taskmaster prompts correctly. It produced zero Taskmaster false positives and passed every
+legacy-category protection gate, but failed both overall-accuracy floors, both improvement floors,
+and the Taskmaster-recall floor. Registration was not changed; the v4 router remains live, and the
+Taskmaster expert remains quarantined. The preblind receipt and one-shot report are preserved under
+`runs/router-v6/` and `runs/evaluation/` respectively. Their prompts and per-example outputs must
+not be reused for training, tuning, threshold selection, or seed selection.
+
 This result is recovery-qualified rather than a pristine one-shot. The first evaluator wrote its
 pre-access receipt and exposed the test bytes, then failed before model loading or generation
 because its context validator rejected builder-defined prior API call/response turns. The defect

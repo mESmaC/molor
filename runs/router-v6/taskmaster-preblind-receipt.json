@@ -1,0 +1,1015 @@
+{
+  "candidate_validation": [
+    {
+      "checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed83",
+      "config": {
+        "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed83/router_config.json",
+        "sha256": "154f01c0f4b6c15d0dc2f69a958b4131286d33771d6733e3ef5f297171959e12",
+        "size_bytes": 16720
+      },
+      "gates": [
+        {
+          "actual": 0.9961538461538462,
+          "name": "validation_accuracy",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 1.0,
+          "name": "taskmaster_precision",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 1.0,
+          "name": "taskmaster_recall",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 0.9846153846153847,
+          "name": "legacy_route_recall",
+          "passed": true,
+          "required": ">=0.98 for every legacy route"
+        }
+      ],
+      "legacy_recalls": {
+        "base/null": 0.9923076923076923,
+        "embedded-knowledge-v1": 1.0,
+        "ocb-can-verified-v1": 1.0,
+        "software-architecture-v1": 0.9846153846153847,
+        "verified-embedded-code-v1": 1.0
+      },
+      "passed": true,
+      "seed": 83,
+      "sidecar_metric_diagnostics": {
+        "confusion_match": true,
+        "examples_match": true,
+        "matches_recomputed": true,
+        "per_route_deltas_reported_minus_recomputed": {
+          "base/null": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "embedded-knowledge-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "ocb-can-verified-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "software-architecture-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "taskmaster-coffee-api-v2-full-dialog-r16": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "verified-embedded-code-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "reported_metrics_well_formed": true,
+        "role": "diagnostic_only_never_used_for_gates_or_selection",
+        "scalar_deltas_reported_minus_recomputed": {
+          "accuracy": 0.0,
+          "loss": 0.0,
+          "mean_confidence": 0.0
+        },
+        "tolerance": 1e-09
+      },
+      "taskmaster_precision": 1.0,
+      "taskmaster_recall": 1.0,
+      "validation_accuracy": 0.9961538461538462,
+      "validation_loss": 0.06239836246539385,
+      "validation_metric_source": "fresh_cpu_recomputation_from_frozen_validation_split",
+      "weights": {
+        "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed83/router.safetensors",
+        "sha256": "f4e7b7f9f26e7c40ba2b1cadf894b9f4f499f43d00e44cb6680ebccf39764621",
+        "size_bytes": 2121216
+      }
+    },
+    {
+      "checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419",
+      "config": {
+        "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419/router_config.json",
+        "sha256": "6b60a56f2497c13f98263b5a334467258e640233b38496e81851510d76901dcf",
+        "size_bytes": 17058
+      },
+      "gates": [
+        {
+          "actual": 0.9974358974358974,
+          "name": "validation_accuracy",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 1.0,
+          "name": "taskmaster_precision",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 1.0,
+          "name": "taskmaster_recall",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 0.9923076923076923,
+          "name": "legacy_route_recall",
+          "passed": true,
+          "required": ">=0.98 for every legacy route"
+        }
+      ],
+      "legacy_recalls": {
+        "base/null": 0.9923076923076923,
+        "embedded-knowledge-v1": 1.0,
+        "ocb-can-verified-v1": 1.0,
+        "software-architecture-v1": 0.9923076923076923,
+        "verified-embedded-code-v1": 1.0
+      },
+      "passed": true,
+      "seed": 8419,
+      "sidecar_metric_diagnostics": {
+        "confusion_match": true,
+        "examples_match": true,
+        "matches_recomputed": true,
+        "per_route_deltas_reported_minus_recomputed": {
+          "base/null": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "embedded-knowledge-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "ocb-can-verified-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "software-architecture-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "taskmaster-coffee-api-v2-full-dialog-r16": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "verified-embedded-code-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "reported_metrics_well_formed": true,
+        "role": "diagnostic_only_never_used_for_gates_or_selection",
+        "scalar_deltas_reported_minus_recomputed": {
+          "accuracy": 0.0,
+          "loss": 0.0,
+          "mean_confidence": 0.0
+        },
+        "tolerance": 1e-09
+      },
+      "taskmaster_precision": 1.0,
+      "taskmaster_recall": 1.0,
+      "validation_accuracy": 0.9974358974358974,
+      "validation_loss": 0.06171273145920191,
+      "validation_metric_source": "fresh_cpu_recomputation_from_frozen_validation_split",
+      "weights": {
+        "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419/router.safetensors",
+        "sha256": "6843189c82119f64ada2707bc4473ade127b34997f1dcc7276948354e707d852",
+        "size_bytes": 2121216
+      }
+    },
+    {
+      "checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed27183",
+      "config": {
+        "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed27183/router_config.json",
+        "sha256": "99e9c4da7162c7df793e7f48d19774cd5aa83da0793dfa1e07318ae4764ee413",
+        "size_bytes": 17417
+      },
+      "gates": [
+        {
+          "actual": 0.9961538461538462,
+          "name": "validation_accuracy",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 1.0,
+          "name": "taskmaster_precision",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 1.0,
+          "name": "taskmaster_recall",
+          "passed": true,
+          "required": ">=0.99"
+        },
+        {
+          "actual": 0.9846153846153847,
+          "name": "legacy_route_recall",
+          "passed": true,
+          "required": ">=0.98 for every legacy route"
+        }
+      ],
+      "legacy_recalls": {
+        "base/null": 0.9846153846153847,
+        "embedded-knowledge-v1": 1.0,
+        "ocb-can-verified-v1": 1.0,
+        "software-architecture-v1": 0.9923076923076923,
+        "verified-embedded-code-v1": 1.0
+      },
+      "passed": true,
+      "seed": 27183,
+      "sidecar_metric_diagnostics": {
+        "confusion_match": true,
+        "examples_match": true,
+        "matches_recomputed": true,
+        "per_route_deltas_reported_minus_recomputed": {
+          "base/null": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "embedded-knowledge-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "ocb-can-verified-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "software-architecture-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "taskmaster-coffee-api-v2-full-dialog-r16": {
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "verified-embedded-code-v1": {
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "reported_metrics_well_formed": true,
+        "role": "diagnostic_only_never_used_for_gates_or_selection",
+        "scalar_deltas_reported_minus_recomputed": {
+          "accuracy": 0.0,
+          "loss": 0.0,
+          "mean_confidence": 0.0
+        },
+        "tolerance": 1e-09
+      },
+      "taskmaster_precision": 1.0,
+      "taskmaster_recall": 1.0,
+      "validation_accuracy": 0.9961538461538462,
+      "validation_loss": 0.062002892448351936,
+      "validation_metric_source": "fresh_cpu_recomputation_from_frozen_validation_split",
+      "weights": {
+        "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed27183/router.safetensors",
+        "sha256": "dddd7a611977373c5f49f9d58e5014b3927fb6308726529283a11dac6e9a9941",
+        "size_bytes": 2121216
+      }
+    }
+  ],
+  "checkpoint_and_expert_artifacts": {
+    "baseline_config": {
+      "path": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled/router_config.json",
+      "sha256": "00e9e2937e28fc4924fd691ad1c14c34a91dc5335e1f9e6a19f8bd29ab1840ff",
+      "size_bytes": 14664
+    },
+    "baseline_weights": {
+      "path": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled/router.safetensors",
+      "sha256": "f05cc10074d3e6468dcae617fa27f1da8451594032f98cff75a9cbfd060bbe67",
+      "size_bytes": 2120188
+    },
+    "candidate_27183_config": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed27183/router_config.json",
+      "sha256": "99e9c4da7162c7df793e7f48d19774cd5aa83da0793dfa1e07318ae4764ee413",
+      "size_bytes": 17417
+    },
+    "candidate_27183_weights": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed27183/router.safetensors",
+      "sha256": "dddd7a611977373c5f49f9d58e5014b3927fb6308726529283a11dac6e9a9941",
+      "size_bytes": 2121216
+    },
+    "candidate_83_config": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed83/router_config.json",
+      "sha256": "154f01c0f4b6c15d0dc2f69a958b4131286d33771d6733e3ef5f297171959e12",
+      "size_bytes": 16720
+    },
+    "candidate_83_weights": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed83/router.safetensors",
+      "sha256": "f4e7b7f9f26e7c40ba2b1cadf894b9f4f499f43d00e44cb6680ebccf39764621",
+      "size_bytes": 2121216
+    },
+    "candidate_8419_config": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419/router_config.json",
+      "sha256": "6b60a56f2497c13f98263b5a334467258e640233b38496e81851510d76901dcf",
+      "size_bytes": 17058
+    },
+    "candidate_8419_weights": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419/router.safetensors",
+      "sha256": "6843189c82119f64ada2707bc4473ade127b34997f1dcc7276948354e707d852",
+      "size_bytes": 2121216
+    },
+    "expert_embedded-knowledge-v1_config": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/embedded-knowledge-v1/adapter_config.json",
+      "sha256": "26cede5455d5dac913c638fd4414500aaacfc7a0c2b526c9a5e3f4ba7307cc20",
+      "size_bytes": 20970
+    },
+    "expert_embedded-knowledge-v1_weights": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/embedded-knowledge-v1/adapter_model.safetensors",
+      "sha256": "a801e4ce28a1963f1bfbb4fb468f6d2abb1457a514d6eb3bf567c55df36c59fa",
+      "size_bytes": 69772944
+    },
+    "expert_ocb-can-verified-v1_config": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/ocb-can-verified-v1/adapter_config.json",
+      "sha256": "a0da85e21f971f9b1a442e5dd2271da7707c2b32e5ba08e21f2f1ea18db26e2a",
+      "size_bytes": 20968
+    },
+    "expert_ocb-can-verified-v1_weights": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/ocb-can-verified-v1/adapter_model.safetensors",
+      "sha256": "b2f0d87f19cd0daed4144048473f25aefc782cc63c1777ca33b45f291cb1ebb5",
+      "size_bytes": 69772944
+    },
+    "expert_software-architecture-v1_config": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/software-architecture-v1/adapter_config.json",
+      "sha256": "e0a79864477e227db6112daa0a93dbdaba2cb7036f35427453a8fe58310d100f",
+      "size_bytes": 20973
+    },
+    "expert_software-architecture-v1_weights": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/software-architecture-v1/adapter_model.safetensors",
+      "sha256": "1a6284288a1c68b1ab114559a58e62199c88172e6985537294b31c7471202232",
+      "size_bytes": 69772944
+    },
+    "expert_taskmaster-coffee-api-v2-full-dialog-r16_config": {
+      "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_config.json",
+      "sha256": "da0feba91aa0013f94f01a1cff9265c658b8fcdf3f3a44b5128f5173d43f04f7",
+      "size_bytes": 20989
+    },
+    "expert_taskmaster-coffee-api-v2-full-dialog-r16_weights": {
+      "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_model.safetensors",
+      "sha256": "e885123d61f71db0eb2779d41e3fb3cf7e9eb0d0db116f42ae657b5ac0ef7318",
+      "size_bytes": 69772944
+    },
+    "expert_verified-embedded-code-v1_config": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/verified-embedded-code-v1/adapter_config.json",
+      "sha256": "1b8bbb392b61b0756fe70d3ba9e029250edd8ae3dedab578ffed1525316e5ac1",
+      "size_bytes": 20974
+    },
+    "expert_verified-embedded-code-v1_weights": {
+      "path": "checkpoints/qwen3-1.7b-corpus-experts/verified-embedded-code-v1/adapter_model.safetensors",
+      "sha256": "9ef49c6a32dacf8c0e2ca748b274ddd37b54e51f4d7095adeb99c0456efe32ed",
+      "size_bytes": 69772944
+    },
+    "taskmaster_adapter_config": {
+      "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_config.json",
+      "sha256": "da0feba91aa0013f94f01a1cff9265c658b8fcdf3f3a44b5128f5173d43f04f7",
+      "size_bytes": 20989
+    },
+    "taskmaster_adapter_weights": {
+      "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_model.safetensors",
+      "sha256": "e885123d61f71db0eb2779d41e3fb3cf7e9eb0d0db116f42ae657b5ac0ef7318",
+      "size_bytes": 69772944
+    }
+  },
+  "checks": {
+    "all_candidate_hashes_recorded_before_blind_access": true,
+    "all_candidate_preblind_gates_passed": true,
+    "all_dataset_gates_passed": true,
+    "blind_probe_opened": false,
+    "model_runtime_verified": true,
+    "registration_changed": false,
+    "runtime_sources_verified": true,
+    "selected_by_freshly_recomputed_validation_loss_only": true,
+    "selected_seed": 8419,
+    "sidecar_validation_metrics_used_for_gates_or_selection": false,
+    "test_metrics_used_for_seed_selection": false,
+    "validation_metrics_freshly_recomputed_on_cpu": true
+  },
+  "dataset_artifacts": {
+    "report": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v6-taskmaster.report.json",
+      "sha256": "4a47892f7aef275483a9915a56a553f510ebccef9d578336d6f42cafa40c4673",
+      "size_bytes": 44216
+    },
+    "source:dataset_builder": {
+      "path": "experiments/first-real-experts/build_router_v6_taskmaster_dataset.py",
+      "sha256": "d4e7d0bccf29fb0f145d6c75e0dc12af793e67101b7e1eae6e06c360dfa7f0dd",
+      "size_bytes": 30054
+    },
+    "source:legacy_v4_report": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.report.json",
+      "sha256": "b566cde269bbc4e9a2886685de5844a99dff8c6b343355800355dd72513bbddb",
+      "size_bytes": 10614
+    },
+    "source:legacy_v4_test": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.test.jsonl",
+      "sha256": "9e0b7d4d0135111bffe4abce653850b81ae16cd47640a6b68ce1e5b883187dad",
+      "size_bytes": 304309
+    },
+    "source:legacy_v4_train": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.train.jsonl",
+      "sha256": "7455b6dedfd2c1eee605bf23074f32168b7eb735c70898af8b7bd9d1a5bd1dd1",
+      "size_bytes": 2252242
+    },
+    "source:legacy_v4_validation": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.validation.jsonl",
+      "sha256": "627e60a656c8ad01feaf79e7010d678d909e37e768e4c9dc7530cb3fd6a76e2c",
+      "size_bytes": 281321
+    },
+    "source:taskmaster_train_provenance": {
+      "path": "experiments/first-real-experts/data/taskmaster-coffee-api-v2.train.provenance.jsonl",
+      "sha256": "145dfcd83f734f57be0196ac36e58a1a1e1728464cd96cc53e6b1db6849efa0f",
+      "size_bytes": 15492514
+    },
+    "source:taskmaster_train_training": {
+      "path": "experiments/first-real-experts/data/taskmaster-coffee-api-v2.train.jsonl",
+      "sha256": "500ac9caa235497f9fb86d1749911d50c0a494136050eb91cd1b807c8689d209",
+      "size_bytes": 35960395
+    },
+    "source:taskmaster_validation_provenance": {
+      "path": "experiments/first-real-experts/data/taskmaster-coffee-api-v2.validation.provenance.jsonl",
+      "sha256": "c315ae5e4db52ee37cbb760c60745fdea5b371f2c451cfb1b90919883fae30e4",
+      "size_bytes": 1845272
+    },
+    "source:taskmaster_validation_training": {
+      "path": "experiments/first-real-experts/data/taskmaster-coffee-api-v2.validation.jsonl",
+      "sha256": "214aac61ddeca261d70a4381a15a973d17ac89d39d20007c2541f3724205176f",
+      "size_bytes": 4232884
+    },
+    "test": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v6-taskmaster.test.jsonl",
+      "sha256": "51a4692d5729685c1a8ae8e296474671f0576dabaefeb1e9a1bf78742c5c08c7",
+      "size_bytes": 412314
+    },
+    "train": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v6-taskmaster.train.jsonl",
+      "sha256": "0dd1d8fada18d0c306a12eb5cc4fbfcfa04e31290dd3112dfcc89791fae9c31f",
+      "size_bytes": 3100035
+    },
+    "validation": {
+      "path": "experiments/first-real-experts/data/router-bootstrap-v6-taskmaster.validation.jsonl",
+      "sha256": "0b9203e5c5778017f6580a9139201e950fd275a6b68dc104807b46cfe0f04220",
+      "size_bytes": 378704
+    }
+  },
+  "execution": {
+    "feature_batch_size": 64,
+    "feature_batch_size_role": "execution-only batching; prompt features and routing semantics are unchanged"
+  },
+  "model_runtime": {
+    "config": {
+      "path": "models/Qwen3-1.7B/config.json",
+      "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197",
+      "size_bytes": 726
+    },
+    "embedding": {
+      "artifact": {
+        "path": "models/Qwen3-1.7B/model-00001-of-00002.safetensors",
+        "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5",
+        "size_bytes": 3441185608
+      },
+      "dtype": "bfloat16",
+      "shape": [
+        151936,
+        2048
+      ],
+      "tensor_name": "model.embed_tokens.weight"
+    },
+    "index": {
+      "path": "models/Qwen3-1.7B/model.safetensors.index.json",
+      "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d",
+      "size_bytes": 25605
+    },
+    "path": "models/Qwen3-1.7B",
+    "tokenizer_artifacts": {
+      "added_tokens.json": {
+        "path": "models/Qwen3-1.7B/added_tokens.json",
+        "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+        "size_bytes": 707
+      },
+      "merges.txt": {
+        "path": "models/Qwen3-1.7B/merges.txt",
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "size_bytes": 1671853
+      },
+      "special_tokens_map.json": {
+        "path": "models/Qwen3-1.7B/special_tokens_map.json",
+        "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+        "size_bytes": 613
+      },
+      "tokenizer.json": {
+        "path": "models/Qwen3-1.7B/tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "size_bytes": 11422654
+      },
+      "tokenizer_config.json": {
+        "path": "models/Qwen3-1.7B/tokenizer_config.json",
+        "sha256": "5a7303fcb1a27ede63134a2cbd61d5282c247ca6d769ce4746d4ffa124aedd63",
+        "size_bytes": 9675
+      },
+      "vocab.json": {
+        "path": "models/Qwen3-1.7B/vocab.json",
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "size_bytes": 2776833
+      }
+    }
+  },
+  "payload_sha256": "659c3848f53d9784572a71a72575f14dd82e1e24bf3da6bb636090f637822e99",
+  "policy": {
+    "path": "experiments/first-real-experts/router-v6-evaluation-policy.json",
+    "sha256": "31e216ddaeafce844caea51a15b662db6e6f69702adaa15428a8e0a6e3bdf869",
+    "size_bytes": 16061
+  },
+  "purpose": "freeze candidate selection and every artifact before blind probe access",
+  "runtime_source_artifacts": {
+    "molor:src/molor/__init__.py": {
+      "path": "src/molor/__init__.py",
+      "sha256": "2f1000f43bae7878a234d418667aaeaa954a4648b42cc7bcb4cd9398c482eace",
+      "size_bytes": 1206
+    },
+    "molor:src/molor/benchmark/__init__.py": {
+      "path": "src/molor/benchmark/__init__.py",
+      "sha256": "97b88b51c9e2ce572aaa6cd8c1f6488ed82cf89cee006d26b093decbb215c7a1",
+      "size_bytes": 324
+    },
+    "molor:src/molor/benchmark/backends.py": {
+      "path": "src/molor/benchmark/backends.py",
+      "sha256": "7deaef282a3b0af91e2eba5163499fe824ea1c93738738d29e3fb94d6911f16f",
+      "size_bytes": 29374
+    },
+    "molor:src/molor/benchmark/cli.py": {
+      "path": "src/molor/benchmark/cli.py",
+      "sha256": "b5b1cf5e59fcb03efef9ea4689fdf694284127464250a57179fe2a1d0fa96e91",
+      "size_bytes": 13408
+    },
+    "molor:src/molor/benchmark/evaluation.py": {
+      "path": "src/molor/benchmark/evaluation.py",
+      "sha256": "9a1c73e15682a3d6a38ba45ea4d139298aa5e8d59fd8b09a4a94ca57086718ea",
+      "size_bytes": 23532
+    },
+    "molor:src/molor/benchmark/lock.py": {
+      "path": "src/molor/benchmark/lock.py",
+      "sha256": "803aea4e1b0f9916a501298f2053bbdac34e9cc8bbf385c3185ce1f69ef20294",
+      "size_bytes": 12831
+    },
+    "molor:src/molor/benchmark/matrix.py": {
+      "path": "src/molor/benchmark/matrix.py",
+      "sha256": "e066b6622891f4e339646c3823a7637c6df21e6fd665bf639d019aee7bdce445",
+      "size_bytes": 11336
+    },
+    "molor:src/molor/benchmark/models.py": {
+      "path": "src/molor/benchmark/models.py",
+      "sha256": "ec96d78281c515b976a42f3e4276784cc7066a990914f0a0c8f1e80030441592",
+      "size_bytes": 14290
+    },
+    "molor:src/molor/benchmark/runner.py": {
+      "path": "src/molor/benchmark/runner.py",
+      "sha256": "5e409ee8550235bb475790545554b5d4c317b75d6efe345c2479442c907ab5a4",
+      "size_bytes": 61311
+    },
+    "molor:src/molor/benchmark/scoring.py": {
+      "path": "src/molor/benchmark/scoring.py",
+      "sha256": "9ca6f724b4bf13761df0317e9794fff101d77a6e2076875f5bb2eb1e49087d6e",
+      "size_bytes": 16719
+    },
+    "molor:src/molor/benchmark/standard.py": {
+      "path": "src/molor/benchmark/standard.py",
+      "sha256": "689317f758ead41227fb2040f0a06d2dbee06a75028058ecabbb3f1918be6172",
+      "size_bytes": 15031
+    },
+    "molor:src/molor/benchmark/wsl_verifier.py": {
+      "path": "src/molor/benchmark/wsl_verifier.py",
+      "sha256": "5a2cd6e46c90b592c018428fac17b067a5521844f534b1fb4b8ef184b1973c64",
+      "size_bytes": 31709
+    },
+    "molor:src/molor/config.py": {
+      "path": "src/molor/config.py",
+      "sha256": "371bec04d68761f1b17986485689bd2f119ba514f385d7c69892bd1e081649de",
+      "size_bytes": 5361
+    },
+    "molor:src/molor/desktop/__init__.py": {
+      "path": "src/molor/desktop/__init__.py",
+      "sha256": "3bc9b027c2eb45f61b049b2d57ccf029d6a3f3a4a4190a4b73d653c2c258280c",
+      "size_bytes": 470
+    },
+    "molor:src/molor/desktop/adapter_catalog.py": {
+      "path": "src/molor/desktop/adapter_catalog.py",
+      "sha256": "a04563edf9af9f50183274e9bc29239c089a2e42ca7031969d9c1eba6b40ef50",
+      "size_bytes": 4884
+    },
+    "molor:src/molor/desktop/app.py": {
+      "path": "src/molor/desktop/app.py",
+      "sha256": "e7838e6f59c6d3ea45acbcbd34d46f10bb5e687d155ecaf72e79e09b30b21145",
+      "size_bytes": 63119
+    },
+    "molor:src/molor/desktop/backend.py": {
+      "path": "src/molor/desktop/backend.py",
+      "sha256": "ebed7f12107896024222fdf209ed98fb1374a77eacfee1bc9fe5de997975edcd",
+      "size_bytes": 24582
+    },
+    "molor:src/molor/desktop/benchmark_panel.py": {
+      "path": "src/molor/desktop/benchmark_panel.py",
+      "sha256": "01de3f21b88052f6329f659dde9e81b73007a6c48cbc85013fc06868a0b996e9",
+      "size_bytes": 12595
+    },
+    "molor:src/molor/desktop/chat_view.py": {
+      "path": "src/molor/desktop/chat_view.py",
+      "sha256": "0dd2398d9f66bf3697347c1be1b8f5c0f103a1ceae5be798a1090ebb288162f1",
+      "size_bytes": 13692
+    },
+    "molor:src/molor/desktop/launch.py": {
+      "path": "src/molor/desktop/launch.py",
+      "sha256": "5efa604dbc5b4a6a14c110a87c6f398726a3bf747b3d5dc05edc0190de6e103e",
+      "size_bytes": 494
+    },
+    "molor:src/molor/desktop/panels.py": {
+      "path": "src/molor/desktop/panels.py",
+      "sha256": "62f3b48038ce2ac47abf383451e5223d42f0bc1bc2b2e5a84c24caaebbef6df6",
+      "size_bytes": 40193
+    },
+    "molor:src/molor/experimental/__init__.py": {
+      "path": "src/molor/experimental/__init__.py",
+      "sha256": "74fcdc8450db6371ab52b54171499ad628112eff688305381f2eb0fa67d66ea8",
+      "size_bytes": 1375
+    },
+    "molor:src/molor/experimental/atxy_kv.py": {
+      "path": "src/molor/experimental/atxy_kv.py",
+      "sha256": "a2f72c89eb4223c94b5c04a03816d7f3bab1f918a3f9268db66420676c3ba6d3",
+      "size_bytes": 17578
+    },
+    "molor:src/molor/experimental/atxy_kv_lab.py": {
+      "path": "src/molor/experimental/atxy_kv_lab.py",
+      "sha256": "ad7d676b4f92668187a5d628576e0bf9647ebf4d58f7c77b2089f2eebd7787b2",
+      "size_bytes": 30636
+    },
+    "molor:src/molor/experimental/atxy_local_latent.py": {
+      "path": "src/molor/experimental/atxy_local_latent.py",
+      "sha256": "c14739c23ec3949634b3c3c43680c08f6ade87e3bf522a1d63fdb622d958158b",
+      "size_bytes": 26540
+    },
+    "molor:src/molor/experimental/atxy_local_latent_lab.py": {
+      "path": "src/molor/experimental/atxy_local_latent_lab.py",
+      "sha256": "0513c1a8983b2b15ce18b16ae61c2650097276280d65452511e4feeaf26c8cbc",
+      "size_bytes": 47476
+    },
+    "molor:src/molor/experimental/atxy_pages.py": {
+      "path": "src/molor/experimental/atxy_pages.py",
+      "sha256": "5b67ff9343f31e7fb9c9d443137ea5ab007e0ce3ac2baa9185018ad50d508212",
+      "size_bytes": 3934
+    },
+    "molor:src/molor/experimental/atxy_vq.py": {
+      "path": "src/molor/experimental/atxy_vq.py",
+      "sha256": "0ac9c8352d0791d19ee97e1b203a4b3fdbb834a22f5cf2ceabfa7ec8da7e822a",
+      "size_bytes": 14808
+    },
+    "molor:src/molor/experimental/atxy_vq_lab.py": {
+      "path": "src/molor/experimental/atxy_vq_lab.py",
+      "sha256": "3f586c48359bfc756d788fe97e17c8390b81a64367f8f204564cff914a80c583",
+      "size_bytes": 25414
+    },
+    "molor:src/molor/experimental/atxy_vq_stack.py": {
+      "path": "src/molor/experimental/atxy_vq_stack.py",
+      "sha256": "2894409cf120a8615a115c5b6fda2f5f55dbcc08b33d1e409f7b004680ac7b3c",
+      "size_bytes": 8735
+    },
+    "molor:src/molor/experimental/autorouter.py": {
+      "path": "src/molor/experimental/autorouter.py",
+      "sha256": "a811488c47cb672d9062dda45a5d7b10be726f5808928e127383b60636c3fd29",
+      "size_bytes": 25393
+    },
+    "molor:src/molor/experimental/cache_lab.py": {
+      "path": "src/molor/experimental/cache_lab.py",
+      "sha256": "a387afad0aa108709a22dbb376203709c1303759d07cbfbcdc045393338d906e",
+      "size_bytes": 13264
+    },
+    "molor:src/molor/experimental/compare.py": {
+      "path": "src/molor/experimental/compare.py",
+      "sha256": "b8e38815e8d5b3e0f5268c601a87e7312b5c8aaf864f5486fe1e011ef138a019",
+      "size_bytes": 6046
+    },
+    "molor:src/molor/experimental/hashed_kv.py": {
+      "path": "src/molor/experimental/hashed_kv.py",
+      "sha256": "0a1f6dd686773d565fe609bdee76151a8d3c6b1147d3552a38cc07f333b56e5f",
+      "size_bytes": 28847
+    },
+    "molor:src/molor/experimental/hashed_kv_lab.py": {
+      "path": "src/molor/experimental/hashed_kv_lab.py",
+      "sha256": "e4e6f2049968bc87bd407441a7ee610f166f1ed3876d53d722e60330e9a15abf",
+      "size_bytes": 31049
+    },
+    "molor:src/molor/experimental/mixture.py": {
+      "path": "src/molor/experimental/mixture.py",
+      "sha256": "1522ce26a482c381cba5d7ddfcf14e7f4215338c99bd54aa7386c8fc5e4b2269",
+      "size_bytes": 33973
+    },
+    "molor:src/molor/feedback/__init__.py": {
+      "path": "src/molor/feedback/__init__.py",
+      "sha256": "e615ca1284d062e8d4130853075f85403eab338c740374a1187bc0dd3f42d55e",
+      "size_bytes": 506
+    },
+    "molor:src/molor/feedback/cli.py": {
+      "path": "src/molor/feedback/cli.py",
+      "sha256": "e2397d02f4e95230da08777225e04334d6e8b223fe9b8f224ecc3edfa99d3ab3",
+      "size_bytes": 1133
+    },
+    "molor:src/molor/feedback/models.py": {
+      "path": "src/molor/feedback/models.py",
+      "sha256": "7bae5d2c55e7cf3c7abaa8b2fd99f0c78f10737c89919590948ff5f3f425d5dc",
+      "size_bytes": 2450
+    },
+    "molor:src/molor/feedback/store.py": {
+      "path": "src/molor/feedback/store.py",
+      "sha256": "075cbb5da2f31526d0d0c680e0d1a7f722f901ae370aadf64105ef49592a70f5",
+      "size_bytes": 36436
+    },
+    "molor:src/molor/identity.py": {
+      "path": "src/molor/identity.py",
+      "sha256": "0a09553cecd37fcaa9bfb77d7070d188a67fb74d71045fb6d97c0a82371c9de4",
+      "size_bytes": 3364
+    },
+    "molor:src/molor/layer.py": {
+      "path": "src/molor/layer.py",
+      "sha256": "f3de954d39ff3172d5d921f33de93562c1ee256bb1f6d71e370d52e1da2305d5",
+      "size_bytes": 4384
+    },
+    "molor:src/molor/loading/__init__.py": {
+      "path": "src/molor/loading/__init__.py",
+      "sha256": "f31e2d311c4088d39c4dadbb9cd04aadd80c84a2a18cb2dc489046eed37ed11b",
+      "size_bytes": 1737
+    },
+    "molor:src/molor/loading/artifacts.py": {
+      "path": "src/molor/loading/artifacts.py",
+      "sha256": "5a0137b5ffa32603b0fa40110e9e3ae92b1f1009f36a6ed589038d723ea97680",
+      "size_bytes": 15297
+    },
+    "molor:src/molor/loading/serialization.py": {
+      "path": "src/molor/loading/serialization.py",
+      "sha256": "4e8d15025234bf8951dae8bfbb3a8cc8f7f91bef6ea7db0f2ed6ebfdbaf97503",
+      "size_bytes": 9668
+    },
+    "molor:src/molor/loading/transformers.py": {
+      "path": "src/molor/loading/transformers.py",
+      "sha256": "b97d306883e7ab89d91193143d47abd6521214b3f57a3bdaa25950e9738a3f48",
+      "size_bytes": 29850
+    },
+    "molor:src/molor/lora_bank.py": {
+      "path": "src/molor/lora_bank.py",
+      "sha256": "7b1c0043bf4751efae27756e46d231384435c7635e411e2c7d7ce1124be9afa1",
+      "size_bytes": 11892
+    },
+    "molor:src/molor/manifests.py": {
+      "path": "src/molor/manifests.py",
+      "sha256": "b2f675cb0d9c87e838d45471254653e6a5afcc27a04d70b7d810c6c99fba4998",
+      "size_bytes": 29332
+    },
+    "molor:src/molor/memory/__init__.py": {
+      "path": "src/molor/memory/__init__.py",
+      "sha256": "0489b8bbf713cceb678d01843a2cd243775b653d49190b206feaa2b374a6fc5e",
+      "size_bytes": 819
+    },
+    "molor:src/molor/memory/store.py": {
+      "path": "src/molor/memory/store.py",
+      "sha256": "18e92b395c40c6c6b6ca7cd121d0a5684fbf6d0524415c3db6e655a2c86146a4",
+      "size_bytes": 64559
+    },
+    "molor:src/molor/memory/types.py": {
+      "path": "src/molor/memory/types.py",
+      "sha256": "57985471c77c0ed3ff958bc68ba3974e596ae02cbb7ea89b02560ffc7a295e2a",
+      "size_bytes": 28539
+    },
+    "molor:src/molor/rewards/__init__.py": {
+      "path": "src/molor/rewards/__init__.py",
+      "sha256": "928d9c5d667ce6faa3b659c0d03eddbd046bb32fbb66940963442ca431e96634",
+      "size_bytes": 1449
+    },
+    "molor:src/molor/rewards/base.py": {
+      "path": "src/molor/rewards/base.py",
+      "sha256": "d72fbda6d829819bf1030208b72ef5d67a8e8472f8e0d929b28e555541f904b3",
+      "size_bytes": 1370
+    },
+    "molor:src/molor/rewards/contract.py": {
+      "path": "src/molor/rewards/contract.py",
+      "sha256": "33d7877e1bd6b3cfe9bfc0d8c5a9d20c1259db81484a10666ed77469eb70f716",
+      "size_bytes": 23518
+    },
+    "molor:src/molor/rewards/external.py": {
+      "path": "src/molor/rewards/external.py",
+      "sha256": "ae456e768a1a4f6db3c77c5163bd18b51cce5476eeb891caf50c26c7ff834098",
+      "size_bytes": 5162
+    },
+    "molor:src/molor/rewards/finance.py": {
+      "path": "src/molor/rewards/finance.py",
+      "sha256": "6bf4499dcd63d6501135d158b1c03b0a739d5862c1f2ffe14d0b3dd563701526",
+      "size_bytes": 27621
+    },
+    "molor:src/molor/rewards/groups.py": {
+      "path": "src/molor/rewards/groups.py",
+      "sha256": "34b22fecd50fecce5db53541e587cadd9208c37cc7c5e5e74aa98c858099e8ac",
+      "size_bytes": 2897
+    },
+    "molor:src/molor/rewards/table.py": {
+      "path": "src/molor/rewards/table.py",
+      "sha256": "d5056770860a3218490705049305bca2cd760cb6473f3f5f3024287550dffada",
+      "size_bytes": 33941
+    },
+    "molor:src/molor/rewards/types.py": {
+      "path": "src/molor/rewards/types.py",
+      "sha256": "c7b87b8bfce02cdc977e58c45c543f79985273f8813bb34d5ebcd0f2712936e2",
+      "size_bytes": 6004
+    },
+    "molor:src/molor/rewards/verifiers.py": {
+      "path": "src/molor/rewards/verifiers.py",
+      "sha256": "e15ab43f2daeeea2023c7bbced8ba3cea5c985cf69432e80111618d4f64ffcd3",
+      "size_bytes": 14934
+    },
+    "molor:src/molor/router.py": {
+      "path": "src/molor/router.py",
+      "sha256": "475d53fbd22585132dd0cc35c57bd2dc4700687ffa200a0d3b3c9dc2eb884068",
+      "size_bytes": 8017
+    },
+    "molor:src/molor/runtime/__init__.py": {
+      "path": "src/molor/runtime/__init__.py",
+      "sha256": "1d66b1dab09b005f229e78bdac5044a283a188a853eaa929ab49ca5ffe2cd775",
+      "size_bytes": 2296
+    },
+    "molor:src/molor/runtime/coordinator.py": {
+      "path": "src/molor/runtime/coordinator.py",
+      "sha256": "0df4bc58ebbe7c3fef561971bb02aae526157262a08a313b3cd23fd9957d3c60",
+      "size_bytes": 41766
+    },
+    "molor:src/molor/runtime/deterministic.py": {
+      "path": "src/molor/runtime/deterministic.py",
+      "sha256": "989fe2bf78405cda5d627e6b95b0913455e87ec90d10d9a8e16bfced0c6ac169",
+      "size_bytes": 8559
+    },
+    "molor:src/molor/runtime/execution.py": {
+      "path": "src/molor/runtime/execution.py",
+      "sha256": "f8570ccbbd78b525d4b1a483bb6bef01919db590ac4c057f62fa7eb24706b98a",
+      "size_bytes": 46494
+    },
+    "molor:src/molor/runtime/http.py": {
+      "path": "src/molor/runtime/http.py",
+      "sha256": "74b6c359a576f90630a3548cea97096aa418439a3bbaef7d7522df4a717385f4",
+      "size_bytes": 37251
+    },
+    "molor:src/molor/runtime/manifests.py": {
+      "path": "src/molor/runtime/manifests.py",
+      "sha256": "fda03de6d8a3013020a4646c6a3141fe6eccb1762305f7d34184920c1f849aa8",
+      "size_bytes": 8556
+    },
+    "molor:src/molor/runtime/service.py": {
+      "path": "src/molor/runtime/service.py",
+      "sha256": "c340adce3131b01f9af23dbffd8856eb686fa609faeb7e0b98370df1d8aedade",
+      "size_bytes": 8409
+    },
+    "molor:src/molor/runtime/smoke.py": {
+      "path": "src/molor/runtime/smoke.py",
+      "sha256": "a6e731d45fa7a56479f736837b1d7058161fe1af15947b1c156ad31c0b539ac7",
+      "size_bytes": 11457
+    },
+    "molor:src/molor/teacher/__init__.py": {
+      "path": "src/molor/teacher/__init__.py",
+      "sha256": "0e42e8cd8a3a85526f917bab457277e3f3a3df56cc902320aeff9793d983e4c5",
+      "size_bytes": 274
+    },
+    "molor:src/molor/teacher/cli.py": {
+      "path": "src/molor/teacher/cli.py",
+      "sha256": "102d142624a360ca861b00793ea4905a310868dc674ce8d1fb38858d83216a2b",
+      "size_bytes": 8138
+    },
+    "molor:src/molor/teacher/protocol.py": {
+      "path": "src/molor/teacher/protocol.py",
+      "sha256": "61702765fe3af4829413533c41b23401cb880760a33f1beac23a3d5bd26de9bc",
+      "size_bytes": 11035
+    },
+    "molor:src/molor/teacher/server.py": {
+      "path": "src/molor/teacher/server.py",
+      "sha256": "6109fc5400c3f1b1169e8c5d7d042be7ba13042e48ea2bf6ec3105d3d98ba200",
+      "size_bytes": 7832
+    },
+    "molor:src/molor/teacher/service.py": {
+      "path": "src/molor/teacher/service.py",
+      "sha256": "6e06aa63f1dba888c8ccbbcaac83ef14f23be8363472d5d07334c781f69c3cd7",
+      "size_bytes": 24617
+    },
+    "molor:src/molor/training/__init__.py": {
+      "path": "src/molor/training/__init__.py",
+      "sha256": "51e227e1ffb832062d3d8352946bb298a0569587842096b959b51153a339935f",
+      "size_bytes": 1322
+    },
+    "molor:src/molor/training/cli.py": {
+      "path": "src/molor/training/cli.py",
+      "sha256": "c4a88534563b1307512e24e2892670ceea71de8d14cbe7d40e9e996a918d7fc2",
+      "size_bytes": 2648
+    },
+    "molor:src/molor/training/data.py": {
+      "path": "src/molor/training/data.py",
+      "sha256": "3f5cc3e8c88817a2fa7095353a5e4a0c7f8faa049dad6ed5fdcee84e9ba24f71",
+      "size_bytes": 7085
+    },
+    "molor:src/molor/training/preference.py": {
+      "path": "src/molor/training/preference.py",
+      "sha256": "370c9d83f677598d1a36c22ba25f23c5872197d6a3ac76e3a7e012e62d976da9",
+      "size_bytes": 10698
+    },
+    "molor:src/molor/training/preference_cli.py": {
+      "path": "src/molor/training/preference_cli.py",
+      "sha256": "c3d9ea56b4fb11a0f2715282ccc598bb67238d4668286043d6a598da10ee93e7",
+      "size_bytes": 1786
+    },
+    "molor:src/molor/training/recipe.py": {
+      "path": "src/molor/training/recipe.py",
+      "sha256": "fbd695d6232e2fc819bf3922516a97f44dbce9d7dd8c90bae5df4497769510dc",
+      "size_bytes": 6084
+    },
+    "molor:src/molor/training/router.py": {
+      "path": "src/molor/training/router.py",
+      "sha256": "b3c30e3997b63fec0b09680a4df88482316321adb0efce922b8eda693c97ad37",
+      "size_bytes": 32618
+    },
+    "molor:src/molor/training/router_cli.py": {
+      "path": "src/molor/training/router_cli.py",
+      "sha256": "a4cdfa4da16b5cf94423416c24ecbd429ae6a2154f3ea531c0c0c8b6715a7d47",
+      "size_bytes": 6135
+    },
+    "molor:src/molor/training/sft.py": {
+      "path": "src/molor/training/sft.py",
+      "sha256": "12f153c40ddf6e1f1acb7fa9e8701fb793096601b78e9d44231989c3d250d16c",
+      "size_bytes": 19318
+    },
+    "script:dataset_builder": {
+      "path": "experiments/first-real-experts/build_router_v6_taskmaster_dataset.py",
+      "sha256": "d4e7d0bccf29fb0f145d6c75e0dc12af793e67101b7e1eae6e06c360dfa7f0dd",
+      "size_bytes": 30054
+    },
+    "script:evaluator": {
+      "path": "experiments/first-real-experts/evaluate_router_v6_registration.py",
+      "sha256": "0e0147ca1804fd1d66de0d3d6223226b2eb84167b6e5bad18af681a7929a118a",
+      "size_bytes": 102053
+    },
+    "script:shared_probe_evaluator": {
+      "path": "experiments/first-real-experts/evaluate_router.py",
+      "sha256": "9c28a5d8a9133d57351ffff4de7f0219291cebb63178d6d0280ace1b2f65b460",
+      "size_bytes": 22320
+    }
+  },
+  "runtime_source_contract": {
+    "molor_source_tree": {
+      "content_fingerprint": "9c8dd9d7d832837b7c93f5115a525818fa28e8993801548ea50cee4e3793d43d",
+      "file_count": 83,
+      "glob": "**/*.py",
+      "hash_policy": "sha256-canonical-repository-relative-path-size-content-v1",
+      "root": "src/molor"
+    },
+    "scripts": {
+      "dataset_builder": {
+        "path": "experiments/first-real-experts/build_router_v6_taskmaster_dataset.py",
+        "sha256": "d4e7d0bccf29fb0f145d6c75e0dc12af793e67101b7e1eae6e06c360dfa7f0dd",
+        "size_bytes": 30054
+      },
+      "evaluator": {
+        "path": "experiments/first-real-experts/evaluate_router_v6_registration.py",
+        "sha256": "0e0147ca1804fd1d66de0d3d6223226b2eb84167b6e5bad18af681a7929a118a",
+        "size_bytes": 102053
+      },
+      "shared_probe_evaluator": {
+        "path": "experiments/first-real-experts/evaluate_router.py",
+        "sha256": "9c28a5d8a9133d57351ffff4de7f0219291cebb63178d6d0280ace1b2f65b460",
+        "size_bytes": 22320
+      }
+    }
+  },
+  "schema_version": "molor.router-v6-preblind-receipt.v1",
+  "selected_candidate_artifacts": {
+    "checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419",
+    "router_config": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419/router_config.json",
+      "sha256": "6b60a56f2497c13f98263b5a334467258e640233b38496e81851510d76901dcf",
+      "size_bytes": 17058
+    },
+    "router_weights": {
+      "path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419/router.safetensors",
+      "sha256": "6843189c82119f64ada2707bc4473ade127b34997f1dcc7276948354e707d852",
+      "size_bytes": 2121216
+    },
+    "seed": 8419
+  },
+  "selection": {
+    "blind_probe_opened_for_selection": false,
+    "metric": "freshly_recomputed_validation_cross_entropy",
+    "selected_checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419",
+    "selected_seed": 8419,
+    "selected_validation_loss": 0.06171273145920191,
+    "sidecar_metrics_used_for_selection": false,
+    "test_metrics_used_for_selection": false,
+    "tie_break": "ascending_seed"
+  }
+}

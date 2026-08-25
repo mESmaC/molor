@@ -215,6 +215,95 @@
     },
     "decision": "preserve live router v4; do not threshold-tune, seed-shop, or promote v5"
   },
+  "router_v6_taskmaster_registration": {
+    "status": "rejected_quarantined_candidate",
+    "preregistration_commit": "4cc62ad",
+    "builder": {
+      "path": "experiments/first-real-experts/build_router_v6_taskmaster_dataset.py",
+      "sha256": "d4e7d0bccf29fb0f145d6c75e0dc12af793e67101b7e1eae6e06c360dfa7f0dd"
+    },
+    "evaluator": {
+      "path": "experiments/first-real-experts/evaluate_router_v6_registration.py",
+      "sha256": "0e0147ca1804fd1d66de0d3d6223226b2eb84167b6e5bad18af681a7929a118a"
+    },
+    "policy": {
+      "path": "experiments/first-real-experts/router-v6-evaluation-policy.json",
+      "sha256": "31e216ddaeafce844caea51a15b662db6e6f69702adaa15428a8e0a6e3bdf869"
+    },
+    "dataset": {
+      "route_count": 6,
+      "train_rows": 5616,
+      "validation_rows": 780,
+      "test_rows": 780,
+      "rows_per_route": {
+        "train": 936,
+        "validation": 130,
+        "test": 130
+      },
+      "train_sha256": "0dd1d8fada18d0c306a12eb5cc4fbfcfa04e31290dd3112dfcc89791fae9c31f",
+      "validation_sha256": "0b9203e5c5778017f6580a9139201e950fd275a6b68dc104807b46cfe0f04220",
+      "test_sha256": "51a4692d5729685c1a8ae8e296474671f0576dabaefeb1e9a1bf78742c5c08c7",
+      "report_sha256": "4a47892f7aef275483a9915a56a553f510ebccef9d578336d6f42cafa40c4673",
+      "legacy_v4_rows_preserved": true,
+      "taskmaster_test_or_prediction_artifacts_read_by_builder": false,
+      "normalized_prompt_overlap": 0,
+      "semantic_group_overlap": 0,
+      "component_overlap": 0
+    },
+    "training": {
+      "candidate_seeds": [83, 8419, 27183],
+      "selection_rule": "all candidates must pass fresh frozen validation gates, then choose lowest fresh validation loss with numeric seed tie-break; saved sidecar and test metrics are diagnostic only",
+      "selected_seed": 8419,
+      "selected_checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v6-taskmaster-seed8419",
+      "checkpoint_sha256": "6843189c82119f64ada2707bc4473ade127b34997f1dcc7276948354e707d852",
+      "router_config_sha256": "6b60a56f2497c13f98263b5a334467258e640233b38496e81851510d76901dcf",
+      "fresh_validation_loss": 0.06171273145920191,
+      "fresh_validation_accuracy": 0.9974358974358974,
+      "fresh_taskmaster_precision": 1.0,
+      "fresh_taskmaster_recall": 1.0,
+      "minimum_fresh_legacy_route_recall": 0.9923076923076923,
+      "all_candidates_passed_preblind_gates": true
+    },
+    "one_shot": {
+      "probe_sha256": "bb001bf82412d96667e4e210d4de5d1c89f6f0edcc9631ea0120d71db49b0781",
+      "prompt_count": 84,
+      "receipt": {
+        "path": "runs/router-v6/taskmaster-preblind-receipt.json",
+        "sha256": "e11fcabe2945acc01052e406b620cb32a38cd1d363ee4fd8ce6c513ccab1e55a",
+        "size_bytes": 41257
+      },
+      "report": {
+        "path": "runs/evaluation/router-v6-taskmaster-registration-one-shot.json",
+        "sha256": "01859c014a89bbe47ddb3a10fd0eb930111c97cdeeee7afcfe1333bd3b9815ee",
+        "size_bytes": 219896
+      },
+      "baseline_exact": 45,
+      "baseline_acceptable": 48,
+      "candidate_exact": 47,
+      "candidate_acceptable": 51,
+      "exact_gain": 2,
+      "acceptable_gain": 3,
+      "taskmaster_correct": 0,
+      "taskmaster_total": 12,
+      "taskmaster_false_positives": 0,
+      "non_taskmaster_total": 72,
+      "failed_gates": [
+        "minimum overall exact accuracy",
+        "minimum overall acceptable accuracy",
+        "exact improvement over v4",
+        "acceptable improvement over v4",
+        "Taskmaster correct"
+      ],
+      "all_legacy_protection_gates_passed": true
+    },
+    "isolation": {
+      "expert_registered": false,
+      "router_registered": false,
+      "desktop_and_teacher_defaults": "qwen3-1.7b-corpus-router-v4-mlp-controlled",
+      "no_post_exposure_retraining_reseeding_or_threshold_tuning": true
+    },
+    "decision": "preserve router v4; retain the Taskmaster expert and router v6 candidates in quarantine; do not reuse one-shot prompts or per-example outputs"
+  },
   "finance_rank16": {
     "status": "rejected_quarantined_candidate",
     "recipe": "experiments/first-real-experts/finance-r16-candidate-recipe.json",

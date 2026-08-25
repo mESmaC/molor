@@ -36,10 +36,11 @@ The promoted router is still the controlled five-way v4 MLP checkpoint. Its hard
 curriculum improved acceptable routing from 66.7% to 73.3% on a 60-prompt blind probe while exactly
 tying v3 on the six-case executable lane. A verified-code-focused v5 candidate and a fresh
 150-rollout five-route RL sweep both failed their held-out promotion gates, so neither changed the
-live router. A Taskmaster coffee-API adapter produced valid JSON consistently but missed its API,
-argument, and full-object exactness floors and remains quarantined. Persistent cross-session memory
-and Memory-LoRA remain the next model-side pieces. The existing `docs/` directory contains design
-notes for those experiments.
+live router. The full-dialog Taskmaster coffee-API adapter passed its isolated expert gates, but a
+preregistered six-route router candidate routed 0/12 sealed Taskmaster intents and failed five
+registration gates. Both the expert and router therefore remain quarantined, with v4 still live.
+Persistent cross-session memory, Memory-LoRA, and a context-aware router representation remain the
+next model-side pieces. The existing `docs/` directory contains design notes for those experiments.
 
 ## Run the desktop app
 
