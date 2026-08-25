@@ -19,6 +19,7 @@ from molor.experimental.hashed_kv import (
     evaluate_hashed_kv,
     select_minmax_pages,
 )
+from molor.experimental.incremental_autorouter import IncrementalPromptAutoRouter
 from molor.experimental.mixture import (
     BASE_ROUTE,
     QWEN3_TARGET_MODULES,
@@ -39,6 +40,7 @@ __all__ = [
     "BASE_ROUTE",
     "HashedKVConfig",
     "HashedKVShadowResult",
+    "IncrementalPromptAutoRouter",
     "NULL_ROUTE_ID",
     "PromptAutoRouter",
     "PageSelection",

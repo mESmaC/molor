@@ -1,0 +1,357 @@
+{
+  "schema_version": "molor.router-v7-hierarchical-evaluation-policy.v1",
+  "status": "frozen_before_candidate_training_and_blind_evaluation",
+  "purpose": "Preregister a sealed one-shot admission decision for a binary Taskmaster gate layered over the unchanged promoted router v4.",
+  "policy_lifecycle": {
+    "semantic_contract_frozen": true,
+    "artifact_bindings_complete": true,
+    "training_authorized": true,
+    "one_shot_evaluation_authorized": true,
+    "artifact_completion_rule": "Only pending identity/path fields were completed. The frozen semantic routing rules, seed set, threshold, selection rule, probe identity, and gates are unchanged.",
+    "independent_audit_required_before_training": true,
+    "candidate_checkpoint_identity_rule": "Candidate directory paths and seeds must be frozen before training; generated config and weight hashes are captured after training in the append-only preblind receipt before any evaluator access to the probe."
+  },
+  "route_contract": {
+    "taskmaster_route_id": "taskmaster-coffee-api-v2-full-dialog-r16",
+    "delegate_router_id": "qwen3-1.7b-corpus-router-v4-mlp-controlled",
+    "architecture": "binary_taskmaster_gate_then_exact_v4_delegate",
+    "binary_labels": [
+      "delegate_v4",
+      "taskmaster-coffee-api-v2-full-dialog-r16"
+    ],
+    "gate_score": "sigmoid probability for the Taskmaster-positive label",
+    "gate_threshold": 0.5,
+    "threshold_comparison": "taskmaster_probability_greater_than_or_equal_to_threshold",
+    "positive_semantics": "Select taskmaster-coffee-api-v2-full-dialog-r16 as the sole primary route; do not consult or blend v4.",
+    "negative_semantics": "Delegate the original prompt to the hash-pinned promoted v4 router with its hash-pinned runtime unchanged and return v4's route decision unchanged.",
+    "frozen_v4_runtime": {
+      "temperature": 1.0,
+      "confidence_threshold": 0.3,
+      "null_bias": 0.0,
+      "top_k": 1,
+      "enabled_experts": [
+        "embedded-knowledge-v1",
+        "ocb-can-verified-v1",
+        "software-architecture-v1",
+        "verified-embedded-code-v1"
+      ]
+    },
+    "delegate_invariance": [
+      "No legacy logits, probabilities, confidence, null bias, threshold, top-k setting, enabled-route set, or tie-break may be changed.",
+      "No Taskmaster score may be injected into the v4 route axis.",
+      "For a gate-negative prompt, the hierarchical router's primary and acceptable-route result must be byte-for-byte derivable from the standalone pinned v4 decision."
+    ]
+  },
+  "training_and_selection": {
+    "candidate_seeds": [
+      83,
+      8419,
+      27183
+    ],
+    "seed_is_only_permitted_candidate_difference": true,
+    "device": "cpu",
+    "gate_threshold_during_validation": 0.5,
+    "fresh_validation_required": true,
+    "fresh_validation_metric": "binary validation loss recomputed by the frozen evaluator from the frozen validation split",
+    "validation_support": {
+      "taskmaster_positive": 130,
+      "non_taskmaster_negative": 650,
+      "total": 780
+    },
+    "candidate_preblind_gates": {
+      "finite_validation_loss_required": true,
+      "validation_accuracy_min": 0.995,
+      "taskmaster_precision_min": 0.99,
+      "taskmaster_recall_min": 0.99,
+      "false_positives_on_650_validation_negatives_max": 0,
+      "all_three_seeds_must_pass": true
+    },
+    "selection_order": [
+      "lowest freshly recomputed validation loss",
+      "lowest numeric seed as the sole exact-loss tie-break"
+    ],
+    "sidecar_metrics_are_diagnostic_only": true,
+    "dataset_has_test_split": false,
+    "test_metrics_used_for_training_or_selection": false,
+    "blind_probe_used_for_training_selection_or_thresholding": false,
+    "post_probe_retraining_reseeding_or_threshold_tuning": false
+  },
+  "blind_probe": {
+    "path": "experiments/first-real-experts/router-blind-probe-v7.jsonl",
+    "sha256": "409057863172ef33323dfe041a3bf6239e8e2846f6d174ceef3669b12cc3e099",
+    "size_bytes": 32719,
+    "rows": 84,
+    "purpose": "blind_intent_probe_never_training",
+    "category_counts": {
+      "base/null": 12,
+      "embedded-knowledge-v1": 12,
+      "mixed": 12,
+      "ocb-can-verified-v1": 12,
+      "software-architecture-v1": 12,
+      "taskmaster-coffee-api-v2-full-dialog-r16": 12,
+      "verified-embedded-code-v1": 12
+    },
+    "taskmaster_contract": "Taskmaster-positive rows are explicit next-API-call planning contexts for a coffee-ordering dialogue, not ordinary coffee discussion, generic JSON work, generic API education, or coffee-related writing.",
+    "semantic_access_policy": "The registration evaluator may parse the probe exactly once, only after the durable preblind receipt is written and re-read successfully."
+  },
+  "one_shot_evaluation": {
+    "baseline": "hash-pinned promoted v4 evaluated on the same sealed probe under its unchanged runtime",
+    "candidate": "selected binary gate at threshold 0.5; positive selects Taskmaster; negative delegates to v4 unchanged",
+    "complete_rows_required": 84,
+    "finite_scores_required": true,
+    "taskmaster_rows": 12,
+    "non_taskmaster_rows": 72,
+    "protected_categories": [
+      "base/null",
+      "embedded-knowledge-v1",
+      "mixed",
+      "ocb-can-verified-v1",
+      "software-architecture-v1",
+      "verified-embedded-code-v1"
+    ],
+    "gates": {
+      "overall_exact_accuracy_min": 0.75,
+      "overall_acceptable_accuracy_min": 0.75,
+      "exact_correct_gain_over_v4_min": 8,
+      "acceptable_correct_gain_over_v4_min": 8,
+      "taskmaster_exact_correct_min": 10,
+      "false_taskmaster_selections_on_non_taskmaster_rows_max": 1,
+      "max_exact_correct_drop_per_protected_category_vs_v4": 1,
+      "max_acceptable_correct_drop_per_protected_category_vs_v4": 1,
+      "all_gates_must_pass": true
+    },
+    "failure_semantics": "Any missing row, non-finite score, invariant violation, or failed gate rejects registration.",
+    "report_path": "runs/evaluation/router-v7-taskmaster-hierarchical-registration-one-shot.json"
+  },
+  "evidence_discipline": {
+    "preblind_receipt_path": "runs/router-v7/taskmaster-hierarchical-preblind-receipt.json",
+    "receipt_written_before_probe_parse_by_evaluator": true,
+    "receipt_write_mode": "exclusive_non_overwriting_atomic",
+    "report_write_mode": "exclusive_non_overwriting_atomic",
+    "preblind_failure_report_must_state_probe_unopened": true,
+    "one_shot_report_must_not_emit_probe_prompt_text": true,
+    "evaluator_may_register_copy_alias_or_modify_defaults": false,
+    "registration_requires_separate_explicit_audited_change": true,
+    "no_retry_after_probe_exposure": true,
+    "no_threshold_seed_data_or_checkpoint_tuning_after_probe_exposure": true
+  },
+  "forbidden_inputs": {
+    "training_selection_thresholding_or_feature_cache": [
+      "router-blind-probe-v7 prompt text or labels",
+      "any earlier router blind-probe prompt text or labels",
+      "router v6 receipt, report, or per-example output",
+      "Taskmaster test data",
+      "Taskmaster predictions",
+      "Taskmaster evaluation outputs",
+      "any earlier per-example router evaluation output"
+    ],
+    "test_data_may_select_candidate": false,
+    "probe_data_may_select_candidate": false
+  },
+  "artifact_bindings": {
+    "binding_state": "complete_frozen_before_training",
+    "unresolved_value_marker": null,
+    "dataset_builder": {
+      "artifact": {
+        "path": "experiments/first-real-experts/build_router_v7_taskmaster_gate_dataset.py",
+        "sha256": "2223625c942127cee1eda1d06ca2fb1a5f6d4f70d9650b1a1709bb404bd8808c",
+        "size_bytes": 10139
+      },
+      "status": "frozen_before_training"
+    },
+    "training_launcher": {
+      "artifact": {
+        "path": "experiments/first-real-experts/train_router_v7_incremental_gate.py",
+        "sha256": "1f01d615025d14477796153fe313536431c457c2782398432ebfcbbdb73c61cd",
+        "size_bytes": 8435
+      },
+      "status": "frozen_before_training"
+    },
+    "registration_evaluator": {
+      "artifact": {
+        "path": "experiments/first-real-experts/evaluate_router_v7_hierarchical_registration.py",
+        "sha256": "3c8022b40c4d0e77b38b0798ad7cca27170243cc38b84d76d08437ded3b99631",
+        "size_bytes": 88947
+      },
+      "status": "frozen_before_training"
+    },
+    "shared_runtime_sources": {
+      "artifacts": [
+        {
+          "path": "experiments/first-real-experts/evaluate_router.py",
+          "sha256": "9c28a5d8a9133d57351ffff4de7f0219291cebb63178d6d0280ace1b2f65b460",
+          "size_bytes": 22320
+        }
+      ],
+      "status": "frozen_before_training"
+    },
+    "molor_source_tree": {
+      "root": "src/molor",
+      "file_count": 84,
+      "content_fingerprint": "45444baac277861523a3247ce4fd5f300bfc35587b526d4ac5e9e9ee947526e2",
+      "status": "frozen_before_training"
+    },
+    "model_runtime": {
+      "path": "models/Qwen3-1.7B",
+      "config": {
+        "path": "models/Qwen3-1.7B/config.json",
+        "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197",
+        "size_bytes": 726
+      },
+      "safetensors_index": {
+        "path": "models/Qwen3-1.7B/model.safetensors.index.json",
+        "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d",
+        "size_bytes": 25605
+      },
+      "embedding": {
+        "tensor_name": "model.embed_tokens.weight",
+        "shape": [
+          151936,
+          2048
+        ],
+        "dtype": "bfloat16",
+        "artifact": {
+          "path": "models/Qwen3-1.7B/model-00001-of-00002.safetensors",
+          "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5",
+          "size_bytes": 3441185608
+        }
+      },
+      "status": "frozen_before_training"
+    },
+    "tokenizer_runtime": {
+      "artifacts": [
+        {
+          "path": "models/Qwen3-1.7B/tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "size_bytes": 11422654
+        },
+        {
+          "path": "models/Qwen3-1.7B/tokenizer_config.json",
+          "sha256": "5a7303fcb1a27ede63134a2cbd61d5282c247ca6d769ce4746d4ffa124aedd63",
+          "size_bytes": 9675
+        },
+        {
+          "path": "models/Qwen3-1.7B/special_tokens_map.json",
+          "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+          "size_bytes": 613
+        },
+        {
+          "path": "models/Qwen3-1.7B/added_tokens.json",
+          "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+          "size_bytes": 707
+        },
+        {
+          "path": "models/Qwen3-1.7B/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "size_bytes": 2776833
+        },
+        {
+          "path": "models/Qwen3-1.7B/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "size_bytes": 1671853
+        }
+      ],
+      "status": "frozen_before_training"
+    },
+    "dataset_report": {
+      "artifact": {
+        "path": "experiments/first-real-experts/data/router-bootstrap-v7-taskmaster-gate.report.json",
+        "sha256": "aefd55324fde12052d20275e52190656e90e728f5a536f0cdb62b5aea2594876",
+        "size_bytes": 2974
+      },
+      "status": "frozen_before_training"
+    },
+    "dataset_train": {
+      "artifact": {
+        "path": "experiments/first-real-experts/data/router-bootstrap-v7-taskmaster-gate.train.jsonl",
+        "sha256": "96196ece3c4808c20ac28676727e536f40455dc78a860770bd207a4bf57d09d4",
+        "size_bytes": 3050427
+      },
+      "rows": 5616,
+      "status": "frozen_before_training"
+    },
+    "dataset_validation": {
+      "artifact": {
+        "path": "experiments/first-real-experts/data/router-bootstrap-v7-taskmaster-gate.validation.jsonl",
+        "sha256": "93f9b74e08acf6556c5ac6a30265f5588fd936eab188045743d8050b8fe47421",
+        "size_bytes": 371814
+      },
+      "rows": 780,
+      "status": "frozen_before_training"
+    },
+    "promoted_v4_delegate": {
+      "checkpoint_path": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
+      "router_config": {
+        "path": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled/router_config.json",
+        "sha256": "00e9e2937e28fc4924fd691ad1c14c34a91dc5335e1f9e6a19f8bd29ab1840ff",
+        "size_bytes": 14664
+      },
+      "router_weights": {
+        "path": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled/router.safetensors",
+        "sha256": "f05cc10074d3e6468dcae617fa27f1da8451594032f98cff75a9cbfd060bbe67",
+        "size_bytes": 2120188
+      },
+      "runtime_policy": {
+        "temperature": 1.0,
+        "confidence_threshold": 0.3,
+        "null_bias": 0.0,
+        "top_k": 1,
+        "enabled_experts": [
+          "embedded-knowledge-v1",
+          "ocb-can-verified-v1",
+          "software-architecture-v1",
+          "verified-embedded-code-v1"
+        ]
+      },
+      "status": "frozen_before_training"
+    },
+    "taskmaster_adapter": {
+      "checkpoint_path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16",
+      "adapter_config": {
+        "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_config.json",
+        "sha256": "da0feba91aa0013f94f01a1cff9265c658b8fcdf3f3a44b5128f5173d43f04f7",
+        "size_bytes": 20989
+      },
+      "adapter_weights": {
+        "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_model.safetensors",
+        "sha256": "e885123d61f71db0eb2779d41e3fb3cf7e9eb0d0db116f42ae657b5ac0ef7318",
+        "size_bytes": 69772944
+      },
+      "status": "frozen_before_training"
+    },
+    "gate_candidate_seed_83": {
+      "seed": 83,
+      "checkpoint_path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v7-taskmaster-gate-seed83",
+      "status": "path_frozen_before_training_hash_pending_generated_artifact_preblind"
+    },
+    "gate_candidate_seed_8419": {
+      "seed": 8419,
+      "checkpoint_path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v7-taskmaster-gate-seed8419",
+      "status": "path_frozen_before_training_hash_pending_generated_artifact_preblind"
+    },
+    "gate_candidate_seed_27183": {
+      "seed": 27183,
+      "checkpoint_path": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v7-taskmaster-gate-seed27183",
+      "status": "path_frozen_before_training_hash_pending_generated_artifact_preblind"
+    }
+  },
+  "probe_author_attestation": {
+    "evidence_kind": "author_attestation",
+    "independently_worded": true,
+    "existing_router_blind_probes_inspected": false,
+    "router_v6_receipt_or_report_inspected": false,
+    "taskmaster_datasets_inspected": false,
+    "taskmaster_test_predictions_or_evaluation_outputs_inspected": false,
+    "candidate_models_inspected": false,
+    "prior_per_example_outputs_inspected": false,
+    "permitted_material_inspected": [
+      "route IDs",
+      "public README route descriptions and aggregate project status",
+      "probe object schema and evaluator code"
+    ],
+    "semantic_access_by_author": "creation only",
+    "sealed_after_creation": true,
+    "postseal_checks": "JSON parse, exact field set, nonblank values, unique IDs/prompts, purpose, route membership, category counts, byte size, and SHA-256; no prompt text was emitted",
+    "attestation_is_not_independent_proof": true
+  }
+}

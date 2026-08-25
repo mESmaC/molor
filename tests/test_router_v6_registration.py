@@ -316,7 +316,7 @@ def test_router_split_loader_rejects_normalized_duplicates(tmp_path: Path) -> No
         evaluator._read_router_split(split, route_ids=("base/null",))
 
 
-def test_frozen_policy_and_dataset_validate_without_opening_probe(
+def test_frozen_policy_detects_later_source_drift_without_opening_probe(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     evaluator = _load_evaluator()
@@ -334,7 +334,8 @@ def test_frozen_policy_and_dataset_validate_without_opening_probe(
         pytest.skip("final runtime/model policy bindings have not been resealed yet")
 
     policy, policy_snapshot = evaluator.load_policy(evaluator.DEFAULT_POLICY)
-    runtime_sources = evaluator.validate_runtime_sources(policy)
+    with pytest.raises(ValueError, match="source-tree file count differs from frozen policy"):
+        evaluator.validate_runtime_sources(policy)
     model_evidence = evaluator.validate_model_runtime(
         policy,
         model_path=evaluator.DEFAULT_MODEL,
@@ -344,7 +345,6 @@ def test_frozen_policy_and_dataset_validate_without_opening_probe(
     assert policy_snapshot.sha256 == (
         "31e216ddaeafce844caea51a15b662db6e6f69702adaa15428a8e0a6e3bdf869"
     )
-    assert len([key for key in runtime_sources if key.startswith("molor:")]) == 83
     assert len(model_evidence.snapshots) == 9
     assert snapshots["report"].sha256 == (
         "4a47892f7aef275483a9915a56a553f510ebccef9d578336d6f42cafa40c4673"
