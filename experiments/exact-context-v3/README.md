@@ -1,12 +1,52 @@
 # Exact-context v3 shared-staging compatibility lab
 
-This is a development-only harness for the exact `SharedStagingCache` prototype. It has **not**
-been run against the real checkpoint, so there is no v3 benchmark result or new context-length
-claim yet.
+This is a development-only harness for the exact `SharedStagingCache` prototype. Its first frozen
+real-checkpoint cell completed on 2026-08-25. The cache passed exact 4K compatibility, but the result
+does **not** authorize a 40K follow-up or a new context-length claim because process RSS still
+exceeded the inherited capacity gate.
 
 The lab asks one narrow question: does an exact cache with permanently CPU-owned K/V backing and
 one reusable CUDA staging pair produce the same eight greedy token IDs as a GPU-resident
 Transformers `DynamicCache` on the inherited 4,096-token synthetic prompt?
+
+## First frozen result and stop decision
+
+The one planned run completed on its first attempt from committed harness `60fb32a`, with canonical
+implementation bundle `9b71fdaa07f7bb3dff1d8e6efe2785da593def904e3d8df6dfa5c23cda2d05e8`.
+Both workers and the aggregate completed with empty error lists; all three integrity seals verify;
+the frozen prompt, model, config, tokenizer, request, eight completion token IDs, and independently
+recomputed completion hashes match exactly.
+
+| Measured 4K + 8 result | DynamicCache | Shared staging | Difference |
+| --- | ---: | ---: | ---: |
+| TTFT | 0.795308 s | 2.949804 s | 3.709x |
+| Decode rate | 3.75906 tok/s | 3.40827 tok/s | -9.33% |
+| Maximum run-phase CUDA allocated | 3,738.996 MiB | 3,450.230 MiB | -288.766 MiB |
+| Post-reset run-phase CUDA peak | 3,948 MiB | 3,500 MiB | -448 MiB |
+| Incremental process RSS after model load | 0.777374 GiB | 7.795147 GiB | +7.017773 GiB |
+| Incremental private commit after model load | 0.820324 GiB | 7.830288 GiB | +7.009964 GiB |
+
+The shared cache owned exactly 4.375 GiB of CPU backing and one 160-MiB CUDA staging pair. It was
+healthy and unpoisoned, every layer ended at 4,103 cached tokens, and the cache object and owned
+storage were released successfully. Seven decode steps transferred 3,291,545,600 bytes of history
+host-to-device, averaging 448.438 MiB per step; including the tiny decode append, mean total traffic
+was 448.547 MiB per step. At native capacity the exact history transfer approaches 4.375 GiB per
+generated token.
+
+The inherited v1 capacity policy allows at most 6 GiB of incremental process RSS. Shared staging
+used 7.795147 GiB, exceeding that ceiling by 1.795147 GiB. That is about a 49.4% reduction from the
+old 15.403934-GiB failure, but it is still a gate failure. The 4K decode rate is numerically above
+2 tok/s, but that threshold applies at the frozen 40,952-token cell and cannot be claimed here.
+Therefore the 40K run is deliberately withheld while pinned-backing overhead is redesigned.
+
+Sealed evidence:
+
+- `runs/exact-context-v3/compatibility-4096-plus-8.dynamic.worker.json` — file SHA-256
+  `deb58b0ff380096b13c1d78569297305ef80fe3a0c5653915a68913c65b4c6d9`;
+- `runs/exact-context-v3/compatibility-4096-plus-8.shared_staging.worker.json` — file SHA-256
+  `9b935388f2cb309fb1e2f9cd4c354994ed92c851f48314e22898eea32c903e3b`;
+- `runs/exact-context-v3/compatibility-4096-plus-8.json` — file SHA-256
+  `b6e636afe8e8375167ef6288685ea0e58cd184a7af5ed7cd695be3b1f530e470`.
 
 ## Isolation and evidence
 

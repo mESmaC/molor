@@ -1,0 +1,5263 @@
+{
+  "schema_version": "molor.exact-context-v3-worker-report.v1",
+  "status": "completed",
+  "created_at": "2026-08-25T15:23:46Z",
+  "finished_at": "2026-08-25T15:24:00Z",
+  "development_only": true,
+  "formal_acceptance_claim": false,
+  "mode": "shared_staging",
+  "request": {
+    "model": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+    "length": 4096,
+    "max_new_tokens": 8,
+    "max_cache_len": 40960,
+    "seed": 8419,
+    "device": "cuda:0",
+    "dtype": "bfloat16",
+    "minimum_free_cuda_gib": 5.0,
+    "cuda_headroom_gib": 1.0,
+    "host_headroom_gib": 2.0,
+    "worker_timeout_seconds": 1800.0,
+    "worker_order": [
+      "dynamic",
+      "shared_staging"
+    ],
+    "workers_share_process": false,
+    "attention_implementation": "sdpa",
+    "sdpa_backend": "cudnn",
+    "deterministic_algorithms": false,
+    "greedy": true,
+    "local_files_only": true,
+    "trust_remote_code": false
+  },
+  "claim_scope": {
+    "exact_unquantized_kv": true,
+    "native_positions_only": true,
+    "context_extension_claim": false,
+    "long_context_quality_claim": false,
+    "compressed_or_sparse": false
+  },
+  "errors": [],
+  "implementation_provenance": {
+    "expected": {
+      "schema_version": "molor.exact-context-v3-implementation-bundle.v1",
+      "artifacts": {
+        "exact_context_lab": {
+          "path": "src/molor/experimental/exact_context_lab.py",
+          "size_bytes": 56765,
+          "sha256": "d3deeee5622538ea7c0abb5118bb7b63b59d7ce71d012400ae19328c854e6830"
+        },
+        "exact_context_v2_lab": {
+          "path": "src/molor/experimental/exact_context_v2_lab.py",
+          "size_bytes": 30868,
+          "sha256": "919b030157f900123da1df4181fcca0798a8996c239f486c4094fa9b32e00a5c"
+        },
+        "lab": {
+          "path": "experiments/exact-context-v3/lab.py",
+          "size_bytes": 83641,
+          "sha256": "151d04fb5bc5fffbe690b48205cb77ce93a3b848b9c69f6cd88fc3c26bed1aaf"
+        },
+        "shared_staging_cache": {
+          "path": "src/molor/experimental/shared_staging_cache.py",
+          "size_bytes": 40259,
+          "sha256": "36fdfa85a5b4bbf49109519d42fe89a8fda14720cccfca3e99c2a681571231b0"
+        },
+        "v1_contract": {
+          "path": "experiments/exact-context-v1/contract.json",
+          "size_bytes": 10316,
+          "sha256": "88c924dd8ca8aa17b2fa4a9cbf4cf80ebfad8642462d7edec481c4611eef3afd"
+        }
+      },
+      "bundle_sha256": "9b71fdaa07f7bb3dff1d8e6efe2785da593def904e3d8df6dfa5c23cda2d05e8"
+    },
+    "preflight_observed": {
+      "schema_version": "molor.exact-context-v3-implementation-bundle.v1",
+      "artifacts": {
+        "lab": {
+          "path": "experiments/exact-context-v3/lab.py",
+          "size_bytes": 83641,
+          "sha256": "151d04fb5bc5fffbe690b48205cb77ce93a3b848b9c69f6cd88fc3c26bed1aaf"
+        },
+        "shared_staging_cache": {
+          "path": "src/molor/experimental/shared_staging_cache.py",
+          "size_bytes": 40259,
+          "sha256": "36fdfa85a5b4bbf49109519d42fe89a8fda14720cccfca3e99c2a681571231b0"
+        },
+        "exact_context_lab": {
+          "path": "src/molor/experimental/exact_context_lab.py",
+          "size_bytes": 56765,
+          "sha256": "d3deeee5622538ea7c0abb5118bb7b63b59d7ce71d012400ae19328c854e6830"
+        },
+        "exact_context_v2_lab": {
+          "path": "src/molor/experimental/exact_context_v2_lab.py",
+          "size_bytes": 30868,
+          "sha256": "919b030157f900123da1df4181fcca0798a8996c239f486c4094fa9b32e00a5c"
+        },
+        "v1_contract": {
+          "path": "experiments/exact-context-v1/contract.json",
+          "size_bytes": 10316,
+          "sha256": "88c924dd8ca8aa17b2fa4a9cbf4cf80ebfad8642462d7edec481c4611eef3afd"
+        }
+      },
+      "bundle_sha256": "9b71fdaa07f7bb3dff1d8e6efe2785da593def904e3d8df6dfa5c23cda2d05e8"
+    },
+    "postflight_observed": {
+      "schema_version": "molor.exact-context-v3-implementation-bundle.v1",
+      "artifacts": {
+        "lab": {
+          "path": "experiments/exact-context-v3/lab.py",
+          "size_bytes": 83641,
+          "sha256": "151d04fb5bc5fffbe690b48205cb77ce93a3b848b9c69f6cd88fc3c26bed1aaf"
+        },
+        "shared_staging_cache": {
+          "path": "src/molor/experimental/shared_staging_cache.py",
+          "size_bytes": 40259,
+          "sha256": "36fdfa85a5b4bbf49109519d42fe89a8fda14720cccfca3e99c2a681571231b0"
+        },
+        "exact_context_lab": {
+          "path": "src/molor/experimental/exact_context_lab.py",
+          "size_bytes": 56765,
+          "sha256": "d3deeee5622538ea7c0abb5118bb7b63b59d7ce71d012400ae19328c854e6830"
+        },
+        "exact_context_v2_lab": {
+          "path": "src/molor/experimental/exact_context_v2_lab.py",
+          "size_bytes": 30868,
+          "sha256": "919b030157f900123da1df4181fcca0798a8996c239f486c4094fa9b32e00a5c"
+        },
+        "v1_contract": {
+          "path": "experiments/exact-context-v1/contract.json",
+          "size_bytes": 10316,
+          "sha256": "88c924dd8ca8aa17b2fa4a9cbf4cf80ebfad8642462d7edec481c4611eef3afd"
+        }
+      },
+      "bundle_sha256": "9b71fdaa07f7bb3dff1d8e6efe2785da593def904e3d8df6dfa5c23cda2d05e8"
+    }
+  },
+  "attention_policy": {
+    "requested": "cudnn",
+    "forced": true,
+    "resolved_pytorch_enum": "CUDNN_ATTENTION",
+    "enabled_flags_before_context": {
+      "cudnn": true,
+      "flash": true,
+      "efficient": true,
+      "math": true
+    },
+    "availability": {
+      "selected_build_or_library_available": true,
+      "cudnn_library_available": true,
+      "cudnn_version": 91900,
+      "flash_attention_build_available": false,
+      "efficient_attention_tensor_free_probe": null,
+      "runtime_input_eligible": "proven only by a successful forced model forward"
+    },
+    "selection_scope": "torch.nn.attention.sdpa_kernel around every prefill/decode forward"
+  },
+  "dependency_contract": {
+    "transformers_expected": "5.15.1",
+    "transformers_observed": "5.15.1",
+    "matches": true
+  },
+  "identity_seconds": 2.1056792000308633,
+  "identities": {
+    "config": {
+      "class": "transformers.models.qwen3.configuration_qwen3.Qwen3Config",
+      "canonical_sha256": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+      "model_type": "qwen3",
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "max_position_embeddings": 40960,
+      "vocab_size": 151936,
+      "num_hidden_layers": 28,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "rope_scaling": {
+        "rope_theta": 1000000,
+        "rope_type": "default"
+      },
+      "commit_hash": null
+    },
+    "model_artifact": {
+      "schema_version": "molor.benchmark-stack-lock.v2",
+      "hash_policy": "sha256-full-read-every-lock",
+      "backend_identity": {
+        "backend": "huggingface-local",
+        "model_id": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+        "model_artifact_path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B"
+      },
+      "stable_backend_identity": {
+        "backend": "huggingface-local"
+      },
+      "required_roles": [
+        {
+          "role": "base",
+          "identifier": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B"
+        }
+      ],
+      "artifacts": [
+        {
+          "role": "base",
+          "path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+          "content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+          "size_bytes": 4079424497,
+          "files": [
+            {
+              "name": "added_tokens.json",
+              "size_bytes": 707,
+              "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+            },
+            {
+              "name": "config.json",
+              "size_bytes": 726,
+              "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+            },
+            {
+              "name": "generation_config.json",
+              "size_bytes": 239,
+              "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+            },
+            {
+              "name": "merges.txt",
+              "size_bytes": 1671853,
+              "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+            },
+            {
+              "name": "model-00001-of-00002.safetensors",
+              "size_bytes": 3441185608,
+              "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5"
+            },
+            {
+              "name": "model-00002-of-00002.safetensors",
+              "size_bytes": 622329984,
+              "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9"
+            },
+            {
+              "name": "model.safetensors.index.json",
+              "size_bytes": 25605,
+              "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d"
+            },
+            {
+              "name": "special_tokens_map.json",
+              "size_bytes": 613,
+              "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+            },
+            {
+              "name": "tokenizer.json",
+              "size_bytes": 11422654,
+              "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+            },
+            {
+              "name": "tokenizer_config.json",
+              "size_bytes": 9675,
+              "sha256": "5a7303fcb1a27ede63134a2cbd61d5282c247ca6d769ce4746d4ffa124aedd63"
+            },
+            {
+              "name": "vocab.json",
+              "size_bytes": 2776833,
+              "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+            }
+          ],
+          "complete": true
+        }
+      ],
+      "unresolved": [],
+      "fully_content_addressed": true,
+      "stack_fingerprint": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91"
+    },
+    "tokenizer": {
+      "class": "transformers.models.qwen2.tokenization_qwen2.Qwen2Tokenizer",
+      "name_or_path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+      "vocab_size_attribute": 151643,
+      "vocabulary_entries": 151669,
+      "vocabulary_sha256": "6e949d8fec10c504f4207a43cdeac7d7961f7fd9894d256f14a8153bb5479b63",
+      "backend_json_sha256": "41e00eccf531cffc2e562d38bdd879d41e5044ea279af5b73c6a32aabcc8fe04",
+      "special_tokens_map_sha256": "edcb2fc2acbbe77f858a9c4fe51295ffdb84711efba5703ec5906b3d67282569",
+      "chat_template_sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5",
+      "commit_hash": null
+    },
+    "loaded_model": {
+      "class": "transformers.models.qwen3.modeling_qwen3.Qwen3ForCausalLM",
+      "parameter_count": 1720574976,
+      "parameter_devices": [
+        "cuda:0"
+      ],
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "loaded_config": {
+        "class": "transformers.models.qwen3.configuration_qwen3.Qwen3Config",
+        "canonical_sha256": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+        "model_type": "qwen3",
+        "architectures": [
+          "Qwen3ForCausalLM"
+        ],
+        "max_position_embeddings": 40960,
+        "vocab_size": 151936,
+        "num_hidden_layers": 28,
+        "num_attention_heads": 16,
+        "num_key_value_heads": 8,
+        "head_dim": 128,
+        "rope_scaling": {
+          "rope_theta": 1000000,
+          "rope_type": "default"
+        },
+        "commit_hash": null
+      },
+      "attention_implementation": "sdpa"
+    },
+    "model_artifact_recheck": {
+      "status": "completed",
+      "seconds": 2.187971500097774,
+      "stack_fingerprint": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91",
+      "matches_preload_identity": true
+    }
+  },
+  "frozen_v1_identity_validation": {
+    "source_contract": {
+      "path": "experiments/exact-context-v1/contract.json",
+      "file_sha256": "88c924dd8ca8aa17b2fa4a9cbf4cf80ebfad8642462d7edec481c4611eef3afd",
+      "model_content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+      "model_stack_fingerprint": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91",
+      "config_canonical_sha256": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+      "tokenizer_vocabulary_sha256": "6e949d8fec10c504f4207a43cdeac7d7961f7fd9894d256f14a8153bb5479b63",
+      "tokenizer_backend_json_sha256": "41e00eccf531cffc2e562d38bdd879d41e5044ea279af5b73c6a32aabcc8fe04",
+      "tokenizer_special_tokens_map_sha256": "edcb2fc2acbbe77f858a9c4fe51295ffdb84711efba5703ec5906b3d67282569",
+      "tokenizer_chat_template_sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5",
+      "max_position_embeddings": 40960,
+      "num_hidden_layers": 28,
+      "num_key_value_heads": 8,
+      "head_dim": 128
+    },
+    "all_match": true,
+    "checks": {
+      "model_content_fingerprint": {
+        "observed": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+        "expected": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+        "matches": true
+      },
+      "model_stack_fingerprint": {
+        "observed": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91",
+        "expected": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91",
+        "matches": true
+      },
+      "config_canonical_sha256": {
+        "observed": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+        "expected": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+        "matches": true
+      },
+      "tokenizer_vocabulary_sha256": {
+        "observed": "6e949d8fec10c504f4207a43cdeac7d7961f7fd9894d256f14a8153bb5479b63",
+        "expected": "6e949d8fec10c504f4207a43cdeac7d7961f7fd9894d256f14a8153bb5479b63",
+        "matches": true
+      },
+      "tokenizer_backend_json_sha256": {
+        "observed": "41e00eccf531cffc2e562d38bdd879d41e5044ea279af5b73c6a32aabcc8fe04",
+        "expected": "41e00eccf531cffc2e562d38bdd879d41e5044ea279af5b73c6a32aabcc8fe04",
+        "matches": true
+      },
+      "tokenizer_special_tokens_map_sha256": {
+        "observed": "edcb2fc2acbbe77f858a9c4fe51295ffdb84711efba5703ec5906b3d67282569",
+        "expected": "edcb2fc2acbbe77f858a9c4fe51295ffdb84711efba5703ec5906b3d67282569",
+        "matches": true
+      },
+      "tokenizer_chat_template_sha256": {
+        "observed": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5",
+        "expected": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5",
+        "matches": true
+      }
+    }
+  },
+  "prompt": {
+    "tokens": 4096,
+    "token_ids_sha256": "f2aef9fe4bc2057f6089979e7136014a94f0085db2e20773e55e601ea5236741",
+    "frozen_observed_sha256": "f2aef9fe4bc2057f6089979e7136014a94f0085db2e20773e55e601ea5236741",
+    "matches_frozen_observation": true,
+    "construction": "v1 deterministic synthetic text; repeat tokenizer output without special tokens; exact truncate",
+    "token_id_min": 12,
+    "token_id_max": 90884
+  },
+  "environment": {
+    "python": "3.12.10",
+    "implementation": "CPython",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "system": "Windows",
+    "release": "11",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "pid": 29552,
+    "torch": "2.11.0+cu128",
+    "torch_cuda_runtime": "12.8",
+    "torch_cudnn": 91900,
+    "transformers": "5.15.1",
+    "dynamic_cache_class": "transformers.cache_utils.DynamicCache",
+    "dynamic_cache_signature": "(ddp_cache_data: collections.abc.Iterable[tuple[torch.Tensor | None, ...]] | None = None, config: transformers.configuration_utils.PreTrainedConfig | None = None, offloading: bool = False, offload_only_non_sliding: bool = False)",
+    "device": {
+      "requested_and_normalized": "cuda:0",
+      "type": "cuda",
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 5070",
+      "capability": [
+        12,
+        0
+      ],
+      "total_memory_bytes": 12820480000,
+      "uuid": "f471eeff-c9f2-b3f5-121f-7af4253d14d2"
+    },
+    "worker_pid": 29552
+  },
+  "arithmetic_policy": {
+    "seed": 8419,
+    "greedy_argmax": true,
+    "sampling": false,
+    "eos_early_stopping": false,
+    "policy": "production-like PyTorch algorithms; nondeterministic kernels permitted",
+    "requested_deterministic_algorithms": false,
+    "torch_deterministic_algorithms": false,
+    "cublas_workspace_config": null,
+    "cudnn_benchmark": false,
+    "cudnn_allow_tf32": false,
+    "cuda_matmul_allow_tf32": false
+  },
+  "projected_memory_contract": {
+    "formula": "2*K/V*layers*kv_heads*head_dim*max_cache_len*dtype_bytes",
+    "max_cache_len": 40960,
+    "dtype": "bfloat16",
+    "dtype_bytes": 2,
+    "layers": 28,
+    "kv_heads": 8,
+    "head_dim": 128,
+    "cpu_backing_bytes": 4697620480,
+    "cpu_backing_gib": 4.375,
+    "shared_device_staging_bytes": 167772160,
+    "shared_device_staging_mib": 160.0,
+    "full_context_h2d_bytes_per_generated_token": 4697620480,
+    "full_context_h2d_gib_per_generated_token": 4.375,
+    "bandwidth_warning": "The shared pair bounds live staging allocation but still transfers the complete used history, layer by layer, for every decode token."
+  },
+  "model_load_memory": [
+    {
+      "label": "before_model_load",
+      "process": {
+        "current_rss_bytes": 863170560,
+        "peak_rss_bytes": 863170560,
+        "private_committed_bytes": 2069676032,
+        "pagefile_usage_bytes": 2069676032,
+        "peak_pagefile_usage_bytes": 2069676032,
+        "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+      },
+      "host": {
+        "available_physical_bytes": 15173005312,
+        "total_physical_bytes": 34049773568,
+        "source": "Windows GlobalMemoryStatusEx"
+      },
+      "live_cache_storage": {
+        "unique_storage_count": 0,
+        "cpu_bytes": 0,
+        "cuda_bytes": 0,
+        "other_device_bytes": 0,
+        "total_bytes": 0,
+        "by_device_bytes": {},
+        "roles_scanned": [
+          "keys",
+          "values"
+        ],
+        "source": "deduplicated live layer K/V tensor storages"
+      },
+      "cuda": {
+        "device_global_free_bytes": 11571036160,
+        "device_global_total_bytes": 12820480000,
+        "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+        "process_allocator_allocated_bytes": 0,
+        "process_allocator_reserved_bytes": 0,
+        "process_allocator_peak_allocated_bytes": 0,
+        "process_allocator_peak_reserved_bytes": 0
+      },
+      "nvidia_smi": {
+        "status": "available",
+        "free_reported_mib": 9730,
+        "total_reported_mib": 12227,
+        "free_bytes_assuming_mib": 10202644480,
+        "total_bytes_assuming_mib": 12820938752,
+        "source": "nvidia-smi global device memory (includes other processes)",
+        "command": [
+          "nvidia-smi",
+          "--id=0",
+          "--query-gpu=memory.free,memory.total",
+          "--format=csv,noheader,nounits"
+        ]
+      }
+    },
+    {
+      "label": "after_model_load",
+      "process": {
+        "current_rss_bytes": 930955264,
+        "peak_rss_bytes": 4933799936,
+        "private_committed_bytes": 6617989120,
+        "pagefile_usage_bytes": 6617989120,
+        "peak_pagefile_usage_bytes": 12416671744,
+        "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+      },
+      "host": {
+        "available_physical_bytes": 15106347008,
+        "total_physical_bytes": 34049773568,
+        "source": "Windows GlobalMemoryStatusEx"
+      },
+      "live_cache_storage": {
+        "unique_storage_count": 0,
+        "cpu_bytes": 0,
+        "cuda_bytes": 0,
+        "other_device_bytes": 0,
+        "total_bytes": 0,
+        "by_device_bytes": {},
+        "roles_scanned": [
+          "keys",
+          "values"
+        ],
+        "source": "deduplicated live layer K/V tensor storages"
+      },
+      "cuda": {
+        "device_global_free_bytes": 7139753984,
+        "device_global_total_bytes": 12820480000,
+        "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+        "process_allocator_allocated_bytes": 3441165312,
+        "process_allocator_reserved_bytes": 4397727744,
+        "process_allocator_peak_allocated_bytes": 4374663680,
+        "process_allocator_peak_reserved_bytes": 4397727744
+      },
+      "nvidia_smi": {
+        "status": "available",
+        "free_reported_mib": 5499,
+        "total_reported_mib": 12227,
+        "free_bytes_assuming_mib": 5766119424,
+        "total_bytes_assuming_mib": 12820938752,
+        "source": "nvidia-smi global device memory (includes other processes)",
+        "command": [
+          "nvidia-smi",
+          "--id=0",
+          "--query-gpu=memory.free,memory.total",
+          "--format=csv,noheader,nounits"
+        ]
+      }
+    }
+  ],
+  "host_memory_guard": {
+    "available_before_model_load_bytes": 15173005312,
+    "required_cpu_backing_plus_headroom_bytes": 6845104128,
+    "enforced_when_available_is_known": true
+  },
+  "model_load_seconds": 1.9792770999483764,
+  "loaded_attention_contract": {
+    "expected": "sdpa",
+    "observed": "sdpa",
+    "matches": true,
+    "checked_before_inference": true
+  },
+  "loaded_context_contract": {
+    "max_position_embeddings": 40960,
+    "vocab_size": 151936,
+    "num_hidden_layers": 28,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "rope_theta": null,
+    "rope_scaling": {
+      "rope_theta": 1000000,
+      "rope_type": "default"
+    },
+    "sliding_window": null
+  },
+  "cuda_memory_guard": {
+    "global_free_after_model_load_bytes": 7139753984,
+    "required_cache_bytes": 167772160,
+    "additional_headroom_bytes": 1073741824,
+    "required_total_free_bytes": 1241513984
+  },
+  "pre_shared_backing_memory": {
+    "label": "immediately_before_shared_backing_allocation",
+    "process": {
+      "current_rss_bytes": 931500032,
+      "peak_rss_bytes": 4933799936,
+      "private_committed_bytes": 6618464256,
+      "pagefile_usage_bytes": 6618464256,
+      "peak_pagefile_usage_bytes": 12416671744,
+      "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+    },
+    "host": {
+      "available_physical_bytes": 15108325376,
+      "total_physical_bytes": 34049773568,
+      "source": "Windows GlobalMemoryStatusEx"
+    },
+    "live_cache_storage": {
+      "unique_storage_count": null,
+      "cpu_bytes": 0,
+      "cuda_bytes": 0,
+      "other_device_bytes": 0,
+      "total_bytes": 0,
+      "by_device_bytes": {
+        "cpu": 0
+      },
+      "source": "SharedStagingCache.telemetry exact owned storage bytes",
+      "exact_cpu_backing_bytes": 0,
+      "exact_shared_staging_bytes": 0
+    },
+    "cuda": {
+      "device_global_free_bytes": 7139753984,
+      "device_global_total_bytes": 12820480000,
+      "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+      "process_allocator_allocated_bytes": 3441165312,
+      "process_allocator_reserved_bytes": 4397727744,
+      "process_allocator_peak_allocated_bytes": 4374663680,
+      "process_allocator_peak_reserved_bytes": 4397727744
+    },
+    "nvidia_smi": {
+      "status": "available",
+      "free_reported_mib": 5499,
+      "total_reported_mib": 12227,
+      "free_bytes_assuming_mib": 5766119424,
+      "total_bytes_assuming_mib": 12820938752,
+      "source": "nvidia-smi global device memory (includes other processes)",
+      "command": [
+        "nvidia-smi",
+        "--id=0",
+        "--query-gpu=memory.free,memory.total",
+        "--format=csv,noheader,nounits"
+      ]
+    }
+  },
+  "post_model_load_host_memory_guard": {
+    "observation_label": "immediately_before_shared_backing_allocation",
+    "available_physical_bytes": 15108325376,
+    "required_cpu_backing_plus_headroom_bytes": 6845104128,
+    "passed": true,
+    "enforced_when_available_is_known": true
+  },
+  "shared_cache_telemetry": {
+    "schema_version": "molor.shared-staging-cache-telemetry.v1",
+    "geometry": {
+      "num_layers": 28,
+      "max_cache_len": 40960,
+      "num_key_value_heads": 8,
+      "key_head_dim": 128,
+      "value_head_dim": 128,
+      "dtype": "bfloat16",
+      "staging_device": "cuda:0",
+      "pin_cpu_backing": true,
+      "non_blocking_copies": true,
+      "batch_size": 1,
+      "layout": "batch_heads_sequence_head_dim"
+    },
+    "health": {
+      "poisoned": false,
+      "active_poison_reason": null,
+      "poison_events": 0,
+      "poison_events_by_reason": {},
+      "cuda_stream_contract": "one_stable_current_stream",
+      "cuda_stream_bound": true
+    },
+    "sequence": {
+      "layer_logical_lengths": [
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103,
+        4103
+      ],
+      "expected_next_layer_idx": 0,
+      "update_cycle_in_progress": false
+    },
+    "storage": {
+      "backing_device": "cpu",
+      "backing_bytes": 4697620480,
+      "layer_backing": [
+        {
+          "layer_idx": 0,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 1,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 2,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 3,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 4,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 5,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 6,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 7,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 8,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 9,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 10,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 11,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 12,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 13,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 14,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 15,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 16,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 17,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 18,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 19,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 20,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 21,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 22,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 23,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 24,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 25,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 26,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        },
+        {
+          "layer_idx": 27,
+          "initialized": true,
+          "logical_length": 4103,
+          "key_bytes": 83886080,
+          "value_bytes": 83886080,
+          "total_bytes": 167772160
+        }
+      ],
+      "staging_device": "cuda:0",
+      "staging_allocated": true,
+      "staging_key_bytes": 83886080,
+      "staging_value_bytes": 83886080,
+      "staging_bytes": 167772160,
+      "staging_pair_allocations": 1,
+      "live_cache_bytes": 4865392640
+    },
+    "operations": {
+      "updates_by_layer": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "prefills_by_layer": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "decodes_by_layer": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "resets": 0
+    },
+    "transfers": {
+      "copies": 840,
+      "bytes": 3762110464,
+      "by_direction": {
+        "cpu_to_cuda:0": {
+          "copies": 392,
+          "bytes": 3291545600
+        },
+        "cuda:0_to_cpu": {
+          "copies": 448,
+          "bytes": 470564864
+        }
+      },
+      "by_phase": {
+        "backing_to_staging": {
+          "copies": 392,
+          "bytes": 3291545600
+        },
+        "decode_to_backing": {
+          "copies": 392,
+          "bytes": 802816
+        },
+        "prefill_to_backing": {
+          "copies": 56,
+          "bytes": 469762048
+        }
+      },
+      "event_capacity": 256,
+      "events_retained": 256,
+      "events_dropped": 584,
+      "events": [
+        {
+          "ordinal": 584,
+          "layer_idx": 20,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 585,
+          "layer_idx": 20,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 586,
+          "layer_idx": 20,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 587,
+          "layer_idx": 20,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 588,
+          "layer_idx": 21,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 589,
+          "layer_idx": 21,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 590,
+          "layer_idx": 21,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 591,
+          "layer_idx": 21,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 592,
+          "layer_idx": 22,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 593,
+          "layer_idx": 22,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 594,
+          "layer_idx": 22,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 595,
+          "layer_idx": 22,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 596,
+          "layer_idx": 23,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 597,
+          "layer_idx": 23,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 598,
+          "layer_idx": 23,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 599,
+          "layer_idx": 23,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 600,
+          "layer_idx": 24,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 601,
+          "layer_idx": 24,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 602,
+          "layer_idx": 24,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 603,
+          "layer_idx": 24,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 604,
+          "layer_idx": 25,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 605,
+          "layer_idx": 25,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 606,
+          "layer_idx": 25,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 607,
+          "layer_idx": 25,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 608,
+          "layer_idx": 26,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 609,
+          "layer_idx": 26,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 610,
+          "layer_idx": 26,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 611,
+          "layer_idx": 26,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 612,
+          "layer_idx": 27,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 613,
+          "layer_idx": 27,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 614,
+          "layer_idx": 27,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 615,
+          "layer_idx": 27,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4199424,
+          "bytes": 8398848,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 616,
+          "layer_idx": 0,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 617,
+          "layer_idx": 0,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 618,
+          "layer_idx": 0,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 619,
+          "layer_idx": 0,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 620,
+          "layer_idx": 1,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 621,
+          "layer_idx": 1,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 622,
+          "layer_idx": 1,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 623,
+          "layer_idx": 1,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 624,
+          "layer_idx": 2,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 625,
+          "layer_idx": 2,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 626,
+          "layer_idx": 2,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 627,
+          "layer_idx": 2,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 628,
+          "layer_idx": 3,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 629,
+          "layer_idx": 3,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 630,
+          "layer_idx": 3,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 631,
+          "layer_idx": 3,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 632,
+          "layer_idx": 4,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 633,
+          "layer_idx": 4,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 634,
+          "layer_idx": 4,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 635,
+          "layer_idx": 4,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 636,
+          "layer_idx": 5,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 637,
+          "layer_idx": 5,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 638,
+          "layer_idx": 5,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 639,
+          "layer_idx": 5,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 640,
+          "layer_idx": 6,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 641,
+          "layer_idx": 6,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 642,
+          "layer_idx": 6,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 643,
+          "layer_idx": 6,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 644,
+          "layer_idx": 7,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 645,
+          "layer_idx": 7,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 646,
+          "layer_idx": 7,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 647,
+          "layer_idx": 7,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 648,
+          "layer_idx": 8,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 649,
+          "layer_idx": 8,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 650,
+          "layer_idx": 8,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 651,
+          "layer_idx": 8,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 652,
+          "layer_idx": 9,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 653,
+          "layer_idx": 9,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 654,
+          "layer_idx": 9,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 655,
+          "layer_idx": 9,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 656,
+          "layer_idx": 10,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 657,
+          "layer_idx": 10,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 658,
+          "layer_idx": 10,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 659,
+          "layer_idx": 10,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 660,
+          "layer_idx": 11,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 661,
+          "layer_idx": 11,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 662,
+          "layer_idx": 11,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 663,
+          "layer_idx": 11,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 664,
+          "layer_idx": 12,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 665,
+          "layer_idx": 12,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 666,
+          "layer_idx": 12,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 667,
+          "layer_idx": 12,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 668,
+          "layer_idx": 13,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 669,
+          "layer_idx": 13,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 670,
+          "layer_idx": 13,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 671,
+          "layer_idx": 13,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 672,
+          "layer_idx": 14,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 673,
+          "layer_idx": 14,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 674,
+          "layer_idx": 14,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 675,
+          "layer_idx": 14,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 676,
+          "layer_idx": 15,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 677,
+          "layer_idx": 15,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 678,
+          "layer_idx": 15,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 679,
+          "layer_idx": 15,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 680,
+          "layer_idx": 16,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 681,
+          "layer_idx": 16,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 682,
+          "layer_idx": 16,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 683,
+          "layer_idx": 16,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 684,
+          "layer_idx": 17,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 685,
+          "layer_idx": 17,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 686,
+          "layer_idx": 17,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 687,
+          "layer_idx": 17,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 688,
+          "layer_idx": 18,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 689,
+          "layer_idx": 18,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 690,
+          "layer_idx": 18,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 691,
+          "layer_idx": 18,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 692,
+          "layer_idx": 19,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 693,
+          "layer_idx": 19,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 694,
+          "layer_idx": 19,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 695,
+          "layer_idx": 19,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 696,
+          "layer_idx": 20,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 697,
+          "layer_idx": 20,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 698,
+          "layer_idx": 20,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 699,
+          "layer_idx": 20,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 700,
+          "layer_idx": 21,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 701,
+          "layer_idx": 21,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 702,
+          "layer_idx": 21,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 703,
+          "layer_idx": 21,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 704,
+          "layer_idx": 22,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 705,
+          "layer_idx": 22,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 706,
+          "layer_idx": 22,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 707,
+          "layer_idx": 22,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 708,
+          "layer_idx": 23,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 709,
+          "layer_idx": 23,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 710,
+          "layer_idx": 23,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 711,
+          "layer_idx": 23,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 712,
+          "layer_idx": 24,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 713,
+          "layer_idx": 24,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 714,
+          "layer_idx": 24,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 715,
+          "layer_idx": 24,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 716,
+          "layer_idx": 25,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 717,
+          "layer_idx": 25,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 718,
+          "layer_idx": 25,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 719,
+          "layer_idx": 25,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 720,
+          "layer_idx": 26,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 721,
+          "layer_idx": 26,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 722,
+          "layer_idx": 26,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 723,
+          "layer_idx": 26,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 724,
+          "layer_idx": 27,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 725,
+          "layer_idx": 27,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 726,
+          "layer_idx": 27,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 727,
+          "layer_idx": 27,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4200448,
+          "bytes": 8400896,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 728,
+          "layer_idx": 0,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 729,
+          "layer_idx": 0,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 730,
+          "layer_idx": 0,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 731,
+          "layer_idx": 0,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 732,
+          "layer_idx": 1,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 733,
+          "layer_idx": 1,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 734,
+          "layer_idx": 1,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 735,
+          "layer_idx": 1,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 736,
+          "layer_idx": 2,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 737,
+          "layer_idx": 2,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 738,
+          "layer_idx": 2,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 739,
+          "layer_idx": 2,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 740,
+          "layer_idx": 3,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 741,
+          "layer_idx": 3,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 742,
+          "layer_idx": 3,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 743,
+          "layer_idx": 3,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 744,
+          "layer_idx": 4,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 745,
+          "layer_idx": 4,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 746,
+          "layer_idx": 4,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 747,
+          "layer_idx": 4,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 748,
+          "layer_idx": 5,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 749,
+          "layer_idx": 5,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 750,
+          "layer_idx": 5,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 751,
+          "layer_idx": 5,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 752,
+          "layer_idx": 6,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 753,
+          "layer_idx": 6,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 754,
+          "layer_idx": 6,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 755,
+          "layer_idx": 6,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 756,
+          "layer_idx": 7,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 757,
+          "layer_idx": 7,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 758,
+          "layer_idx": 7,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 759,
+          "layer_idx": 7,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 760,
+          "layer_idx": 8,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 761,
+          "layer_idx": 8,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 762,
+          "layer_idx": 8,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 763,
+          "layer_idx": 8,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 764,
+          "layer_idx": 9,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 765,
+          "layer_idx": 9,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 766,
+          "layer_idx": 9,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 767,
+          "layer_idx": 9,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 768,
+          "layer_idx": 10,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 769,
+          "layer_idx": 10,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 770,
+          "layer_idx": 10,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 771,
+          "layer_idx": 10,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 772,
+          "layer_idx": 11,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 773,
+          "layer_idx": 11,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 774,
+          "layer_idx": 11,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 775,
+          "layer_idx": 11,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 776,
+          "layer_idx": 12,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 777,
+          "layer_idx": 12,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 778,
+          "layer_idx": 12,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 779,
+          "layer_idx": 12,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 780,
+          "layer_idx": 13,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 781,
+          "layer_idx": 13,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 782,
+          "layer_idx": 13,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 783,
+          "layer_idx": 13,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 784,
+          "layer_idx": 14,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 785,
+          "layer_idx": 14,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 786,
+          "layer_idx": 14,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 787,
+          "layer_idx": 14,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 788,
+          "layer_idx": 15,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 789,
+          "layer_idx": 15,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 790,
+          "layer_idx": 15,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 791,
+          "layer_idx": 15,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 792,
+          "layer_idx": 16,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 793,
+          "layer_idx": 16,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 794,
+          "layer_idx": 16,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 795,
+          "layer_idx": 16,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 796,
+          "layer_idx": 17,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 797,
+          "layer_idx": 17,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 798,
+          "layer_idx": 17,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 799,
+          "layer_idx": 17,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 800,
+          "layer_idx": 18,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 801,
+          "layer_idx": 18,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 802,
+          "layer_idx": 18,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 803,
+          "layer_idx": 18,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 804,
+          "layer_idx": 19,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 805,
+          "layer_idx": 19,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 806,
+          "layer_idx": 19,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 807,
+          "layer_idx": 19,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 808,
+          "layer_idx": 20,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 809,
+          "layer_idx": 20,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 810,
+          "layer_idx": 20,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 811,
+          "layer_idx": 20,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 812,
+          "layer_idx": 21,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 813,
+          "layer_idx": 21,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 814,
+          "layer_idx": 21,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 815,
+          "layer_idx": 21,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 816,
+          "layer_idx": 22,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 817,
+          "layer_idx": 22,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 818,
+          "layer_idx": 22,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 819,
+          "layer_idx": 22,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 820,
+          "layer_idx": 23,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 821,
+          "layer_idx": 23,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 822,
+          "layer_idx": 23,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 823,
+          "layer_idx": 23,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 824,
+          "layer_idx": 24,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 825,
+          "layer_idx": 24,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 826,
+          "layer_idx": 24,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 827,
+          "layer_idx": 24,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 828,
+          "layer_idx": 25,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 829,
+          "layer_idx": 25,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 830,
+          "layer_idx": 25,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 831,
+          "layer_idx": 25,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 832,
+          "layer_idx": 26,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 833,
+          "layer_idx": 26,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 834,
+          "layer_idx": 26,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 835,
+          "layer_idx": 26,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 836,
+          "layer_idx": 27,
+          "phase": "decode_to_backing",
+          "tensor_role": "key",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 837,
+          "layer_idx": 27,
+          "phase": "decode_to_backing",
+          "tensor_role": "value",
+          "source_device": "cuda:0",
+          "destination_device": "cpu",
+          "direction": "cuda:0_to_cpu",
+          "elements": 1024,
+          "bytes": 2048,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 838,
+          "layer_idx": 27,
+          "phase": "backing_to_staging",
+          "tensor_role": "key",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        },
+        {
+          "ordinal": 839,
+          "layer_idx": 27,
+          "phase": "backing_to_staging",
+          "tensor_role": "value",
+          "source_device": "cpu",
+          "destination_device": "cuda:0",
+          "direction": "cpu_to_cuda:0",
+          "elements": 4201472,
+          "bytes": 8402944,
+          "non_blocking": true
+        }
+      ]
+    }
+  },
+  "shared_cache_telemetry_validation": {
+    "all_checks_passed": true,
+    "expected_final_cache_tokens": 4103,
+    "decode_steps_that_append_to_cache": 7,
+    "expected_total_copies": 840,
+    "expected_total_transfer_bytes": 3762110464,
+    "event_capacity": 256,
+    "events_retained": 256,
+    "events_dropped": 584,
+    "full_history_h2d_is_still_present": true
+  },
+  "cache_release_memory": {
+    "label": "after_cache_release",
+    "process": {
+      "current_rss_bytes": 9300971520,
+      "peak_rss_bytes": 9312079872,
+      "private_committed_bytes": 15025696768,
+      "pagefile_usage_bytes": 15025696768,
+      "peak_pagefile_usage_bytes": 15040253952,
+      "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+    },
+    "host": {
+      "available_physical_bytes": 6846615552,
+      "total_physical_bytes": 34049773568,
+      "source": "Windows GlobalMemoryStatusEx"
+    },
+    "live_cache_storage": {
+      "unique_storage_count": 0,
+      "cpu_bytes": 0,
+      "cuda_bytes": 0,
+      "other_device_bytes": 0,
+      "total_bytes": 0,
+      "by_device_bytes": {},
+      "roles_scanned": [
+        "keys",
+        "values"
+      ],
+      "source": "deduplicated live layer K/V tensor storages"
+    },
+    "cuda": {
+      "device_global_free_bytes": 7127171072,
+      "device_global_total_bytes": 12820480000,
+      "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+      "process_allocator_allocated_bytes": 3449684992,
+      "process_allocator_reserved_bytes": 4397727744,
+      "process_allocator_peak_allocated_bytes": 3670017024,
+      "process_allocator_peak_reserved_bytes": 4399824896
+    },
+    "nvidia_smi": {
+      "status": "available",
+      "free_reported_mib": 5487,
+      "total_reported_mib": 12227,
+      "free_bytes_assuming_mib": 5753536512,
+      "total_bytes_assuming_mib": 12820938752,
+      "source": "nvidia-smi global device memory (includes other processes)",
+      "command": [
+        "nvidia-smi",
+        "--id=0",
+        "--query-gpu=memory.free,memory.total",
+        "--format=csv,noheader,nounits"
+      ]
+    },
+    "cache_release": {
+      "cache_object_collected": true,
+      "live_cache_storage_zero": true,
+      "release_succeeded": true
+    }
+  },
+  "run": {
+    "prompt_tokens": 4096,
+    "completion_tokens": 8,
+    "completion_token_ids": [
+      72349,
+      27268,
+      53596,
+      624,
+      57954,
+      2266,
+      5942,
+      21730
+    ],
+    "completion_token_ids_sha256": "9d7473bd51b6712aa012c57766968ce6fca73dbc9ddd10246802dcbc0ff9c7a2",
+    "eos_stopping": false,
+    "timing": {
+      "prefill_seconds": 2.949804099975154,
+      "ttft_seconds": 2.949804099975154,
+      "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+      "decode_model_step_seconds": 2.0538283000933006,
+      "all_model_step_seconds": 5.0036324000684544,
+      "run_wall_seconds": 5.349004399962723,
+      "decode_tokens_per_second": 3.408269327909254
+    },
+    "steps": [
+      {
+        "completion_index": 0,
+        "phase": "prefill_to_first_token",
+        "model_input_tokens": 4096,
+        "cache_tokens_after_forward": 4096,
+        "output_token_id": 72349,
+        "seconds": 2.949804099975154,
+        "memory_observation": {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 9181581312,
+            "peak_rss_bytes": 9181581312,
+            "private_committed_bytes": 14893264896,
+            "pagefile_usage_bytes": 14893264896,
+            "peak_pagefile_usage_bytes": 14893264896,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6890778624,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 0,
+            "other_device_bytes": 0,
+            "total_bytes": 4697620480,
+            "by_device_bytes": {
+              "cpu": 4697620480
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 0
+          },
+          "cuda": {
+            "device_global_free_bytes": 7127171072,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3450087936,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5487,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5753536512,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 1,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4097,
+        "output_token_id": 27268,
+        "seconds": 0.3623932000482455,
+        "memory_observation": {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 9291182080,
+            "peak_rss_bytes": 9301401600,
+            "private_committed_bytes": 15016161280,
+            "pagefile_usage_bytes": 15016161280,
+            "peak_pagefile_usage_bytes": 15028080640,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6873341952,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5485,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5751439360,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 2,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4098,
+        "output_token_id": 53596,
+        "seconds": 0.29393960000015795,
+        "memory_observation": {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 9293553664,
+            "peak_rss_bytes": 9304498176,
+            "private_committed_bytes": 15018418176,
+            "pagefile_usage_bytes": 15018418176,
+            "peak_pagefile_usage_bytes": 15032774656,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6870724608,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5490,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5756682240,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 3,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4099,
+        "output_token_id": 624,
+        "seconds": 0.2806067999918014,
+        "memory_observation": {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 9295220736,
+            "peak_rss_bytes": 9306202112,
+            "private_committed_bytes": 15019982848,
+            "pagefile_usage_bytes": 15019982848,
+            "peak_pagefile_usage_bytes": 15034527744,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6848282624,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5485,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5751439360,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 4,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4100,
+        "output_token_id": 57954,
+        "seconds": 0.2794925000052899,
+        "memory_observation": {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 9297412096,
+            "peak_rss_bytes": 9308721152,
+            "private_committed_bytes": 15021826048,
+            "pagefile_usage_bytes": 15021826048,
+            "peak_pagefile_usage_bytes": 15036375040,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6854549504,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5485,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5751439360,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 5,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4101,
+        "output_token_id": 2266,
+        "seconds": 0.2786634999793023,
+        "memory_observation": {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 9297981440,
+            "peak_rss_bytes": 9309089792,
+            "private_committed_bytes": 15022284800,
+            "pagefile_usage_bytes": 15022284800,
+            "peak_pagefile_usage_bytes": 15036641280,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6851698688,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5490,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5756682240,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 6,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4102,
+        "output_token_id": 5942,
+        "seconds": 0.27685789996758103,
+        "memory_observation": {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 9299644416,
+            "peak_rss_bytes": 9310793728,
+            "private_committed_bytes": 15024128000,
+            "pagefile_usage_bytes": 15024128000,
+            "peak_pagefile_usage_bytes": 15038648320,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6838157312,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5485,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5751439360,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      },
+      {
+        "completion_index": 7,
+        "phase": "single_token_decode",
+        "model_input_tokens": 1,
+        "cache_tokens_after_forward": 4103,
+        "output_token_id": 21730,
+        "seconds": 0.2818748001009226,
+        "memory_observation": {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 9300914176,
+            "peak_rss_bytes": 9312079872,
+            "private_committed_bytes": 15025696768,
+            "pagefile_usage_bytes": 15025696768,
+            "peak_pagefile_usage_bytes": 15040253952,
+            "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+          },
+          "host": {
+            "available_physical_bytes": 6849097728,
+            "total_physical_bytes": 34049773568,
+            "source": "Windows GlobalMemoryStatusEx"
+          },
+          "live_cache_storage": {
+            "unique_storage_count": null,
+            "cpu_bytes": 4697620480,
+            "cuda_bytes": 167772160,
+            "other_device_bytes": 0,
+            "total_bytes": 4865392640,
+            "by_device_bytes": {
+              "cpu": 4697620480,
+              "cuda:0": 167772160
+            },
+            "source": "SharedStagingCache.telemetry exact owned storage bytes",
+            "exact_cpu_backing_bytes": 4697620480,
+            "exact_shared_staging_bytes": 167772160
+          },
+          "cuda": {
+            "device_global_free_bytes": 7125073920,
+            "device_global_total_bytes": 12820480000,
+            "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+            "process_allocator_allocated_bytes": 3617828352,
+            "process_allocator_reserved_bytes": 4399824896,
+            "process_allocator_peak_allocated_bytes": 3670017024,
+            "process_allocator_peak_reserved_bytes": 4399824896
+          },
+          "nvidia_smi": {
+            "status": "available",
+            "free_reported_mib": 5485,
+            "total_reported_mib": 12227,
+            "free_bytes_assuming_mib": 5751439360,
+            "total_bytes_assuming_mib": 12820938752,
+            "source": "nvidia-smi global device memory (includes other processes)",
+            "command": [
+              "nvidia-smi",
+              "--id=0",
+              "--query-gpu=memory.free,memory.total",
+              "--format=csv,noheader,nounits"
+            ]
+          }
+        }
+      }
+    ],
+    "memory_observations": [
+      {
+        "label": "before_prefill",
+        "process": {
+          "current_rss_bytes": 945930240,
+          "peak_rss_bytes": 4933799936,
+          "private_committed_bytes": 6638231552,
+          "pagefile_usage_bytes": 6638231552,
+          "peak_pagefile_usage_bytes": 12416671744,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 15090499584,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 0,
+          "cuda_bytes": 0,
+          "other_device_bytes": 0,
+          "total_bytes": 0,
+          "by_device_bytes": {
+            "cpu": 0
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 0,
+          "exact_shared_staging_bytes": 0
+        },
+        "cuda": {
+          "device_global_free_bytes": 7139753984,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3441263616,
+          "process_allocator_reserved_bytes": 4397727744,
+          "process_allocator_peak_allocated_bytes": 3441263616,
+          "process_allocator_peak_reserved_bytes": 4397727744
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5499,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5766119424,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_prefill_and_first_token",
+        "process": {
+          "current_rss_bytes": 9181581312,
+          "peak_rss_bytes": 9181581312,
+          "private_committed_bytes": 14893264896,
+          "pagefile_usage_bytes": 14893264896,
+          "peak_pagefile_usage_bytes": 14893264896,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6890778624,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 0,
+          "other_device_bytes": 0,
+          "total_bytes": 4697620480,
+          "by_device_bytes": {
+            "cpu": 4697620480
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 0
+        },
+        "cuda": {
+          "device_global_free_bytes": 7127171072,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3450087936,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5487,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5753536512,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_2",
+        "process": {
+          "current_rss_bytes": 9291182080,
+          "peak_rss_bytes": 9301401600,
+          "private_committed_bytes": 15016161280,
+          "pagefile_usage_bytes": 15016161280,
+          "peak_pagefile_usage_bytes": 15028080640,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6873341952,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5485,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5751439360,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_3",
+        "process": {
+          "current_rss_bytes": 9293553664,
+          "peak_rss_bytes": 9304498176,
+          "private_committed_bytes": 15018418176,
+          "pagefile_usage_bytes": 15018418176,
+          "peak_pagefile_usage_bytes": 15032774656,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6870724608,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5490,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5756682240,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_4",
+        "process": {
+          "current_rss_bytes": 9295220736,
+          "peak_rss_bytes": 9306202112,
+          "private_committed_bytes": 15019982848,
+          "pagefile_usage_bytes": 15019982848,
+          "peak_pagefile_usage_bytes": 15034527744,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6848282624,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5485,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5751439360,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_5",
+        "process": {
+          "current_rss_bytes": 9297412096,
+          "peak_rss_bytes": 9308721152,
+          "private_committed_bytes": 15021826048,
+          "pagefile_usage_bytes": 15021826048,
+          "peak_pagefile_usage_bytes": 15036375040,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6854549504,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5485,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5751439360,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_6",
+        "process": {
+          "current_rss_bytes": 9297981440,
+          "peak_rss_bytes": 9309089792,
+          "private_committed_bytes": 15022284800,
+          "pagefile_usage_bytes": 15022284800,
+          "peak_pagefile_usage_bytes": 15036641280,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6851698688,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5490,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5756682240,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_7",
+        "process": {
+          "current_rss_bytes": 9299644416,
+          "peak_rss_bytes": 9310793728,
+          "private_committed_bytes": 15024128000,
+          "pagefile_usage_bytes": 15024128000,
+          "peak_pagefile_usage_bytes": 15038648320,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6838157312,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5485,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5751439360,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "after_completion_8",
+        "process": {
+          "current_rss_bytes": 9300914176,
+          "peak_rss_bytes": 9312079872,
+          "private_committed_bytes": 15025696768,
+          "pagefile_usage_bytes": 15025696768,
+          "peak_pagefile_usage_bytes": 15040253952,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6849097728,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5485,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5751439360,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      },
+      {
+        "label": "run_complete",
+        "process": {
+          "current_rss_bytes": 9300930560,
+          "peak_rss_bytes": 9312079872,
+          "private_committed_bytes": 15025696768,
+          "pagefile_usage_bytes": 15025696768,
+          "peak_pagefile_usage_bytes": 15040253952,
+          "source": "Windows GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX"
+        },
+        "host": {
+          "available_physical_bytes": 6846410752,
+          "total_physical_bytes": 34049773568,
+          "source": "Windows GlobalMemoryStatusEx"
+        },
+        "live_cache_storage": {
+          "unique_storage_count": null,
+          "cpu_bytes": 4697620480,
+          "cuda_bytes": 167772160,
+          "other_device_bytes": 0,
+          "total_bytes": 4865392640,
+          "by_device_bytes": {
+            "cpu": 4697620480,
+            "cuda:0": 167772160
+          },
+          "source": "SharedStagingCache.telemetry exact owned storage bytes",
+          "exact_cpu_backing_bytes": 4697620480,
+          "exact_shared_staging_bytes": 167772160
+        },
+        "cuda": {
+          "device_global_free_bytes": 7125073920,
+          "device_global_total_bytes": 12820480000,
+          "global_source": "torch.cuda.mem_get_info; device-global and includes other processes",
+          "process_allocator_allocated_bytes": 3617828352,
+          "process_allocator_reserved_bytes": 4399824896,
+          "process_allocator_peak_allocated_bytes": 3670017024,
+          "process_allocator_peak_reserved_bytes": 4399824896
+        },
+        "nvidia_smi": {
+          "status": "available",
+          "free_reported_mib": 5485,
+          "total_reported_mib": 12227,
+          "free_bytes_assuming_mib": 5751439360,
+          "total_bytes_assuming_mib": 12820938752,
+          "source": "nvidia-smi global device memory (includes other processes)",
+          "command": [
+            "nvidia-smi",
+            "--id=0",
+            "--query-gpu=memory.free,memory.total",
+            "--format=csv,noheader,nounits"
+          ]
+        }
+      }
+    ],
+    "final_cache_tokens": 4103,
+    "mode": "shared_staging",
+    "prompt_token_ids_sha256": "f2aef9fe4bc2057f6089979e7136014a94f0085db2e20773e55e601ea5236741"
+  },
+  "memory_summary": {
+    "observations": 14,
+    "max_current_rss_bytes": 9300971520,
+    "max_process_peak_rss_bytes": 9312079872,
+    "max_private_committed_bytes": 15025696768,
+    "max_torch_cuda_allocated_bytes": 3617828352,
+    "max_torch_cuda_reserved_bytes": 4399824896,
+    "max_torch_cuda_peak_allocated_bytes": 4374663680,
+    "minimum_cuda_device_global_free_bytes": 7125073920,
+    "minimum_nvidia_smi_global_free_bytes": 5751439360,
+    "max_exact_cpu_backing_bytes": 4697620480,
+    "max_exact_shared_staging_bytes": 167772160,
+    "separation_note": "Process RSS/private commit, PyTorch allocator bytes, and device-global free memory have different scopes and are not added together."
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "scope": "canonical JSON of this report with the integrity member omitted",
+    "sha256": "5622e32fa71a094ce92ebf200cbd4364693bdfa19c03256699a11d7754e9344f"
+  }
+}

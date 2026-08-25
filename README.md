@@ -323,6 +323,13 @@ native 40,960-position boundary and saved 1.6875 GiB of peak CUDA allocation at 
 rejected for context expansion because offloaded dynamic-cache growth retained 15.404 GiB of process
 RSS against a 6-GiB ceiling. See `experiments/exact-context-v1/` for the immutable one-shot evidence.
 
+The audited v3 CPU-owned/shared-GPU-staging cache subsequently passed exact 4K + 8-token parity on
+its first frozen run, using exactly 4.375 GiB of CPU backing and one 160-MiB CUDA staging pair. It
+decoded at 3.408 tok/s versus 3.759 tok/s for `DynamicCache`, but incremental process RSS was still
+7.795 GiB against the inherited 6-GiB ceiling. That cuts the old RSS failure by about 49.4%, yet the
+40K follow-up remains deliberately blocked. See `experiments/exact-context-v3/` and the sealed
+`runs/exact-context-v3/compatibility-4096-plus-8*.json` evidence.
+
 The first hashed/paged-cache milestone also runs in shadow mode. It captures real post-RoPE Q/K and
 matching V from selected Qwen layers, then compares deterministic 32/64-bit SimHash, a Quest-style
 min/max page bound, mandatory-only locality, and a forced-set exact-attention oracle at equal
