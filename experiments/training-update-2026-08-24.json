@@ -304,6 +304,103 @@
     },
     "decision": "preserve router v4; retain the Taskmaster expert and router v6 candidates in quarantine; do not reuse one-shot prompts or per-example outputs"
   },
+  "router_v7_hierarchical_taskmaster_registration": {
+    "status": "rejected_quarantined_candidate",
+    "preregistration_commit": "7943e00",
+    "architecture": "binary Taskmaster admission gate; gate-positive selects Taskmaster only; gate-negative returns the pinned v4 AutoRouteDecision unchanged",
+    "builder": {
+      "path": "experiments/first-real-experts/build_router_v7_taskmaster_gate_dataset.py",
+      "sha256": "2223625c942127cee1eda1d06ca2fb1a5f6d4f70d9650b1a1709bb404bd8808c"
+    },
+    "trainer": {
+      "path": "experiments/first-real-experts/train_router_v7_incremental_gate.py",
+      "sha256": "1f01d615025d14477796153fe313536431c457c2782398432ebfcbbdb73c61cd",
+      "device": "cpu"
+    },
+    "evaluator": {
+      "path": "experiments/first-real-experts/evaluate_router_v7_hierarchical_registration.py",
+      "sha256": "3c8022b40c4d0e77b38b0798ad7cca27170243cc38b84d76d08437ded3b99631"
+    },
+    "policy": {
+      "path": "experiments/first-real-experts/router-v7-evaluation-policy.json",
+      "sha256": "43058bb13a14af39ba45bb73e77631555271c94db4c740694184536991fb0564"
+    },
+    "dataset": {
+      "route_count": 2,
+      "train_rows": 5616,
+      "validation_rows": 780,
+      "test_split": null,
+      "train_support": {
+        "taskmaster": 936,
+        "delegate_v4": 4680
+      },
+      "validation_support": {
+        "taskmaster": 130,
+        "delegate_v4": 650
+      },
+      "train_sha256": "96196ece3c4808c20ac28676727e536f40455dc78a860770bd207a4bf57d09d4",
+      "validation_sha256": "93f9b74e08acf6556c5ac6a30265f5588fd936eab188045743d8050b8fe47421",
+      "report_sha256": "aefd55324fde12052d20275e52190656e90e728f5a536f0cdb62b5aea2594876",
+      "normalized_train_validation_overlap": 0,
+      "router_or_taskmaster_test_artifacts_read": false,
+      "prediction_or_evaluation_artifacts_read": false,
+      "blind_probe_read": false
+    },
+    "training": {
+      "candidate_seeds": [83, 8419, 27183],
+      "selection_rule": "all candidates must pass fresh frozen validation gates, then choose lowest fresh validation loss with numeric seed tie-break; no test split or sidecar metric may select a candidate",
+      "selected_seed": 27183,
+      "selected_checkpoint": "checkpoints/qwen3-1.7b-candidate-routers-quarantine/router-v7-taskmaster-gate-seed27183",
+      "checkpoint_sha256": "576501b989b53c99470ed2985445f1b9f7e6c7ba66385196702974995c1bad48",
+      "router_config_sha256": "170b46f5561f309ca5f1779fd66bfed3cbefda9a0e2d610ed179bed37d6c0319",
+      "fresh_validation_loss": 0.02135882711945436,
+      "fresh_validation_accuracy": 1.0,
+      "fresh_taskmaster_precision": 1.0,
+      "fresh_taskmaster_recall": 1.0,
+      "fresh_false_positives_among_650_negatives": 0,
+      "all_candidates_passed_preblind_gates": true
+    },
+    "one_shot": {
+      "probe_sha256": "409057863172ef33323dfe041a3bf6239e8e2846f6d174ceef3669b12cc3e099",
+      "prompt_count": 84,
+      "receipt": {
+        "path": "runs/router-v7/taskmaster-hierarchical-preblind-receipt.json",
+        "sha256": "cf2e0cff4307bdc16b5a5c7dc0ae06247ba767dd3f611b5d84d35bcb2ce5e779",
+        "size_bytes": 34572
+      },
+      "report": {
+        "path": "runs/evaluation/router-v7-taskmaster-hierarchical-registration-one-shot.json",
+        "sha256": "4ea76cdb1930585f67b206a20a623cc5428637d44db14620fe09b42169dbdf3d",
+        "size_bytes": 237909
+      },
+      "baseline_exact": 38,
+      "baseline_acceptable": 50,
+      "candidate_exact": 38,
+      "candidate_acceptable": 50,
+      "exact_gain": 0,
+      "acceptable_gain": 0,
+      "taskmaster_correct": 0,
+      "taskmaster_total": 12,
+      "taskmaster_false_positives": 0,
+      "non_taskmaster_total": 72,
+      "failed_gates": [
+        "minimum overall exact accuracy",
+        "minimum overall acceptable accuracy",
+        "exact improvement over v4",
+        "acceptable improvement over v4",
+        "Taskmaster correct"
+      ],
+      "all_legacy_protection_gates_passed": true
+    },
+    "isolation": {
+      "expert_registered": false,
+      "router_registered": false,
+      "desktop_and_teacher_defaults": "qwen3-1.7b-corpus-router-v4-mlp-controlled",
+      "no_post_exposure_retraining_reseeding_or_threshold_tuning": true
+    },
+    "conclusion": "exact delegation eliminated legacy-route interference, but the frozen-embedding linear admission gate did not generalize to independently authored Taskmaster intents",
+    "decision": "preserve router v4; retain the Taskmaster expert and router v7 candidates in quarantine; do not reuse one-shot prompts or per-example outputs"
+  },
   "finance_rank16": {
     "status": "rejected_quarantined_candidate",
     "recipe": "experiments/first-real-experts/finance-r16-candidate-recipe.json",

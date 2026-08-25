@@ -70,6 +70,20 @@ Taskmaster expert remains quarantined. The preblind receipt and one-shot report 
 `runs/router-v6/` and `runs/evaluation/` respectively. Their prompts and per-example outputs must
 not be reused for training, tuning, threshold selection, or seed selection.
 
+Router v7 then tested whether separating Taskmaster admission from the proven five-way router would
+remove multiclass interference. Its binary CPU gate used 936 Taskmaster positives and 4,680 exact
+v4-delegation negatives for training, with a train/validation-only preregistration and no test
+split. All three frozen seeds achieved 100% validation accuracy, 100% Taskmaster precision/recall,
+and zero false positives among 650 validation negatives; seed 27183 won the fixed lowest-loss rule
+at `0.0213588`. On a new independently authored 84-prompt one-shot probe, exact gate-negative
+delegation preserved every v4 category with zero regressions and zero false Taskmaster positives,
+but the gate admitted 0/12 Taskmaster prompts. Candidate and v4 therefore tied at 38/84 exact and
+50/84 acceptable. The same five overall/improvement/Taskmaster gates failed, so registration was
+not changed. This rules out multiclass competition as the primary failure: the frozen-embedding
+linear admission representation did not generalize beyond its development distribution. V7's
+receipt and report are preserved under `runs/router-v7/` and `runs/evaluation/`; their prompts and
+per-example outputs are permanently excluded from future training or tuning.
+
 This result is recovery-qualified rather than a pristine one-shot. The first evaluator wrote its
 pre-access receipt and exposed the test bytes, then failed before model loading or generation
 because its context validator rejected builder-defined prior API call/response turns. The defect

@@ -38,9 +38,13 @@ tying v3 on the six-case executable lane. A verified-code-focused v5 candidate a
 150-rollout five-route RL sweep both failed their held-out promotion gates, so neither changed the
 live router. The full-dialog Taskmaster coffee-API adapter passed its isolated expert gates, but a
 preregistered six-route router candidate routed 0/12 sealed Taskmaster intents and failed five
-registration gates. Both the expert and router therefore remain quarantined, with v4 still live.
-Persistent cross-session memory, Memory-LoRA, and a context-aware router representation remain the
-next model-side pieces. The existing `docs/` directory contains design notes for those experiments.
+registration gates. A subsequent hierarchical v7 admission gate exactly preserved every v4
+decision on gate-negative prompts, but it also routed 0/12 independently sealed Taskmaster intents
+and failed the same five promotion gates. The result isolates the remaining problem to admission
+generalization rather than multiclass route competition. The expert and both router candidates
+therefore remain quarantined, with v4 still live. Persistent cross-session memory, Memory-LoRA,
+and a stronger context-aware router representation remain the next model-side pieces. The existing
+`docs/` directory contains design notes for those experiments.
 
 ## Run the desktop app
 
