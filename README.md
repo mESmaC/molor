@@ -318,6 +318,11 @@ NVMe portion of this lab is deliberately labelled **snapshot/archive**: it write
 `DynamicCache`, reloads it, and verifies continuation logits. It gives measured I/O data for a
 future custom paged cache without presenting disk as VRAM.
 
+The frozen exact hybrid context trial completed exact greedy decoding through the Qwen checkpoint's
+native 40,960-position boundary and saved 1.6875 GiB of peak CUDA allocation at 16K, but it remains
+rejected for context expansion because offloaded dynamic-cache growth retained 15.404 GiB of process
+RSS against a 6-GiB ceiling. See `experiments/exact-context-v1/` for the immutable one-shot evidence.
+
 The first hashed/paged-cache milestone also runs in shadow mode. It captures real post-RoPE Q/K and
 matching V from selected Qwen layers, then compares deterministic 32/64-bit SimHash, a Quest-style
 min/max page bound, mandatory-only locality, and a forced-set exact-attention oracle at equal

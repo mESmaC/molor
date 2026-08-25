@@ -629,5 +629,31 @@
       "all_saved_weights_byte_identical_to_parent": true
     },
     "decision": "preserve router v4; the fresh judged matrix did not support a held-out-improving conservative update"
+  },
+  "exact_context_v1": {
+    "status": "rejected",
+    "source_commit": "84f95c260420b3f07e75886e3bdfc1f27ff26f99",
+    "preregistration_commit": "d3bb09a",
+    "contract_sha256": "88c924dd8ca8aa17b2fa4a9cbf4cf80ebfad8642462d7edec481c4611eef3afd",
+    "runner_sha256": "d3deeee5622538ea7c0abb5118bb7b63b59d7ce71d012400ae19328c854e6830",
+    "evaluator_sha256": "c4af54e3712d007dc7a93d8afbf60e34ea85c41a1ca6ffb3c7ed1bf21c46101b",
+    "evidence": {
+      "parity_report_sha256": "cd80de47e11b91458f1e1721a27f8b37c4562696c13a275b1c0459a96c5c445c",
+      "capacity_report_sha256": "97b8b0763d4c7b830efa6cc1485a03016d24fcaabb4a1e121c161cea70fd1259",
+      "acceptance_summary_sha256": "c9ac666932af5a4907882ff5b0a053cecf5f6c6d38c0d56c996bac34aaec952b"
+    },
+    "passed": {
+      "completion_token_parity_failures": 0,
+      "maximum_40952_ttft_seconds": 6.21541740000248,
+      "median_40952_decode_tokens_per_second": 4.441916923136774,
+      "nearest_rank_p95_40952_decode_step_seconds": 0.4514142000116408,
+      "dynamic_minus_offloaded_peak_cuda_gib_at_16384": 1.6875,
+      "minimum_global_cuda_free_gib": 4.2587890625
+    },
+    "failed": {
+      "maximum_incremental_process_rss_gib": 15.403934478759766,
+      "ceiling_gib": 6.0
+    },
+    "decision": "preserve the rejection; native-position exact execution was observed, but no production context increase is authorized"
   }
 }

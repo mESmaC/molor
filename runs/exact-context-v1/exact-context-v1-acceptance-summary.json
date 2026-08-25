@@ -1,0 +1,162 @@
+{
+  "schema_version": "molor.exact-context-acceptance-summary.v1",
+  "status": "rejected",
+  "decision": "not authorized",
+  "decision_scope": {
+    "authorized_only_if_all_gates_pass": "exact systems path through native 40,960 positions",
+    "not_authorized": [
+      "semantic long-context quality",
+      "positions above 40,960",
+      "sparse KV",
+      "ATXY KV",
+      "compressed KV",
+      "NVMe or disk-backed KV"
+    ]
+  },
+  "failure_policy": {
+    "retries": 0,
+    "rule": "Any missing, malformed, failed, or gate-failing frozen report rejects the decision; preserve both reports and the exclusive summary without rerunning or tuning this v1 contract."
+  },
+  "evidence": {
+    "contract": {
+      "path": "experiments/exact-context-v1/contract.json",
+      "sha256": "88c924dd8ca8aa17b2fa4a9cbf4cf80ebfad8642462d7edec481c4611eef3afd",
+      "size_bytes": 10316
+    },
+    "runner": {
+      "path": "src/molor/experimental/exact_context_lab.py",
+      "sha256": "d3deeee5622538ea7c0abb5118bb7b63b59d7ce71d012400ae19328c854e6830",
+      "size_bytes": 56765
+    },
+    "evaluator": {
+      "path": "experiments/exact-context-v1/evaluate_acceptance.py",
+      "sha256": "c4af54e3712d007dc7a93d8afbf60e34ea85c41a1ca6ffb3c7ed1bf21c46101b",
+      "size_bytes": 47383
+    },
+    "reports": {
+      "parity": {
+        "path": "runs/exact-context-v1/exact-context-v1-parity.json",
+        "sha256": "cd80de47e11b91458f1e1721a27f8b37c4562696c13a275b1c0459a96c5c445c",
+        "cells": 12
+      },
+      "capacity": {
+        "path": "runs/exact-context-v1/exact-context-v1-capacity.json",
+        "sha256": "97b8b0763d4c7b830efa6cc1485a03016d24fcaabb4a1e121c161cea70fd1259",
+        "cells": 6
+      }
+    },
+    "models_run_by_evaluator": false
+  },
+  "gate_results": [
+    {
+      "name": "minimum_global_cuda_free_observation",
+      "passed": true,
+      "observed": {
+        "bytes": 4572839936,
+        "gib": 4.2587890625
+      },
+      "requirement": ">= 1 GiB across every recorded CUDA observation"
+    },
+    {
+      "name": "maximum_incremental_process_rss_over_after_model_load",
+      "passed": false,
+      "observed": {
+        "bytes": 16539848704,
+        "gib": 15.403934478759766,
+        "per_phase_bytes": {
+          "parity": 10712338432,
+          "capacity": 16539848704
+        }
+      },
+      "requirement": "<= 6 GiB, using max current process RSS minus that report's after_model_load current RSS"
+    },
+    {
+      "name": "40952_each_ttft",
+      "passed": true,
+      "observed": {
+        "seconds": [
+          6.2154174000024796,
+          6.048382400069386,
+          6.056560899945907
+        ],
+        "maximum_seconds": 6.2154174000024796
+      },
+      "requirement": "each <= 60 seconds"
+    },
+    {
+      "name": "40952_median_decode_throughput",
+      "passed": true,
+      "observed": {
+        "tokens_per_second": [
+          2.2288024962665944,
+          4.442742662097388,
+          4.441916923136774
+        ],
+        "median_tokens_per_second": 4.441916923136774
+      },
+      "requirement": ">= 2 decoded tokens/second"
+    },
+    {
+      "name": "40952_p95_single_token_decode",
+      "passed": true,
+      "observed": {
+        "sample_count": 21,
+        "nearest_rank_p95_seconds": 0.4514142000116408
+      },
+      "requirement": "nearest-rank p95 <= 1 second over the 21 post-prefill decode steps"
+    },
+    {
+      "name": "16384_paired_offloaded_dynamic_token_identity",
+      "passed": true,
+      "observed": [
+        {
+          "repeat": 0,
+          "offloaded": "d578c6c83fd18439ab40740eed77cc6b62c3e515082d3ace81da58a693523852",
+          "dynamic": "d578c6c83fd18439ab40740eed77cc6b62c3e515082d3ace81da58a693523852",
+          "identical": true
+        },
+        {
+          "repeat": 1,
+          "offloaded": "d578c6c83fd18439ab40740eed77cc6b62c3e515082d3ace81da58a693523852",
+          "dynamic": "d578c6c83fd18439ab40740eed77cc6b62c3e515082d3ace81da58a693523852",
+          "identical": true
+        },
+        {
+          "repeat": 2,
+          "offloaded": "d578c6c83fd18439ab40740eed77cc6b62c3e515082d3ace81da58a693523852",
+          "dynamic": "d578c6c83fd18439ab40740eed77cc6b62c3e515082d3ace81da58a693523852",
+          "identical": true
+        }
+      ],
+      "requirement": "all three same-repeat completion token hashes identical"
+    },
+    {
+      "name": "16384_offloaded_cuda_allocation_saving",
+      "passed": true,
+      "observed": {
+        "offloaded_peak_allocated_bytes": [
+          4398121984,
+          4398121984,
+          4398121984
+        ],
+        "maximum_offloaded_peak_allocated_bytes": 4398121984,
+        "dynamic_peak_allocated_bytes": [
+          6210061312,
+          6210061312,
+          6210061312
+        ],
+        "dynamic_median_peak_allocated_bytes": 6210061312,
+        "dynamic_median_minus_maximum_offloaded_bytes": 1811939328,
+        "dynamic_median_minus_maximum_offloaded_gib": 1.6875
+      },
+      "requirement": ">= 1.5 GiB; dynamic median peak allocation minus maximum offloaded peak allocation"
+    }
+  ],
+  "all_gates_passed": false,
+  "created_at": "2026-08-25T12:39:23Z",
+  "integrity": {
+    "algorithm": "sha256",
+    "scope": "canonical JSON of this summary with the integrity member omitted",
+    "sha256": "3349601e3924c2191f560b1d66049c48e2bd7daea4fe761077642835e572648e"
+  }
+}

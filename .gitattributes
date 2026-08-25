@@ -25,6 +25,7 @@ runs/router-v6/*.json binary
 runs/evaluation/router-v6*.json binary
 runs/router-v7/*.json binary
 runs/evaluation/router-v7*.json binary
+runs/exact-context-v1/*.json binary
 
 *.png binary
 *.jpg binary

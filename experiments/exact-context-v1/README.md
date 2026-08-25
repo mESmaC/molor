@@ -45,6 +45,42 @@ lab writes no KV snapshot and makes no NVMe, disk-backed decoding, sparse-cache,
 context-extension claim. CUDA device-global observations include other processes and are labelled
 separately from this process's PyTorch allocator statistics.
 
+## Frozen v1 outcome
+
+The preregistered run was executed once and **rejected**. Exact offloaded inference completed at
+32,768 and 40,952 prompt tokens plus eight generated tokens, but process RSS exceeded the frozen
+operational ceiling. The rejection is preserved; v1 must not be rerun or retuned.
+
+| Gate | Frozen observation | Result |
+| --- | ---: | --- |
+| Completion-token identity | zero failures across all 18 cells | pass |
+| 40,952-token TTFT | 6.215 s maximum | pass |
+| 40,952-token decode | 4.442 token/s median | pass |
+| 40,952-token single-step decode | 0.451 s nearest-rank p95 | pass |
+| 16,384-token GPU allocation saving | 1.6875 GiB | pass |
+| Minimum observed global GPU free memory | 4.259 GiB | pass |
+| Incremental process RSS | 15.404 GiB, with a 6 GiB ceiling | **fail** |
+
+The RSS peak occurred during the second 32K repeat, not the 40,952-token cells. A fresh 32K prefill
+rose by about 4.17 GiB over the post-load baseline, close to its 3.5-GiB nominal BF16 KV payload;
+most excess appeared during single-token growth and then remained in the Windows process working
+set. This is consistent with full-cache copy/reallocation and allocator retention in the growing
+offloaded `DynamicCache`. It is operationally real memory usage even though it is not the intrinsic
+size of one live 40K cache.
+
+The result proves only that exact hybrid execution reached the checkpoint's final native positions
+with identical greedy tokens on this machine. It does not authorize a production context increase,
+semantic long-context quality, positions above 40,960, sparse/ATXY/compressed KV, or NVMe-backed
+decode. A successor must use isolated workers with live-cache/private-byte telemetry and retain the
+6-GiB gate; if growth still fails, evaluate an exact preallocated/in-place offloaded cache rather
+than relaxing the limit.
+
+Frozen artifact file hashes:
+
+- parity report: `cd80de47e11b91458f1e1721a27f8b37c4562696c13a275b1c0459a96c5c445c`;
+- capacity report: `97b8b0763d4c7b830efa6cc1485a03016d24fcaabb4a1e121c161cea70fd1259`;
+- acceptance summary: `c9ac666932af5a4907882ff5b0a053cecf5f6c6d38c0d56c996bac34aaec952b`.
+
 ## Run deliberately
 
 No benchmark result is checked into this directory. Before running, confirm the selected GPU has

@@ -706,6 +706,14 @@ Move beyond 40,960 tokens only with a model whose positional behavior and long-c
 separately validated. Repeat retrieval and systems gates at each length. Capacity arithmetic for
 one or ten million tokens is motivation, not evidence that the current model can use that context.
 
+The frozen exact-context v1 systems run reached 40,952 prompt tokens plus eight greedy tokens with
+zero token-parity failures, a 6.215-second maximum TTFT, 4.442 token/s median decode, and 1.6875 GiB
+less peak CUDA allocation at 16K for CPU-offloaded versus GPU-resident KV. It was nevertheless
+rejected because incremental Windows process RSS reached 15.404 GiB against a preregistered 6-GiB
+ceiling. The excess accumulated during grow-by-concatenation decode and persisted across repeats;
+it must be solved with isolated-worker accounting and likely exact preallocated/in-place offload,
+not by calling the native-position execution a context expansion.
+
 ## Milestone completion definition
 
 `hashed-kv-shadow-v1` is complete when one immutable sealed run either passes Gate 0 and Gate 1 or

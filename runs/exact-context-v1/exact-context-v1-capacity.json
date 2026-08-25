@@ -1,0 +1,2804 @@
+{
+  "schema_version": "molor.exact-context-report.v1",
+  "status": "completed",
+  "created_at": "2026-08-25T12:38:05Z",
+  "finished_at": "2026-08-25T12:38:59Z",
+  "claim_scope": {
+    "exact_cache_modes_only": true,
+    "exact_cache_meaning": "uncompressed model-produced K/V state; CPU offload does not approximate it",
+    "arithmetic_exactness": "kernel arithmetic may be nondeterministic; greedy token parity remains mandatory",
+    "live_cache_modes": [
+      "GPU-resident DynamicCache",
+      "CPU-offloaded DynamicCache"
+    ],
+    "snapshot_or_archive": false,
+    "nvme_or_disk_backed_decode": false,
+    "sparse_or_compressed_cache": false,
+    "context_extension_claim": false,
+    "position_contract": "no request may exceed model max_position_embeddings"
+  },
+  "request": {
+    "model": "models/Qwen3-1.7B",
+    "revision": null,
+    "allow_download": false,
+    "modes": [
+      "offloaded"
+    ],
+    "lengths": [
+      32768,
+      40952
+    ],
+    "max_new_tokens": 8,
+    "repeats": 3,
+    "seed": 8419,
+    "device": "cuda:0",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "sdpa_backend": "cudnn",
+    "deterministic_algorithms": false,
+    "logits_to_keep": 1,
+    "mode_order": "declared CLI order inside each length and repeat; no warm-up",
+    "minimum_free_cuda_gib": 5.0,
+    "cuda_headroom_gib": 1.0,
+    "validated_max_position_embeddings": 40960,
+    "validated_loaded_max_position_embeddings": 40960
+  },
+  "attempts": [
+    {
+      "execution_ordinal": 0,
+      "mode": "offloaded",
+      "prompt_tokens": 32768,
+      "repeat": 0,
+      "status": "completed",
+      "run_index": 0
+    },
+    {
+      "execution_ordinal": 1,
+      "mode": "offloaded",
+      "prompt_tokens": 32768,
+      "repeat": 1,
+      "status": "completed",
+      "run_index": 1
+    },
+    {
+      "execution_ordinal": 2,
+      "mode": "offloaded",
+      "prompt_tokens": 32768,
+      "repeat": 2,
+      "status": "completed",
+      "run_index": 2
+    },
+    {
+      "execution_ordinal": 3,
+      "mode": "offloaded",
+      "prompt_tokens": 40952,
+      "repeat": 0,
+      "status": "completed",
+      "run_index": 3
+    },
+    {
+      "execution_ordinal": 4,
+      "mode": "offloaded",
+      "prompt_tokens": 40952,
+      "repeat": 1,
+      "status": "completed",
+      "run_index": 4
+    },
+    {
+      "execution_ordinal": 5,
+      "mode": "offloaded",
+      "prompt_tokens": 40952,
+      "repeat": 2,
+      "status": "completed",
+      "run_index": 5
+    }
+  ],
+  "runs": [
+    {
+      "prompt_tokens": 32768,
+      "completion_tokens": 8,
+      "completion_token_ids": [
+        13,
+        36101,
+        25,
+        31839,
+        7460,
+        1449,
+        15129,
+        16319
+      ],
+      "completion_token_ids_sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80",
+      "eos_stopping": false,
+      "timing": {
+        "prefill_seconds": 4.834869400016032,
+        "ttft_seconds": 4.834869400016032,
+        "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+        "decode_model_step_seconds": 3.9184044998837635,
+        "all_model_step_seconds": 8.753273899899796,
+        "run_wall_seconds": 8.758108700043522,
+        "decode_tokens_per_second": 1.786441394758415
+      },
+      "steps": [
+        {
+          "completion_index": 0,
+          "phase": "prefill_to_first_token",
+          "model_input_tokens": 32768,
+          "cache_tokens_after_forward": 32768,
+          "output_token_id": 13,
+          "seconds": 4.834869400016032,
+          "memory_observation": {
+            "label": "after_prefill_and_first_token",
+            "process": {
+              "current_rss_bytes": 5412532224,
+              "peak_rss_bytes": 5412532224,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5545918464,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584993792,
+              "process_allocator_reserved_bytes": 5968494592,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 5968494592
+            }
+          }
+        },
+        {
+          "completion_index": 1,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32769,
+          "output_token_id": 36101,
+          "seconds": 1.3577680999878794,
+          "memory_observation": {
+            "label": "after_completion_2",
+            "process": {
+              "current_rss_bytes": 12902707200,
+              "peak_rss_bytes": 12902707200,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5273288704,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584736768,
+              "process_allocator_reserved_bytes": 6241124352,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6241124352
+            }
+          }
+        },
+        {
+          "completion_index": 2,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32770,
+          "output_token_id": 25,
+          "seconds": 0.5168287000851706,
+          "memory_observation": {
+            "label": "after_completion_3",
+            "process": {
+              "current_rss_bytes": 13979377664,
+              "peak_rss_bytes": 13979377664,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5134876672,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584740864,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 3,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32771,
+          "output_token_id": 31839,
+          "seconds": 0.4120051999343559,
+          "memory_observation": {
+            "label": "after_completion_4",
+            "process": {
+              "current_rss_bytes": 14518194176,
+              "peak_rss_bytes": 14518194176,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5134876672,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584744960,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 4,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32772,
+          "output_token_id": 7460,
+          "seconds": 0.40750309999566525,
+          "memory_observation": {
+            "label": "after_completion_5",
+            "process": {
+              "current_rss_bytes": 15057338368,
+              "peak_rss_bytes": 15057338368,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584749056,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 5,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32773,
+          "output_token_id": 1449,
+          "seconds": 0.40927609999198467,
+          "memory_observation": {
+            "label": "after_completion_6",
+            "process": {
+              "current_rss_bytes": 15595241472,
+              "peak_rss_bytes": 15595241472,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584753152,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 6,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32774,
+          "output_token_id": 15129,
+          "seconds": 0.40671379992272705,
+          "memory_observation": {
+            "label": "after_completion_7",
+            "process": {
+              "current_rss_bytes": 15999172608,
+              "peak_rss_bytes": 15999172608,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584757248,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 7,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32775,
+          "output_token_id": 16319,
+          "seconds": 0.40830949996598065,
+          "memory_observation": {
+            "label": "after_completion_8",
+            "process": {
+              "current_rss_bytes": 16403640320,
+              "peak_rss_bytes": 16403640320,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584761344,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        }
+      ],
+      "memory_observations": [
+        {
+          "label": "before_prefill",
+          "process": {
+            "current_rss_bytes": 953737216,
+            "peak_rss_bytes": 4939837440,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 7439646720,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3441951744,
+            "process_allocator_reserved_bytes": 4085252096,
+            "process_allocator_peak_allocated_bytes": 3441951744,
+            "process_allocator_peak_reserved_bytes": 4085252096
+          }
+        },
+        {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 5412532224,
+            "peak_rss_bytes": 5412532224,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5545918464,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584993792,
+            "process_allocator_reserved_bytes": 5968494592,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 5968494592
+          }
+        },
+        {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 12902707200,
+            "peak_rss_bytes": 12902707200,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5273288704,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584736768,
+            "process_allocator_reserved_bytes": 6241124352,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6241124352
+          }
+        },
+        {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 13979377664,
+            "peak_rss_bytes": 13979377664,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5134876672,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584740864,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 14518194176,
+            "peak_rss_bytes": 14518194176,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5134876672,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584744960,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 15057338368,
+            "peak_rss_bytes": 15057338368,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584749056,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 15595241472,
+            "peak_rss_bytes": 15595241472,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584753152,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 15999172608,
+            "peak_rss_bytes": 15999172608,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584757248,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 16403640320,
+            "peak_rss_bytes": 16403640320,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584761344,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "run_complete",
+          "process": {
+            "current_rss_bytes": 16403644416,
+            "peak_rss_bytes": 16403644416,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584761344,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        }
+      ],
+      "final_cache_tokens": 32775,
+      "repeat": 0,
+      "prompt_token_ids_sha256": "945e1148694356fc7adc93b4eb6e54e19eebb4885a6caf837c2f2b6b4b543e1a",
+      "cache": {
+        "mode": "offloaded",
+        "class": "transformers.cache_utils.DynamicCache",
+        "offloading": true,
+        "offload_only_non_sliding": false,
+        "payload": "exact model-produced K/V; no quantization or approximation"
+      }
+    },
+    {
+      "prompt_tokens": 32768,
+      "completion_tokens": 8,
+      "completion_token_ids": [
+        13,
+        36101,
+        25,
+        31839,
+        7460,
+        1449,
+        15129,
+        16319
+      ],
+      "completion_token_ids_sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80",
+      "eos_stopping": false,
+      "timing": {
+        "prefill_seconds": 4.32938639994245,
+        "ttft_seconds": 4.32938639994245,
+        "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+        "decode_model_step_seconds": 1.5130192000651732,
+        "all_model_step_seconds": 5.842405600007623,
+        "run_wall_seconds": 5.848118199966848,
+        "decode_tokens_per_second": 4.626511018299355
+      },
+      "steps": [
+        {
+          "completion_index": 0,
+          "phase": "prefill_to_first_token",
+          "model_input_tokens": 32768,
+          "cache_tokens_after_forward": 32768,
+          "output_token_id": 13,
+          "seconds": 4.32938639994245,
+          "memory_observation": {
+            "label": "after_prefill_and_first_token",
+            "process": {
+              "current_rss_bytes": 16403644416,
+              "peak_rss_bytes": 16403644416,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5543821312,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584993792,
+              "process_allocator_reserved_bytes": 5968494592,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 5968494592
+            }
+          }
+        },
+        {
+          "completion_index": 1,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32769,
+          "output_token_id": 36101,
+          "seconds": 0.17962780001107603,
+          "memory_observation": {
+            "label": "after_completion_2",
+            "process": {
+              "current_rss_bytes": 16403644416,
+              "peak_rss_bytes": 16403644416,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5271191552,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584736768,
+              "process_allocator_reserved_bytes": 6241124352,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6241124352
+            }
+          }
+        },
+        {
+          "completion_index": 2,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32770,
+          "output_token_id": 25,
+          "seconds": 0.4175240999320522,
+          "memory_observation": {
+            "label": "after_completion_3",
+            "process": {
+              "current_rss_bytes": 16537747456,
+              "peak_rss_bytes": 16537747456,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584740864,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 3,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32771,
+          "output_token_id": 31839,
+          "seconds": 0.18366109998896718,
+          "memory_observation": {
+            "label": "after_completion_4",
+            "process": {
+              "current_rss_bytes": 16806182912,
+              "peak_rss_bytes": 16806182912,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584744960,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 4,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32772,
+          "output_token_id": 7460,
+          "seconds": 0.18255520006641746,
+          "memory_observation": {
+            "label": "after_completion_5",
+            "process": {
+              "current_rss_bytes": 17074618368,
+              "peak_rss_bytes": 17074618368,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584749056,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 5,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32773,
+          "output_token_id": 1449,
+          "seconds": 0.18433690001256764,
+          "memory_observation": {
+            "label": "after_completion_6",
+            "process": {
+              "current_rss_bytes": 17343053824,
+              "peak_rss_bytes": 17343053824,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584753152,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 6,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32774,
+          "output_token_id": 15129,
+          "seconds": 0.18458210001699626,
+          "memory_observation": {
+            "label": "after_completion_7",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584757248,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 7,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32775,
+          "output_token_id": 16319,
+          "seconds": 0.18073200003709644,
+          "memory_observation": {
+            "label": "after_completion_8",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584761344,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        }
+      ],
+      "memory_observations": [
+        {
+          "label": "before_prefill",
+          "process": {
+            "current_rss_bytes": 16403644416,
+            "peak_rss_bytes": 16403644416,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 7427063808,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3450471424,
+            "process_allocator_reserved_bytes": 4085252096,
+            "process_allocator_peak_allocated_bytes": 3450471424,
+            "process_allocator_peak_reserved_bytes": 4085252096
+          }
+        },
+        {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 16403644416,
+            "peak_rss_bytes": 16403644416,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5543821312,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584993792,
+            "process_allocator_reserved_bytes": 5968494592,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 5968494592
+          }
+        },
+        {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 16403644416,
+            "peak_rss_bytes": 16403644416,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5271191552,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584736768,
+            "process_allocator_reserved_bytes": 6241124352,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6241124352
+          }
+        },
+        {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 16537747456,
+            "peak_rss_bytes": 16537747456,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584740864,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 16806182912,
+            "peak_rss_bytes": 16806182912,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584744960,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 17074618368,
+            "peak_rss_bytes": 17074618368,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584749056,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 17343053824,
+            "peak_rss_bytes": 17343053824,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584753152,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584757248,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584761344,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "run_complete",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584761344,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        }
+      ],
+      "final_cache_tokens": 32775,
+      "repeat": 1,
+      "prompt_token_ids_sha256": "945e1148694356fc7adc93b4eb6e54e19eebb4885a6caf837c2f2b6b4b543e1a",
+      "cache": {
+        "mode": "offloaded",
+        "class": "transformers.cache_utils.DynamicCache",
+        "offloading": true,
+        "offload_only_non_sliding": false,
+        "payload": "exact model-produced K/V; no quantization or approximation"
+      }
+    },
+    {
+      "prompt_tokens": 32768,
+      "completion_tokens": 8,
+      "completion_token_ids": [
+        13,
+        36101,
+        25,
+        31839,
+        7460,
+        1449,
+        15129,
+        16319
+      ],
+      "completion_token_ids_sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80",
+      "eos_stopping": false,
+      "timing": {
+        "prefill_seconds": 4.234404800110497,
+        "ttft_seconds": 4.234404800110497,
+        "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+        "decode_model_step_seconds": 1.2697355998679996,
+        "all_model_step_seconds": 5.504140399978496,
+        "run_wall_seconds": 5.509396800072864,
+        "decode_tokens_per_second": 5.512958761436407
+      },
+      "steps": [
+        {
+          "completion_index": 0,
+          "phase": "prefill_to_first_token",
+          "model_input_tokens": 32768,
+          "cache_tokens_after_forward": 32768,
+          "output_token_id": 13,
+          "seconds": 4.234404800110497,
+          "memory_observation": {
+            "label": "after_prefill_and_first_token",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5543821312,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584993792,
+              "process_allocator_reserved_bytes": 5968494592,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 5968494592
+            }
+          }
+        },
+        {
+          "completion_index": 1,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32769,
+          "output_token_id": 36101,
+          "seconds": 0.18235070002265275,
+          "memory_observation": {
+            "label": "after_completion_2",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5271191552,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584736768,
+              "process_allocator_reserved_bytes": 6241124352,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6241124352
+            }
+          }
+        },
+        {
+          "completion_index": 2,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32770,
+          "output_token_id": 25,
+          "seconds": 0.1818778000306338,
+          "memory_observation": {
+            "label": "after_completion_3",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584740864,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 3,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32771,
+          "output_token_id": 31839,
+          "seconds": 0.18148069991730154,
+          "memory_observation": {
+            "label": "after_completion_4",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584744960,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 4,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32772,
+          "output_token_id": 7460,
+          "seconds": 0.18106329999864101,
+          "memory_observation": {
+            "label": "after_completion_5",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584749056,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 5,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32773,
+          "output_token_id": 1449,
+          "seconds": 0.18008079996798187,
+          "memory_observation": {
+            "label": "after_completion_6",
+            "process": {
+              "current_rss_bytes": 17477271552,
+              "peak_rss_bytes": 17477271552,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584753152,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 6,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32774,
+          "output_token_id": 15129,
+          "seconds": 0.18114129989407957,
+          "memory_observation": {
+            "label": "after_completion_7",
+            "process": {
+              "current_rss_bytes": 17074618368,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584757248,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        },
+        {
+          "completion_index": 7,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 32775,
+          "output_token_id": 16319,
+          "seconds": 0.181741000036709,
+          "memory_observation": {
+            "label": "after_completion_8",
+            "process": {
+              "current_rss_bytes": 17074618368,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 5132779520,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3584761344,
+              "process_allocator_reserved_bytes": 6379536384,
+              "process_allocator_peak_allocated_bytes": 5346558976,
+              "process_allocator_peak_reserved_bytes": 6379536384
+            }
+          }
+        }
+      ],
+      "memory_observations": [
+        {
+          "label": "before_prefill",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 7427063808,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3450471424,
+            "process_allocator_reserved_bytes": 4085252096,
+            "process_allocator_peak_allocated_bytes": 3450471424,
+            "process_allocator_peak_reserved_bytes": 4085252096
+          }
+        },
+        {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5543821312,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584993792,
+            "process_allocator_reserved_bytes": 5968494592,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 5968494592
+          }
+        },
+        {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5271191552,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584736768,
+            "process_allocator_reserved_bytes": 6241124352,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6241124352
+          }
+        },
+        {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584740864,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584744960,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584749056,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 17477271552,
+            "peak_rss_bytes": 17477271552,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584753152,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 17074618368,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584757248,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 17074618368,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584761344,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        },
+        {
+          "label": "run_complete",
+          "process": {
+            "current_rss_bytes": 17074618368,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 5132779520,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3584761344,
+            "process_allocator_reserved_bytes": 6379536384,
+            "process_allocator_peak_allocated_bytes": 5346558976,
+            "process_allocator_peak_reserved_bytes": 6379536384
+          }
+        }
+      ],
+      "final_cache_tokens": 32775,
+      "repeat": 2,
+      "prompt_token_ids_sha256": "945e1148694356fc7adc93b4eb6e54e19eebb4885a6caf837c2f2b6b4b543e1a",
+      "cache": {
+        "mode": "offloaded",
+        "class": "transformers.cache_utils.DynamicCache",
+        "offloading": true,
+        "offload_only_non_sliding": false,
+        "payload": "exact model-produced K/V; no quantization or approximation"
+      }
+    },
+    {
+      "prompt_tokens": 40952,
+      "completion_tokens": 8,
+      "completion_token_ids": [
+        1573,
+        60608,
+        264,
+        9142,
+        13,
+        22453,
+        25,
+        8350
+      ],
+      "completion_token_ids_sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716",
+      "eos_stopping": false,
+      "timing": {
+        "prefill_seconds": 6.2154174000024796,
+        "ttft_seconds": 6.2154174000024796,
+        "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+        "decode_model_step_seconds": 3.1406999999890104,
+        "all_model_step_seconds": 9.35611739999149,
+        "run_wall_seconds": 9.36131980002392,
+        "decode_tokens_per_second": 2.2288024962665944
+      },
+      "steps": [
+        {
+          "completion_index": 0,
+          "phase": "prefill_to_first_token",
+          "model_input_tokens": 40952,
+          "cache_tokens_after_forward": 40952,
+          "output_token_id": 1573,
+          "seconds": 6.2154174000024796,
+          "memory_observation": {
+            "label": "after_prefill_and_first_token",
+            "process": {
+              "current_rss_bytes": 16928583680,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4740612096,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618744832,
+              "process_allocator_reserved_bytes": 6771703808,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6771703808
+            }
+          }
+        },
+        {
+          "completion_index": 1,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40953,
+          "output_token_id": 60608,
+          "seconds": 0.451916899997741,
+          "memory_observation": {
+            "label": "after_completion_2",
+            "process": {
+              "current_rss_bytes": 16930574336,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 2,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40954,
+          "output_token_id": 264,
+          "seconds": 0.44957189995329827,
+          "memory_observation": {
+            "label": "after_completion_3",
+            "process": {
+              "current_rss_bytes": 16932048896,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 3,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40955,
+          "output_token_id": 9142,
+          "seconds": 0.4502650999929756,
+          "memory_observation": {
+            "label": "after_completion_4",
+            "process": {
+              "current_rss_bytes": 16933662720,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 4,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40956,
+          "output_token_id": 13,
+          "seconds": 0.44682130008004606,
+          "memory_observation": {
+            "label": "after_completion_5",
+            "process": {
+              "current_rss_bytes": 16934871040,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 5,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40957,
+          "output_token_id": 22453,
+          "seconds": 0.4514142000116408,
+          "memory_observation": {
+            "label": "after_completion_6",
+            "process": {
+              "current_rss_bytes": 16936341504,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 6,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40958,
+          "output_token_id": 25,
+          "seconds": 0.44517820002511144,
+          "memory_observation": {
+            "label": "after_completion_7",
+            "process": {
+              "current_rss_bytes": 16937365504,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 7,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40959,
+          "output_token_id": 8350,
+          "seconds": 0.44553239992819726,
+          "memory_observation": {
+            "label": "after_completion_8",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        }
+      ],
+      "memory_observations": [
+        {
+          "label": "before_prefill",
+          "process": {
+            "current_rss_bytes": 17074618368,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 7427063808,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3450668032,
+            "process_allocator_reserved_bytes": 4085252096,
+            "process_allocator_peak_allocated_bytes": 3450668032,
+            "process_allocator_peak_reserved_bytes": 4085252096
+          }
+        },
+        {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 16928583680,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4740612096,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618744832,
+            "process_allocator_reserved_bytes": 6771703808,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6771703808
+          }
+        },
+        {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 16930574336,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 16932048896,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 16933662720,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 16934871040,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 16936341504,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 16937365504,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "run_complete",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        }
+      ],
+      "final_cache_tokens": 40959,
+      "repeat": 0,
+      "prompt_token_ids_sha256": "15e59757c2758d182acaca4d57d62ced248b1ef46d69eb346f8e5ad032d376fe",
+      "cache": {
+        "mode": "offloaded",
+        "class": "transformers.cache_utils.DynamicCache",
+        "offloading": true,
+        "offload_only_non_sliding": false,
+        "payload": "exact model-produced K/V; no quantization or approximation"
+      }
+    },
+    {
+      "prompt_tokens": 40952,
+      "completion_tokens": 8,
+      "completion_token_ids": [
+        1573,
+        60608,
+        264,
+        9142,
+        13,
+        22453,
+        25,
+        8350
+      ],
+      "completion_token_ids_sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716",
+      "eos_stopping": false,
+      "timing": {
+        "prefill_seconds": 6.048382400069386,
+        "ttft_seconds": 6.048382400069386,
+        "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+        "decode_model_step_seconds": 1.5756033001234755,
+        "all_model_step_seconds": 7.623985700192861,
+        "run_wall_seconds": 7.6294132000766695,
+        "decode_tokens_per_second": 4.442742662097388
+      },
+      "steps": [
+        {
+          "completion_index": 0,
+          "phase": "prefill_to_first_token",
+          "model_input_tokens": 40952,
+          "cache_tokens_after_forward": 40952,
+          "output_token_id": 1573,
+          "seconds": 6.048382400069386,
+          "memory_observation": {
+            "label": "after_prefill_and_first_token",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4740612096,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618744832,
+              "process_allocator_reserved_bytes": 6771703808,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6771703808
+            }
+          }
+        },
+        {
+          "completion_index": 1,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40953,
+          "output_token_id": 60608,
+          "seconds": 0.22537970007397234,
+          "memory_observation": {
+            "label": "after_completion_2",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 2,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40954,
+          "output_token_id": 264,
+          "seconds": 0.22570740000810474,
+          "memory_observation": {
+            "label": "after_completion_3",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 3,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40955,
+          "output_token_id": 9142,
+          "seconds": 0.22341710003092885,
+          "memory_observation": {
+            "label": "after_completion_4",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 4,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40956,
+          "output_token_id": 13,
+          "seconds": 0.22583989996928722,
+          "memory_observation": {
+            "label": "after_completion_5",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 5,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40957,
+          "output_token_id": 22453,
+          "seconds": 0.22600010002497584,
+          "memory_observation": {
+            "label": "after_completion_6",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 6,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40958,
+          "output_token_id": 25,
+          "seconds": 0.22416230000089854,
+          "memory_observation": {
+            "label": "after_completion_7",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 7,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40959,
+          "output_token_id": 8350,
+          "seconds": 0.22509680001530796,
+          "memory_observation": {
+            "label": "after_completion_8",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        }
+      ],
+      "memory_observations": [
+        {
+          "label": "before_prefill",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 7427063808,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3450668032,
+            "process_allocator_reserved_bytes": 4085252096,
+            "process_allocator_peak_allocated_bytes": 3450668032,
+            "process_allocator_peak_reserved_bytes": 4085252096
+          }
+        },
+        {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4740612096,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618744832,
+            "process_allocator_reserved_bytes": 6771703808,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6771703808
+          }
+        },
+        {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "run_complete",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        }
+      ],
+      "final_cache_tokens": 40959,
+      "repeat": 1,
+      "prompt_token_ids_sha256": "15e59757c2758d182acaca4d57d62ced248b1ef46d69eb346f8e5ad032d376fe",
+      "cache": {
+        "mode": "offloaded",
+        "class": "transformers.cache_utils.DynamicCache",
+        "offloading": true,
+        "offload_only_non_sliding": false,
+        "payload": "exact model-produced K/V; no quantization or approximation"
+      }
+    },
+    {
+      "prompt_tokens": 40952,
+      "completion_tokens": 8,
+      "completion_token_ids": [
+        1573,
+        60608,
+        264,
+        9142,
+        13,
+        22453,
+        25,
+        8350
+      ],
+      "completion_token_ids_sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716",
+      "eos_stopping": false,
+      "timing": {
+        "prefill_seconds": 6.056560899945907,
+        "ttft_seconds": 6.056560899945907,
+        "ttft_scope": "prefill model call plus finite-logit validation and greedy argmax; excludes prompt host-to-device transfer, cache construction, and pre-run telemetry",
+        "decode_model_step_seconds": 1.5758962000254542,
+        "all_model_step_seconds": 7.6324570999713615,
+        "run_wall_seconds": 7.637710200040601,
+        "decode_tokens_per_second": 4.441916923136774
+      },
+      "steps": [
+        {
+          "completion_index": 0,
+          "phase": "prefill_to_first_token",
+          "model_input_tokens": 40952,
+          "cache_tokens_after_forward": 40952,
+          "output_token_id": 1573,
+          "seconds": 6.056560899945907,
+          "memory_observation": {
+            "label": "after_prefill_and_first_token",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4740612096,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618744832,
+              "process_allocator_reserved_bytes": 6771703808,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6771703808
+            }
+          }
+        },
+        {
+          "completion_index": 1,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40953,
+          "output_token_id": 60608,
+          "seconds": 0.22619279997888952,
+          "memory_observation": {
+            "label": "after_completion_2",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 2,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40954,
+          "output_token_id": 264,
+          "seconds": 0.2240264000138268,
+          "memory_observation": {
+            "label": "after_completion_3",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 3,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40955,
+          "output_token_id": 9142,
+          "seconds": 0.22481010004412383,
+          "memory_observation": {
+            "label": "after_completion_4",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 4,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40956,
+          "output_token_id": 13,
+          "seconds": 0.2248791999882087,
+          "memory_observation": {
+            "label": "after_completion_5",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 5,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40957,
+          "output_token_id": 22453,
+          "seconds": 0.22554400004446507,
+          "memory_observation": {
+            "label": "after_completion_6",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 6,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40958,
+          "output_token_id": 25,
+          "seconds": 0.2239941000007093,
+          "memory_observation": {
+            "label": "after_completion_7",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        },
+        {
+          "completion_index": 7,
+          "phase": "single_token_decode",
+          "model_input_tokens": 1,
+          "cache_tokens_after_forward": 40959,
+          "output_token_id": 8350,
+          "seconds": 0.22644959995523095,
+          "memory_observation": {
+            "label": "after_completion_8",
+            "process": {
+              "current_rss_bytes": 16938860544,
+              "peak_rss_bytes": 17477402624,
+              "source": "Windows GetProcessMemoryInfo working set"
+            },
+            "cuda": {
+              "device_global_free_bytes": 4572839936,
+              "device_global_total_bytes": 12820480000,
+              "process_allocator_allocated_bytes": 3618417664,
+              "process_allocator_reserved_bytes": 6939475968,
+              "process_allocator_peak_allocated_bytes": 5820707840,
+              "process_allocator_peak_reserved_bytes": 6939475968
+            }
+          }
+        }
+      ],
+      "memory_observations": [
+        {
+          "label": "before_prefill",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 7427063808,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3450668032,
+            "process_allocator_reserved_bytes": 4085252096,
+            "process_allocator_peak_allocated_bytes": 3450668032,
+            "process_allocator_peak_reserved_bytes": 4085252096
+          }
+        },
+        {
+          "label": "after_prefill_and_first_token",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4740612096,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618744832,
+            "process_allocator_reserved_bytes": 6771703808,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6771703808
+          }
+        },
+        {
+          "label": "after_completion_2",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_3",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_4",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_5",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_6",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_7",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "after_completion_8",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        },
+        {
+          "label": "run_complete",
+          "process": {
+            "current_rss_bytes": 16938860544,
+            "peak_rss_bytes": 17477402624,
+            "source": "Windows GetProcessMemoryInfo working set"
+          },
+          "cuda": {
+            "device_global_free_bytes": 4572839936,
+            "device_global_total_bytes": 12820480000,
+            "process_allocator_allocated_bytes": 3618417664,
+            "process_allocator_reserved_bytes": 6939475968,
+            "process_allocator_peak_allocated_bytes": 5820707840,
+            "process_allocator_peak_reserved_bytes": 6939475968
+          }
+        }
+      ],
+      "final_cache_tokens": 40959,
+      "repeat": 2,
+      "prompt_token_ids_sha256": "15e59757c2758d182acaca4d57d62ced248b1ef46d69eb346f8e5ad032d376fe",
+      "cache": {
+        "mode": "offloaded",
+        "class": "transformers.cache_utils.DynamicCache",
+        "offloading": true,
+        "offload_only_non_sliding": false,
+        "payload": "exact model-produced K/V; no quantization or approximation"
+      }
+    }
+  ],
+  "errors": [],
+  "attention_policy": {
+    "requested": "cudnn",
+    "forced": true,
+    "resolved_pytorch_enum": "CUDNN_ATTENTION",
+    "enabled_flags_before_context": {
+      "cudnn": true,
+      "flash": true,
+      "efficient": true,
+      "math": true
+    },
+    "availability": {
+      "selected_build_or_library_available": true,
+      "cudnn_library_available": true,
+      "cudnn_version": 91900,
+      "flash_attention_build_available": false,
+      "efficient_attention_tensor_free_probe": null,
+      "runtime_input_eligible": "proven only by a successful forced model forward"
+    },
+    "selection_scope": "torch.nn.attention.sdpa_kernel around every prefill/decode forward"
+  },
+  "identities": {
+    "config": {
+      "class": "transformers.models.qwen3.configuration_qwen3.Qwen3Config",
+      "canonical_sha256": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+      "model_type": "qwen3",
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "max_position_embeddings": 40960,
+      "vocab_size": 151936,
+      "num_hidden_layers": 28,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "rope_scaling": {
+        "rope_theta": 1000000,
+        "rope_type": "default"
+      },
+      "commit_hash": null
+    },
+    "model_artifact": {
+      "schema_version": "molor.benchmark-stack-lock.v2",
+      "hash_policy": "sha256-full-read-every-lock",
+      "backend_identity": {
+        "backend": "huggingface-local",
+        "model_id": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+        "model_artifact_path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B"
+      },
+      "stable_backend_identity": {
+        "backend": "huggingface-local"
+      },
+      "required_roles": [
+        {
+          "role": "base",
+          "identifier": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B"
+        }
+      ],
+      "artifacts": [
+        {
+          "role": "base",
+          "path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+          "content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+          "size_bytes": 4079424497,
+          "files": [
+            {
+              "name": "added_tokens.json",
+              "size_bytes": 707,
+              "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680"
+            },
+            {
+              "name": "config.json",
+              "size_bytes": 726,
+              "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+            },
+            {
+              "name": "generation_config.json",
+              "size_bytes": 239,
+              "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+            },
+            {
+              "name": "merges.txt",
+              "size_bytes": 1671853,
+              "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+            },
+            {
+              "name": "model-00001-of-00002.safetensors",
+              "size_bytes": 3441185608,
+              "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5"
+            },
+            {
+              "name": "model-00002-of-00002.safetensors",
+              "size_bytes": 622329984,
+              "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9"
+            },
+            {
+              "name": "model.safetensors.index.json",
+              "size_bytes": 25605,
+              "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d"
+            },
+            {
+              "name": "special_tokens_map.json",
+              "size_bytes": 613,
+              "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd"
+            },
+            {
+              "name": "tokenizer.json",
+              "size_bytes": 11422654,
+              "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+            },
+            {
+              "name": "tokenizer_config.json",
+              "size_bytes": 9675,
+              "sha256": "5a7303fcb1a27ede63134a2cbd61d5282c247ca6d769ce4746d4ffa124aedd63"
+            },
+            {
+              "name": "vocab.json",
+              "size_bytes": 2776833,
+              "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+            }
+          ],
+          "complete": true
+        }
+      ],
+      "unresolved": [],
+      "fully_content_addressed": true,
+      "stack_fingerprint": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91"
+    },
+    "tokenizer": {
+      "class": "transformers.models.qwen2.tokenization_qwen2.Qwen2Tokenizer",
+      "name_or_path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+      "vocab_size_attribute": 151643,
+      "vocabulary_entries": 151669,
+      "vocabulary_sha256": "6e949d8fec10c504f4207a43cdeac7d7961f7fd9894d256f14a8153bb5479b63",
+      "backend_json_sha256": "41e00eccf531cffc2e562d38bdd879d41e5044ea279af5b73c6a32aabcc8fe04",
+      "special_tokens_map_sha256": "edcb2fc2acbbe77f858a9c4fe51295ffdb84711efba5703ec5906b3d67282569",
+      "chat_template_sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5",
+      "commit_hash": null
+    },
+    "loaded_model": {
+      "class": "transformers.models.qwen3.modeling_qwen3.Qwen3ForCausalLM",
+      "name_or_path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+      "parameter_count": 1720574976,
+      "parameter_devices": [
+        "cuda:0"
+      ],
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "loaded_config": {
+        "class": "transformers.models.qwen3.configuration_qwen3.Qwen3Config",
+        "canonical_sha256": "e2709ebe03b4c4e47fc99312b15b4ff9bdfeb2a28512f25ab52081cdbc577065",
+        "model_type": "qwen3",
+        "architectures": [
+          "Qwen3ForCausalLM"
+        ],
+        "max_position_embeddings": 40960,
+        "vocab_size": 151936,
+        "num_hidden_layers": 28,
+        "num_attention_heads": 16,
+        "num_key_value_heads": 8,
+        "head_dim": 128,
+        "rope_scaling": {
+          "rope_theta": 1000000,
+          "rope_type": "default"
+        },
+        "commit_hash": null
+      },
+      "attention_implementation": "sdpa"
+    },
+    "model_artifact_recheck": {
+      "seconds": 2.247313900035806,
+      "stack_fingerprint": "c89442b5bbc335341e634f163f41ba193e0412f9e80676cf0e8a283ad60daa91",
+      "matches_preload_identity": true
+    }
+  },
+  "identity_seconds": 2.2029077999759465,
+  "prompts": [
+    {
+      "prompt_tokens": 32768,
+      "token_ids_sha256": "945e1148694356fc7adc93b4eb6e54e19eebb4885a6caf837c2f2b6b4b543e1a",
+      "token_id_min": 12,
+      "token_id_max": 90884,
+      "construction": "repeat tokenizer output without special tokens, then exact truncate"
+    },
+    {
+      "prompt_tokens": 40952,
+      "token_ids_sha256": "15e59757c2758d182acaca4d57d62ced248b1ef46d69eb346f8e5ad032d376fe",
+      "token_id_min": 12,
+      "token_id_max": 90884,
+      "construction": "repeat tokenizer output without special tokens, then exact truncate"
+    }
+  ],
+  "environment": {
+    "python": "3.12.10",
+    "implementation": "CPython",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "system": "Windows",
+    "release": "11",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "pid": 18592,
+    "torch": "2.11.0+cu128",
+    "torch_cuda_runtime": "12.8",
+    "torch_cudnn": 91900,
+    "transformers": "5.15.1",
+    "dynamic_cache_class": "transformers.cache_utils.DynamicCache",
+    "dynamic_cache_signature": "(ddp_cache_data: collections.abc.Iterable[tuple[torch.Tensor | None, ...]] | None = None, config: transformers.configuration_utils.PreTrainedConfig | None = None, offloading: bool = False, offload_only_non_sliding: bool = False)",
+    "device": {
+      "requested_and_normalized": "cuda:0",
+      "type": "cuda",
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 5070",
+      "capability": [
+        12,
+        0
+      ],
+      "total_memory_bytes": 12820480000,
+      "uuid": "f471eeff-c9f2-b3f5-121f-7af4253d14d2"
+    }
+  },
+  "arithmetic_policy": {
+    "seed": 8419,
+    "greedy_argmax": true,
+    "sampling": false,
+    "eos_early_stopping": false,
+    "policy": "production-like PyTorch algorithms; nondeterministic kernels permitted",
+    "requested_deterministic_algorithms": false,
+    "torch_deterministic_algorithms": false,
+    "cublas_workspace_config": null,
+    "cudnn_benchmark": false,
+    "cudnn_allow_tf32": false,
+    "cuda_matmul_allow_tf32": false
+  },
+  "model_load_memory": [
+    {
+      "label": "before_model_load",
+      "process": {
+        "current_rss_bytes": 870318080,
+        "peak_rss_bytes": 870318080,
+        "source": "Windows GetProcessMemoryInfo working set"
+      },
+      "cuda": {
+        "device_global_free_bytes": 11571036160,
+        "device_global_total_bytes": 12820480000,
+        "process_allocator_allocated_bytes": 0,
+        "process_allocator_reserved_bytes": 0,
+        "process_allocator_peak_allocated_bytes": 0,
+        "process_allocator_peak_reserved_bytes": 0
+      }
+    },
+    {
+      "label": "after_model_load",
+      "process": {
+        "current_rss_bytes": 937422848,
+        "peak_rss_bytes": 4939837440,
+        "source": "Windows GetProcessMemoryInfo working set"
+      },
+      "cuda": {
+        "device_global_free_bytes": 7139753984,
+        "device_global_total_bytes": 12820480000,
+        "process_allocator_allocated_bytes": 3441165312,
+        "process_allocator_reserved_bytes": 4397727744,
+        "process_allocator_peak_allocated_bytes": 4374663680,
+        "process_allocator_peak_reserved_bytes": 4397727744
+      }
+    }
+  ],
+  "model_load_seconds": 2.11567530001048,
+  "memory_contract": {
+    "nominal_dynamic_kv_tensor_bytes_at_largest_request": 4697620480,
+    "nominal_formula": "2*K/V*layers*kv_heads*head_dim*tokens*dtype_bytes",
+    "excludes": "allocator overhead, attention workspace, logits, model weights, and other processes",
+    "pre_load_minimum_global_free_bytes": 5368709120,
+    "post_load_cuda_headroom_bytes": 1073741824
+  },
+  "token_identity": {
+    "matrix": {
+      "expected_cells": 6,
+      "actual_records": 6,
+      "complete_and_unique": true,
+      "missing": [],
+      "duplicates": [],
+      "unexpected": []
+    },
+    "all_completed_run_tokens_identical_by_prompt": true,
+    "comparisons": [
+      {
+        "scope": "same_prompt_all_modes_and_repeats",
+        "prompt_tokens": 32768,
+        "reference": {
+          "mode": "offloaded",
+          "repeat": 0,
+          "sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80"
+        },
+        "candidate": {
+          "mode": "offloaded",
+          "repeat": 1,
+          "sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80"
+        },
+        "identical": true,
+        "first_mismatch_index": null
+      },
+      {
+        "scope": "same_prompt_all_modes_and_repeats",
+        "prompt_tokens": 32768,
+        "reference": {
+          "mode": "offloaded",
+          "repeat": 0,
+          "sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80"
+        },
+        "candidate": {
+          "mode": "offloaded",
+          "repeat": 2,
+          "sha256": "1ca8cb29ccf9764d329832c03eb24b27958e926a8b616ed0ad70cf65668e8f80"
+        },
+        "identical": true,
+        "first_mismatch_index": null
+      },
+      {
+        "scope": "same_prompt_all_modes_and_repeats",
+        "prompt_tokens": 40952,
+        "reference": {
+          "mode": "offloaded",
+          "repeat": 0,
+          "sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716"
+        },
+        "candidate": {
+          "mode": "offloaded",
+          "repeat": 1,
+          "sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716"
+        },
+        "identical": true,
+        "first_mismatch_index": null
+      },
+      {
+        "scope": "same_prompt_all_modes_and_repeats",
+        "prompt_tokens": 40952,
+        "reference": {
+          "mode": "offloaded",
+          "repeat": 0,
+          "sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716"
+        },
+        "candidate": {
+          "mode": "offloaded",
+          "repeat": 2,
+          "sha256": "e7e051baa4ecbc201981234bcfe6e474986dd31c30daa3a49b6483815ecbc716"
+        },
+        "identical": true,
+        "first_mismatch_index": null
+      }
+    ],
+    "dynamic_vs_offloaded_matched_pairs": [],
+    "failure_count": 0
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "scope": "canonical JSON of this report with the integrity member omitted",
+    "sha256": "30897aec4e7340c7e3c08ca944fe6a44e979d3539b1c4186136a75f0240d797f"
+  }
+}
