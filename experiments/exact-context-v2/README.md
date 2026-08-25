@@ -60,3 +60,31 @@ Do not call `StaticCache.early_initialization`: it would allocate the complete 4
 on CUDA before offload. If isolated StaticCache still exceeds the RSS requirement, the next fix is
 a CPU-resident preallocated backing with reusable GPU staging buffers, not allocator trimming or a
 larger acceptance threshold.
+
+## Development compatibility outcome
+
+The first isolated 4,096-token compatibility cell completed successfully with an exact
+40,960-token StaticCache backing. Its eight-token completion hash exactly matched all three prior
+GPU-resident DynamicCache reference repeats, and the cache object was proven collected after the
+run. The diagnostic nevertheless falsified generic StaticCache as the V1 memory fix:
+
+| Observation | Result |
+| --- | ---: |
+| Unique live K/V backing | 4.375 GiB |
+| Post-model-load RSS | 0.863 GiB |
+| RSS after prefill | 8.31 GiB |
+| Maximum/run-complete RSS | 12.477 GiB |
+| Maximum private committed bytes | 18.167 GiB |
+| Post-release RSS | 12.477 GiB |
+| TTFT | 2.000 s |
+| Decode throughput | 3.544 token/s |
+
+Although the fixed live backing no longer grows, each decode still copies full layer buffers
+between CPU and GPU. Host allocator/working-set retention therefore grows at every token and
+already exceeds the unchanged 6-GiB operational ceiling in this small compatibility cell. The
+three 40,952-token trials were deliberately not run: preallocation alone is rejected as the next
+context path. The next systems design must keep CPU-resident backing and reuse bounded GPU staging
+buffers rather than assigning each layer tensor back and forth with `.to()`.
+
+Development report SHA-256:
+`25053e1d89a98c3a43d1009175ebb0e1c63033b0af0e3eefb3bc5de7bf88d2b3`.

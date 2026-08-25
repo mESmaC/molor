@@ -714,6 +714,13 @@ ceiling. The excess accumulated during grow-by-concatenation decode and persiste
 it must be solved with isolated-worker accounting and likely exact preallocated/in-place offload,
 not by calling the native-position execution a context expansion.
 
+A follow-up isolated development cell tested generic offloaded `StaticCache` with a fixed
+40,960-token backing. It preserved the GPU-resident reference completion exactly and exposed one
+4.375-GiB live cache, but RSS still rose from 0.863 GiB after model load to 12.477 GiB after eight
+tokens. Fixed allocation removed growing live storage, not the host copies retained while whole
+layer buffers move CPU↔GPU. The next exact hierarchy therefore needs CPU-owned backing plus bounded,
+reusable GPU staging buffers; ordinary `StaticCache.offloading=True` is not that architecture.
+
 ## Milestone completion definition
 
 `hashed-kv-shadow-v1` is complete when one immutable sealed run either passes Gate 0 and Gate 1 or

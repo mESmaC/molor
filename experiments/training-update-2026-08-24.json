@@ -655,5 +655,21 @@
       "ceiling_gib": 6.0
     },
     "decision": "preserve the rejection; native-position exact execution was observed, but no production context increase is authorized"
+  },
+  "exact_context_v2_static_development": {
+    "status": "stopped_after_compatibility_failure",
+    "implementation_commit": "b7f54eb",
+    "report_sha256": "25053e1d89a98c3a43d1009175ebb0e1c63033b0af0e3eefb3bc5de7bf88d2b3",
+    "prompt_tokens": 4096,
+    "completion_tokens": 8,
+    "static_capacity_tokens": 40960,
+    "token_parity_with_prior_gpu_dynamic_reference": true,
+    "release_succeeded": true,
+    "unique_live_cache_gib": 4.375,
+    "post_model_load_rss_gib": 0.863,
+    "maximum_run_rss_gib": 12.477,
+    "maximum_private_committed_gib": 18.167,
+    "operational_rss_ceiling_gib": 6.0,
+    "decision": "do not run the planned 40K static trials; generic layer .to() offload still retains too much host memory, so require CPU-owned backing with reusable GPU staging"
   }
 }
