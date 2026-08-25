@@ -64,6 +64,12 @@ def discover_adapters(workspace_root: Path) -> tuple[AdapterCatalogEntry, ...]:
                 checkpoint_parts = ()
             if any(part.startswith(".") for part in checkpoint_parts):
                 continue
+            if any(
+                part.casefold() == "quarantine"
+                or part.casefold().endswith("-quarantine")
+                for part in checkpoint_parts
+            ):
+                continue
             if directory in seen:
                 continue
             seen.add(directory)

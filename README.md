@@ -32,12 +32,14 @@ current runtime.
   plus annotation, teacher-RL, benchmark, training, and context-lab tools;
 - a terminal command that compares base, each expert, and a 50/50 blend on the same prompt.
 
-The promoted router is the controlled five-way v4 MLP checkpoint. Its hard-negative curriculum
-improved acceptable routing from 66.7% to 73.3% on a new 60-prompt blind probe while exactly tying
-v3 on the six-case executable lane. A six-trial conservative router-RL sweep selected no update,
-and a new rank-16 finance adapter improved NLL but regressed verifier-backed calculation quality.
-Persistent cross-session memory and Memory-LoRA remain the next model-side pieces. The existing
-`docs/` directory contains design notes for those experiments.
+The promoted router is still the controlled five-way v4 MLP checkpoint. Its hard-negative
+curriculum improved acceptable routing from 66.7% to 73.3% on a 60-prompt blind probe while exactly
+tying v3 on the six-case executable lane. A verified-code-focused v5 candidate and a fresh
+150-rollout five-route RL sweep both failed their held-out promotion gates, so neither changed the
+live router. A Taskmaster coffee-API adapter produced valid JSON consistently but missed its API,
+argument, and full-object exactness floors and remains quarantined. Persistent cross-session memory
+and Memory-LoRA remain the next model-side pieces. The existing `docs/` directory contains design
+notes for those experiments.
 
 ## Run the desktop app
 
@@ -191,6 +193,13 @@ so those older scores are development diagnostics, not blind promotion evidence.
 ablation also resampled unrelated v3 rows and was rejected; the promoted build holds the original
 v3 selection seed fixed at 307 so the comparison isolates the new hard negatives.
 
+The follow-up v5 curriculum replaced 144 split-owned generated-code rows with complete-project and
+driver intent contrastives while preserving route balance and all unaffected row positions. Its
+selected seed retained 99.23% file-held-out accuracy, but the new 72-prompt blind gate only moved
+overall acceptable routing from 66.7% to 69.4% and verified-code routing from 0/12 to 4/12, short of
+the required 8/12. Embedded routing also fell from 6/12 to 4/12, beyond the one-case regression
+allowance. V5 was rejected before executable evaluation; v4 remains the default.
+
 The teacher-RL pilot evaluates 24 immutable prompts through base, all three experts, and auto, then
 trains only on a separate 32-prompt/128-rollout sibling set. Reproduce the collection and the
 conservative full-information contextual-bandit update with:
@@ -213,15 +222,27 @@ the complete local base, router, and adapter artifacts and reject mixed or drift
 Historical collections are retained only with an explicit `legacy_path_identity_only` status after
 strict runtime path/name checks. A follow-up beta/seed sweep over the complete legacy 32-prompt,
 four-route reward matrix selected epoch zero in all six trials: no split improved hard top-1 reward,
-and every saved candidate stayed byte-identical to its parent. That matrix omits
-`verified-embedded-code-v1`, so production RL requires a newly collected and judged five-route
-matrix rather than reusing the legacy grades.
+and every saved candidate stayed byte-identical to its parent.
+
+The replacement five-route collection is now complete: 30 new prompts were each run through all
+four experts plus base/null for 150/150 successful, content-addressed rollouts. Three route-blind
+review shards produced 150 grades and 19 same-prompt preferences. The same six beta/seed trials
+again selected epoch zero: held-out hard and expected reward gains, route changes, and KL were all
+zero, and every saved weight file was byte-identical to v4. This is a valid negative RL result, not
+a promoted policy.
 
 The quarantined `financial-analysis-verified-r16-v1` experiment trained 2,026 clean rows for one
 rank-16 epoch. Held-out NLL improved from 5.2249 to 0.2971, but the 149 eligible calculation rows
 scored only 38.3% numeric+unit accuracy, 38.9% verifier pass, and 61.1% calculation consistency,
 all below the stronger rank-8 comparator. It was not added to the rack. Exact hashes, seed results,
 gates, and decisions are recorded in `experiments/training-update-2026-08-24.json`.
+
+The quarantined `taskmaster-coffee-api-v1` experiment trained 1,176 group-separated Taskmaster-4
+examples under CC-BY-4.0. On 145 held-out cases it reached 100% JSON/schema validity, 77.9% API-name
+exactness, 47.6% argument exactness, and 45.5% full-object exactness. Those last three missed the
+85% / 70% / 60% floors, so the adapter is excluded from defaults, router training, and normal
+desktop discovery. Its exposed v1 test must not be used to tune a successor; a v2 attempt needs a
+new group-disjoint holdout.
 
 Run the blind intent probe with the desktop's default routing policy using:
 

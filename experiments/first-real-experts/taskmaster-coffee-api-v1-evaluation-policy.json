@@ -1,0 +1,28 @@
+{
+  "schema_version": "molor.expert-promotion-policy.v1",
+  "policy_id": "taskmaster-coffee-api-v1-heldout-generation",
+  "candidate_posture": "quarantine_until_every_gate_passes",
+  "evaluation": {
+    "dataset": "data/taskmaster-coffee-api-v1.test.evaluation.jsonl",
+    "dataset_sha256": "dbc04384ef9b0481655494bdcd8edb15979944d532fd609d0670b43472dc07c1",
+    "examples": 145,
+    "route": "forced adapter versus frozen base/null",
+    "generation": {
+      "do_sample": false,
+      "enable_thinking": false,
+      "max_prompt_tokens": 2048,
+      "max_new_tokens": 192
+    }
+  },
+  "minimum_rates": {
+    "json_parseable": 0.98,
+    "schema_valid": 0.98,
+    "api_name_exact": 0.85,
+    "arguments_exact": 0.7,
+    "semantic_exact": 0.6
+  },
+  "minimum_absolute_improvement_over_base": 0.1,
+  "decision_rule": "Every minimum rate and every base-improvement gate must pass; otherwise keep the adapter quarantined and out of discovery, defaults, and router training.",
+  "provenance_note": "These thresholds were declared in the active run before test scoring and persisted after the run; the Git artifact alone is not proof of pre-registration.",
+  "reuse_policy": "The v1 test result is now exposed. Do not tune or select another candidate against it; create a new group-disjoint holdout for a v2 attempt."
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "molor.router-promotion-policy.v1",
+  "policy_id": "router-v5-verified-code-contrastive",
+  "parent_checkpoint": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
+  "candidate_checkpoint": "checkpoints/qwen3-1.7b-corpus-router-v5-mlp-seed83",
+  "candidate_selection": "All three training seeds must reach at least 0.99 file-held-out accuracy; choose the lowest validation loss without reading intent probes.",
+  "blind_probe": {
+    "path": "router-blind-probe-v4.jsonl",
+    "sha256": "03d3b671ac831596a3cfff2c154e256b88c57731c04d37c59e0910912235bce2",
+    "prompts": 72,
+    "confidence_threshold": 0.3,
+    "top_k": 1
+  },
+  "gates": [
+    "Overall acceptable-route accuracy and exact single-label accuracy must both improve over v4.",
+    "Verified-code accuracy must improve by at least 4 of 12 and reach at least 8 of 12.",
+    "No other category may lose more than 1 of 12.",
+    "Only after all blind-intent gates pass may the executable lane run, and it must not decline."
+  ],
+  "decision_rule": "Reject on the first failed stage; do not threshold-tune or compare alternate seeds on the blind probe.",
+  "provenance_note": "These gates were declared in the active run before blind scoring and persisted after the run; the Git artifact alone is not proof of pre-registration.",
+  "reuse_policy": "The v4 blind probe is now exposed. Do not tune a successor against it; author another isolated probe for a v6 attempt."
+}

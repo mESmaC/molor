@@ -1,0 +1,39 @@
+{
+  "model_id": "../../models/Qwen3-1.7B",
+  "output_dir": "../../checkpoints/qwen3-1.7b-candidate-experts-quarantine",
+  "dtype": "bfloat16",
+  "device": "cuda",
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "rank": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "max_length": 2048,
+  "epochs": 1,
+  "learning_rate": 0.00005,
+  "lr_scheduler": "cosine",
+  "warmup_ratio": 0.05,
+  "weight_decay": 0.01,
+  "micro_batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "gradient_checkpointing": true,
+  "checkpoint_every_steps": 100,
+  "max_grad_norm": 1.0,
+  "seed": 241104,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  },
+  "experts": [
+    {
+      "name": "taskmaster-coffee-api-v1",
+      "dataset": "data/taskmaster-coffee-api-v1.train.jsonl"
+    }
+  ]
+}

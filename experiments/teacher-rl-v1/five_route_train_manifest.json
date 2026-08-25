@@ -1,0 +1,550 @@
+{
+  "schema_version": "molor.teacher-eval.manifest.v1",
+  "run_id": "teacher-rl-v2-five-route-train-01",
+  "description": "Fresh full-information reward collection for the promoted v4 router, four frozen experts, and base/null. Prompts and held-out task families are disjoint from the immutable pilot and legacy four-route RL set.",
+  "api": {
+    "endpoint": "http://127.0.0.1:8765",
+    "request_timeout_seconds": 3600
+  },
+  "generation": {
+    "base_seed": 840825,
+    "repetitions": 1,
+    "candidates_per_route": 1,
+    "settings": {
+      "max_new_tokens": 384,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 0,
+      "enable_thinking": false,
+      "reasoning_preset": "Five-route teacher RL training",
+      "system_instruction": "Answer accurately and directly. Obey requested output constraints, state material uncertainty, do not invent missing technical facts, and include actionable detail when requested.",
+      "context_token_budget": 4096,
+      "cache_mode": "dynamic"
+    }
+  },
+  "routing": {
+    "forced_routes": [
+      {
+        "route_id": "embedded-knowledge-v1",
+        "runtime_name": "embedded-knowledge-v1",
+        "legacy_weights": {
+          "base": 0.0,
+          "expert_a": 1.0,
+          "expert_b": 0.0
+        }
+      },
+      {
+        "route_id": "ocb-can-verified-v1",
+        "runtime_name": "ocb-can-verified-v1",
+        "legacy_weights": {
+          "base": 0.0,
+          "expert_a": 0.0,
+          "expert_b": 1.0
+        }
+      },
+      {
+        "route_id": "software-architecture-v1",
+        "runtime_name": "software-architecture-v1",
+        "legacy_weights": null
+      },
+      {
+        "route_id": "verified-embedded-code-v1",
+        "runtime_name": "verified-embedded-code-v1",
+        "legacy_weights": null
+      },
+      {
+        "route_id": "base/null",
+        "runtime_name": "base",
+        "legacy_weights": {
+          "base": 1.0,
+          "expert_a": 0.0,
+          "expert_b": 0.0
+        }
+      }
+    ],
+    "manual_policy_defaults": {
+      "mode": "manual",
+      "top_k": 1,
+      "temperature": 1.0,
+      "confidence_threshold": 0.0,
+      "null_bias": 0.0,
+      "max_prompt_tokens": 256,
+      "enabled_experts": [
+        "embedded-knowledge-v1",
+        "ocb-can-verified-v1",
+        "software-architecture-v1",
+        "verified-embedded-code-v1"
+      ],
+      "manual_route": {}
+    },
+    "auto": {
+      "enabled": false,
+      "route_id": "auto",
+      "policy": {
+        "mode": "auto",
+        "top_k": 1,
+        "temperature": 1.0,
+        "confidence_threshold": 0.3,
+        "null_bias": 0.0,
+        "max_prompt_tokens": 256,
+        "enabled_experts": [
+          "embedded-knowledge-v1",
+          "ocb-can-verified-v1",
+          "software-architecture-v1",
+          "verified-embedded-code-v1"
+        ],
+        "manual_route": {}
+      }
+    }
+  },
+  "outputs": {
+    "raw_report": "../../runs/teacher-rl-v2/five-route-train/raw-rollouts.jsonl",
+    "review_pack": "../../runs/teacher-rl-v2/five-route-train/review-pack.json",
+    "submission_log": "../../runs/teacher-rl-v2/five-route-train/submissions.jsonl"
+  },
+  "evaluation_contract": {
+    "split": "rl_train_v2",
+    "immutable_evaluation": false,
+    "auto_routing_enabled": false,
+    "rollout_matrix": "Run all four named experts and base/null for every prompt; do not substitute auto-routed outputs.",
+    "action_axis": [
+      "embedded-knowledge-v1",
+      "ocb-can-verified-v1",
+      "software-architecture-v1",
+      "verified-embedded-code-v1",
+      "base/null"
+    ],
+    "intent_labels_are_diagnostic_only": true,
+    "oracle_definition": "The judged full-route reward vector, not expected_route or acceptable_routes metadata, defines the oracle and soft router target.",
+    "teacher_normalization": "T=(overall_score+2)/4; optionally confidence-adjust with Tconf=0.5+confidence*(T-0.5).",
+    "heldout_contract": "Every prompt declares router_split and semantic_family. The 20 training prompts and 10 held-out prompts use distinct authored task families, with four train and two held-out prompts for each diagnostic route intent.",
+    "separation": "All prompt text is newly authored and normalized-text disjoint from manifest.json, train_manifest.json, and top2_manifest.json. Do not merge these rows into the immutable 24-prompt evaluation suite.",
+    "reward_guidance": {
+      "deterministic_tasks": "Verify exact arithmetic, bit layouts, code constraints, or requested formats where possible before assigning the teacher score.",
+      "architecture_tasks": "Judge correctness and tradeoff coverage rather than keyword presence; use the supplied anchors only as review guidance.",
+      "general_constraints": "Cap reward when a core numeric, protocol, compilation, or explicit-output constraint is wrong, even if prose quality is high."
+    }
+  },
+  "prompts": [
+    {
+      "prompt_id": "FR-EK01",
+      "prompt": "A peripheral exposes a volatile 32-bit READY register whose bit 2 becomes one after calibration. Explain why copying the register address into a non-volatile pointer or polling a cached local value is incorrect, and give a bounded polling strategy that cannot wait forever.",
+      "tags": ["embedded-knowledge", "volatile", "polling", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "embedded_knowledge",
+        "semantic_family": "volatile-register-observation",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "anchors": ["volatile access", "fresh register read", "deadline or iteration bound", "timeout result"]
+      }
+    },
+    {
+      "prompt_id": "FR-EK02",
+      "prompt": "An embedded image executes `.fastcode` from SRAM but stores its initial bytes in flash. Explain the difference between VMA and LMA, which linker symbols startup code needs, and what the reset handler must do before calling code in that section.",
+      "tags": ["embedded-knowledge", "linker", "startup", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "embedded_knowledge",
+        "semantic_family": "linker-load-run-addresses",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "anchors": ["VMA in SRAM", "LMA in flash", "load/start/end symbols", "startup copy before use"]
+      }
+    },
+    {
+      "prompt_id": "FR-EK03",
+      "prompt": "A 24-bit down-counter is clocked at 48 MHz after a divide-by-64 prescaler and counts inclusively from RELOAD to zero. Find RELOAD for a 10.000 ms interrupt period and show the tick calculation and hexadecimal register value.",
+      "tags": ["embedded-knowledge", "timer", "calculation", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "embedded_knowledge",
+        "semantic_family": "inclusive-downcounter-timing",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "check": "48,000,000/64=750,000 Hz; 10 ms needs 7,500 ticks; inclusive down-counter RELOAD=7,499=0x1D4B."
+      }
+    },
+    {
+      "prompt_id": "FR-EK04",
+      "prompt": "A low-priority task holds a mutex needed by a high-priority task while a medium-priority CPU-bound task runs. Name the failure mode, explain the schedule that causes it, and compare priority inheritance with priority ceiling as remedies.",
+      "tags": ["embedded-knowledge", "rtos", "scheduling", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "embedded_knowledge",
+        "semantic_family": "rtos-priority-inversion",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "anchors": ["priority inversion", "medium task preempts low holder", "inheritance is dynamic", "ceiling is predeclared and bounded"]
+      }
+    },
+    {
+      "prompt_id": "FR-EK05",
+      "prompt": "A DMA engine writes received samples into a cacheable RAM buffer on a non-coherent MCU, but the CPU sometimes reads the previous contents. Describe the required ownership, cache maintenance, memory-ordering, and alignment steps before and after DMA.",
+      "tags": ["embedded-knowledge", "dma", "cache", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "embedded_knowledge",
+        "semantic_family": "noncoherent-dma-ownership",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "anchors": ["exclusive ownership", "clean before device read where needed", "invalidate after device write", "barriers", "cache-line alignment and alias avoidance"]
+      }
+    },
+    {
+      "prompt_id": "FR-EK06",
+      "prompt": "A product resets intermittently in the field and its watchdog reset flag is cleared early during boot. Design a reset-forensics sequence that distinguishes watchdog, brownout, software, and external resets while remaining robust if power fails during logging.",
+      "tags": ["embedded-knowledge", "watchdog", "forensics", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "embedded_knowledge",
+        "semantic_family": "reset-cause-forensics",
+        "expected_route": "embedded-knowledge-v1",
+        "acceptable_routes": ["embedded-knowledge-v1"],
+        "anchors": ["capture reset flags before clearing", "retained or durable record", "CRC/version or two-phase write", "boot counter", "defer watchdog enable/clear safely"]
+      }
+    },
+    {
+      "prompt_id": "FR-CN01",
+      "prompt": "A signed 13-bit Intel-order CAN signal starts at bit 3, has factor 0.125 and offset 4. Decode payload `D8 FF 01 00 00 00 00 00`. Show extraction, sign extension, and the final physical value.",
+      "tags": ["can", "dbc", "signed", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "can",
+        "semantic_family": "unaligned-signed-intel-decode",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Little-endian 16-bit window is 0xFFD8; shift 3 and mask 0x1FFF gives 0x1FFB, which sign-extends to -5; physical=3.375."
+      }
+    },
+    {
+      "prompt_id": "FR-CN02",
+      "prompt": "A CAN FD frame uses a 500 kbit/s nominal phase and a 2 Mbit/s data phase with bit-rate switching. Explain which fields use each rate, where switching occurs, and why arbitration still uses the nominal rate.",
+      "tags": ["can", "can-fd", "bit-rate-switch", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "can",
+        "semantic_family": "can-fd-dual-bit-rate",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "anchors": ["nominal arbitration phase", "BRS transition", "data phase at fast rate", "return before ACK/end", "shared arbitration timing"]
+      }
+    },
+    {
+      "prompt_id": "FR-CN03",
+      "prompt": "A standard data frame with identifier `0x123` and an extended data frame whose top 11 identifier bits are also `0x123` start simultaneously. Which frame wins and at what arbitration field does the decisive dominant/recessive difference occur?",
+      "tags": ["can", "arbitration", "extended-id", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "can",
+        "semantic_family": "standard-versus-extended-arbitration",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "The standard frame wins: its dominant RTR bit competes with the extended frame's recessive SRR bit after the shared 11 identifier bits."
+      }
+    },
+    {
+      "prompt_id": "FR-CN04",
+      "prompt": "A classical-CAN receiver has REC 126. It detects two receive errors, each of which increments REC by one, and then receives a valid frame. State the counter progression and error-active/error-passive state after each event under the usual thresholds.",
+      "tags": ["can", "error-confinement", "rec", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "can",
+        "semantic_family": "receiver-error-counter-state",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "REC progresses 126 -> 127 (active) -> 128 (passive); a successful reception normally decrements REC to 127, returning error-active."
+      }
+    },
+    {
+      "prompt_id": "FR-CN05",
+      "prompt": "Decode the 29-bit J1939 identifier `0x18FEEE2A`: report priority, data page, PDU format, PDU specific, source address, whether it is PDU1 or PDU2, and the resulting PGN.",
+      "tags": ["can", "j1939", "identifier", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "can",
+        "semantic_family": "j1939-pgn-decomposition",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Priority=6, DP=0, PF=0xFE, PS=0xEE, SA=0x2A; PF>=240 means PDU2 and PGN=0xFEEE."
+      }
+    },
+    {
+      "prompt_id": "FR-CN06",
+      "prompt": "Using an 11-bit acceptance filter where mask bit 1 means compare, give one filter value and mask that admit exactly identifiers `0x2B8`, `0x2BA`, `0x2BC`, and `0x2BE`, and reject the odd identifiers between them. Explain the don't-care bits.",
+      "tags": ["can", "acceptance-filter", "mask", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "can",
+        "semantic_family": "sparse-even-filter-set",
+        "expected_route": "ocb-can-verified-v1",
+        "acceptable_routes": ["ocb-can-verified-v1"],
+        "check": "Value 0x2B8 with mask 0x7F9 (bits 2:1 don't care, bit 0 compared as zero) admits exactly 0x2B8/BA/BC/BE."
+      }
+    },
+    {
+      "prompt_id": "FR-AR01",
+      "prompt": "An order service must publish an `OrderPlaced` event exactly when its relational transaction commits, but the broker can be unavailable. Design a transactional-outbox flow, publisher retry behavior, consumer deduplication, and cleanup policy.",
+      "tags": ["architecture", "outbox", "events", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "architecture",
+        "semantic_family": "transactional-outbox-delivery",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["business row and outbox in one transaction", "at-least-once relay", "stable event ID", "idempotent consumer", "retention/cleanup after confirmed publication"]
+      }
+    },
+    {
+      "prompt_id": "FR-AR02",
+      "prompt": "A popular cache key expires and ten thousand requests simultaneously miss, overwhelming the database. Design layered controls for stampede prevention, stale-data behavior, failure recovery, and metrics.",
+      "tags": ["architecture", "cache", "load-shedding", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "architecture",
+        "semantic_family": "cache-stampede-control",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["request coalescing or lease", "TTL jitter", "stale-while-revalidate", "bounded fallback", "database protection", "hit/miss/fill telemetry"]
+      }
+    },
+    {
+      "prompt_id": "FR-AR03",
+      "prompt": "Producers and consumers of a Kafka event cannot all deploy together. A required business field is being replaced by two more precise fields. Give a backward- and forward-compatible schema evolution, deployment order, validation, and final cleanup plan.",
+      "tags": ["architecture", "schema-evolution", "streaming", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "architecture",
+        "semantic_family": "event-schema-expand-contract",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["add optional fields", "dual write", "consumer fallback", "backfill or replay", "observed cutover", "remove old field last"]
+      }
+    },
+    {
+      "prompt_id": "FR-AR04",
+      "prompt": "A multi-tenant API needs per-tenant and global rate limits across 40 stateless instances. Premium tenants have different quotas, the limiter store can fail, and no tenant may monopolize capacity. Propose the algorithm, consistency boundary, failure mode, and observability.",
+      "tags": ["architecture", "rate-limit", "multi-tenant", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "architecture",
+        "semantic_family": "distributed-hierarchical-rate-limits",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["hierarchical token buckets", "atomic shared accounting or bounded local leases", "fairness", "explicit fail-open/closed choice", "quota and rejection metrics"]
+      }
+    },
+    {
+      "prompt_id": "FR-AR05",
+      "prompt": "After restoring a database from a six-hour-old backup, downstream search and billing systems still contain events emitted after that backup. Design recovery so state converges without double billing or silently losing post-backup work.",
+      "tags": ["architecture", "disaster-recovery", "reconciliation", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "architecture",
+        "semantic_family": "point-in-time-restore-reconciliation",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["recovery epoch or high-water mark", "quiesce writes", "authoritative source", "idempotent replay/reconciliation", "billing keys", "audit before reopen"]
+      }
+    },
+    {
+      "prompt_id": "FR-AR06",
+      "prompt": "Rotate a database credential used by hundreds of service instances without downtime. Some instances may be offline during rotation and an emergency rollback must remain possible. Design issuance, rollout, revocation, verification, and audit steps.",
+      "tags": ["architecture", "credential-rotation", "deployment", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "architecture",
+        "semantic_family": "overlapping-credential-rotation",
+        "expected_route": "software-architecture-v1",
+        "acceptable_routes": ["software-architecture-v1"],
+        "anchors": ["overlap old and new credentials", "versioned secret", "staged rollout", "connection refresh", "usage telemetry", "revoke only after convergence", "bounded rollback window"]
+      }
+    },
+    {
+      "prompt_id": "FR-VC01",
+      "prompt": "Output only a compilable C11 translation unit implementing `int32_t sat_sub_i32(int32_t left, int32_t right)`. Clamp mathematical underflow or overflow to `INT32_MIN` or `INT32_MAX` without first performing an overflowing signed subtraction.",
+      "tags": ["verified-code", "c11", "checked-arithmetic", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "verified_code",
+        "semantic_family": "saturating-signed-subtraction",
+        "expected_route": "verified-embedded-code-v1",
+        "acceptable_routes": ["verified-embedded-code-v1", "embedded-knowledge-v1"],
+        "check": "Compile as strict C11 and test all boundary pairs under UBSan; no signed-overflowing intermediate is permitted."
+      }
+    },
+    {
+      "prompt_id": "FR-VC02",
+      "prompt": "Output only compilable C11 for `bool read_le24(const uint8_t *bytes, size_t length, uint32_t *out)`. Return false for null pointers or fewer than three bytes and leave `*out` unchanged on failure; otherwise decode exactly three little-endian bytes.",
+      "tags": ["verified-code", "c11", "endian", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "verified_code",
+        "semantic_family": "checked-little-endian-load",
+        "expected_route": "verified-embedded-code-v1",
+        "acceptable_routes": ["verified-embedded-code-v1", "embedded-knowledge-v1"],
+        "check": "Strict compile plus null, short-input, unchanged-output, and endian vectors; bytes 56 34 12 decode to 0x123456."
+      }
+    },
+    {
+      "prompt_id": "FR-VC03",
+      "prompt": "Output only compilable C11 implementing `uint32_t set_field(uint32_t reg, uint32_t value)`. Replace bits 9 through 14 inclusive with the low six bits of `value`, preserve every other bit, and avoid implementation-defined bit-fields.",
+      "tags": ["verified-code", "c11", "bit-mask", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "verified_code",
+        "semantic_family": "portable-bitfield-replacement",
+        "expected_route": "verified-embedded-code-v1",
+        "acceptable_routes": ["verified-embedded-code-v1", "embedded-knowledge-v1"],
+        "check": "Field mask is 0x7E00; hidden vectors verify replacement, truncation to six bits, and preservation outside the mask."
+      }
+    },
+    {
+      "prompt_id": "FR-VC04",
+      "prompt": "Output a complete compilable C11 implementation of a single-producer/single-consumer byte ring with capacity 256. Provide nonblocking `bool push(uint8_t)` and `bool pop(uint8_t *)` using C11 atomics, define full/empty behavior, and do not use a mutex or allocate memory.",
+      "tags": ["verified-code", "c11", "atomics", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "verified_code",
+        "semantic_family": "spsc-atomic-ring",
+        "expected_route": "verified-embedded-code-v1",
+        "acceptable_routes": ["verified-embedded-code-v1", "embedded-knowledge-v1"],
+        "check": "Strict compile and concurrent stress test; producer publishes data before head release, consumer observes head with acquire, and tail has the symmetric ordering."
+      }
+    },
+    {
+      "prompt_id": "FR-VC05",
+      "prompt": "Output only a compilable C11 translation unit implementing `uint16_t crc16_ccitt_false(const uint8_t *data, size_t length)`. Use polynomial 0x1021, initial value 0xFFFF, no reflection, and no final XOR. Treat a null pointer as valid only when length is zero.",
+      "tags": ["verified-code", "c11", "crc", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "verified_code",
+        "semantic_family": "crc16-reference-implementation",
+        "expected_route": "verified-embedded-code-v1",
+        "acceptable_routes": ["verified-embedded-code-v1", "embedded-knowledge-v1"],
+        "check": "Strict compile; ASCII `123456789` must produce 0x29B1; null/nonzero length must not be dereferenced and should have an explicit deterministic policy."
+      }
+    },
+    {
+      "prompt_id": "FR-VC06",
+      "prompt": "Output only compilable C11 for `bool parse_u16_decimal(const char *text, uint16_t *out)`. Accept one or more ASCII digits followed immediately by the terminating NUL character; reject signs, whitespace, trailing characters, null pointers, empty input, and values above 65535 while leaving `*out` unchanged on every failure.",
+      "tags": ["verified-code", "c11", "parser", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "verified_code",
+        "semantic_family": "transactional-bounded-decimal-parser",
+        "expected_route": "verified-embedded-code-v1",
+        "acceptable_routes": ["verified-embedded-code-v1", "embedded-knowledge-v1"],
+        "check": "Strict compile; verify 0, 65535, 65536, empty, signed, whitespace, suffix, null, and unchanged-output failure cases without overflowing an intermediate."
+      }
+    },
+    {
+      "prompt_id": "FR-BN01",
+      "prompt": "A delivery van carries 27 cans. It unloads 9 cans and later collects 4 cans. Reply with only the final number of cans.",
+      "tags": ["base-null", "arithmetic", "hard-negative", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "base_null",
+        "semantic_family": "plain-two-step-count",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "22"
+      }
+    },
+    {
+      "prompt_id": "FR-BN02",
+      "prompt": "From `Leah embedded the photo beside a Gothic arch`, return only JSON with keys `person`, `object`, and `location`.",
+      "tags": ["base-null", "json", "hard-negative", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "base_null",
+        "semantic_family": "simple-structured-extraction",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "{\"person\":\"Leah\",\"object\":\"photo\",\"location\":\"beside a Gothic arch\"} with no surrounding prose."
+      }
+    },
+    {
+      "prompt_id": "FR-BN03",
+      "prompt": "Write exactly eight words thanking Sam for returning a router adapter.",
+      "tags": ["base-null", "word-count", "hard-negative", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "base_null",
+        "semantic_family": "constrained-social-sentence",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "Exactly eight whitespace-delimited words, thanks Sam, and mentions the returned router adapter."
+      }
+    },
+    {
+      "prompt_id": "FR-BN04",
+      "prompt": "A museum architecture tour begins at 09:45 and lasts 2 hours 35 minutes. Reply with only the ending time in 24-hour `HH:MM` format.",
+      "tags": ["base-null", "time", "hard-negative", "rl-train-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "train",
+        "category": "base_null",
+        "semantic_family": "clock-duration-addition",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "12:20"
+      }
+    },
+    {
+      "prompt_id": "FR-BN05",
+      "prompt": "Alphabetize these words and return only a JSON array: canary, embedded, archipelago, routing, adaptation.",
+      "tags": ["base-null", "sorting", "hard-negative", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "base_null",
+        "semantic_family": "lexicographic-json-list",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "[\"adaptation\",\"archipelago\",\"canary\",\"embedded\",\"routing\"]"
+      }
+    },
+    {
+      "prompt_id": "FR-BN06",
+      "prompt": "A backpack costs $68 before a 15 percent discount. Reply with only the sale price rounded to two decimal places.",
+      "tags": ["base-null", "percentage", "rl-heldout-v2"],
+      "metadata": {
+        "split": "rl_train_v2",
+        "router_split": "heldout",
+        "category": "base_null",
+        "semantic_family": "single-percentage-discount",
+        "expected_route": "base/null",
+        "acceptable_routes": ["base/null"],
+        "check": "57.80"
+      }
+    }
+  ]
+}

@@ -41,6 +41,8 @@ DEFAULT_MODEL = WORKSPACE_ROOT / "models" / "Qwen3-1.7B"
 DEFAULT_PROBE = Path(__file__).resolve().parent / "data" / "router-intent-probe-v1.jsonl"
 DEFAULT_OUTPUT = WORKSPACE_ROOT / "runs" / "evaluation" / "router-intent-probe-v1.json"
 PROBE_PURPOSE = "small_intent_probe_never_training"
+BLIND_PROBE_PURPOSE = "blind_intent_probe_never_training"
+ALLOWED_PROBE_PURPOSES = frozenset({PROBE_PURPOSE, BLIND_PROBE_PURPOSE})
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,6 +52,7 @@ class ProbeItem:
     category: str
     acceptable_routes: tuple[str, ...]
     expected_route: str | None = None
+    purpose: str = PROBE_PURPOSE
 
     def __post_init__(self) -> None:
         for value, field_name in (
@@ -69,6 +72,8 @@ class ProbeItem:
                 raise ValueError("expected_route must be a route ID or null")
             if self.expected_route not in routes:
                 raise ValueError("expected_route must also be acceptable")
+        if self.purpose not in ALLOWED_PROBE_PURPOSES:
+            raise ValueError("purpose must be an explicit evaluation-only marker")
         object.__setattr__(self, "acceptable_routes", routes)
 
 
@@ -101,9 +106,10 @@ def load_probe(path: Path) -> tuple[ProbeItem, ...]:
                 unknown = set(raw).difference(allowed_fields)
                 if unknown:
                     raise ValueError(f"unknown fields: {sorted(unknown)!r}")
-                if raw.get("purpose") != PROBE_PURPOSE:
+                if raw.get("purpose") not in ALLOWED_PROBE_PURPOSES:
                     raise ValueError(
-                        f"purpose must be {PROBE_PURPOSE!r} to prevent training reuse"
+                        "purpose must be an evaluation-only marker from "
+                        f"{sorted(ALLOWED_PROBE_PURPOSES)!r} to prevent training reuse"
                     )
                 acceptable = raw.get("acceptable_routes")
                 expected = raw.get("expected_route")
@@ -117,6 +123,7 @@ def load_probe(path: Path) -> tuple[ProbeItem, ...]:
                     category=raw["category"],
                     expected_route=expected,
                     acceptable_routes=tuple(acceptable),
+                    purpose=raw["purpose"],
                 )
             except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
                 raise ValueError(f"{path}:{line_number}: {exc}") from exc
@@ -129,6 +136,9 @@ def load_probe(path: Path) -> tuple[ProbeItem, ...]:
     prompts = [item.prompt for item in items]
     if len(prompts) != len(set(prompts)):
         raise ValueError("probe prompts must be unique")
+    purposes = {item.purpose for item in items}
+    if len(purposes) != 1:
+        raise ValueError("probe rows must use one consistent evaluation-only purpose")
     return tuple(items)
 
 
@@ -474,11 +484,13 @@ def main() -> None:
         top_k=args.top_k,
         enabled_experts=enabled,
     )
+    probe_purpose = items[0].purpose
     report = {
         "schema_version": "molor.router-intent-probe-report.v1",
         "evaluation_kind": "small_held_out_intent_probe",
         "scope_warning": (
-            "This 40-prompt hand-labelled OOD probe diagnoses obvious intent routing behavior. "
+            f"This {len(items)}-prompt hand-labelled OOD probe diagnoses obvious intent "
+            "routing behavior. "
             "It is not a broad capability benchmark and does not measure answer quality."
         ),
         "training_exclusion": (
@@ -488,7 +500,7 @@ def main() -> None:
         "probe": {
             "path": str(probe_path),
             "sha256": _sha256(probe_path),
-            "purpose": PROBE_PURPOSE,
+            "purpose": probe_purpose,
             "count": len(items),
             "categories": dict(sorted(Counter(item.category for item in items).items())),
         },

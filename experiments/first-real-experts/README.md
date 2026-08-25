@@ -34,6 +34,17 @@ It improved held-out NLL to .2971, but on 149 eligible calculation rows reached 
 numeric+unit accuracy, 38.9% verifier pass, and 61.1% calculation consistency, below the stronger
 rank-8 finance comparator. It is not part of the resident rack or router.
 
+The rank-16 `taskmaster-coffee-api-v1` candidate is likewise quarantined. It was trained for one
+epoch on 1,176 group-separated positive API calls from Taskmaster-4, with 181 validation and 145
+test rows. The held-out candidate produced parseable, schema-valid JSON on all 145 cases, versus
+77.9% parseable and 20.7% schema-valid for base. It reached 77.9% API-name exactness, 47.6%
+argument exactness, and 45.5% full-object exactness, missing the run-declared 85% / 70% / 60%
+promotion floors. The checkpoint is not in the resident rack or router, and explicit quarantine
+directories are excluded from normal desktop adapter discovery. Exact-path evaluation remains
+possible. The exposed v1 test is closed to further candidate selection; a successor needs a fresh
+group-disjoint holdout. Taskmaster-4 is licensed CC-BY-4.0 and attributed to Bill Byrne and
+Saravanan Ganesh of Google LLC; the pinned source manifest and policy are stored beside the recipe.
+
 `grounded-can-curriculum` is preserved as a negative result. Expanding training to 484 legal
 payload variants improved template/mechanics fields but reduced raw decode accuracy to 13/26. The
 older `trusted-can` v2 is an invalid lookup/memorization experiment and is marked do-not-use beside
@@ -51,6 +62,7 @@ generation reports are in `runs/evaluation/`.
 | Complete FABLE traces | filtered to terminal | 540 permissively licensed, task-separated terminal traces fit the current SFT objective |
 | OCB CAN database | rebuilt and trained as `ocb-can-verified-v1` | Original QA rows contained invalid IDs, untrusted records, leakage, and impossible held-out lookups; the replacement uses message-group holdout and generated-answer verification |
 | `software-architecture` | repaired and trained as `software-architecture-v1` | Prompt-group normalization, best-response selection, corruption filtering, topic balancing, and a new split removed normalized-prompt leakage; the source remains synthetic |
+| Taskmaster-4 coffee API calls | trained once, then rejected to quarantine | 1,502 conflict-filtered examples across 749 disjoint groups; JSON format generalized, but API-name, argument, and full-object exactness missed promotion floors |
 | MultiDoGO customer shard | rejected | support transcripts with PII/duplication, not go-to-market expertise |
 | `repos-code-corpus` | held | unmanifested/incomplete and currently sourced from CDAS only; it needs a proper code/DAPT pipeline |
 
@@ -121,8 +133,22 @@ exact probe rows. Aggregate failures on the older probes informed those family c
 older probe scores are development diagnostics rather than blind evidence. An initial v4
 ablation that resampled unrelated v3 rows was rejected. The promoted controlled build keeps the
 original v3 selection seed 307, isolating the new rows. This is still a routing-taxonomy bootstrap,
-not proof that the selected expert beats every forced route; a new complete five-route reward
-matrix is required for further router RL.
+not proof that the selected expert beats every forced route.
+
+V5 then replaced 144 split-owned generated-code rows with complete-project and driver-intent
+contrastives while preserving the 4,680 / 650 / 650 balance and all 5,836 unaffected rows at their
+original positions. Seed 83 retained 99.23% file-held-out route-label accuracy. On a new independent
+72-prompt blind probe, overall acceptable routing rose from v4's 66.7% to 69.4% and verified-code
+rose from 0/12 to 4/12, but the latter missed its required 8/12 floor; embedded knowledge regressed
+from 6/12 to 4/12. V5 was rejected before executable evaluation, with no threshold tuning or seed
+shopping.
+
+A fresh complete five-route reward matrix was also collected: 30 new prompts, 150/150 successful
+forced-route rollouts, 150 route-blind grades, and 19 same-prompt preferences. The manifest separates
+20 train from 10 held-out prompts by semantic family and binds the exact base, v4 router, and four
+adapter artifacts. Across beta 0.25/0.5/1.0 and seeds 8419/27183, all six conservative RL trials
+selected epoch zero. Held-out reward gains and route changes were zero, and every saved checkpoint
+was byte-identical to v4, so no RL router was promoted.
 
 The four current corpus experts use rank 16 LoRA over Qwen's seven attention/MLP projections. The
 adapters under `qwen3-1.7b-real-experts` are the older rank-8 experiments. Training uses BF16 and

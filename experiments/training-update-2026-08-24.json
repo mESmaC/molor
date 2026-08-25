@@ -122,6 +122,99 @@
     },
     "decision": "promote the controlled v4 router; retain the same four-expert rack and target verified-code intent in the next curriculum iteration"
   },
+  "router_v5_verified_code_contrastive": {
+    "status": "rejected_quarantined_candidate",
+    "builder": "experiments/first-real-experts/build_router_v5_verified_code_contrastive_dataset.py",
+    "selected_checkpoint": "checkpoints/qwen3-1.7b-corpus-router-v5-mlp-seed83",
+    "checkpoint_sha256": "f742eaf6fef83e8e7154c3ca8c341e2689365f7ba8a40d5c3066d5058dcfd432",
+    "router_config_sha256": "7d5fc48539e55704188b9949946917e827cd598e951f3803c5b7e911c6cdb89f",
+    "dataset": {
+      "route_count": 5,
+      "train_rows": 4680,
+      "validation_rows": 650,
+      "test_rows": 650,
+      "rows_per_route": {
+        "train": 936,
+        "validation": 130,
+        "test": 130
+      },
+      "train_sha256": "0c55a3e71eb625bb63d37b581cf2bb1f8cb63bd98e96a4f971f08f273f1c0e32",
+      "validation_sha256": "cd91f0659ea3e429e77491bee084dfcb9f9c6c7e4ddcdbe8a17e2aa4e84eaac6",
+      "test_sha256": "460556efaecd6933df51d058525a9e9eec407d05ea71c3e6896d89de8a4dbf54",
+      "normalized_prompt_overlap": 0,
+      "semantic_group_overlap": 0,
+      "exact_probe_rows_used": false,
+      "evaluation_artifacts_read_by_builder": false,
+      "blind_gap_analysis_informed_curriculum": true,
+      "new_split_owned_verified_code_rows": {
+        "train": 96,
+        "validation": 24,
+        "test": 24
+      },
+      "replaced_complete_generated_code_groups": 72,
+      "unaffected_rows_preserved_at_original_positions": 5836
+    },
+    "training": {
+      "candidate_seeds": [83, 8419, 27183],
+      "selection_rule": "require at least 0.99 test accuracy for every candidate, then choose the lowest validation loss without probe-based seed selection",
+      "selected_seed": 83,
+      "best_epoch": 12,
+      "validation_accuracy": 0.9969230769230769,
+      "validation_loss": 0.06385360268446115,
+      "test_accuracy": 0.9923076923076923,
+      "test_loss": 0.06593542254888095
+    },
+    "fresh_blind_probe": {
+      "path": "experiments/first-real-experts/router-blind-probe-v4.jsonl",
+      "sha256": "03d3b671ac831596a3cfff2c154e256b88c57731c04d37c59e0910912235bce2",
+      "prompt_count": 72,
+      "composition": "12 prompts for each single-label route and 12 mixed-route prompts",
+      "authored_without_repository_or_prior_probe_access": true,
+      "confidence_threshold": 0.3,
+      "promotion_policy": {
+        "path": "experiments/first-real-experts/router-v5-evaluation-policy.json",
+        "sha256": "cd61b9e50eeae8f14df673b0a19e8c7cc986e744c4c68df599ed11ea59bd766a",
+        "provenance": "declared procedurally before blind scoring and persisted in this post-run report; Git history alone does not prove pre-registration",
+        "gates": [
+          "overall acceptable and exact accuracy must both improve over v4",
+          "verified-code must improve by at least 4 of 12 and reach at least 8 of 12",
+          "no other category may lose more than 1 of 12",
+          "the executable lane must not decline after the blind intent gates pass"
+        ]
+      },
+      "v4": {
+        "acceptable_route_accuracy": 0.6666666666666666,
+        "exact_single_label_accuracy": 0.6333333333333333,
+        "base_null_accuracy": 0.8333333333333334,
+        "embedded_knowledge_accuracy": 0.5,
+        "mixed_acceptable_accuracy": 0.8333333333333334,
+        "ocb_can_accuracy": 0.9166666666666666,
+        "software_architecture_accuracy": 0.9166666666666666,
+        "verified_embedded_code_accuracy": 0.0,
+        "result_sha256": "75056bcced57f4a051afc325345b8d352036db652bb5ac5d407a8b905c24d7a1"
+      },
+      "v5": {
+        "acceptable_route_accuracy": 0.6944444444444444,
+        "exact_single_label_accuracy": 0.65,
+        "base_null_accuracy": 0.9166666666666666,
+        "embedded_knowledge_accuracy": 0.3333333333333333,
+        "mixed_acceptable_accuracy": 0.9166666666666666,
+        "ocb_can_accuracy": 0.8333333333333334,
+        "software_architecture_accuracy": 0.8333333333333334,
+        "verified_embedded_code_accuracy": 0.3333333333333333,
+        "result_sha256": "3e131cad3719f527af3dd98b723ac759cc17106b75f8e5ce2a0e39e2caa1856c"
+      },
+      "failed_gates": [
+        "verified-code improved from 0 of 12 to 4 of 12 but missed the required 8 of 12 floor",
+        "embedded-knowledge regressed from 6 of 12 to 4 of 12, exceeding the one-case regression allowance"
+      ]
+    },
+    "executable_evaluation": {
+      "status": "not_run",
+      "reason": "the candidate failed the earlier sealed blind-intent gates"
+    },
+    "decision": "preserve live router v4; do not threshold-tune, seed-shop, or promote v5"
+  },
   "finance_rank16": {
     "status": "rejected_quarantined_candidate",
     "recipe": "experiments/first-real-experts/finance-r16-candidate-recipe.json",
@@ -170,6 +263,90 @@
     ],
     "decision": "do not add to the resident rack or router"
   },
+  "taskmaster_coffee_api_rank16": {
+    "status": "rejected_quarantined_candidate",
+    "source": {
+      "dataset": "Taskmaster-4 TM-4-2024 self-dialog reward release",
+      "repository": "https://github.com/google-research-datasets/Taskmaster.git",
+      "resolved_commit": "d92cb6af3005f1dc09c39e75e7daf4a04905e00b",
+      "license": "CC-BY-4.0",
+      "attribution": "Taskmaster-4 is the work of Bill Byrne and Saravanan Ganesh from Google LLC.",
+      "source_manifest_sha256": "53d35fa7a966bac9734759842bf99197b16e8aa12722b21a96efe37a0a860c9a"
+    },
+    "recipe": "experiments/first-real-experts/taskmaster-coffee-api-v1-recipe.json",
+    "output": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v1",
+    "dataset": {
+      "source_rows": 3228,
+      "positive_api_rows_before_conflict_filtering": 2041,
+      "invalid_rows_quarantined": 58,
+      "conflicting_rows_quarantined": 418,
+      "exact_duplicates_collapsed": 121,
+      "emitted_examples": 1502,
+      "emitted_groups": 749,
+      "group_disjoint": true,
+      "train_rows": 1176,
+      "validation_rows": 181,
+      "test_rows": 145,
+      "build_report_sha256": "e3b11439deb94cc5791cd4574bc41414b48b87f9041ab78611959055973d684e",
+      "train_sha256": "81df15e918a9234bfcd65a0fb7e79618ba2203c0dad1615d9a45e86eb90894eb",
+      "validation_sha256": "a28c7e7fa97e785bac8f149d5aa1d7d0148c0e0c5e73984d833e2573fcfa7f3c",
+      "test_sha256": "9c0f018e516728bb6233d93b808f59acd9c529ed95dfd8c63842c5598c4f297f",
+      "test_evaluation_sha256": "dbc04384ef9b0481655494bdcd8edb15979944d532fd609d0670b43472dc07c1"
+    },
+    "training": {
+      "rank": 16,
+      "alpha": 32,
+      "epochs": 1,
+      "optimizer_steps": 147,
+      "final_training_loss": 0.16326423200224055,
+      "elapsed_seconds": 323.95608210004866,
+      "seed": 241104,
+      "adapter_sha256": "e936ac30db0fca6e87f90adaff99631c8f91eae17d8a3af2177f1582943d6654",
+      "adapter_config_sha256": "34eff93dd6c48540190baffeea0186b8c58654c346f2822dcd87315b10a0add8"
+    },
+    "heldout_generation": {
+      "examples": 145,
+      "base": {
+        "json_parseable_rate": 0.7793103448275862,
+        "schema_valid_rate": 0.20689655172413793,
+        "api_name_exact_rate": 0.020689655172413793,
+        "arguments_exact_rate": 0.0,
+        "semantic_exact_rate": 0.0,
+        "report_sha256": "9140a24db2d40da9de700528c4832e95ce30fff246a8d2cf2c8a2d84fde07321"
+      },
+      "candidate": {
+        "json_parseable_rate": 1.0,
+        "schema_valid_rate": 1.0,
+        "api_name_exact_rate": 0.7793103448275862,
+        "arguments_exact_rate": 0.47586206896551725,
+        "semantic_exact_rate": 0.45517241379310347,
+        "report_sha256": "9d8ae0eabce5ec4d1f0de9d2d947010f5d0c20500544f1177c242b04b890f834"
+      },
+      "metric_note": "arguments_exact is a partial-field metric and can pass even when the API name is wrong; semantic_exact is the complete-object metric"
+    },
+    "promotion_gates": {
+      "policy": "experiments/first-real-experts/taskmaster-coffee-api-v1-evaluation-policy.json",
+      "policy_sha256": "f5c23776c9d2664d0ae709f9000e4cd1b947cc4658a7b91fb210495f85430b3e",
+      "provenance": "declared procedurally before test scoring and persisted in this post-run report",
+      "json_and_schema_validity_minimum": 0.98,
+      "api_name_exact_minimum": 0.85,
+      "arguments_exact_minimum": 0.7,
+      "semantic_exact_minimum": 0.6,
+      "minimum_absolute_improvement_over_base_per_principal_metric": 0.1
+    },
+    "failed_gates": [
+      "API-name exact was 77.93%, below the 85% floor",
+      "argument exact was 47.59%, below the 70% floor",
+      "full-object semantic exact was 45.52%, below the 60% floor"
+    ],
+    "isolation": {
+      "default_loaded": false,
+      "router_registered": false,
+      "desktop_catalog": "explicit quarantine directories are excluded by adapter discovery"
+    },
+    "reproducibility_caveat": "the current trainer summary does not bind the recipe, builder revision, complete base/tokenizer/chat-template bytes, or dependency versions; close that gap before any future promotion attempt",
+    "decision": "retain the checkpoint in candidate quarantine; do not register it in the resident rack or router"
+  },
   "router_rl_sweep": {
     "status": "no_update_selected",
     "method": "full_information_contextual_bandit_kl_v1",
@@ -206,5 +383,65 @@
       "runtime_adapter_aliases": "supported and validated independently from stable route IDs"
     },
     "decision": "preserve the parent; collect a fresh content-addressed five-route matrix before production RL"
+  },
+  "router_rl_five_route_sweep": {
+    "status": "no_update_selected",
+    "method": "full_information_contextual_bandit_kl_v1",
+    "collection": {
+      "run_id": "teacher-rl-v2-five-route-train-01",
+      "manifest": "experiments/teacher-rl-v1/five_route_train_manifest.json",
+      "manifest_file_sha256": "b8a6b501bf7c8067cfe74d821ac8f9cb4d345475dd56f92c2bcd7160a2e63419",
+      "canonical_manifest_sha256": "ce414ea11fd0c3edc912fcfcecc0992d9832f2c28ee4f1327b2d586af97cd1b6",
+      "prompts": 30,
+      "train_prompts": 20,
+      "heldout_prompts": 10,
+      "routes": 5,
+      "rollout_cells": 150,
+      "successful_cells": 150,
+      "error_cells": 0,
+      "auto_routes_included": 0,
+      "semantic_families_crossing_split": 0,
+      "raw_report_sha256": "a23ef9ff86ddf35b7ca091282982296678c34cb1873c8ceaa54b3b5fb512558c",
+      "artifact_provenance": "exact_local_artifact_bytes",
+      "exact_artifact_contract_sha256": "82c9b03c5ecf5caf697c35abdd5f6884135fbdc2f59db358a09f674e35c08e6d"
+    },
+    "blind_review": {
+      "review_pack_sha256": "4fe0348658cf0f404ac88e1728b77692950af3cca9e0444ac02847a9ce45bf6e",
+      "shard_index_sha256": "d2ef1fa084a5696e4497714df095fef7030a3069b9309235d1498ec6e58531dd",
+      "teacher": {
+        "id": "codex-blind-teacher-v2",
+        "model": "gpt-5.6-sol",
+        "provider": "openai"
+      },
+      "grades": 150,
+      "preferences": 19,
+      "missing_grades": 0,
+      "merged_judgments_sha256": "f2a53b98d9733d95fae15bca6c974e041a2ebf3c3d7f4caa9c0c176874128580"
+    },
+    "optimizer_dataset_fingerprints": {
+      "seed_8419": "f7f1d6624dd2f50a9e85bbd2d9657fb1936665eb63c081475fac38ad3c8c8383",
+      "seed_27183": "c0168b514ea9cc7df2ede80c6456b689a77e453a87d071fb7fdc326a0f12ba63"
+    },
+    "optimizer_split_fingerprints": {
+      "seed_8419": "c655494214a5a699a28534ad8d53afd96b5b1cc1379bb697dcc5e56c2dfbc856",
+      "seed_27183": "e875388b45fc2cbfcfac8c48dbc2d415cc52ec4afc5f8491137ef38cb79ca5ff"
+    },
+    "explicit_split_assignments_identical_across_seeds": true,
+    "parent": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
+    "parent_weights_sha256": "f05cc10074d3e6468dcae617fa27f1da8451594032f98cff75a9cbfd060bbe67",
+    "betas": [0.25, 0.5, 1.0],
+    "seeds": [8419, 27183],
+    "trials": 6,
+    "heldout_examples_per_trial": 10,
+    "result": {
+      "qualifying_trials": 0,
+      "best_epoch_for_every_trial": 0,
+      "heldout_hard_reward_gain_for_every_trial": 0.0,
+      "heldout_expected_reward_gain_for_every_trial": 0.0,
+      "route_changed_fraction_for_every_trial": 0.0,
+      "mean_kl_for_every_saved_candidate": 0.0,
+      "all_saved_weights_byte_identical_to_parent": true
+    },
+    "decision": "preserve router v4; the fresh judged matrix did not support a held-out-improving conservative update"
   }
 }
