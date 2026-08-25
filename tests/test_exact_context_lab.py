@@ -1,3 +1,4 @@
+from collections import UserDict
 import json
 from types import SimpleNamespace
 
@@ -26,10 +27,10 @@ class CharacterTokenizer:
         *,
         add_special_tokens: bool,
         return_attention_mask: bool,
-    ) -> dict[str, list[int]]:
+    ) -> UserDict[str, list[int]]:
         assert add_special_tokens is False
         assert return_attention_mask is False
-        return {"input_ids": [2 + ord(character) % 251 for character in text]}
+        return UserDict({"input_ids": [2 + ord(character) % 251 for character in text]})
 
 
 class FakeCache:

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from collections.abc import Mapping
 import ctypes
 from dataclasses import dataclass
 import gc
@@ -175,7 +176,7 @@ def _synthetic_prompt_ids(tokenizer: Any, token_count: int) -> Tensor:
         add_special_tokens=False,
         return_attention_mask=False,
     )
-    if not isinstance(encoded, dict) or "input_ids" not in encoded:
+    if not isinstance(encoded, Mapping) or "input_ids" not in encoded:
         raise ValueError("tokenizer did not return input_ids")
     seed_ids = _normalize_tokenizer_ids(encoded["input_ids"])
     repeats = math.ceil(token_count / len(seed_ids))
