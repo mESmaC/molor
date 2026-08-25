@@ -45,17 +45,28 @@ possible. The exposed v1 test is closed to further candidate selection; a succes
 group-disjoint holdout. Taskmaster-4 is licensed CC-BY-4.0 and attributed to Bill Byrne and
 Saravanan Ganesh of Google LLC; the pinned source manifest and policy are stored beside the recipe.
 
-The fresh `taskmaster-coffee-api-v2-full-dialog-r16` successor is sealed for one quarantined run,
-but is not promoted or registered. Its pinned full-dialog builder emits 14,436 conflict-filtered,
-component-disjoint examples: 11,626 train, 1,380 validation, and 1,430 untouched test. It consumes
-zero reward rows, has zero overlap with all 1,623 accepted v1 source conversations, quarantines all
-120 dialogs containing malformed embedded JSON, and derives the prompt tool catalog from train
-only. The deterministic training receipt binds the builder, source, recipe, policy, build report,
-train/provenance/catalog bytes, complete local Qwen base, exact dependencies, and the full local
-trainer source tree. The fixed launcher refuses warm starts, discoverable output roots, stale
-recovery checkpoints, and overwrites. The v2 test remains unopened until training completes and
-the separate evaluator seals the candidate, frozen base, quarantined v1 comparator, metrics, and
-generation settings in a pre-access receipt.
+The `taskmaster-coffee-api-v2-full-dialog-r16` successor completed its single sealed rank-16 run on
+11,626 full-dialog training examples. Its builder emitted 14,436 conflict-filtered,
+component-disjoint examples: 11,626 train, 1,380 validation, and 1,430 test. It consumes zero reward
+rows, has zero overlap with all 1,623 accepted v1 source conversations, quarantines all 120 dialogs
+containing malformed embedded JSON, and derives the prompt tool catalog from train only.
+
+On the fixed 1,430-example comparison, the candidate reached 100% parseable/schema-valid output,
+99.44% API-name exactness, and 87.06% argument/semantic exactness. Frozen base reached 23.22% /
+14.06% / 13.43% on API name / arguments / semantics; quarantined v1 reached 29.79% / 34.13% /
+15.31%. Every declared minimum-rate, base-improvement, and v1-non-regression gate passed. The
+result does not authorize router or resident-rack registration, so the adapter remains an explicit
+candidate until a separate routing decision is evaluated.
+
+This result is recovery-qualified rather than a pristine one-shot. The first evaluator wrote its
+pre-access receipt and exposed the test bytes, then failed before model loading or generation
+because its context validator rejected builder-defined prior API call/response turns. The defect
+was reproduced and repaired using train/validation only; all 11,626 train and 1,380 validation
+contexts then passed, and every model, adapter, generation, metric, threshold, and artifact identity
+was held fixed for one documented recovery. The original receipt, incident, recovery receipt,
+4,290 content-addressed predictions, and final report are preserved under `runs/evaluation/`. The
+exposed v2 test must never be used for tuning, checkpoint selection, threshold adjustment, or
+training.
 
 ```powershell
 # Safe identity verification; does not load the model or open the v2 test.
@@ -64,7 +75,7 @@ generation settings in a pre-access receipt.
 # The single fixed quarantined run. Do not rerun after an emitted candidate or v2 recovery checkpoint.
 .\.venv\Scripts\python.exe experiments/first-real-experts/run_taskmaster_coffee_api_v2_training.py
 
-# One-shot final comparison after training; this permanently exposes the v2 test.
+# Historical first-access command. The v2 test is now exposed and this must not be rerun.
 .\.venv\Scripts\python.exe experiments/first-real-experts/evaluate_taskmaster_coffee_api_v2.py --acknowledge-one-shot
 ```
 
@@ -86,6 +97,7 @@ generation reports are in `runs/evaluation/`.
 | OCB CAN database | rebuilt and trained as `ocb-can-verified-v1` | Original QA rows contained invalid IDs, untrusted records, leakage, and impossible held-out lookups; the replacement uses message-group holdout and generated-answer verification |
 | `software-architecture` | repaired and trained as `software-architecture-v1` | Prompt-group normalization, best-response selection, corruption filtering, topic balancing, and a new split removed normalized-prompt leakage; the source remains synthetic |
 | Taskmaster-4 coffee API calls | trained once, then rejected to quarantine | 1,502 conflict-filtered examples across 749 disjoint groups; JSON format generalized, but API-name, argument, and full-object exactness missed promotion floors |
+| Taskmaster-4 full-dialog coffee API v2 | trained once; all expert gates passed; registration held | 14,436 component-disjoint examples; candidate reached 99.44% API-name and 87.06% argument/semantic exactness on the exposed, recovery-qualified 1,430-example test |
 | MultiDoGO customer shard | rejected | support transcripts with PII/duplication, not go-to-market expertise |
 | `repos-code-corpus` | held | unmanifested/incomplete and currently sourced from CDAS only; it needs a proper code/DAPT pipeline |
 

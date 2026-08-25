@@ -1,0 +1,53 @@
+{
+  "artifact_identities": {
+    "candidate_adapter_sha256": "e885123d61f71db0eb2779d41e3fb3cf7e9eb0d0db116f42ae657b5ac0ef7318",
+    "evaluation_report_sha256": "64a602818e3bf796a3c096ff4193d92a0e3465d833955a37ba124555bb99c359",
+    "evaluator_sha256": "9a737d07ea74381e09e24e51abc0b1a4e82ecc9b089497d2ad75686957f75c5b",
+    "incident_sha256": "7f83dfbace6550541f2ede8f5c98fb77ac5a5cdca7a21f33ed8500fb4b21c94d",
+    "original_preaccess_receipt_sha256": "c4568aca439999b1a8fe30dd9c46da5f2124aa1624c3f68b2cf737a589ff9e52",
+    "predictions_sha256": "1533a36c69ed94c6817bfee2f0bbb042ad35fbd61fbceaa8a8477977f156b575",
+    "recovery_preaccess_receipt_sha256": "2a53a2ff3d889596ec96fd5db945cd6702fbeb7db638ad11417b14993c2ea176",
+    "training_completion_receipt_sha256": "95093018f31f78a839d06ec0fda2817ebd94d3279e7debaa6671794deaa3c17f"
+  },
+  "candidate": "taskmaster-coffee-api-v2-full-dialog-r16",
+  "decision": "expert_policy_gates_passed_but_router_registration_not_authorized",
+  "evaluated_examples": 1430,
+  "gates": {
+    "all_expert_policy_gates_passed": true,
+    "candidate_minimum_rates_passed": true,
+    "fresh_v1_non_regression_passed": true,
+    "minimum_absolute_improvement_over_base_passed": true
+  },
+  "recovery_qualification": {
+    "classification": "same_frozen_attempt_mechanical_parser_recovery",
+    "model_generation_entered_during_failed_first_access": false,
+    "pristine_one_shot": false,
+    "test_exposed": true,
+    "warning": "The result is a documented recovery of the frozen first attempt, not a pristine one-shot. Never use the exposed v2 test for tuning, checkpoint selection, threshold adjustment, or training."
+  },
+  "routes": {
+    "forced_candidate": {
+      "api_name_exact_rate": 0.9944055944055944,
+      "arguments_exact_rate": 0.8706293706293706,
+      "json_parseable_rate": 1.0,
+      "schema_valid_rate": 1.0,
+      "semantic_exact_rate": 0.8706293706293706
+    },
+    "frozen_base_null": {
+      "api_name_exact_rate": 0.23216783216783216,
+      "arguments_exact_rate": 0.14055944055944056,
+      "json_parseable_rate": 0.8902097902097902,
+      "schema_valid_rate": 0.6664335664335664,
+      "semantic_exact_rate": 0.13426573426573427
+    },
+    "quarantined_v1": {
+      "api_name_exact_rate": 0.29790209790209793,
+      "arguments_exact_rate": 0.3412587412587413,
+      "json_parseable_rate": 0.7013986013986014,
+      "schema_valid_rate": 0.6895104895104895,
+      "semantic_exact_rate": 0.15314685314685314
+    }
+  },
+  "schema_version": "molor.taskmaster-coffee-api-evaluation-summary.v2",
+  "status": "policy_gates_passed_candidate_remains_unregistered"
+}
