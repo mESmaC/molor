@@ -1,6 +1,12 @@
 """Small, experiment-first supervised training tools for LoRA experts."""
 
-from molor.training.data import AssistantOnlyCollator, ChatExample, ChatMessage, load_jsonl
+from molor.training.data import (
+    AssistantOnlyCollator,
+    ChatExample,
+    ChatMessage,
+    EncodedChatExample,
+    load_jsonl,
+)
 from molor.training.preference import (
     PreferenceExample,
     PreferenceProgress,
@@ -26,6 +32,7 @@ __all__ = [
     "AssistantOnlyCollator",
     "ChatExample",
     "ChatMessage",
+    "EncodedChatExample",
     "ExpertRecipe",
     "DEFAULT_ROUTE_IDS",
     "PreferenceExample",

@@ -1,0 +1,281 @@
+{
+  "schema_version": "molor.qwen3-0.6b-reasoning-expert-report.v1",
+  "created_on": "2026-08-25",
+  "status": "trained_but_not_promoted",
+  "privacy_and_distribution": {
+    "model_policy": "private_only",
+    "tracked_artifacts": [
+      "builders and trainer source",
+      "training recipe",
+      "aggregate provenance, validation, speed, and benchmark metrics"
+    ],
+    "excluded_from_git": [
+      "base-model weights",
+      "expert weights and recovery checkpoints",
+      "materialized and upstream dataset rows",
+      "benchmark responses and local service logs"
+    ],
+    "license_interpretation": "Source labels support continued private experimentation; they are not independent public-release clearance.",
+    "caveat": "The local mirror records source-declared licenses but does not contain the five original upstream LICENSE/NOTICE snapshots or independently certify uploader rights or model-output platform terms. Preserve those texts and re-audit before any distribution."
+  },
+  "corpus": {
+    "id": "reasoning-trace-v1",
+    "local_path": "datasets/reasoning-trace-v1",
+    "quality_manifest_sha256": "b594a7a4bbf28d9f6e84f1fe8a926427cd95c3624d28d0a011bceaff62bfc69a",
+    "builder": {
+      "path": "src/molor/experimental/reasoning_corpus.py",
+      "sha256": "f866e17891338bfa3150a2af4a3832caab5ed3bbd35f964a5ea81ec343d4e81b",
+      "entrypoint": "experiments/qwen3-0.6b-development/build_reasoning_corpus.py",
+      "entrypoint_sha256": "c564f03b24c1bf9234757095981272c4a8e46057cc63a23c7c51ebab79b9555e"
+    },
+    "source": {
+      "mirror": "Crownelius/Complete-FABLE.5-traces-2M",
+      "commit": "b9f20b5c2638b96311252d5894e3d010ba2a2715",
+      "mirror_readme_sha256": "03c6e8854447477901f3b89689c9f5f75ebc463435d96cf59dd9f3db76856535",
+      "prepared_train_sha256": "70e7462373f5f6254a48c0f5a8c937195045dc1700b36cea25398e3686d83c8e",
+      "prepared_validation_sha256": "4b4ebdd4744ffb4ce4ec9da555738e7e3c5106f10ac0ec76ea7a156129f6770d",
+      "license_provenance": "source_asserted_not_independently_certified"
+    },
+    "sources": [
+      {
+        "slug": "Roman1111111/claude-sonnet-4.6-100000X-filtered",
+        "declared_license": "MIT",
+        "use": "weight_updating_train",
+        "records": 9000
+      },
+      {
+        "slug": "Roman1111111/claude-opus-4.6-10000x",
+        "declared_license": "MIT",
+        "use": "weight_updating_train",
+        "records": 3000
+      },
+      {
+        "slug": "TeichAI/lordx64-claude-opus-4.7-max-cleaned",
+        "declared_license": "Apache-2.0",
+        "use": "validation_only",
+        "records": 512
+      },
+      {
+        "slug": "TeichAI/Claude-Sonnet-4.6-Reasoning-1100x",
+        "declared_license": "Apache-2.0",
+        "use": "test_only",
+        "records": 300
+      },
+      {
+        "slug": "TeichAI/Claude-Opus-4.6-Reasoning-887x",
+        "declared_license": "Apache-2.0",
+        "use": "test_only",
+        "records": 212
+      }
+    ],
+    "excluded_license_classes": [
+      "AGPL",
+      "CC-BY",
+      "noncommercial",
+      "unknown"
+    ],
+    "contract": {
+      "assistant_target": "explicit <think> block followed by final answer",
+      "chat_template_enable_thinking": true,
+      "max_rendered_tokens": 1024,
+      "truncation": false,
+      "source_system_prompts_replaced": true,
+      "teacher_identity_and_named_benchmark_filtering": true
+    },
+    "splits": {
+      "train": {
+        "records": 12000,
+        "rendered_tokens": 7717194,
+        "sha256": "ab04a7a7628afa7cbd3a22c9e0f5207a544378a8897867c2342dc19e477ea9d5"
+      },
+      "validation": {
+        "records": 512,
+        "rendered_tokens": 238035,
+        "sha256": "e5582741ac252eecb4bb94f1b7879f1b3c5961305f24954b381498319af9bb49"
+      },
+      "test": {
+        "records": 512,
+        "rendered_tokens": 325563,
+        "sha256": "bcd991b57849144c24ed058abcacc9ed3e2e6c0d8e6dac6a5cdcd8e6f3ba6c00"
+      }
+    },
+    "leakage_checks": {
+      "normalized_prompt_overlap": 0,
+      "source_overlap": 0,
+      "selected_prompt_groups_unique": true
+    }
+  },
+  "training_speed": {
+    "report": "experiments/qwen3-0.6b-development/training-speed-report-2026-08-25.json",
+    "report_sha256": "3d40c7c4f517cef7d11d06c0f29e4fe00672216394c831a491a208df23f47a49",
+    "controlled_short_workload": {
+      "published_recipe_baseline_seconds": 66.17963260004763,
+      "selected_short_profile_seconds": 42.292914399993606,
+      "selected_short_profile_speedup": 1.5647924371950501,
+      "selected_short_profile_changes": [
+        "gradient checkpointing disabled after a max-shape memory preflight",
+        "BF16 autocast with FP32 adapter master weights",
+        "one-time pretokenization",
+        "stable length sorting within unchanged optimizer groups"
+      ],
+      "reasoning_recipe_speedup": null,
+      "reasoning_recipe_note": "The reasoning recipe retained gradient checkpointing, so the 1.565x short-input profile is not a measured speedup for the 1024-token reasoning workload.",
+      "fused_adamw_selected": false,
+      "reason": "Its single-run improvement over default AdamW was only 0.64%, too small to separate confidently from timing noise."
+    },
+    "reasoning_1024_memory_gate": {
+      "selected_micro_batch_size": 3,
+      "gradient_accumulation_steps": 3,
+      "gradient_checkpointing": true,
+      "preflight_peak_allocated_gib": 6.548931121826172,
+      "preflight_peak_reserved_gib": 8.287109375,
+      "rejected_without_checkpointing_micro_batch_size": 2,
+      "rejected_checkpointed_micro_batch_size": 4
+    },
+    "limitations": [
+      "Each controlled speed profile was measured once.",
+      "The earlier 1.7B-to-0.6B 1.037x trainer ratio was invalid because the preserved 1.7B receipts omitted the first 750 continuation steps.",
+      "Full reasoning training retained checkpointing because actual 1024-token memory probes rejected the faster uncheckpointed shape."
+    ]
+  },
+  "training": {
+    "recipe": "experiments/qwen3-0.6b-development/reasoning-trace-v1-recipe.json",
+    "recipe_sha256": "5aeb5a3437daa4e51d9bc7912bfc3a28b9c4365b2bdb2b5b7e40494901d49d9a",
+    "checkpoint": "checkpoints/qwen3-0.6b-corpus-experts/reasoning-trace-v1",
+    "training_summary_sha256": "4d707be44709553533f1d07320913eccefe92395832fadd14fab9e04d56f976a",
+    "examples": 12000,
+    "epochs": 1,
+    "optimizer_steps": 1334,
+    "effective_batch_size": 9,
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_projections": 196,
+    "trainable_parameters": 10092544,
+    "final_training_loss": 1.1623347997665405,
+    "elapsed_seconds": 2060.163974300027,
+    "adapter_parameter_dtype": "float32",
+    "base_and_autocast_dtype": "bfloat16"
+  },
+  "checkpoint_validation": {
+    "status": "passed",
+    "adapter_sha256": "2c1047cbfe7087debab8f287b27dd5996d90a3bdfcf0e444fe70416a89cbacd9",
+    "adapter_config_sha256": "527344a3dcf5dc5987a8b611540ac610e470ff066cc6d59d5131e43b05cf5287",
+    "base_config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "base_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "tensor_count": 392,
+    "lora_a_tensors": 196,
+    "lora_b_tensors": 196,
+    "parameter_count": 10092544,
+    "parameter_payload_bytes": 40370176,
+    "all_float32": true,
+    "missing_tensors": 0,
+    "unexpected_tensors": 0,
+    "shape_mismatches": 0,
+    "nonfinite_values": 0,
+    "base_projection_mismatches": 0
+  },
+  "source_disjoint_heldout_nll": {
+    "status": "passed",
+    "evaluator": "experiments/first-real-experts/evaluate_adapter.py",
+    "evaluator_sha256": "c23ea0a30f653ee11da31d60cf9339c43694b327a7739519a2955c29cd91aad3",
+    "split": "test",
+    "dataset_sha256": "bcd991b57849144c24ed058abcacc9ed3e2e6c0d8e6dac6a5cdcd8e6f3ba6c00",
+    "examples": 512,
+    "supervised_tokens": 295128,
+    "enable_thinking": true,
+    "max_length": 1024,
+    "base_nll": 2.9423829877392067,
+    "base_perplexity": 18.960976292832683,
+    "expert_nll": 2.775075610874807,
+    "expert_perplexity": 16.039839736121117,
+    "nll_improvement_percent": 5.686118277653283,
+    "elapsed_seconds": 136.3841794000473,
+    "content_policy": "Aggregate metrics only; no prompts, targets, or generations were written to the tracked report."
+  },
+  "frozen_benchmark": {
+    "suite": "molor-core-v1 1.0.0",
+    "profile": "full",
+    "suite_fingerprint": "0f2be48bcdec9a29d412f4c56f1c671fc276af73df572d78046c841f7afc4de5",
+    "workload_fingerprint": "1184f848aa22c77f52c57b7017909d7605d4e74cc7eaaa004eb75ca87244a929",
+    "evaluation_fingerprint": "a13350d7a6441a679d6d7dceeebc3c87c7bba1e00b624f5f750f28c17bae86c9",
+    "generation_enable_thinking": false,
+    "smoke": {
+      "run_id": "20260825-214203Z-qwen3-0.6b-reasoning-trace-v1-forced-smoke-frozen",
+      "scored": 10,
+      "errors": 0,
+      "quality_index": 250.0,
+      "result_fingerprint": "88d5651a7b83fb5d93ed6237a8e65478a2429657c10ce6582eace3b92b48ff6a",
+      "stack_fingerprint": "39f98b5393367f47cc3dbb2fb96a6b4ed2f9a1b79be00b13cf8024a65088e327",
+      "stack_fully_content_addressed": true,
+      "interpretation": "Plumbing-only gate; not used for quality selection."
+    },
+    "candidate": {
+      "run_id": "20260825-214216Z-qwen3-0.6b-reasoning-trace-v1-forced-full-frozen",
+      "summary_sha256": "c939980dfdfac908946c9a91ec77401a23e39a46239ca65c501d478662529e4c",
+      "stack_lock_sha256": "e967efef146a76c61eacf0c1c97c4507390e52448dbc83d72d5d2ec541a7b90c",
+      "comparison_sha256": "f3660a99a538d92ecdfc86fe6351ce66f3b47ff5f803a15b8d11a0caa070cfb4",
+      "result_fingerprint": "1a8d945d03bf7712bdcbfc6e189b902f92c8852a7e3d38be0d4e84f3eca2dcde",
+      "stack_fingerprint": "39f98b5393367f47cc3dbb2fb96a6b4ed2f9a1b79be00b13cf8024a65088e327",
+      "stack_fully_content_addressed": true,
+      "scored": 64,
+      "errors": 0,
+      "quality_index": 404.08333333333337,
+      "quality_index_ci95": [
+        297.4166666666667,
+        511.9166666666667
+      ],
+      "general_reasoning_percent": 50.0,
+      "quantitative_percent": 0.0,
+      "target_macro_percent": 25.0,
+      "throughput_median_tokens_per_second": 24.291093783987808,
+      "ttft_median_seconds": 0.10448110004654154
+    },
+    "baseline": {
+      "run_id": "20260825-200419Z-qwen3-0.6b-corpus-rack-v4-full-base",
+      "summary_sha256": "a0487b49f6831583182c94753cd1a8c73f87a19be96da2286c048f73c4f58f5f",
+      "quality_index": 519.25,
+      "general_reasoning_percent": 66.66666666666666,
+      "quantitative_percent": 16.666666666666664,
+      "target_macro_percent": 41.66666666666666,
+      "throughput_median_tokens_per_second": 36.9300384890508,
+      "ttft_median_seconds": 0.08444495004368946
+    },
+    "comparison": {
+      "quality_index_delta": -115.16666666666663,
+      "quality_relative_delta_percent": -22.17942545337826,
+      "paired_wins": 1,
+      "paired_ties": 55,
+      "paired_losses": 8,
+      "paired_quality_index_delta_ci95": [
+        -201.0041666666667,
+        -35.583333333333336
+      ]
+    },
+    "pre_registered_target_gate": {
+      "required_target_macro_percent": 50.0,
+      "required_no_category_below_base": true,
+      "passed": false,
+      "failed_reasons": [
+        "Target macro was 25.0%, below 50.0%.",
+        "General reasoning was 50.0%, below the base's 66.67%.",
+        "Quantitative was 0.0%, below the base's 16.67%."
+      ]
+    }
+  },
+  "decision": {
+    "checkpoint_retained": true,
+    "runtime_availability": "manual_route_only",
+    "auto_router_changed": false,
+    "promotion": "rejected",
+    "reason": "The expert improved source-disjoint trace NLL but regressed the frozen broad benchmark and both target categories.",
+    "next_hypothesis": "Use verifier-grounded math and concise-answer supervision, then evaluate with a preregistered reasoning protocol before considering router admission."
+  },
+  "limitations": [
+    "The held-out NLL measures imitation of explicit reasoning traces, not answer correctness.",
+    "The frozen benchmark used its comparable default with enable_thinking=false while the expert was trained on explicit thinking blocks; this mismatch is recorded but was not tuned after seeing results.",
+    "A synthetic 32-token thinking-enabled runtime smoke returned no parsed final answer; a separate 64-token non-thinking request verified the manual-route plumbing.",
+    "Exactly one frozen full candidate run was used; no per-case responses were inspected for tuning.",
+    "Checkpoint weights and datasets remain local and are intentionally absent from this Git report."
+  ]
+}

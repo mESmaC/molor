@@ -53,6 +53,29 @@ class ChatExample:
         return cls(tuple(messages))
 
 
+@dataclass(frozen=True, slots=True)
+class EncodedChatExample:
+    """One rendered chat with assistant-only labels, before batch padding."""
+
+    input_ids: tuple[int, ...]
+    labels: tuple[int, ...]
+
+    def __post_init__(self) -> None:
+        if not self.input_ids or len(self.input_ids) != len(self.labels):
+            raise ValueError("encoded input IDs and labels need the same non-zero length")
+        if any(type(token_id) is not int or token_id < 0 for token_id in self.input_ids):
+            raise ValueError("encoded input IDs must be non-negative integers")
+        if any(type(label) is not int or (label != -100 and label < 0) for label in self.labels):
+            raise ValueError("encoded labels must be token IDs or -100")
+        if any(
+            label != -100 and label != token_id
+            for token_id, label in zip(self.input_ids, self.labels, strict=True)
+        ):
+            raise ValueError("unmasked labels must match their input token IDs")
+        if all(label == -100 for label in self.labels):
+            raise ValueError("encoded example must contain an assistant target")
+
+
 def load_jsonl(path: str | Path) -> list[ChatExample]:
     """Load the intentionally tiny training format used by the toy experiments."""
 
@@ -141,7 +164,9 @@ class AssistantOnlyCollator:
         )
         return self._token_ids(rendered)
 
-    def _encode(self, example: ChatExample) -> tuple[list[int], list[int]]:
+    def encode(self, example: ChatExample) -> EncodedChatExample:
+        """Render one example once so it can be reused across epochs or regrouped."""
+
         prompt_ids = self._render(example.messages[:-1], generating=True)
         full_ids = self._render(example.messages, generating=False)
         if full_ids[: len(prompt_ids)] != prompt_ids:
@@ -157,17 +182,20 @@ class AssistantOnlyCollator:
         labels = [-100] * prompt_length + full_ids[prompt_length:]
         if all(label == -100 for label in labels):
             raise ValueError("max_length removed the entire assistant response")
-        return full_ids, labels
+        return EncodedChatExample(tuple(full_ids), tuple(labels))
 
-    def __call__(self, examples: list[ChatExample]) -> dict[str, Tensor]:
+    def collate_encoded(self, examples: list[EncodedChatExample]) -> dict[str, Tensor]:
+        """Pad examples that were already rendered by :meth:`encode`."""
+
         if not examples:
             raise ValueError("cannot collate an empty batch")
-        encoded = [self._encode(example) for example in examples]
-        width = max(len(input_ids) for input_ids, _ in encoded)
+        width = max(len(example.input_ids) for example in examples)
         input_rows: list[list[int]] = []
         label_rows: list[list[int]] = []
         attention_rows: list[list[int]] = []
-        for input_ids, labels in encoded:
+        for example in examples:
+            input_ids = list(example.input_ids)
+            labels = list(example.labels)
             padding = width - len(input_ids)
             input_rows.append(input_ids + [self.pad_token_id] * padding)
             label_rows.append(labels + [-100] * padding)
@@ -177,3 +205,8 @@ class AssistantOnlyCollator:
             "attention_mask": torch.tensor(attention_rows, dtype=torch.long),
             "labels": torch.tensor(label_rows, dtype=torch.long),
         }
+
+    def __call__(self, examples: list[ChatExample]) -> dict[str, Tensor]:
+        if not examples:
+            raise ValueError("cannot collate an empty batch")
+        return self.collate_encoded([self.encode(example) for example in examples])

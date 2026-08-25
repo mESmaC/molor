@@ -5,9 +5,10 @@ checkpoints unchanged, read the same prepared training shards, and write only to
 `checkpoints/qwen3-0.6b-corpus-experts/`.
 
 The 0.6B and 1.7B bases have different weights and dimensions, so their adapters and routers do
-not transfer between lanes. Four rank-16 0.6B experts and the five-route v4 MLP router are now
-trained under their isolated checkpoint namespaces. Successful ideas still need to be retrained
-and checked on the preserved 1.7B promotion lane; no weights are copied between bases.
+not transfer between lanes. Five rank-16 0.6B experts are trained under their isolated checkpoint
+namespace. The v4 MLP router remains frozen on the original four experts plus the base/null route;
+the fifth, `reasoning-trace-v1`, is manual-only. Successful ideas still need to be retrained and
+checked on the preserved 1.7B promotion lane; no weights are copied between bases.
 
 The recipes intentionally retain each promoted expert's initial hyperparameters as a comparable
 starting point. Run one from the repository root, for example:
@@ -51,12 +52,37 @@ translate into broad forced-route quality and must not be treated as generic mod
 For CLI reproduction, pass both `--route-top-k 2` and `--confidence-threshold 0.3`; the benchmark
 CLI otherwise defaults to top-k 1 and threshold 0.0.
 
-Summed trainer-internal elapsed time was 4,477 seconds here versus 4,644 seconds in the preserved
-1.7B receipts; the preserved 1.7B sum was 1.037× the 0.6B sum. These timers start after base-model
-loading and the runs were not a controlled end-to-end A/B. Smaller diagnostic subsets and a
-dedicated speed benchmark are needed before making iteration-speed claims.
+The earlier 4,477-versus-4,644-second cross-scale comparison was invalid: the preserved 1.7B
+receipts omit the first 750 OCB continuation steps. A controlled same-work 0.6B short-input profile
+instead measured a 1.565× single-run speedup from disabling gradient checkpointing, BF16 adapter
+autocast, one-time pretokenization, and stable length sorting within unchanged optimizer groups.
+Disabling checkpointing alone accounted for 1.481× of that result. The actual 1,024-token reasoning
+shape required checkpointing at micro-batch three on this 12 GiB GPU, so 1.565× is not a measured
+speedup for the reasoning run. See `training-speed-report-2026-08-25.json` for the measurements and
+limitations.
 
 See the [training and benchmark receipt](training-benchmark-report-2026-08-25.json) for base,
 adapter, router, dataset, and benchmark hashes; aggregate confidence intervals and throughput; the
 cross-scale reference; and the explicit development decision. The benchmark is not
 context-expansion evidence.
+
+## Reasoning trace expert
+
+`reasoning-trace-v1` trained for one epoch over 12,000 source-disjoint, explicit-thinking examples:
+1,334 optimizer steps in 2,060 seconds, ending at training loss 1.1623. Structural validation
+passed for all 392 finite FP32 LoRA tensors and 10,092,544 parameters. The weight-updating rows came
+only from two sources labelled MIT; the Apache-2.0-labelled rows were reserved for validation and
+test. We treat those labels as sufficient provenance for this private experiment, not as public
+release clearance, and keep all rows and weights outside Git.
+
+On the untouched 512-example test split, the expert reduced assistant-token NLL from 2.9424 to
+2.7751, a 5.69% improvement. That imitation gain did not transfer to the frozen broad benchmark:
+the forced expert scored 404.08/1000 versus 519.25 for base, including 50.0% versus 66.7% on general
+reasoning and 0.0% versus 16.7% on quantitative. It therefore failed the preregistered target gate,
+was not added to auto routing, and remains available only for manual experiments. The benchmark
+used its comparable `enable_thinking=false` default; that train/eval format mismatch is recorded,
+not post-result tuned.
+
+See `reasoning-trace-v1-training-benchmark-report-2026-08-25.json` for corpus hashes, license
+provenance, training and structural receipts, aggregate held-out metrics, frozen benchmark
+fingerprints, and the non-promotion decision.

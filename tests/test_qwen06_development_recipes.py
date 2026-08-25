@@ -38,3 +38,18 @@ def test_06_recipes_preserve_training_settings_but_isolate_model_and_output() ->
         assert recipe.output_dir.name == "qwen3-0.6b-corpus-experts"
         assert all(expert.dataset.is_file() for expert in recipe.experts)
         assert _comparable_payload(development_path) == _comparable_payload(promotion_path)
+
+
+def test_reasoning_recipe_uses_thinking_compatible_bounded_speed_profile() -> None:
+    recipe = load_training_recipe(_DEVELOPMENT_ROOT / "reasoning-trace-v1-recipe.json")
+
+    assert Path(recipe.model_id).name == "Qwen3-0.6B"
+    assert recipe.experts[0].name == "reasoning-trace-v1"
+    assert recipe.max_length == 1024
+    assert recipe.micro_batch_size == 3
+    assert recipe.gradient_accumulation_steps == 3
+    assert recipe.gradient_checkpointing is True
+    assert recipe.autocast_adapter_compute is True
+    assert recipe.batching_strategy == "pretokenized_group_sorted"
+    assert recipe.fused_adamw is False
+    assert recipe.chat_template_kwargs == {"enable_thinking": True}

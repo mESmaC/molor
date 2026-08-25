@@ -56,6 +56,9 @@ class TrainingRecipe:
     micro_batch_size: int = 1
     gradient_accumulation_steps: int = 4
     gradient_checkpointing: bool = True
+    autocast_adapter_compute: bool = False
+    batching_strategy: str = "online"
+    fused_adamw: bool = False
     checkpoint_every_steps: int | None = None
     max_grad_norm: float = 1.0
     seed: int = 42
@@ -75,6 +78,14 @@ class TrainingRecipe:
             raise ValueError("dtype must be bfloat16, float16, or float32")
         if self.lr_scheduler not in {"constant", "cosine"}:
             raise ValueError("lr_scheduler must be constant or cosine")
+        if self.batching_strategy not in {
+            "online",
+            "pretokenized",
+            "pretokenized_group_sorted",
+        }:
+            raise ValueError(
+                "batching_strategy must be online, pretokenized, or pretokenized_group_sorted"
+            )
         for name, value in (
             ("rank", self.rank),
             ("max_length", self.max_length),
@@ -93,9 +104,7 @@ class TrainingRecipe:
                 raise ValueError(f"{name} must be positive")
         if not 0 <= self.dropout < 1:
             raise ValueError("dropout must be in [0, 1)")
-        if not isinstance(self.warmup_ratio, (int, float)) or isinstance(
-            self.warmup_ratio, bool
-        ):
+        if not isinstance(self.warmup_ratio, (int, float)) or isinstance(self.warmup_ratio, bool):
             raise ValueError("warmup_ratio must be numeric")
         if not 0 <= self.warmup_ratio < 1:
             raise ValueError("warmup_ratio must be in [0, 1)")
@@ -107,6 +116,12 @@ class TrainingRecipe:
             raise ValueError("checkpoint_every_steps must be a positive integer or null")
         if self.weight_decay < 0:
             raise ValueError("weight_decay must not be negative")
+        if not isinstance(self.autocast_adapter_compute, bool):
+            raise ValueError("autocast_adapter_compute must be a boolean")
+        if self.autocast_adapter_compute and self.dtype != "bfloat16":
+            raise ValueError("autocast_adapter_compute currently requires dtype='bfloat16'")
+        if not isinstance(self.fused_adamw, bool):
+            raise ValueError("fused_adamw must be a boolean")
 
 
 def load_training_recipe(path: str | Path) -> TrainingRecipe:

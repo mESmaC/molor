@@ -1,0 +1,132 @@
+{
+  "schema_version": "molor.training-speed-report.v1",
+  "created_on": "2026-08-25",
+  "status": "controlled_single-run_profile",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 5070",
+    "dedicated_memory_mib": 12227
+  },
+  "workload": {
+    "model": "models/Qwen3-0.6B",
+    "dataset": "experiments/first-real-experts/data/verified-embedded-code-v1.train.jsonl",
+    "dataset_sha256": "5a055fe5cd62e9b129b650678748543f95d08053e47150cc6d3f193f38b3c02c",
+    "examples": 920,
+    "epochs": 1,
+    "optimizer_steps": 115,
+    "max_length": 512,
+    "micro_batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "attention_implementation": "sdpa",
+    "adapter_parameter_dtype": "float32",
+    "seed": 9071
+  },
+  "profiles": [
+    {
+      "name": "published_recipe_baseline",
+      "gradient_checkpointing": true,
+      "autocast_adapter_compute": false,
+      "batching_strategy": "online",
+      "fused_adamw": false,
+      "elapsed_seconds": 66.17963260004763,
+      "final_training_loss": 0.014796013720659154,
+      "speedup_vs_baseline": 1.0
+    },
+    {
+      "name": "no_gradient_checkpointing",
+      "gradient_checkpointing": false,
+      "autocast_adapter_compute": false,
+      "batching_strategy": "online",
+      "fused_adamw": false,
+      "elapsed_seconds": 44.693611399969086,
+      "final_training_loss": 0.01497280375865779,
+      "speedup_vs_baseline": 1.4807403234390095
+    },
+    {
+      "name": "no_checkpoint_bf16_autocast",
+      "gradient_checkpointing": false,
+      "autocast_adapter_compute": true,
+      "batching_strategy": "online",
+      "fused_adamw": false,
+      "elapsed_seconds": 43.611954399966635,
+      "final_training_loss": 0.01408366534409988,
+      "speedup_vs_baseline": 1.5174654176951596
+    },
+    {
+      "name": "group_sorted_default_adamw",
+      "gradient_checkpointing": false,
+      "autocast_adapter_compute": true,
+      "batching_strategy": "pretokenized_group_sorted",
+      "fused_adamw": false,
+      "elapsed_seconds": 42.292914399993606,
+      "final_training_loss": 0.014685346252733041,
+      "speedup_vs_baseline": 1.5647924371950501
+    },
+    {
+      "name": "group_sorted_fused_adamw",
+      "gradient_checkpointing": false,
+      "autocast_adapter_compute": true,
+      "batching_strategy": "pretokenized_group_sorted",
+      "fused_adamw": true,
+      "elapsed_seconds": 42.02322279999498,
+      "final_training_loss": 0.014848768056936652,
+      "speedup_vs_baseline": 1.5748347744536986
+    }
+  ],
+  "reasoning_1024_memory_preflight": [
+    {
+      "micro_batch_size": 1,
+      "gradient_checkpointing": false,
+      "forward_backward_seconds": 0.6072894000681117,
+      "peak_allocated_gib": 7.215248107910156,
+      "peak_reserved_gib": 7.603515625,
+      "driver_free_mib_at_peak": 3197.0,
+      "passed_9_5_gib_reserved_gate": true
+    },
+    {
+      "micro_batch_size": 2,
+      "gradient_checkpointing": false,
+      "peak_allocated_bytes": 14795833344,
+      "peak_reserved_gib": 13.95703125,
+      "driver_free_mib_at_peak": 0.0,
+      "passed_9_5_gib_reserved_gate": false
+    },
+    {
+      "micro_batch_size": 2,
+      "gradient_checkpointing": true,
+      "forward_backward_seconds": 1.033929800032638,
+      "peak_allocated_gib": 4.7544708251953125,
+      "peak_reserved_gib": 5.81640625,
+      "driver_free_mib_at_peak": 5027.0,
+      "passed_9_5_gib_reserved_gate": true
+    },
+    {
+      "micro_batch_size": 3,
+      "gradient_checkpointing": true,
+      "forward_backward_seconds": 1.3728039999259636,
+      "peak_allocated_gib": 6.548931121826172,
+      "peak_reserved_gib": 8.287109375,
+      "driver_free_mib_at_peak": 1518.56640625,
+      "passed_9_5_gib_reserved_gate": true
+    },
+    {
+      "micro_batch_size": 4,
+      "gradient_checkpointing": true,
+      "forward_backward_seconds": 1.7394643999869004,
+      "peak_allocated_gib": 8.346321105957031,
+      "peak_reserved_gib": 10.37109375,
+      "driver_free_mib_at_peak": 0.0,
+      "passed_9_5_gib_reserved_gate": false
+    }
+  ],
+  "decision": {
+    "general_short_sequence_default": "Use BF16 autocast and pretokenized in-group length sorting; disable gradient checkpointing only after a max-shape memory preflight.",
+    "reasoning_1024_recipe": "Use micro-batch 3, gradient accumulation 3, gradient checkpointing enabled, BF16 autocast, pretokenized in-group sorting, and default AdamW.",
+    "fused_adamw": "Not selected: its 0.64% single-run gain over default AdamW is too small to distinguish confidently from timing noise."
+  },
+  "limitations": [
+    "Each profile was run once, so small differences do not have confidence intervals.",
+    "In-group sorting preserves optimizer-group membership and assistant-token weighting, but dropout and floating-point reduction order prevent bitwise-identical updates.",
+    "The short-workload peak memory was not used to approve the reasoning recipe; dedicated full-shape 1024-token probes were run separately.",
+    "The earlier published 1.7B/0.6B 1.037x ratio is not a valid scale comparison because the preserved 1.7B receipt omitted the first 750 OCB continuation steps."
+  ]
+}

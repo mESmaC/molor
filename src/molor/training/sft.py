@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable, Iterator
+from contextlib import nullcontext
 from dataclasses import dataclass
 import hashlib
 import json
@@ -173,10 +174,11 @@ def _write_training_summary(
         "weight_decay": recipe.weight_decay,
         "micro_batch_size": recipe.micro_batch_size,
         "gradient_accumulation_steps": recipe.gradient_accumulation_steps,
-        "effective_batch_size": (
-            recipe.micro_batch_size * recipe.gradient_accumulation_steps
-        ),
+        "effective_batch_size": (recipe.micro_batch_size * recipe.gradient_accumulation_steps),
         "gradient_checkpointing": recipe.gradient_checkpointing,
+        "autocast_adapter_compute": recipe.autocast_adapter_compute,
+        "batching_strategy": recipe.batching_strategy,
+        "fused_adamw": recipe.fused_adamw,
         "checkpoint_every_steps": recipe.checkpoint_every_steps,
         "max_grad_norm": recipe.max_grad_norm,
         "seed": recipe.seed,
@@ -225,8 +227,7 @@ def _validate_recovery_checkpoint(
     if start_optimizer_step == 0:
         if summary_path.exists():
             raise ValueError(
-                "an adapter recovery checkpoint requires an explicit nonzero "
-                "start_optimizer_step"
+                "an adapter recovery checkpoint requires an explicit nonzero start_optimizer_step"
             )
         return None
     try:
@@ -262,9 +263,7 @@ def _write_recovery_checkpoint(
 ) -> None:
     directory = engine.save_expert(
         expert_name,
-        recipe.output_dir
-        / ".checkpoints"
-        / f"{expert_name}-step-{optimizer_step:06d}",
+        recipe.output_dir / ".checkpoints" / f"{expert_name}-step-{optimizer_step:06d}",
     )
     payload = {
         "kind": "adapter_recovery_checkpoint",
@@ -332,6 +331,11 @@ def train_experts(
             )
 
     model = engine.model
+    device = _input_device(model)
+    if recipe.autocast_adapter_compute and device.type != "cuda":
+        raise RuntimeError("autocast_adapter_compute requires a CUDA training device")
+    if recipe.fused_adamw and device.type != "cuda":
+        raise RuntimeError("fused_adamw requires a CUDA training device")
     if recipe.gradient_checkpointing:
         enable_checkpointing = getattr(model, "gradient_checkpointing_enable", None)
         if not callable(enable_checkpointing):
@@ -345,7 +349,6 @@ def train_experts(
     if model_config is not None and previous_use_cache is not None:
         model_config.use_cache = False
 
-    device = _input_device(model)
     final_losses: dict[str, float] = {}
     try:
         for expert_index, expert in enumerate(recipe.experts):
@@ -357,20 +360,25 @@ def train_experts(
                 max_length=recipe.max_length,
                 chat_template_kwargs=recipe.chat_template_kwargs,
             )
+            encoded_examples = (
+                None
+                if recipe.batching_strategy == "online"
+                else tuple(collator.encode(example) for example in examples)
+            )
             engine.set_trainable_expert(expert.name)
             parameters = list(engine.expert_parameters(expert.name))
             if not parameters or any(not parameter.requires_grad for parameter in parameters):
                 raise RuntimeError(f"expert {expert.name!r} did not expose trainable parameters")
             if any(parameter.dtype != torch.float32 for parameter in parameters):
                 raise RuntimeError(f"expert {expert.name!r} parameters are not float32")
-            optimizer = torch.optim.AdamW(
-                parameters,
-                lr=recipe.learning_rate,
-                weight_decay=recipe.weight_decay,
-            )
-            examples_per_step = (
-                recipe.micro_batch_size * recipe.gradient_accumulation_steps
-            )
+            optimizer_kwargs: dict[str, object] = {
+                "lr": recipe.learning_rate,
+                "weight_decay": recipe.weight_decay,
+            }
+            if recipe.fused_adamw:
+                optimizer_kwargs["fused"] = True
+            optimizer = torch.optim.AdamW(parameters, **optimizer_kwargs)
+            examples_per_step = recipe.micro_batch_size * recipe.gradient_accumulation_steps
             groups_per_epoch = math.ceil(len(examples) / examples_per_step)
             total_steps = expert_epochs * groups_per_epoch
             if expert.start_optimizer_step >= total_steps:
@@ -379,12 +387,11 @@ def train_experts(
                     f"{expert.start_optimizer_step}, but this run has only {total_steps} steps"
                 )
             recovery_summary = recovery_summaries.get(expert.name)
-            if recovery_summary is not None and recovery_summary.get(
-                "total_optimizer_steps"
-            ) != total_steps:
-                raise ValueError(
-                    "recovery checkpoint total step horizon does not match the recipe"
-                )
+            if (
+                recovery_summary is not None
+                and recovery_summary.get("total_optimizer_steps") != total_steps
+            ):
+                raise ValueError("recovery checkpoint total step horizon does not match the recipe")
             warmup_steps = round(total_steps * recipe.warmup_ratio)
             optimizer_step = expert.start_optimizer_step
             scheduler = torch.optim.lr_scheduler.LambdaLR(
@@ -409,16 +416,38 @@ def train_experts(
                     optimizer.zero_grad(set_to_none=True)
                     group_loss = 0.0
                     prepared_batches: list[tuple[dict[str, Tensor], int]] = []
-                    for micro_batch in _chunks(group, recipe.micro_batch_size):
-                        batch = collator(
-                            [examples[example_index] for example_index in micro_batch]
-                        )
-                        target_tokens = int((batch["labels"] != -100).sum())
-                        prepared_batches.append((batch, target_tokens))
+                    if encoded_examples is None:
+                        for micro_batch in _chunks(group, recipe.micro_batch_size):
+                            batch = collator(
+                                [examples[example_index] for example_index in micro_batch]
+                            )
+                            target_tokens = int((batch["labels"] != -100).sum())
+                            prepared_batches.append((batch, target_tokens))
+                    else:
+                        encoded_group = [encoded_examples[example_index] for example_index in group]
+                        if recipe.batching_strategy == "pretokenized_group_sorted":
+                            encoded_group.sort(
+                                key=lambda example: len(example.input_ids), reverse=True
+                            )
+                        for offset in range(0, len(encoded_group), recipe.micro_batch_size):
+                            encoded_batch = encoded_group[offset : offset + recipe.micro_batch_size]
+                            batch = collator.collate_encoded(encoded_batch)
+                            target_tokens = sum(
+                                label != -100
+                                for encoded in encoded_batch
+                                for label in encoded.labels
+                            )
+                            prepared_batches.append((batch, target_tokens))
                     group_target_tokens = sum(count for _batch, count in prepared_batches)
                     for cpu_batch, target_tokens in prepared_batches:
                         batch = {key: value.to(device) for key, value in cpu_batch.items()}
-                        loss = _loss_from_output(model(**batch))
+                        autocast_context = (
+                            torch.autocast(device_type="cuda", dtype=torch.bfloat16)
+                            if recipe.autocast_adapter_compute
+                            else nullcontext()
+                        )
+                        with autocast_context:
+                            loss = _loss_from_output(model(**batch))
                         if not torch.isfinite(loss):
                             raise RuntimeError(f"non-finite loss while training {expert.name!r}")
                         micro_batch_weight = target_tokens / group_target_tokens
@@ -457,9 +486,7 @@ def train_experts(
                             )
                         )
 
-            saved_directory = engine.save_expert(
-                expert.name, recipe.output_dir / expert.name
-            )
+            saved_directory = engine.save_expert(expert.name, recipe.output_dir / expert.name)
             _write_training_summary(
                 saved_directory,
                 recipe=recipe,
@@ -472,9 +499,7 @@ def train_experts(
                 elapsed_seconds=time.perf_counter() - expert_started,
                 initial_adapter=expert.initial_adapter,
                 start_optimizer_step=expert.start_optimizer_step,
-                optimizer_steps_this_run=(
-                    optimizer_step - expert.start_optimizer_step
-                ),
+                optimizer_steps_this_run=(optimizer_step - expert.start_optimizer_step),
             )
     finally:
         if model_config is not None and previous_use_cache is not None:
