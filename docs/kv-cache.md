@@ -40,6 +40,14 @@ mean output relative L2 was `1.223`. Raw-vector ATXY RVQ is rejected for active 
 must first pass a dense-attention ceiling using a separately validated per-layer/head latent; it
 must not combine a failing latent with routing and attribute the resulting error to retrieval.
 
+That ceiling has now also been measured and rejected for the preregistered local linear rank-prefix
+latent. Across 7,680 comparisons, the strongest quality result among storage-eligible 1.325x arms
+still achieved only `0.8516` top-1 attention agreement and `0.6538` global output relative L2.
+Rank-120 V alone retained `0.4022` global output error, while the only faithful K128/V128 arm grew
+storage to `0.9938x` native capacity. This representation will not receive ATXY codebooks and does
+not authorize context expansion. Exact ATXY addressing remains usable as physical page identity;
+any payload successor requires a new preregistered residual or multi-subspace design.
+
 The initial retrieval unit is a logical token page, not an individual token. The CLI defaults to
 64 tokens so early measurements do not hide pivotal tokens in a 28 MiB whole-model page; 128, 256,
 and 512-token alternatives are measured rather than assumed. A logical

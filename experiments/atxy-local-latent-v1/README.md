@@ -36,6 +36,27 @@ the FP32 V centers; they are arithmetic, not measured allocation or speedup.
 The lab writes one non-overwriting report under `runs/atxy-local-latent-v1/`. A report is tracked
 only after its declared identities and recomputed summaries pass an independent artifact audit.
 
+## Result and stop decision
+
+The preregistered run produced 7,680 attention comparisons. An independent audit recomputed every
+record, all 80 overall/per-layer summaries, every storage projection, and all fixed gates with zero
+mismatches. No joint arm passed.
+
+- The 1.590x K64/V96 arm reached only `0.7604` top-1 agreement, `0.1530` mean KL, and `0.7240`
+  global output relative L2.
+- The 1.325x K96/V96 arm reached only `0.8516` top-1 agreement, `0.04462` mean KL, and `0.6538`
+  global output relative L2.
+- Isolating rank-120 K still left `0.9609` top-1 agreement and `0.1476` global output relative L2.
+  Isolating rank-120 V left `0.4022` global output relative L2, identifying V as the harder wall.
+- Only K128/V128 was faithful, but its `0.9938x` ratio is larger than native BF16 KV and its worst
+  selected-layer top-1 agreement still missed the fixed gate.
+
+The local linear rank-prefix representation is therefore rejected for active KV. It does not
+advance to ATXY codebooks and does not authorize context expansion. Exact ATXY page addressing
+survives as physical identity; a future payload representation needs a qualitatively different
+residual or multi-subspace design and a new preregistration. The machine-readable decision and
+evidence hashes are in `stop-decision.json`.
+
 This is deliberately not a context-extension run. A pass says only that a local linear latent is
 credible enough to receive a separately versioned ATXY codebook experiment. It does not establish
 all-layer quality, 40K quality, long-context positional behavior, a GPU kernel, a live cache,

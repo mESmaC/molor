@@ -1,0 +1,83 @@
+{
+  "schema_version": "molor.atxy-local-latent-stop.v1",
+  "decision": "reject_local_linear_rank_prefix_for_active_kv",
+  "promotion_eligible": false,
+  "advance_to_atxy_codebooks": false,
+  "context_extension_authorized": false,
+  "evidence": {
+    "report": "runs/atxy-local-latent-v1/atxy-local-latent-shadow-20260825-052902.json",
+    "report_sha256": "bff79871d271fef6f169139cbed59125fe6b98576c1f9fc1de94ec203d1204e6",
+    "report_payload_sha256": "6c5c34834c1b241e08843744e17b875c3b7b09f2b1daa3929ace7e180992c362",
+    "contract_sha256": "dd5d46c0af4c1b43859d05d1008b5e4719fd8d7b2562905f29a4ca8dc8fc3f39",
+    "source_tree_sha256": "8e00087f5fd39ae085c31f2a0f4fcb2a67a284ccbdbc0f8fd3329f548da0c9de",
+    "preregistered_commit": "ee9639af913f9f68c5a411d2f891bf8e8999d3a1",
+    "independent_audit": {
+      "verdict": "track",
+      "mismatches": 0
+    }
+  },
+  "protocol": {
+    "attention_records": 7680,
+    "overall_summaries": 20,
+    "per_layer_summaries": 60,
+    "joint_arms": 7,
+    "joint_arms_passing_all_fixed_development_gates": 0
+  },
+  "storage_eligible_arms": [
+    {
+      "arm": "joint-k64-v96",
+      "projected_compression_ratio": 1.5900003881836886,
+      "attention_kl_mean": 0.1530065834464646,
+      "attention_top1_agreement": 0.7604166666666666,
+      "output_relative_l2_global": 0.7240403862885885
+    },
+    {
+      "arm": "joint-k64-v128",
+      "projected_compression_ratio": 1.3250088959337496,
+      "attention_kl_mean": 0.1530065834464646,
+      "attention_top1_agreement": 0.7604166666666666,
+      "output_relative_l2_global": 0.4397120769211631
+    },
+    {
+      "arm": "joint-k80-v112",
+      "projected_compression_ratio": 1.3250088959337496,
+      "attention_kl_mean": 0.08641656720230155,
+      "attention_top1_agreement": 0.796875,
+      "output_relative_l2_global": 0.5988902508143817
+    },
+    {
+      "arm": "joint-k96-v96",
+      "projected_compression_ratio": 1.3250088959337496,
+      "attention_kl_mean": 0.044624496515628685,
+      "attention_top1_agreement": 0.8515625,
+      "output_relative_l2_global": 0.6537731162797145
+    }
+  ],
+  "near_full_rank_anchor": {
+    "arm": "joint-k128-v128",
+    "projected_compression_ratio": 0.9937647087366863,
+    "attention_kl_mean": 0.00007311806515527171,
+    "attention_top1_agreement": 0.9947916666666666,
+    "output_relative_l2_global": 0.008051290450183568,
+    "failure_reasons": [
+      "projected_storage_exceeds_native_bf16_kv",
+      "worst_layer_top1_agreement_below_fixed_gate"
+    ]
+  },
+  "isolated_bottlenecks": {
+    "key_rank_120": {
+      "attention_kl_mean": 0.008363588523752222,
+      "attention_top1_agreement": 0.9609375,
+      "output_relative_l2_global": 0.14764200442878075
+    },
+    "value_rank_120": {
+      "output_relative_l2_global": 0.40220397954254394,
+      "output_cosine_similarity_mean": 0.90946179161877
+    }
+  },
+  "scope": {
+    "stopped": "single_per_layer_per_kv_head_linear_rank_prefix_representation",
+    "survives": "exact_atxy_physical_page_identity",
+    "successor_requirement": "qualitatively_different_residual_or_multi_subspace_representation_with_new_preregistration"
+  }
+}
