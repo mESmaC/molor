@@ -1,0 +1,189 @@
+{
+  "schema_version": "molor.router-v8-turn-aware-admission-preregistration.v1",
+  "status": "frozen_quarantined_scaffold_before_training",
+  "experiment_id": "router-v8-turn-aware-admission",
+  "authorization": {
+    "training": false,
+    "blind_evaluation": false,
+    "registration": false,
+    "live_backend_integration": false
+  },
+  "route_contract": {
+    "route_axis": [
+      "taskmaster-coffee-api-v2-full-dialog-r16",
+      "base/null"
+    ],
+    "taskmaster_threshold": 0.5,
+    "comparison": "greater_than_or_equal",
+    "negative": "return_exact_hash_pinned_v4_AutoRouteDecision_unchanged",
+    "positive": "select_taskmaster-coffee-api-v2-full-dialog-r16_without_v4"
+  },
+  "seeds": [
+    83,
+    8419,
+    27183
+  ],
+  "arms": {
+    "A": {
+      "arm_id": "A",
+      "name": "current_user_masked_mean_control",
+      "source": "frozen_input_embeddings",
+      "embedding_tensor": "model.embed_tokens.weight",
+      "embedding_width": 2048,
+      "prompt_scope": "user_content_only",
+      "max_tokens": 256,
+      "padding": "longest",
+      "truncation": "right",
+      "add_special_tokens": true,
+      "pooling": "masked_mean",
+      "head": {
+        "layers": [
+          "LayerNorm(2048)",
+          "Linear(2048,2)"
+        ],
+        "route_axis": [
+          "taskmaster-coffee-api-v2-full-dialog-r16",
+          "base/null"
+        ],
+        "score": "softmax_taskmaster_probability"
+      }
+    },
+    "B": {
+      "arm_id": "B",
+      "name": "turn_aware_admission_bigru",
+      "source": "frozen_input_embeddings",
+      "embedding_tensor": "model.embed_tokens.weight",
+      "embedding_width": 2048,
+      "per_turn_pooling": "masked_mean",
+      "rendering": {
+        "max_turns": 12,
+        "max_tokens": 512,
+        "add_special_tokens": true,
+        "allocation": "current_user_full_then_prior_turns_newest_first",
+        "partial_prior_turn": "retain_token_suffix_and_stop",
+        "output_order": "chronological",
+        "require_final_user_turn": true,
+        "overlong_current_user": "reject"
+      },
+      "rendering_fingerprint": "0a197fc172c3cfc31d1681887ad7523149057e5ea761f67e1a6740934c1811da",
+      "role_axis": [
+        "system",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "architecture": {
+        "content_projection": {
+          "input_width": 2048,
+          "output_width": 224,
+          "bias": true
+        },
+        "role_embedding": {
+          "classes": 4,
+          "width": 16
+        },
+        "recency_embedding": {
+          "classes": 12,
+          "width": 16
+        },
+        "turn_feature_width": 256,
+        "sequence_encoder": {
+          "type": "GRU",
+          "layers": 1,
+          "input_width": 256,
+          "hidden_width_per_direction": 128,
+          "bidirectional": true,
+          "bias": true
+        },
+        "head": [
+          "LayerNorm(256)",
+          "Dropout(0.1)",
+          "Linear(256,1)"
+        ],
+        "score": "sigmoid_taskmaster_probability"
+      },
+      "route_axis": [
+        "taskmaster-coffee-api-v2-full-dialog-r16",
+        "base/null"
+      ],
+      "threshold": 0.5
+    }
+  },
+  "architecture_fingerprint": "23dbad1c853107026776c03e32da440745607ca9920538ea641276d2c931c86e",
+  "preblind_gates": {
+    "all_seeds_must_pass": true,
+    "original_validation": {
+      "accuracy_min": 0.995,
+      "taskmaster_precision_min": 0.99,
+      "taskmaster_recall_min": 0.99,
+      "false_taskmaster_max": 0,
+      "negative_support": 650
+    },
+    "turn_aware_development_challenge": {
+      "rows": 240,
+      "taskmaster_positive_rows": 60,
+      "legacy_negative_rows": 180,
+      "taskmaster_recall_min_count": 50,
+      "false_taskmaster_max": 2,
+      "overall_accuracy_min": 0.95
+    },
+    "paired_consistency_min": 0.95,
+    "arm_b_over_arm_a": {
+      "taskmaster_recall_gain_min": 0.3,
+      "additional_false_taskmaster_max": 1
+    },
+    "exact_v4_negative_decision_identity": 1.0,
+    "resource_guards": {
+      "checkpoint_size_bytes_max": 8388608,
+      "cpu_p95_latency_ms_max": 25.0,
+      "cpu_p95_latency_ratio_vs_arm_a_max": 2.0
+    },
+    "seed_selection": [
+      "lowest_fresh_original_validation_cross_entropy",
+      "lowest_numeric_seed"
+    ]
+  },
+  "promotion_guards": {
+    "probe_rows": 84,
+    "overall_exact_or_acceptable_min": 0.75,
+    "exact_or_acceptable_gain_over_v4_min_count": 8,
+    "taskmaster_exact_or_acceptable_min_count": 10,
+    "taskmaster_rows": 12,
+    "false_taskmaster_max": 1,
+    "negative_rows": 72,
+    "legacy_exact_drop_max_count": 1,
+    "legacy_acceptable_drop_max_count": 1,
+    "mixed_exact_drop_max_count": 1,
+    "mixed_acceptable_drop_max_count": 1,
+    "evaluation_attempts": 1,
+    "post_probe_tuning_or_retry": false,
+    "registration_side_effects": false
+  },
+  "forbidden_inputs": [
+    "taskmaster_test_split",
+    "taskmaster_predictions",
+    "sealed_blind_probe_contents",
+    "per_example_evaluation_outputs",
+    "one_shot_evaluation_report"
+  ],
+  "artifact_bindings": {
+    "representation_module": {
+      "path": "src/molor/experimental/router_v8_turn_aware.py",
+      "sha256": "5be58bd2a103b389c68d6d094772aed7f9354fff33df8997c0be46b456d738c4",
+      "size_bytes": 31710
+    },
+    "readme": {
+      "path": "experiments/router-v8-turn-aware-admission/README.md",
+      "sha256": "5e2f2a4f24ea36804357a24b48042c2b630be3552a117dee7ad1326327d88fa0",
+      "size_bytes": 5895
+    },
+    "focused_tests": {
+      "path": "tests/test_router_v8_turn_aware.py",
+      "sha256": "57536801c691a99a5d8a9521716320885b5ae53c7abd282ec09cf79a17d21b8c",
+      "size_bytes": 11796
+    }
+  },
+  "integrity": {
+    "canonical_payload_sha256": "e4c76657c6494d6ec39c912384c7cfc4b25f1e5d103fa66aaed3b6d46e3da46a"
+  }
+}
