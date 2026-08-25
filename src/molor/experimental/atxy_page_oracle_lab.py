@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Callable, Iterator, Mapping
+from contextlib import nullcontext
 from dataclasses import asdict, dataclass
 import gc
 import hashlib
@@ -41,6 +42,7 @@ _DATASET_SCHEMA = "molor.atxy-page-oracle-development-dataset.v1"
 _REPORT_SCHEMA = "molor.atxy-page-oracle-development-report.v1"
 _STATUS = "development-only"
 _MASS_TARGETS = (0.98, 0.995, 0.999)
+_SDPA_BACKENDS = ("auto", "cudnn", "efficient", "flash", "math")
 
 
 def _positive_int(value: object, name: str) -> int:
@@ -62,6 +64,53 @@ def _fraction(value: object, name: str) -> float:
     if not math.isfinite(result) or not 0 < result <= 1:
         raise ValueError(f"{name} must be finite and in (0, 1]")
     return result
+
+
+def _sdpa_kernel_context(
+    backend: str,
+    *,
+    kernel_factory: Callable[[Any], Any] | None = None,
+) -> Any:
+    """Force one SDPA kernel for capture, or leave PyTorch selection automatic."""
+
+    if backend not in _SDPA_BACKENDS:
+        raise ValueError(f"SDPA backend must be one of {', '.join(_SDPA_BACKENDS)}")
+    if backend == "auto":
+        return nullcontext()
+    from torch.nn.attention import SDPBackend
+
+    resolved = {
+        "cudnn": SDPBackend.CUDNN_ATTENTION,
+        "efficient": SDPBackend.EFFICIENT_ATTENTION,
+        "flash": SDPBackend.FLASH_ATTENTION,
+        "math": SDPBackend.MATH,
+    }[backend]
+    if kernel_factory is None:
+        from torch.nn.attention import sdpa_kernel
+
+        kernel_factory = sdpa_kernel
+    return kernel_factory(resolved)
+
+
+def _capture_qkv_with_sdpa_backend(
+    model: Any,
+    *,
+    input_ids: Tensor,
+    layer_indices: tuple[int, ...],
+    query_positions: tuple[int, ...],
+    sdpa_backend: str,
+    capture_fn: Callable[..., tuple[CapturedLayer, ...]] = _capture_qkv,
+    context_factory: Callable[[str], Any] = _sdpa_kernel_context,
+) -> tuple[CapturedLayer, ...]:
+    """Capture Q/K/V while forcing the requested memory-bounded SDPA implementation."""
+
+    with context_factory(sdpa_backend):
+        return capture_fn(
+            model,
+            input_ids=input_ids,
+            layer_indices=layer_indices,
+            query_positions=query_positions,
+        )
 
 
 def _sha256_file(path: Path) -> str:
@@ -765,6 +814,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--recent-pages", type=int, default=1)
     parser.add_argument("--top-k", type=int, default=32)
     parser.add_argument("--seed", type=int, default=8419)
+    parser.add_argument("--sdpa-backend", choices=_SDPA_BACKENDS, default="cudnn")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--output-directory", type=Path, default=DEFAULT_OUTPUT_DIRECTORY)
     return parser
@@ -845,6 +895,18 @@ def main() -> None:
     )
     model.eval()
     runtime_device = str(model.get_input_embeddings().weight.device)
+    if args.sdpa_backend != "auto" and not runtime_device.startswith("cuda"):
+        parser.error(f"forced {args.sdpa_backend} SDPA requires a CUDA capture device")
+    if args.sdpa_backend == "cudnn" and not torch.backends.cudnn.is_available():
+        parser.error("forced cuDNN SDPA requires an available cuDNN library")
+
+    def capture_with_backend(model_to_capture: Any, **kwargs: Any) -> tuple[CapturedLayer, ...]:
+        return _capture_qkv_with_sdpa_backend(
+            model_to_capture,
+            sdpa_backend=args.sdpa_backend,
+            **kwargs,
+        )
+
     budget_records: list[dict[str, Any]] = []
     minimum_mass_records: list[dict[str, Any]] = []
     physical_records: list[dict[str, Any]] = []
@@ -858,6 +920,7 @@ def main() -> None:
             input_ids=tokens,
             layer_indices=layer_indices,
             checkpoints=case.queries,
+            capture_fn=capture_with_backend,
         ):
             print(
                 f"Captured independent prefix {case.case_id}@{checkpoint.token_count:,}: "
@@ -990,6 +1053,7 @@ def main() -> None:
             "cache_dtype": "bfloat16",
             "scoring_dtype": "float32-cpu",
             "capture_protocol": "independent-causal-prefix-forward-per-checkpoint",
+            "sdpa_backend": args.sdpa_backend,
         },
         "atxy": {
             "meaning": "exact physical layer/page identity only",
@@ -1004,6 +1068,9 @@ def main() -> None:
             "cuda": torch.version.cuda,
             "capture_device": runtime_device,
             "capture_attention_implementation": "sdpa",
+            "capture_sdpa_backend": args.sdpa_backend,
+            "capture_sdpa_backend_forced": args.sdpa_backend != "auto",
+            "cudnn_version": torch.backends.cudnn.version(),
         },
         "implementation": {
             "preflight": implementation_preflight,

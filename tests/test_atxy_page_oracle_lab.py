@@ -9,10 +9,13 @@ from molor.experimental.atxy_page_oracle_lab import (
     DevelopmentCase,
     QueryCheckpoint,
     _capture_independent_prefixes,
+    _capture_qkv_with_sdpa_backend,
     _evaluate_captured_layer,
     _local_model_stack_identity,
     _load_dataset_manifest,
+    _parser,
     _seal_report,
+    _sdpa_kernel_context,
     _summarize_budget_records,
     _summarize_minimum_mass_records,
     _summarize_physical_records,
@@ -50,6 +53,90 @@ class CharacterTokenizer:
     def __call__(self, text: str, *, add_special_tokens: bool):
         assert add_special_tokens
         return {"input_ids": list(range(len(text)))}
+
+
+def test_sdpa_capture_wrapper_enters_requested_backend_context() -> None:
+    events: list[str] = []
+
+    class FakeContext:
+        def __enter__(self):
+            events.append("enter")
+
+        def __exit__(self, exc_type, exc, traceback):
+            del exc_type, exc, traceback
+            events.append("exit")
+
+    def context_factory(backend: str):
+        assert backend == "cudnn"
+        return FakeContext()
+
+    def capture_fn(model, *, input_ids, layer_indices, query_positions):
+        del model, input_ids, layer_indices, query_positions
+        assert events == ["enter"]
+        return ()
+
+    result = _capture_qkv_with_sdpa_backend(
+        object(),
+        input_ids=torch.arange(4),
+        layer_indices=(0,),
+        query_positions=(3,),
+        sdpa_backend="cudnn",
+        capture_fn=capture_fn,
+        context_factory=context_factory,
+    )
+
+    assert result == ()
+    assert events == ["enter", "exit"]
+
+
+def test_sdpa_kernel_context_auto_is_noop_and_invalid_backend_fails() -> None:
+    called = False
+
+    def kernel_factory(backend):
+        nonlocal called
+        called = True
+        return backend
+
+    with _sdpa_kernel_context("auto", kernel_factory=kernel_factory):
+        pass
+    assert called is False
+    with pytest.raises(ValueError, match="SDPA backend"):
+        _sdpa_kernel_context("unknown")
+
+
+def test_parser_defaults_to_forced_cudnn_sdpa() -> None:
+    args = _parser().parse_args(["--dataset-manifest", "manifest.json"])
+
+    assert args.sdpa_backend == "cudnn"
+
+
+def test_sdpa_capture_wrapper_exits_context_when_capture_fails() -> None:
+    events: list[str] = []
+
+    class FakeContext:
+        def __enter__(self):
+            events.append("enter")
+
+        def __exit__(self, exc_type, exc, traceback):
+            del exc, traceback
+            events.append(exc_type.__name__ if exc_type else "exit")
+
+    def capture_fn(*args, **kwargs):
+        del args, kwargs
+        raise RuntimeError("capture failed")
+
+    with pytest.raises(RuntimeError, match="capture failed"):
+        _capture_qkv_with_sdpa_backend(
+            object(),
+            input_ids=torch.arange(4),
+            layer_indices=(0,),
+            query_positions=(3,),
+            sdpa_backend="cudnn",
+            capture_fn=capture_fn,
+            context_factory=lambda backend: FakeContext(),
+        )
+
+    assert events == ["enter", "RuntimeError"]
 
 
 def test_manifest_loader_checks_source_identity_and_causal_queries(tmp_path) -> None:

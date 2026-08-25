@@ -105,6 +105,7 @@ Run the cheap one-case smoke path first:
 .\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
   --dataset-manifest .\experiments\atxy-page-oracle-v1\dataset\smoke-manifest.json `
   --model .\models\Qwen3-1.7B `
+  --sdpa-backend cudnn `
   --page-size 64 256 `
   --candidate-fraction 0.125 0.25 0.35 0.5
 ```
@@ -138,6 +139,7 @@ After that capture/scoring/report path passes, run the focused one-case pilot:
 .\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
   --dataset-manifest .\experiments\atxy-page-oracle-v1\dataset\pilot-manifest.json `
   --model .\models\Qwen3-1.7B `
+  --sdpa-backend cudnn `
   --page-size 64 256 `
   --candidate-fraction 0.25 0.35
 ```
@@ -155,6 +157,7 @@ After the pilot passes, invoke the four-case matrix:
 .\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
   --dataset-manifest .\experiments\atxy-page-oracle-v1\dataset\development-manifest.json `
   --model .\models\Qwen3-1.7B `
+  --sdpa-backend cudnn `
   --page-size 64 256 `
   --candidate-fraction 0.125 0.25 0.35 0.5
 ```
@@ -162,6 +165,11 @@ After the pilot passes, invoke the four-case matrix:
 Reports are exclusively created beneath `runs/atxy-page-oracle-v1/` by default and are explicitly
 ineligible for promotion. The checked-in manifests are deterministic development inputs, not a
 preregistered corpus, and no formal report is checked in.
+
+Long-prefix capture defaults to forced cuDNN SDPA and records that selection in the report. Leaving
+kernel selection automatic is permitted only as an explicit diagnostic: on this stack it selected
+a quadratic-memory path at 16K and failed before producing evidence. A forced backend that is not
+available or input-eligible fails the run instead of silently falling back.
 
 The model must be a local Hugging Face directory. Before configuration, tokenizer, or weights are
 loaded, the lab fully hashes the behavior-bearing local stack: config and generation metadata,
