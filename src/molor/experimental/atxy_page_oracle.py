@@ -310,7 +310,7 @@ def build_exact_page_oracle_curve_from_weights(
     weights = attention_weights.detach().to(device="cpu", dtype=torch.float32).contiguous()
     if not bool(torch.isfinite(weights).all()) or bool((weights < 0).any()):
         raise ValueError("attention_weights must be finite and non-negative")
-    total_mass = float(weights.sum().item())
+    total_mass = float(weights.sum(dtype=torch.float64).item())
     if not math.isfinite(total_mass) or total_mass <= 0:
         raise ValueError("attention_weights must have positive total mass")
     if not math.isclose(total_mass, 1.0, rel_tol=0.0, abs_tol=1e-5):

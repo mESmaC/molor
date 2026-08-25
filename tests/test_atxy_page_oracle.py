@@ -199,3 +199,24 @@ def test_precomputed_attention_builder_reuses_validated_unit_mass_weights() -> N
         build_exact_page_oracle_curve_from_weights(
             torch.tensor([0.5, -0.1, 0.3, 0.3]), values, page_size=2
         )
+
+
+def test_long_extreme_attention_is_stably_normalized_before_page_scoring() -> None:
+    token_count = 32_768
+    query = torch.tensor([1.0])
+    keys = torch.linspace(-40.0, 40.0, token_count).unsqueeze(1)
+    values = torch.linspace(-1.0, 1.0, token_count).unsqueeze(1)
+
+    weights = exact_attention_weights(query, keys)
+    curve = build_exact_page_oracle_curve_from_weights(
+        weights,
+        values,
+        page_size=256,
+        sink_pages=1,
+        recent_pages=1,
+    )
+
+    assert weights.dtype is torch.float32
+    assert float(weights.sum(dtype=torch.float64)) == pytest.approx(1.0, abs=1e-7)
+    assert curve.total_tokens == token_count
+    assert float(curve.page_masses.sum(dtype=torch.float64)) == pytest.approx(1.0, abs=1e-6)

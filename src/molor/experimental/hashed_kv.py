@@ -462,7 +462,13 @@ def exact_attention_weights(query: Tensor, keys: Tensor) -> Tensor:
 
     query_cpu, keys_cpu = _validate_query_keys(query, keys)
     scale = 1.0 / math.sqrt(query_cpu.numel())
-    return torch.softmax(torch.mv(keys_cpu, query_cpu) * scale, dim=0)
+    weights = torch.softmax(torch.mv(keys_cpu, query_cpu) * scale, dim=0)
+    # A long float32 softmax can accumulate slightly outside the downstream
+    # unit-mass validation tolerance even though every element is valid.  Use a
+    # float64 scalar reduction to remove that reduction error, while retaining
+    # the intended float32 weights and page-scoring path.
+    total_mass = weights.sum(dtype=torch.float64)
+    return (weights / total_mass).contiguous()
 
 
 def _validate_query_keys(query: Tensor, keys: Tensor) -> tuple[Tensor, Tensor]:
