@@ -1,0 +1,23 @@
+{
+  "schema_version": "molor.atxy-page-oracle-development-dataset.v1",
+  "status": "development-only",
+  "cases": [
+    {
+      "id": "mixed-development-01-smoke",
+      "path": "smoke-prompts/mixed-development-01-smoke.txt",
+      "sha256": "7801d5d9d2441e5eb2acebf55f91dfa5ce2afc765d8f139dac894fd92a033a3c",
+      "token_count": 4096,
+      "queries": [
+        {
+          "token_count": 4096,
+          "support_token_spans": [
+            [
+              3991,
+              4031
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -38,7 +38,11 @@ single-full-forward shortcut or fallback protocol. This costs more prefill work,
 that a backend produces prefix-identical Q/K/V when its kernel shape includes later masked tokens.
 Only one checkpoint capture is retained and scored at a time.
 
-The lab consumes already-rendered exact-token-count text files through a checksummed manifest:
+The checked-in development dataset is rendered entirely from deterministic synthetic templates.
+It contains no Taskmaster examples or router evaluation inputs. Every 32K case includes software,
+embedded/CAN, financial, and simulated customer-terminal records in a different segment order.
+Each query has one unique `ACTIVE` support record plus two nearby `ARCHIVED`/near-anchor
+distractors. The lab consumes these exact-token-count text files through a checksummed manifest:
 
 ```json
 {
@@ -68,21 +72,54 @@ every source are read into immutable byte snapshots once. Tokenization uses the 
 text rather than reopening a source, and exact manifest/source byte equality is verified again
 before any report can be written.
 
+## Deterministic dataset builder
+
+The tokenizer-only builder loads `models/Qwen3-1.7B` locally, renders four heterogeneous cases of
+exactly 32,768 tokens, re-tokenizes the completed UTF-8 sources, and rejects any support marker
+whose token subsequence is absent, repeated, non-causal, or insufficiently distinct from its close
+distractors. It also emits a one-case 4,096-token smoke source that is byte-for-byte the first
+validated causal checkpoint prefix of case 01.
+
+```powershell
+.\.venv\Scripts\python.exe .\experiments\atxy-page-oracle-v1\build_dataset.py
+```
+
+Generated assets live under `dataset/`:
+
+- `development-manifest.json` and four sources under `prompts/`;
+- `smoke-manifest.json` and one source under `smoke-prompts/`; and
+- `SHA256SUMS`, which covers both manifests and all five sources.
+
+Writes are exclusive and idempotent. A rerun accepts existing byte-identical outputs and prints
+`verified`; if any generated target differs, it fails without replacing or deleting anything.
+Moving the differing file out of the dataset directory is therefore an explicit prerequisite for
+regeneration.
+
 ## Run
 
-After preparing a development manifest, invoke the module directly:
+Run the cheap one-case smoke path first:
 
 ```powershell
 .\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
-  --dataset-manifest .\path\to\development-manifest.json `
+  --dataset-manifest .\experiments\atxy-page-oracle-v1\dataset\smoke-manifest.json `
+  --model .\models\Qwen3-1.7B `
+  --page-size 64 256 `
+  --candidate-fraction 0.125 0.25 0.35 0.5
+```
+
+After that capture/scoring/report path passes, invoke the four-case matrix:
+
+```powershell
+.\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
+  --dataset-manifest .\experiments\atxy-page-oracle-v1\dataset\development-manifest.json `
   --model .\models\Qwen3-1.7B `
   --page-size 64 256 `
   --candidate-fraction 0.125 0.25 0.35 0.5
 ```
 
 Reports are exclusively created beneath `runs/atxy-page-oracle-v1/` by default and are explicitly
-ineligible for promotion. No checked-in dataset manifest or formal report is part of this initial
-implementation.
+ineligible for promotion. The checked-in manifests are deterministic development inputs, not a
+preregistered corpus, and no formal report is checked in.
 
 The model must be a local Hugging Face directory. Before configuration, tokenizer, or weights are
 loaded, the lab fully hashes the behavior-bearing local stack: config and generation metadata,
