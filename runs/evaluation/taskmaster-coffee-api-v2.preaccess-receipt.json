@@ -1,0 +1,217 @@
+{
+  "artifact_stack": {
+    "artifacts": [
+      {
+        "complete": true,
+        "content_fingerprint": "772bbbfd94e3a63f48e2f315ea8f4d2318c66290c1d98d624dd9bc679c85bb7c",
+        "files": [
+          {
+            "name": "added_tokens.json",
+            "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+            "size_bytes": 707
+          },
+          {
+            "name": "config.json",
+            "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197",
+            "size_bytes": 726
+          },
+          {
+            "name": "generation_config.json",
+            "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+            "size_bytes": 239
+          },
+          {
+            "name": "merges.txt",
+            "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+            "size_bytes": 1671853
+          },
+          {
+            "name": "model-00001-of-00002.safetensors",
+            "sha256": "169ad53ec313c3a34b06c0809216e4fc072cce444a5d4ff2b59690d064130ed5",
+            "size_bytes": 3441185608
+          },
+          {
+            "name": "model-00002-of-00002.safetensors",
+            "sha256": "912becff8d60672aa8628ef08c05898d9adf17c2ad4ae3caf99b065622fdeff9",
+            "size_bytes": 622329984
+          },
+          {
+            "name": "model.safetensors.index.json",
+            "sha256": "0d660e94b165eb912669a5249dff44b83188c4777a07ddb9611fb78d91b0578d",
+            "size_bytes": 25605
+          },
+          {
+            "name": "special_tokens_map.json",
+            "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+            "size_bytes": 613
+          },
+          {
+            "name": "tokenizer.json",
+            "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "size_bytes": 11422654
+          },
+          {
+            "name": "tokenizer_config.json",
+            "sha256": "5a7303fcb1a27ede63134a2cbd61d5282c247ca6d769ce4746d4ffa124aedd63",
+            "size_bytes": 9675
+          },
+          {
+            "name": "vocab.json",
+            "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+            "size_bytes": 2776833
+          }
+        ],
+        "path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+        "role": "base",
+        "size_bytes": 4079424497
+      },
+      {
+        "complete": true,
+        "content_fingerprint": "bb1db9340d5b496a93c52ecc2309845bf48ce6099f30f557b33341d2e686bb7a",
+        "files": [
+          {
+            "name": "adapter_config.json",
+            "sha256": "da0feba91aa0013f94f01a1cff9265c658b8fcdf3f3a44b5128f5173d43f04f7",
+            "size_bytes": 20989
+          },
+          {
+            "name": "adapter_model.safetensors",
+            "sha256": "e885123d61f71db0eb2779d41e3fb3cf7e9eb0d0db116f42ae657b5ac0ef7318",
+            "size_bytes": 69772944
+          }
+        ],
+        "path": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v2-full-dialog-r16",
+        "role": "expert",
+        "size_bytes": 69793933
+      },
+      {
+        "complete": true,
+        "content_fingerprint": "3d9bb712b0c04e788443f6a45aae506598b4827a34e33edce4a2a8966931bea8",
+        "files": [
+          {
+            "name": "adapter_config.json",
+            "sha256": "34eff93dd6c48540190baffeea0186b8c58654c346f2822dcd87315b10a0add8",
+            "size_bytes": 20973
+          },
+          {
+            "name": "adapter_model.safetensors",
+            "sha256": "e936ac30db0fca6e87f90adaff99631c8f91eae17d8a3af2177f1582943d6654",
+            "size_bytes": 69772944
+          }
+        ],
+        "path": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v1",
+        "role": "expert",
+        "size_bytes": 69793917
+      }
+    ],
+    "backend_identity": {
+      "backend": "transformers",
+      "configured_expert_paths": [
+        "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v2-full-dialog-r16",
+        "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v1"
+      ],
+      "experts": [
+        "forced_candidate",
+        "quarantined_v1"
+      ],
+      "model_artifact_path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B"
+    },
+    "fully_content_addressed": true,
+    "hash_policy": "sha256-full-read-every-lock",
+    "required_roles": [
+      {
+        "identifier": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-1.7B",
+        "role": "base"
+      },
+      {
+        "identifier": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v2-full-dialog-r16",
+        "index": 0,
+        "role": "expert"
+      },
+      {
+        "identifier": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v1",
+        "index": 1,
+        "role": "expert"
+      }
+    ],
+    "schema_version": "molor.benchmark-stack-lock.v2",
+    "stable_backend_identity": {
+      "backend": "transformers",
+      "experts": [
+        "forced_candidate",
+        "quarantined_v1"
+      ]
+    },
+    "stack_fingerprint": "817eb2c4c25fedf1b7a89b348fde020c3d0e18d05d500f21d202a09499c07bd6",
+    "unresolved": []
+  },
+  "build_report": {
+    "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\taskmaster-coffee-api-v2.build-report.json",
+    "sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15"
+  },
+  "evaluation": {
+    "expected_rows": 1430,
+    "expected_sha256_from_unopened_build_report": "976d98a50292f75f1eb4c4e68bcd76cb0921a13c39ea3e6afe2772ed2c3bc57a",
+    "expected_size_bytes": 5032208,
+    "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\taskmaster-coffee-api-v2.test.evaluation.jsonl"
+  },
+  "evaluator": {
+    "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\evaluate_taskmaster_coffee_api_v2.py",
+    "sha256": "5f34a8c5543446d8cc12baec19c777e9f92525bc67b8140e43f693ff1c763e80"
+  },
+  "forced_candidate_path": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v2-full-dialog-r16",
+  "generation": {
+    "batch_size": 1,
+    "device": "cuda",
+    "do_sample": false,
+    "dtype": "bfloat16",
+    "enable_thinking": false,
+    "max_new_tokens": 192,
+    "max_prompt_tokens": 2048
+  },
+  "metric_contract": {
+    "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\taskmaster-coffee-api-v2-metric-contract.json",
+    "sha256": "3f384627a9bfe47c1e1de72a6f56915e4d061a83cf42c3c505527178cc392212"
+  },
+  "one_shot_warning": "The v2 test is now exposed. Never use it for tuning, checkpoint selection, threshold adjustment, or training.",
+  "policy": {
+    "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\taskmaster-coffee-api-v2-evaluation-policy.json",
+    "sha256": "5247ce8565e4dfe660cc8c636e13e17adbca6374dfea101b1ac765a3021f846c"
+  },
+  "purpose": "freeze every comparator and metric identity before first v2 test access",
+  "quarantined_v1_path": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v1",
+  "schema_version": "molor.taskmaster-coffee-api-preaccess-receipt.v1",
+  "test_access_state": "sealed_not_opened_by_this_evaluator_yet",
+  "training_completion": {
+    "candidate_artifacts": {
+      "adapter_config.json": {
+        "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_config.json",
+        "sha256": "da0feba91aa0013f94f01a1cff9265c658b8fcdf3f3a44b5128f5173d43f04f7",
+        "size_bytes": 20989
+      },
+      "adapter_model.safetensors": {
+        "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/adapter_model.safetensors",
+        "sha256": "e885123d61f71db0eb2779d41e3fb3cf7e9eb0d0db116f42ae657b5ac0ef7318",
+        "size_bytes": 69772944
+      },
+      "training_summary.json": {
+        "path": "checkpoints/qwen3-1.7b-candidate-experts-quarantine/taskmaster-coffee-api-v2-full-dialog-r16/training_summary.json",
+        "sha256": "8a334de832b87129d262398e9acc05931af59025f7f23f096ab917cd1bc99799",
+        "size_bytes": 1464
+      }
+    },
+    "completion_receipt": {
+      "path": "C:\\Users\\engin\\Documents\\molor\\checkpoints\\qwen3-1.7b-candidate-experts-quarantine\\taskmaster-coffee-api-v2-full-dialog-r16\\training_completion_receipt.json",
+      "payload_sha256": "029c5e4d0e63fd6cc1f54879ca0fc26dbdbfd005b47227468836b1985f1a59cb",
+      "sha256": "95093018f31f78a839d06ec0fda2817ebd94d3279e7debaa6671794deaa3c17f"
+    },
+    "final_training_loss": 0.00015732571888959384,
+    "preflight_receipt": {
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\taskmaster-coffee-api-v2-training-receipt.json",
+      "payload_sha256": "6593173fd59b6bab8a5bac6413a04f01759adb30a59ce56ff32113182e8b0257",
+      "sha256": "d4739554b64e3e946e331f8ab87a6e14631b804d43b4c29e08cdeaa6d38a57b4"
+    },
+    "registration_changed": false,
+    "test_evaluation_opened": false
+  }
+}

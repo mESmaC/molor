@@ -1,0 +1,78 @@
+{
+  "dataset_id": "taskmaster-coffee-api-v2",
+  "failure": {
+    "exception_type": "ValueError",
+    "location": "taskmaster-coffee-api-v2.test.evaluation.jsonl:2",
+    "message": "invalid conversation context turn 1",
+    "model_generation_entered": false,
+    "predictions_written": false,
+    "report_written": false,
+    "stage": "load_evaluation->_parse_messages->_validate_context",
+    "state_boundary": "pre-access receipt written; full holdout SHA-256 read succeeded; row validation failed; generate_all_routes was not entered"
+  },
+  "first_access_at": "2026-08-25T02:21:20.1059691-04:00",
+  "frozen_attempt": {
+    "artifact_stack_fingerprint": "817eb2c4c25fedf1b7a89b348fde020c3d0e18d05d500f21d202a09499c07bd6",
+    "build_report_sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15",
+    "generation": {
+      "batch_size": 1,
+      "device": "cuda",
+      "do_sample": false,
+      "dtype": "bfloat16",
+      "enable_thinking": false,
+      "max_new_tokens": 192,
+      "max_prompt_tokens": 2048
+    },
+    "holdout_descriptor": {
+      "rows": 1430,
+      "sha256": "976d98a50292f75f1eb4c4e68bcd76cb0921a13c39ea3e6afe2772ed2c3bc57a",
+      "size_bytes": 5032208
+    },
+    "metric_contract_sha256": "3f384627a9bfe47c1e1de72a6f56915e4d061a83cf42c3c505527178cc392212",
+    "policy_sha256": "5247ce8565e4dfe660cc8c636e13e17adbca6374dfea101b1ac765a3021f846c"
+  },
+  "non_test_reproduction": {
+    "old_validator_accepted_training_rows": 2582,
+    "old_validator_accepted_validation_rows": 321,
+    "repaired_validator_accepted_training_rows": 11626,
+    "repaired_validator_accepted_validation_rows": 1380,
+    "validation_failure_before_repair": "taskmaster-coffee-api-v2.validation.evaluation.jsonl:1: invalid conversation context turn 1"
+  },
+  "original_evaluator_sha256": "5f34a8c5543446d8cc12baec19c777e9f92525bc67b8140e43f693ff1c763e80",
+  "original_preaccess_receipt": {
+    "path": "runs/evaluation/taskmaster-coffee-api-v2.preaccess-receipt.json",
+    "sha256": "c4568aca439999b1a8fe30dd9c46da5f2124aa1624c3f68b2cf737a589ff9e52",
+    "size_bytes": 9446
+  },
+  "recovery_authorization": {
+    "allowed": true,
+    "classification": "same_frozen_attempt_mechanical_parser_recovery",
+    "not_pristine_one_shot": true,
+    "single_recovery_generation_scoring_attempt": true
+  },
+  "recovery_outputs": {
+    "preaccess_receipt": "runs/evaluation/taskmaster-coffee-api-v2.recovery-preaccess-receipt.json",
+    "predictions": "runs/evaluation/taskmaster-coffee-api-v2.recovery-predictions.jsonl",
+    "report": "runs/evaluation/taskmaster-coffee-api-v2.recovery.json"
+  },
+  "repair": {
+    "canonical_lf_git_diff_sha256": "611a87b24d28c6b6c21b78ac0e34a7c7b17d4c497c03595b4d385e3c8bc2732a",
+    "scope": [
+      "accept builder-defined user/agent text turns",
+      "accept builder-defined prior agent API calls",
+      "accept matching builder-defined API responses",
+      "allow a decision context to end after a completed API response",
+      "preserve full canonical context turns for content identity",
+      "add truthful recovery receipt and report provenance"
+    ]
+  },
+  "repaired_evaluator_sha256": "9a737d07ea74381e09e24e51abc0b1a4e82ecc9b089497d2ad75686957f75c5b",
+  "repository_commit_at_first_access": "bfd0765dc57ace1351376b40bf9c6b58ee31936b",
+  "schema_version": "molor.taskmaster-coffee-api-evaluation-incident.v1",
+  "status": "holdout_exposed_failed_before_generation",
+  "test_exposure": {
+    "exposed": true,
+    "pristine_one_shot_preserved": false,
+    "reason": "the evaluator read the full holdout for identity verification before schema validation failed"
+  }
+}

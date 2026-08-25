@@ -114,6 +114,66 @@ def _evaluation_rows(evaluator) -> list[dict[str, Any]]:
     return sorted(rows, key=lambda row: row["example_id"])
 
 
+def test_load_evaluation_accepts_builder_api_history(tmp_path: Path) -> None:
+    evaluator = _load_evaluator("taskmaster_v2_evaluator_api_history_test")
+    catalog_canonical = evaluator.canonical_json(_catalog(evaluator))
+    context = [
+        {"role": "user", "text": "Please show me the latte choices."},
+        {"role": "agent", "api": {"get_menu_items": {"query": "latte"}}},
+        {
+            "role": "api",
+            "response": {"get_menu_items": {"items": [{"id": "latte"}]}},
+        },
+    ]
+    expected = {
+        "role": "agent",
+        "api": {"update_order": {"item_id": "latte", "quantity": 1}},
+    }
+    expected_canonical = evaluator.canonical_json(expected)
+    row = {
+        "schema_version": evaluator.EVALUATION_SCHEMA,
+        "example_id": "tm4-coffee-api-v2:"
+        + evaluator.sha256_text(
+            evaluator.canonical_json({"context": context, "generation": expected})
+        ),
+        "expected": expected,
+        "expected_canonical": expected_canonical,
+        "expected_sha256": evaluator.sha256_text(expected_canonical),
+        "group_id": "tm4-coffee-v2-component:"
+        + evaluator.sha256_text("synthetic-api-history-group"),
+        "messages": evaluator.messages_for(
+            evaluator.canonical_json(context),
+            expected_canonical,
+            tool_catalog_canonical=catalog_canonical,
+        )[:-1],
+    }
+    path = tmp_path / "api-history.evaluation.jsonl"
+    _write_jsonl(path, [row], evaluator)
+
+    suite = evaluator.load_evaluation(path)
+
+    assert len(suite.cases) == 1
+    assert suite.cases[0].context == context
+
+
+def test_context_rejects_malformed_api_history() -> None:
+    evaluator = _load_evaluator("taskmaster_v2_evaluator_bad_api_history_test")
+    mismatched = [
+        {"role": "user", "text": "Show the menu."},
+        {"role": "agent", "api": {"show_menu": {}}},
+        {"role": "api", "response": {"get_menu_items": {}}},
+    ]
+    dangling = [
+        {"role": "user", "text": "Show the menu."},
+        {"role": "agent", "api": {"show_menu": {}}},
+    ]
+
+    with pytest.raises(ValueError, match="API pair mismatch"):
+        evaluator._validate_context(mismatched)
+    with pytest.raises(ValueError, match="unmatched API call"):
+        evaluator._validate_context(dangling)
+
+
 def _write_jsonl(path: Path, rows: list[dict[str, Any]], evaluator) -> None:
     path.write_text(
         "".join(evaluator.canonical_json(row) + "\n" for row in rows),
@@ -658,3 +718,103 @@ def test_preaccess_receipt_binds_expected_data_without_opening_evaluation(
     assert receipt["artifact_stack"] is stack
     assert receipt["training_completion"]["completion_receipt"]["sha256"] == "c" * 64
     assert evaluator.ONE_SHOT_WARNING in receipt["one_shot_warning"]
+
+    recovery = evaluator.build_preaccess_receipt(
+        evaluator_path=EVALUATOR_PATH,
+        metric_contract_path=METRIC_CONTRACT_PATH,
+        policy_path=POLICY_PATH,
+        build_report_path=POLICY_PATH,
+        build_report=build_report,
+        stack=stack,
+        training_completion_binding=receipt["training_completion"],
+        candidate=tmp_path / "checkpoints" / "candidate-experts-quarantine" / "v2",
+        v1=tmp_path / "checkpoints" / "candidate-experts-quarantine" / "v1",
+        evaluation_path=nonexistent_holdout,
+        dtype_name="bfloat16",
+        device="cuda",
+        batch_size=4,
+        recovery_incident_binding={"incident_sha256": "e" * 64},
+    )
+    assert recovery["test_access_state"] == "exposed_by_prior_failed_pre_generation_validation"
+    assert recovery["recovery_incident"]["incident_sha256"] == "e" * 64
+    assert "not a pristine one-shot" in recovery["one_shot_warning"]
+
+
+def test_recovery_incident_preserves_every_frozen_receipt_field(tmp_path: Path) -> None:
+    evaluator = _load_evaluator("taskmaster_v2_evaluator_recovery_incident_test")
+    nonexistent_holdout = tmp_path / "unopened.evaluation.jsonl"
+    current = evaluator.build_preaccess_receipt(
+        evaluator_path=EVALUATOR_PATH,
+        metric_contract_path=METRIC_CONTRACT_PATH,
+        policy_path=POLICY_PATH,
+        build_report_path=POLICY_PATH,
+        build_report={
+            "outputs": {
+                "test_evaluation": {
+                    "path": "taskmaster-coffee-api-v2.test.evaluation.jsonl",
+                    "rows": 2,
+                    "sha256": "a" * 64,
+                    "size_bytes": 123,
+                }
+            }
+        },
+        stack={"stack_fingerprint": "b" * 64},
+        training_completion_binding={"completion_receipt": {"sha256": "c" * 64}},
+        candidate=tmp_path / "candidate",
+        v1=tmp_path / "v1",
+        evaluation_path=nonexistent_holdout,
+        dtype_name="bfloat16",
+        device="cuda",
+        batch_size=1,
+    )
+    original = json.loads(json.dumps(current))
+    original_evaluator_sha256 = "0" * 64
+    original["evaluator"]["sha256"] = original_evaluator_sha256
+    original_path = tmp_path / "original-preaccess.json"
+    _write_json(original_path, original)
+    original_descriptor = _descriptor(original_path, tmp_path, evaluator)
+    incident_path = tmp_path / "incident.json"
+    _write_json(
+        incident_path,
+        {
+            "schema_version": evaluator.RECOVERY_INCIDENT_SCHEMA,
+            "dataset_id": evaluator.DATASET_ID,
+            "status": "holdout_exposed_failed_before_generation",
+            "failure": {
+                "stage": "load_evaluation->_parse_messages->_validate_context",
+                "model_generation_entered": False,
+                "predictions_written": False,
+                "report_written": False,
+            },
+            "original_preaccess_receipt": {
+                "path": str(original_path),
+                "sha256": original_descriptor["sha256"],
+                "size_bytes": original_descriptor["size_bytes"],
+            },
+            "original_evaluator_sha256": original_evaluator_sha256,
+            "repaired_evaluator_sha256": evaluator.sha256_file(EVALUATOR_PATH),
+            "recovery_authorization": {
+                "allowed": True,
+                "classification": "same_frozen_attempt_mechanical_parser_recovery",
+                "not_pristine_one_shot": True,
+                "single_recovery_generation_scoring_attempt": True,
+            },
+        },
+    )
+
+    binding = evaluator.validate_recovery_incident(
+        incident_path,
+        evaluator_path=EVALUATOR_PATH,
+        current_receipt=current,
+    )
+
+    assert binding["not_pristine_one_shot"] is True
+    assert binding["original_preaccess_receipt"]["sha256"] == original_descriptor["sha256"]
+
+    current["generation"]["batch_size"] = 2
+    with pytest.raises(ValueError, match="generation"):
+        evaluator.validate_recovery_incident(
+            incident_path,
+            evaluator_path=EVALUATOR_PATH,
+            current_receipt=current,
+        )

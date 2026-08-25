@@ -58,6 +58,7 @@ DEFAULT_PREACCESS_RECEIPT = (
 PREDICTION_SCHEMA = "molor.taskmaster-coffee-api-prediction.v2"
 REPORT_SCHEMA = "molor.taskmaster-coffee-api-evaluation-report.v2"
 PREACCESS_SCHEMA = "molor.taskmaster-coffee-api-preaccess-receipt.v1"
+RECOVERY_INCIDENT_SCHEMA = "molor.taskmaster-coffee-api-evaluation-incident.v1"
 TRAINING_COMPLETION_SCHEMA = "molor.taskmaster-coffee-api-training-completion.v2"
 TRAINING_PREFLIGHT_SCHEMA = "molor.taskmaster-coffee-api-training-receipt.v2"
 METRIC_CONTRACT_SCHEMA = "molor.taskmaster-coffee-api-metric-contract.v2"
@@ -92,7 +93,7 @@ class EvaluationCase:
     example_id: str
     group_id: str
     messages: tuple[dict[str, str], ...]
-    context: list[dict[str, str]]
+    context: list[dict[str, Any]]
     expected: dict[str, Any]
     expected_canonical: str
     expected_sha256: str
@@ -133,22 +134,65 @@ def _validate_generation(value: Any) -> dict[str, Any]:
     return value
 
 
-def _validate_context(value: Any) -> list[dict[str, str]]:
+def _validate_api_response(value: Any) -> dict[str, Any]:
+    if not isinstance(value, dict) or set(value) != {"response", "role"}:
+        raise ValueError("API response must contain exactly response and role")
+    if value["role"] != "api":
+        raise ValueError("API response role must be api")
+    response = value["response"]
+    if not isinstance(response, dict) or len(response) != 1:
+        raise ValueError("API response must contain exactly one result")
+    name, payload = next(iter(response.items()))
+    if not isinstance(name, str) or not name or name != name.strip():
+        raise ValueError("response API name must be a non-empty trimmed string")
+    if not isinstance(payload, dict):
+        raise ValueError("API response payload must be an object")
+    canonical_json(value)
+    return value
+
+
+def _validate_context(value: Any) -> list[dict[str, Any]]:
     if not isinstance(value, list) or not value:
         raise ValueError("conversation context must be a non-empty array")
-    context: list[dict[str, str]] = []
+    context: list[dict[str, Any]] = []
+    pending_api_name: str | None = None
     for index, turn in enumerate(value):
-        if (
-            not isinstance(turn, dict)
-            or set(turn) != {"role", "text"}
-            or turn.get("role") not in {"user", "agent"}
-            or not isinstance(turn.get("text"), str)
-            or not turn["text"].strip()
-        ):
+        if not isinstance(turn, dict):
             raise ValueError(f"invalid conversation context turn {index}")
-        context.append({"role": turn["role"], "text": turn["text"]})
-    if context[-1]["role"] != "user":
-        raise ValueError("decision context must end with a user turn")
+
+        if pending_api_name is not None:
+            response = _validate_api_response(turn)
+            response_name = next(iter(response["response"]))
+            if response_name != pending_api_name:
+                raise ValueError(f"conversation context API pair mismatch at turn {index}")
+            context.append(response)
+            pending_api_name = None
+            continue
+
+        if set(turn) == {"role", "text"}:
+            if (
+                turn.get("role") not in {"user", "agent"}
+                or not isinstance(turn.get("text"), str)
+                or not turn["text"].strip()
+            ):
+                raise ValueError(f"invalid conversation context turn {index}")
+            context.append({"role": turn["role"], "text": turn["text"]})
+            continue
+
+        if set(turn) == {"api", "role"}:
+            if not context or context[-1]["role"] not in {"user", "api"}:
+                raise ValueError(f"invalid conversation context API call at turn {index}")
+            generation = _validate_generation(turn)
+            pending_api_name = next(iter(generation["api"]))
+            context.append(generation)
+            continue
+
+        raise ValueError(f"invalid conversation context turn {index}")
+
+    if pending_api_name is not None:
+        raise ValueError("conversation context ends with an unmatched API call")
+    if context[-1]["role"] not in {"user", "api"}:
+        raise ValueError("decision context must end with a user turn or completed API response")
     return context
 
 
@@ -217,7 +261,7 @@ def _parse_messages(
     value: Any,
     *,
     expected_canonical: str,
-) -> tuple[tuple[dict[str, str], ...], list[dict[str, str]], dict[str, Any], str]:
+) -> tuple[tuple[dict[str, str], ...], list[dict[str, Any]], dict[str, Any], str]:
     if (
         not isinstance(value, list)
         or len(value) != 2
@@ -1013,13 +1057,28 @@ def build_preaccess_receipt(
     dtype_name: str,
     device: str,
     batch_size: int,
+    recovery_incident_binding: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     expected_evaluation = build_report["outputs"]["test_evaluation"]
-    return {
+    recovery = recovery_incident_binding is not None
+    receipt = {
         "schema_version": PREACCESS_SCHEMA,
-        "purpose": "freeze every comparator and metric identity before first v2 test access",
-        "test_access_state": "sealed_not_opened_by_this_evaluator_yet",
-        "one_shot_warning": ONE_SHOT_WARNING,
+        "purpose": (
+            "freeze the same comparators and metrics for the documented evaluator recovery"
+            if recovery
+            else "freeze every comparator and metric identity before first v2 test access"
+        ),
+        "test_access_state": (
+            "exposed_by_prior_failed_pre_generation_validation"
+            if recovery
+            else "sealed_not_opened_by_this_evaluator_yet"
+        ),
+        "one_shot_warning": (
+            f"{ONE_SHOT_WARNING} This is a recovery of the frozen first attempt, not a "
+            "pristine one-shot."
+            if recovery
+            else ONE_SHOT_WARNING
+        ),
         "evaluator": {"path": str(evaluator_path), "sha256": sha256_file(evaluator_path)},
         "metric_contract": {
             "path": str(metric_contract_path),
@@ -1048,6 +1107,93 @@ def build_preaccess_receipt(
             "enable_thinking": False,
             "max_new_tokens": 192,
             "max_prompt_tokens": 2048,
+        },
+    }
+    if recovery_incident_binding is not None:
+        receipt["recovery_incident"] = dict(recovery_incident_binding)
+    return receipt
+
+
+def validate_recovery_incident(
+    path: Path,
+    *,
+    evaluator_path: Path,
+    current_receipt: Mapping[str, Any],
+) -> dict[str, Any]:
+    incident = _read_json_object(path, label="recovery_incident")
+    if incident.get("schema_version") != RECOVERY_INCIDENT_SCHEMA:
+        raise ValueError("unsupported recovery incident schema")
+    if incident.get("dataset_id") != DATASET_ID:
+        raise ValueError("recovery incident does not describe the v2 dataset")
+    if incident.get("status") != "holdout_exposed_failed_before_generation":
+        raise ValueError("recovery incident status is not recoverable")
+
+    failure = incident.get("failure")
+    if (
+        not isinstance(failure, dict)
+        or failure.get("stage") != "load_evaluation->_parse_messages->_validate_context"
+        or failure.get("model_generation_entered") is not False
+        or failure.get("predictions_written") is not False
+        or failure.get("report_written") is not False
+    ):
+        raise ValueError("recovery incident does not prove a pre-generation failure")
+
+    authorization = incident.get("recovery_authorization")
+    if (
+        not isinstance(authorization, dict)
+        or authorization.get("allowed") is not True
+        or authorization.get("classification") != "same_frozen_attempt_mechanical_parser_recovery"
+        or authorization.get("not_pristine_one_shot") is not True
+        or authorization.get("single_recovery_generation_scoring_attempt") is not True
+    ):
+        raise ValueError("recovery incident has no valid single-attempt authorization")
+
+    original_descriptor = incident.get("original_preaccess_receipt")
+    if not isinstance(original_descriptor, dict):
+        raise ValueError("recovery incident has no original pre-access receipt")
+    declared_original = original_descriptor.get("path")
+    if not isinstance(declared_original, str) or not declared_original:
+        raise ValueError("recovery incident original receipt path is invalid")
+    original_path = Path(declared_original)
+    if not original_path.is_absolute():
+        original_path = WORKSPACE / original_path
+    original_path = original_path.resolve()
+    if sha256_file(original_path) != original_descriptor.get(
+        "sha256"
+    ) or original_path.stat().st_size != original_descriptor.get("size_bytes"):
+        raise ValueError("original pre-access receipt bytes do not match the incident")
+    original = _read_json_object(original_path, label="original_preaccess_receipt")
+    if original.get("evaluator", {}).get("sha256") != incident.get("original_evaluator_sha256"):
+        raise ValueError("original evaluator identity does not match the incident")
+    if sha256_file(evaluator_path) != incident.get("repaired_evaluator_sha256"):
+        raise ValueError("repaired evaluator identity does not match the incident")
+
+    frozen_fields = (
+        "metric_contract",
+        "policy",
+        "build_report",
+        "evaluation",
+        "artifact_stack",
+        "training_completion",
+        "forced_candidate_path",
+        "quarantined_v1_path",
+        "generation",
+    )
+    changed = [
+        field for field in frozen_fields if original.get(field) != current_receipt.get(field)
+    ]
+    if changed:
+        raise ValueError("recovery changed frozen receipt fields: " + ", ".join(changed))
+
+    return {
+        "classification": authorization["classification"],
+        "incident_path": str(path),
+        "incident_sha256": sha256_file(path),
+        "not_pristine_one_shot": True,
+        "original_preaccess_receipt": {
+            "path": str(original_path),
+            "sha256": original_descriptor["sha256"],
+            "size_bytes": original_descriptor["size_bytes"],
         },
     }
 
@@ -1177,6 +1323,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--predictions-output", type=Path, default=DEFAULT_PREDICTIONS)
     parser.add_argument("--preaccess-receipt", type=Path, default=DEFAULT_PREACCESS_RECEIPT)
     parser.add_argument("--output", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument(
+        "--recovery-incident",
+        type=Path,
+        help="documented failed-first-access incident authorizing one frozen recovery run",
+    )
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--dtype", choices=("bfloat16", "float16", "float32"), default="bfloat16")
@@ -1235,7 +1386,7 @@ def main(arguments: Sequence[str] | None = None) -> None:
         policy=policy,
         stack=stack,
     )
-    receipt = build_preaccess_receipt(
+    base_receipt = build_preaccess_receipt(
         evaluator_path=evaluator_path,
         metric_contract_path=metric_contract_path,
         policy_path=policy_path,
@@ -1250,10 +1401,59 @@ def main(arguments: Sequence[str] | None = None) -> None:
         device=args.device,
         batch_size=args.batch_size,
     )
+    recovery_binding: dict[str, Any] | None = None
+    if args.recovery_incident is not None:
+        if args.predictions is not None:
+            raise ValueError("recovery evaluation must generate fresh frozen-route predictions")
+        incident_path = args.recovery_incident.expanduser().resolve()
+        recovery_binding = validate_recovery_incident(
+            incident_path,
+            evaluator_path=evaluator_path,
+            current_receipt=base_receipt,
+        )
+    receipt = (
+        build_preaccess_receipt(
+            evaluator_path=evaluator_path,
+            metric_contract_path=metric_contract_path,
+            policy_path=policy_path,
+            build_report_path=build_report_path,
+            build_report=build_report,
+            stack=stack,
+            training_completion_binding=training_completion_binding,
+            candidate=candidate,
+            v1=v1,
+            evaluation_path=evaluation_path,
+            dtype_name=args.dtype,
+            device=args.device,
+            batch_size=args.batch_size,
+            recovery_incident_binding=recovery_binding,
+        )
+        if recovery_binding is not None
+        else base_receipt
+    )
     receipt_path = args.preaccess_receipt.expanduser().resolve()
+    if recovery_binding is not None:
+        original_receipt = Path(recovery_binding["original_preaccess_receipt"]["path"])
+        if receipt_path == original_receipt:
+            raise ValueError("recovery must preserve the original pre-access receipt")
+        recovery_outputs = {
+            "pre-access receipt": receipt_path,
+            "predictions": args.predictions_output.expanduser().resolve(),
+            "report": args.output.expanduser().resolve(),
+        }
+        existing = [
+            label for label, output_path in recovery_outputs.items() if output_path.exists()
+        ]
+        if existing:
+            raise FileExistsError(
+                "recovery outputs already exist; refusing a repeat attempt: " + ", ".join(existing)
+            )
     _write_json(receipt_path, receipt)
     receipt_sha256 = sha256_file(receipt_path)
-    print(f"SEALED ONE-SHOT WARNING: {ONE_SHOT_WARNING}", flush=True)
+    warning_label = (
+        "SEALED RECOVERY WARNING" if recovery_binding is not None else "SEALED ONE-SHOT WARNING"
+    )
+    print(f"{warning_label}: {receipt['one_shot_warning']}", flush=True)
     print(f"Pre-access receipt: {receipt_path} ({receipt_sha256})", flush=True)
 
     expected_evaluation = build_report["outputs"]["test_evaluation"]
@@ -1294,7 +1494,11 @@ def main(arguments: Sequence[str] | None = None) -> None:
         "schema_version": REPORT_SCHEMA,
         "dataset_id": DATASET_ID,
         "one_shot_test_warning": {
-            "status": "exposed_by_this_run",
+            "status": (
+                "recovery_after_prior_failed_pre_generation_validation"
+                if recovery_binding is not None
+                else "exposed_by_this_run"
+            ),
             "warning": ONE_SHOT_WARNING,
             "reuse_policy": policy["reuse_policy"],
         },
@@ -1326,6 +1530,7 @@ def main(arguments: Sequence[str] | None = None) -> None:
         "available_examples": len(suite.cases),
         "evaluated_examples": len(suite.cases),
         "generation": generation,
+        "recovery_incident": recovery_binding,
         "metric_contract": metric_contract,
         "artifact_stack": stack,
         **evaluation_result,
