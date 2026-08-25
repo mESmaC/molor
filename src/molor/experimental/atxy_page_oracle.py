@@ -336,11 +336,23 @@ def build_exact_page_oracle_curve_from_weights(
     page_weighted_values = torch.empty(
         (len(pages), values_cpu.shape[1]), dtype=torch.float32, device="cpu"
     )
-    for page in pages:
-        page_weights = weights[page.start : page.stop]
-        page_values = values_cpu[page.start : page.stop]
-        page_masses[page.page_id] = page_weights.sum()
-        page_weighted_values[page.page_id] = torch.matmul(page_weights, page_values)
+    full_page_count = int(weights.numel()) // page_size
+    full_token_count = full_page_count * page_size
+    if full_page_count:
+        full_weights = weights[:full_token_count].reshape(full_page_count, page_size)
+        full_values = values_cpu[:full_token_count].reshape(
+            full_page_count, page_size, values_cpu.shape[1]
+        )
+        page_masses[:full_page_count] = full_weights.sum(dim=1)
+        page_weighted_values[:full_page_count] = torch.bmm(
+            full_weights.unsqueeze(1), full_values
+        ).squeeze(1)
+    if full_token_count < weights.numel():
+        final_page = pages[-1]
+        final_weights = weights[full_token_count:]
+        final_values = values_cpu[full_token_count:]
+        page_masses[final_page.page_id] = final_weights.sum()
+        page_weighted_values[final_page.page_id] = torch.matmul(final_weights, final_values)
 
     mandatory_set = set(mandatory)
     ranked = tuple(

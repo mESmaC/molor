@@ -57,6 +57,34 @@ def test_cumulative_oracle_matches_existing_exact_reference_on_partial_pages() -
     assert metrics.support_page_recall == 1.0
 
 
+def test_vectorized_page_statistics_match_manual_partial_page_reductions() -> None:
+    generator = torch.Generator().manual_seed(420)
+    weights = torch.softmax(torch.randn(13, generator=generator), dim=0)
+    values = torch.randn(13, 7, generator=generator)
+
+    curve = build_exact_page_oracle_curve_from_weights(
+        weights,
+        values,
+        page_size=4,
+        sink_pages=0,
+        recent_pages=0,
+    )
+
+    expected_masses = []
+    expected_weighted_values = []
+    for page in build_page_spans(13, 4):
+        page_weights = weights[page.start : page.stop]
+        page_values = values[page.start : page.stop]
+        expected_masses.append(page_weights.sum())
+        expected_weighted_values.append(torch.matmul(page_weights, page_values))
+    assert torch.allclose(curve.page_masses, torch.stack(expected_masses), atol=1e-7)
+    assert torch.allclose(
+        curve.page_weighted_values,
+        torch.stack(expected_weighted_values),
+        atol=1e-6,
+    )
+
+
 def test_oracle_is_mass_optimal_at_fixed_budget_with_mandatory_pages() -> None:
     query = torch.tensor([1.0])
     keys = torch.tensor([[0.0], [0.0], [1.0], [1.0], [5.0], [5.0], [-1.0]])
