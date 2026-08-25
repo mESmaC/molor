@@ -1,0 +1,41 @@
+{
+  "schema_version": "molor.atxy-page-oracle-development-dataset.v1",
+  "status": "development-only",
+  "cases": [
+    {
+      "id": "mixed-development-01",
+      "path": "prompts/mixed-development-01.txt",
+      "sha256": "67bf4ae88d31591b3cf696ae38790148376a5ac597a66b0e224a970b21deea4f",
+      "token_count": 32768,
+      "queries": [
+        {
+          "token_count": 16384,
+          "support_token_spans": [
+            [
+              16281,
+              16320
+            ]
+          ]
+        },
+        {
+          "token_count": 32767,
+          "support_token_spans": [
+            [
+              32547,
+              32586
+            ]
+          ]
+        },
+        {
+          "token_count": 32768,
+          "support_token_spans": [
+            [
+              32667,
+              32707
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -77,8 +77,9 @@ before any report can be written.
 The tokenizer-only builder loads `models/Qwen3-1.7B` locally, renders four heterogeneous cases of
 exactly 32,768 tokens, re-tokenizes the completed UTF-8 sources, and rejects any support marker
 whose token subsequence is absent, repeated, non-causal, or insufficiently distinct from its close
-distractors. It also emits a one-case 4,096-token smoke source that is byte-for-byte the first
-validated causal checkpoint prefix of case 01.
+distractors. It also emits a one-case pilot manifest that reuses case 01 at checkpoints 16,384,
+32,767, and 32,768, plus a 4,096-token smoke source that is byte-for-byte the first validated causal
+checkpoint prefix of case 01.
 
 ```powershell
 .\.venv\Scripts\python.exe .\experiments\atxy-page-oracle-v1\build_dataset.py
@@ -87,8 +88,9 @@ validated causal checkpoint prefix of case 01.
 Generated assets live under `dataset/`:
 
 - `development-manifest.json` and four sources under `prompts/`;
+- `pilot-manifest.json`, which reuses `prompts/mixed-development-01.txt` without duplicating it;
 - `smoke-manifest.json` and one source under `smoke-prompts/`; and
-- `SHA256SUMS`, which covers both manifests and all five sources.
+- `SHA256SUMS`, which covers all three manifests and all five sources.
 
 Writes are exclusive and idempotent. A rerun accepts existing byte-identical outputs and prints
 `verified`; if any generated target differs, it fails without replacing or deleting anything.
@@ -107,7 +109,47 @@ Run the cheap one-case smoke path first:
   --candidate-fraction 0.125 0.25 0.35 0.5
 ```
 
-After that capture/scoring/report path passes, invoke the four-case matrix:
+### 4K smoke result
+
+The one-case smoke completed its full all-layer/head matrix and passed an independent integrity
+audit. It is valid development evidence for the capture and scoring path, but it is not a selector
+or context-extension result. At the 25% logical page budget:
+
+| Page size | Mean retained mass | p01 retained mass | Global output relative L2 | Mean physical fetch |
+| ---: | ---: | ---: | ---: | ---: |
+| 64 | 0.9639 | 0.6225 | 0.04035 | 71.7% |
+| 256 | 0.9575 | 0.5703 | 0.04746 | 61.6% |
+
+The output diagnostics pass the development L2/cosine screens, but attention-mass tails fail
+badly and independent head choices union into mostly dense physical reads. Page-256 support recall
+is structurally guaranteed in this smoke because the support lies in the mandatory recent page.
+The result therefore authorizes only the focused longer-length pilot below; it does not justify
+training a fixed-budget selector.
+
+The report contains 3,584 head-budget records, 2,688 minimum-mass records, and 224 physical-union
+records. File SHA-256:
+`d164e11679d3469f50e20a8c0f7555ab2149d60bb8949e36c0120335b06e26d0`.
+Canonical in-report integrity SHA-256:
+`a865ea414a436d3a84d864ca1037cdba5c0f82e0ce22a3b2a7e72277d4405479`.
+
+After that capture/scoring/report path passes, run the focused one-case pilot:
+
+```powershell
+.\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
+  --dataset-manifest .\experiments\atxy-page-oracle-v1\dataset\pilot-manifest.json `
+  --model .\models\Qwen3-1.7B `
+  --page-size 64 256 `
+  --candidate-fraction 0.25 0.35
+```
+
+The pilot performs three independent causal prefix captures. The 16,384 checkpoint supplies the
+first decisive length, while 32,767 exercises a partial final page and adjacent 32,768 is its
+full-page control. If oracle attention retention or the layer-wide physical union is already
+unacceptable here, stop before selector work and before spending on the four-case matrix. Passing
+the pilot authorizes only that larger development matrix; it does not establish context extension
+or promotion readiness.
+
+After the pilot passes, invoke the four-case matrix:
 
 ```powershell
 .\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `

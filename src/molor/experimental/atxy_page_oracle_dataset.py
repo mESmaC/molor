@@ -20,8 +20,10 @@ DATASET_SCHEMA = "molor.atxy-page-oracle-development-dataset.v1"
 DATASET_STATUS = "development-only"
 FULL_TOKEN_COUNT = 32_768
 CHECKPOINTS = (4_096, 8_192, 16_384, 32_767, 32_768)
+PILOT_CHECKPOINTS = (16_384, 32_767, 32_768)
 DEFAULT_MODEL = Path("models/Qwen3-1.7B")
 FULL_MANIFEST_NAME = "development-manifest.json"
+PILOT_MANIFEST_NAME = "pilot-manifest.json"
 SMOKE_MANIFEST_NAME = "smoke-manifest.json"
 CHECKSUM_NAME = "SHA256SUMS"
 
@@ -64,6 +66,7 @@ class RenderedCase:
 class DatasetAssets:
     files: Mapping[str, bytes]
     full_cases: tuple[RenderedCase, ...]
+    pilot_case: RenderedCase
     smoke_case: RenderedCase
 
 
@@ -466,12 +469,24 @@ def _manifest_bytes(cases: Sequence[RenderedCase], paths: Mapping[str, str]) -> 
 
 
 def render_dataset(tokenizer: Any) -> DatasetAssets:
-    """Render the full development corpus and its exact 4K smoke prefix."""
+    """Render the full corpus, the case-01 pilot, and its exact 4K smoke prefix."""
 
     if getattr(tokenizer, "is_fast", False) is not True:
         raise ValueError("dataset rendering requires a fast tokenizer with character offsets")
     full_cases = tuple(render_case(tokenizer, recipe) for recipe in CASE_RECIPES)
     first_case = full_cases[0]
+    pilot_case = RenderedCase(
+        case_id=first_case.case_id,
+        source_text=first_case.source_text,
+        token_ids=first_case.token_ids,
+        checkpoints=tuple(
+            checkpoint
+            for checkpoint in first_case.checkpoints
+            if checkpoint.token_count in PILOT_CHECKPOINTS
+        ),
+    )
+    if tuple(checkpoint.token_count for checkpoint in pilot_case.checkpoints) != PILOT_CHECKPOINTS:
+        raise RuntimeError("pilot checkpoints do not exactly match the frozen checkpoint set")
     first_checkpoint = first_case.checkpoints[0]
     smoke_text = first_case.source_text[: first_checkpoint.query_end_character]
     smoke_ids = _encoded(tokenizer, smoke_text)
@@ -493,13 +508,19 @@ def render_dataset(tokenizer: Any) -> DatasetAssets:
     }
     files[smoke_paths[smoke_case.case_id]] = smoke_case.source_text.encode("utf-8")
     files[FULL_MANIFEST_NAME] = _manifest_bytes(full_cases, full_paths)
+    files[PILOT_MANIFEST_NAME] = _manifest_bytes((pilot_case,), full_paths)
     files[SMOKE_MANIFEST_NAME] = _manifest_bytes((smoke_case,), smoke_paths)
     checksum_lines = [
         f"{_sha256(payload)}  {path}\n"
         for path, payload in sorted(files.items(), key=lambda item: item[0])
     ]
     files[CHECKSUM_NAME] = "".join(checksum_lines).encode("ascii")
-    return DatasetAssets(files=files, full_cases=full_cases, smoke_case=smoke_case)
+    return DatasetAssets(
+        files=files,
+        full_cases=full_cases,
+        pilot_case=pilot_case,
+        smoke_case=smoke_case,
+    )
 
 
 def write_assets_exclusive(output_directory: Path, assets: DatasetAssets) -> tuple[Path, ...]:
