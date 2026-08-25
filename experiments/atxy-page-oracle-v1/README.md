@@ -151,7 +151,37 @@ unacceptable here, stop before selector work and before spending on the four-cas
 the pilot authorizes only that larger development matrix; it does not establish context extension
 or promotion readiness.
 
-After the pilot passes, invoke the four-case matrix:
+### 16K/32K pilot result and stop decision
+
+The forced-cuDNN pilot completed and passed its report-integrity and aggregate-recomputation
+checks. At the 25% logical page budget, its decisive rows were:
+
+| Tokens | Page size | Mean retained mass | p01 retained mass | Global output relative L2 | Mean physical fetch |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 16,384 | 64 | 0.9659 | 0.7173 | 0.0721 | 75.2% |
+| 16,384 | 256 | 0.9587 | 0.6914 | 0.0849 | 71.3% |
+| 32,767 | 64 | 0.9849 | 0.8223 | 0.0192 | 72.7% |
+| 32,767 | 256 | 0.9817 | 0.8082 | 0.0241 | 70.6% |
+| 32,768 | 64 | 0.9806 | 0.7643 | 0.0300 | 71.9% |
+| 32,768 | 256 | 0.9770 | 0.7505 | 0.0352 | 70.2% |
+
+At 32K, the median physical token fraction needed for 0.995 mass ranged from 22.1% to 32.0%, but
+the p95 requirement ranged from 76.0% to 85.9%. Every row missed the 0.995 mean-mass and 0.98 p01
+screens, and logical 25% selections still required roughly 70% of the layer payload after GQA-head
+unions. The 16K rows also missed the 0.05 global-output-L2 screen.
+
+The exact-attention oracle therefore rejects a fixed-budget ATXY page selector at these geometries.
+The four-case matrix was deliberately not run. Work proceeds only on a correctness-preserving
+progressive selector with certified mass and exact dense fallback, backed by bounded CPU/GPU
+staging; a learned fixed-budget hash selector cannot exceed this oracle ceiling.
+
+The report contains 5,376 head-budget records, 8,064 minimum-mass records, and 336 physical-union
+records. File SHA-256:
+`417298182eb3f8c56dfbebdf6cfa5c23bff4379825a562f76ed2a748c9665274`.
+Canonical in-report integrity SHA-256:
+`7bfeefbf11b66802153f355fa3f4ae3e10c49dd3464bf01431d7b8f0943a3f44`.
+
+Had the pilot passed, the four-case matrix command would have been:
 
 ```powershell
 .\.venv\Scripts\python.exe -m molor.experimental.atxy_page_oracle_lab `
@@ -164,7 +194,8 @@ After the pilot passes, invoke the four-case matrix:
 
 Reports are exclusively created beneath `runs/atxy-page-oracle-v1/` by default and are explicitly
 ineligible for promotion. The checked-in manifests are deterministic development inputs, not a
-preregistered corpus, and no formal report is checked in.
+preregistered corpus. Audited smoke and pilot reports are retained as immutable development
+evidence; neither is a formal promotion report.
 
 Long-prefix capture defaults to forced cuDNN SDPA and records that selection in the report. Leaving
 kernel selection automatic is permitted only as an explicit diagnostic: on this stack it selected
