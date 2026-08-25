@@ -1,8 +1,9 @@
 """Conservative reward optimization for the frozen MoLoRA prompt router.
 
 This tool consumes the counterfactual teacher-evaluation matrix rather than dataset labels.  Each
-training row contains a complete reward vector for the forced base/null route and all three frozen
-LoRA experts.  Auto-routed rollouts are deliberately excluded from optimization.
+training row contains a complete reward vector for the forced base/null route and every frozen LoRA
+expert in the parent router's action axis.  Auto-routed rollouts are deliberately excluded from
+optimization.
 
 The learned policy maximizes the full-information contextual-bandit objective
 
@@ -103,6 +104,7 @@ class ParentContract:
     weights_path: Path
     sidecar: dict[str, Any]
     route_ids: tuple[str, ...]
+    runtime_names: tuple[str, ...]
     router_config: RouterConfig
 
 
@@ -171,10 +173,46 @@ def _load_parent_contract(directory: Path) -> ParentContract:
     ):
         raise OptimizerError("initial router has invalid route_ids")
     route_ids = tuple(raw_routes)
-    if len(route_ids) != 4 or route_ids[-1] != "base/null" or len(set(route_ids)) != 4:
+    if len(route_ids) < 2 or route_ids[-1] != "base/null" or len(set(route_ids)) != len(route_ids):
         raise OptimizerError(
-            "reward optimization requires exactly three experts followed by base/null"
+            "reward optimization requires one or more unique experts followed by base/null"
         )
+    expected_route_to_index = {
+        route_id: index for index, route_id in enumerate(route_ids)
+    }
+    if sidecar.get("route_to_index") != expected_route_to_index:
+        raise OptimizerError("initial router route_to_index does not match its ordered route_ids")
+
+    raw_adapters = sidecar.get("adapters")
+    if not isinstance(raw_adapters, list) or any(
+        not isinstance(adapter, Mapping) for adapter in raw_adapters
+    ):
+        raise OptimizerError("initial router has invalid adapter metadata")
+    adapter_route_ids = tuple(str(adapter.get("route_id") or "") for adapter in raw_adapters)
+    if adapter_route_ids != route_ids[:-1]:
+        raise OptimizerError(
+            "initial router adapter metadata does not match its ordered expert routes"
+        )
+    runtime_names: list[str] = []
+    for route_id, adapter in zip(adapter_route_ids, raw_adapters, strict=True):
+        runtime_name = adapter.get("runtime_name", route_id)
+        if not isinstance(runtime_name, str) or not evaluation.ID_PATTERN.fullmatch(runtime_name):
+            raise OptimizerError("initial router adapter runtime_name is invalid")
+        runtime_names.append(runtime_name)
+    if len(runtime_names) != len(set(runtime_names)) or "base" in runtime_names:
+        raise OptimizerError(
+            "initial router adapter runtime names must be unique and cannot use reserved base"
+        )
+
+    checkpoint = sidecar.get("checkpoint")
+    if not isinstance(checkpoint, Mapping):
+        raise OptimizerError("initial router has no checkpoint artifact identity")
+    expected_checkpoint_sha = checkpoint.get("sha256")
+    expected_checkpoint_size = checkpoint.get("size_bytes")
+    if expected_checkpoint_sha != _sha256_file(weights_path) or expected_checkpoint_size != (
+        weights_path.stat().st_size
+    ):
+        raise OptimizerError("initial router weights differ from its checkpoint artifact identity")
     raw_config = sidecar.get("router_config")
     if not isinstance(raw_config, dict):
         raise OptimizerError("initial router has no router_config object")
@@ -182,9 +220,235 @@ def _load_parent_contract(directory: Path) -> ParentContract:
         router_config = RouterConfig(**raw_config)
     except (TypeError, ValueError) as exc:
         raise OptimizerError(f"invalid initial router config: {exc}") from exc
-    if router_config.num_routes != len(route_ids) or router_config.mode != "sequence":
+    if (
+        router_config.num_routes != len(route_ids)
+        or not router_config.include_null_expert
+        or router_config.mode != "sequence"
+    ):
         raise OptimizerError("initial router action axis/configuration is incompatible")
-    return ParentContract(root, config_path, weights_path, sidecar, route_ids, router_config)
+    return ParentContract(
+        root,
+        config_path,
+        weights_path,
+        sidecar,
+        route_ids,
+        tuple([*runtime_names, "base"]),
+        router_config,
+    )
+
+
+def _validate_manifest_route_contract(
+    manifest: evaluation.EvalManifest,
+    parent: ParentContract,
+) -> None:
+    routes_by_id = {route.route_id: route for route in manifest.forced_routes}
+    if set(routes_by_id) != set(parent.route_ids):
+        raise OptimizerError(
+            "manifest forced routes must match the initial router's action IDs exactly"
+        )
+
+    expected_runtime_names = dict(zip(parent.route_ids, parent.runtime_names, strict=True))
+    for route_id, runtime_name in expected_runtime_names.items():
+        if routes_by_id[route_id].runtime_name != runtime_name:
+            raise OptimizerError(
+                "manifest runtime routes must match the parent adapter runtime names and map "
+                "base/null to base"
+            )
+
+    expected_enabled_experts = set(parent.runtime_names[:-1])
+    for label, policy in (
+        ("manual_policy_defaults", manifest.manual_policy_defaults),
+        ("auto.policy", manifest.auto_policy),
+    ):
+        enabled = policy.get("enabled_experts")
+        if (
+            not isinstance(enabled, list)
+            or len(enabled) != len(expected_enabled_experts)
+            or set(enabled) != expected_enabled_experts
+        ):
+            raise OptimizerError(
+                f"manifest {label}.enabled_experts must match the parent expert bank exactly"
+            )
+
+
+def _parent_health_identity(parent: ParentContract) -> dict[str, object]:
+    model = parent.sidecar.get("model")
+    if not isinstance(model, Mapping):
+        raise OptimizerError("initial router has no frozen-base model metadata")
+    model_id = model.get("model_id")
+    adapters = parent.sidecar.get("adapters")
+    if not isinstance(adapters, list):
+        raise OptimizerError("initial router has invalid adapter metadata")
+    expert_paths = [adapter.get("path") for adapter in adapters]
+    health = {
+        "status": "ok",
+        "protocol_version": "molor.teacher-api.v1",
+        "model_loaded": True,
+        "model_id": model_id,
+        "experts": list(parent.runtime_names[:-1]),
+        "configured_expert_paths": expert_paths,
+        "router_checkpoint": str(parent.directory),
+        "router_loaded": True,
+    }
+    try:
+        return evaluation._student_health_identity(health)
+    except evaluation.EvalError as exc:
+        raise OptimizerError(f"initial router cannot identify a local student stack: {exc}") from exc
+
+
+def _collection_provenance(
+    events: Sequence[Mapping[str, object]],
+    manifest: evaluation.EvalManifest,
+    parent: ParentContract,
+) -> dict[str, object]:
+    """Validate rollout sessions, retaining an honest compatibility status for old reports."""
+
+    sessions = [
+        event
+        for event in events
+        if event.get("event") == "collection_session"
+        and event.get("manifest_sha256") == manifest.fingerprint
+        and event.get("run_id") == manifest.run_id
+    ]
+    successful = [
+        event
+        for event in evaluation._successful_rollouts(events).values()
+        if event.get("manifest_sha256") == manifest.fingerprint
+        and event.get("run_id") == manifest.run_id
+    ]
+    if successful and not sessions:
+        raise OptimizerError("raw rollouts have no matching collection session provenance")
+
+    legacy_selected = any(event.get("artifact_contract_sha256") is None for event in successful)
+    selected_exact_contracts: set[str] = set()
+    selected_legacy_capabilities: set[str] = set()
+    for rollout in successful:
+        contract_sha = rollout.get("artifact_contract_sha256")
+        capability_sha = rollout.get("capabilities_sha256")
+        if not isinstance(capability_sha, str) or not capability_sha:
+            raise OptimizerError("raw rollout has no capabilities fingerprint")
+        if contract_sha is None:
+            selected_legacy_capabilities.add(capability_sha)
+        elif not isinstance(contract_sha, str) or not contract_sha:
+            raise OptimizerError("raw rollout has an invalid artifact contract fingerprint")
+        else:
+            selected_exact_contracts.add(contract_sha)
+    if legacy_selected and selected_exact_contracts:
+        raise OptimizerError(
+            "successful rollout matrix mixes legacy and exact artifact provenance generations"
+        )
+    if len(selected_exact_contracts) > 1:
+        raise OptimizerError(
+            "successful rollout matrix mixes multiple exact artifact contract generations"
+        )
+    if len(selected_legacy_capabilities) > 1:
+        raise OptimizerError(
+            "successful legacy rollout matrix mixes multiple collection session identities"
+        )
+
+    expected_health = _parent_health_identity(parent)
+    expected_contract: dict[str, object] | None = None
+    exact_contracts: set[str] = set()
+    legacy_capabilities: set[str] = set()
+    legacy_session_identities: set[str] = set()
+    for rollout in successful:
+        capability_sha = rollout.get("capabilities_sha256")
+        assert isinstance(capability_sha, str)  # validated for the complete selected set above
+        contract_sha = rollout.get("artifact_contract_sha256")
+        if contract_sha is None:
+            matching = [
+                session
+                for session in sessions
+                if session.get("capabilities_sha256") == capability_sha
+                and session.get("student_artifact_contract") is None
+            ]
+            if not matching:
+                raise OptimizerError("legacy rollout has no matching legacy collection session")
+            for session in matching:
+                if session.get("artifact_provenance_status") not in (
+                    None,
+                    evaluation.LEGACY_ARTIFACT_PROVENANCE,
+                ):
+                    raise OptimizerError("legacy collection session has an invalid provenance status")
+                health = session.get("health")
+                if not isinstance(health, Mapping):
+                    raise OptimizerError("legacy collection session has no health identity")
+                try:
+                    actual_health = evaluation._student_health_identity(health)
+                except evaluation.EvalError as exc:
+                    raise OptimizerError(f"legacy collection health is invalid: {exc}") from exc
+                if actual_health != expected_health:
+                    raise OptimizerError(
+                        "legacy collection health paths/names do not match the parent router stack"
+                    )
+                legacy_session_identities.add(
+                    _fingerprint(
+                        {
+                            "capabilities_sha256": capability_sha,
+                            "health_identity": actual_health,
+                        }
+                    )
+                )
+            legacy_capabilities.add(capability_sha)
+            continue
+
+        assert isinstance(contract_sha, str)  # validated for the complete selected set above
+        matching = [
+            session
+            for session in sessions
+            if session.get("capabilities_sha256") == capability_sha
+            and isinstance(session.get("student_artifact_contract"), Mapping)
+            and session["student_artifact_contract"].get("contract_sha256") == contract_sha
+        ]
+        if not matching:
+            raise OptimizerError("exact-provenance rollout has no matching collection session")
+        if expected_contract is None:
+            try:
+                expected_contract = evaluation._build_student_artifact_contract(
+                    {
+                        "status": "ok",
+                        "protocol_version": "molor.teacher-api.v1",
+                        **expected_health,
+                    },
+                    show_progress=False,
+                )
+            except evaluation.EvalError as exc:
+                raise OptimizerError(
+                    f"cannot fingerprint the parent router's current student stack: {exc}"
+                ) from exc
+        for session in matching:
+            if session.get("artifact_provenance_status") != evaluation.EXACT_ARTIFACT_PROVENANCE:
+                raise OptimizerError("exact collection session has an invalid provenance status")
+            try:
+                actual_contract = evaluation._validate_student_artifact_contract(
+                    session.get("student_artifact_contract")
+                )
+            except evaluation.EvalError as exc:
+                raise OptimizerError(str(exc)) from exc
+            if actual_contract != expected_contract:
+                raise OptimizerError(
+                    "collection artifact bytes differ from the parent/current student stack"
+                )
+        exact_contracts.add(contract_sha)
+
+    if len(legacy_session_identities) > 1:
+        raise OptimizerError(
+            "successful legacy rollout matrix mixes multiple validated session identities"
+        )
+
+    status = (
+        evaluation.LEGACY_ARTIFACT_PROVENANCE
+        if legacy_capabilities
+        else evaluation.EXACT_ARTIFACT_PROVENANCE
+    )
+    return {
+        "status": status,
+        "successful_rollouts_validated": len(successful),
+        "collection_sessions_considered": len(sessions),
+        "exact_contract_sha256": sorted(exact_contracts),
+        "legacy_capabilities_sha256": sorted(legacy_capabilities),
+        "legacy_session_identity_sha256": sorted(legacy_session_identities),
+    }
 
 
 def _prompt_text(prompt: evaluation.PromptSpec) -> str:
@@ -526,15 +790,13 @@ def _prepare_rewards(
         manifest = evaluation.load_manifest(manifest_path)
     except evaluation.EvalError as exc:
         raise OptimizerError(str(exc)) from exc
-    manifest_routes = tuple(route.route_id for route in manifest.forced_routes)
-    if set(manifest_routes) != set(parent.route_ids):
-        raise OptimizerError(
-            "manifest forced routes must exactly match the initial router's base+expert bank"
-        )
+    _validate_manifest_route_contract(manifest, parent)
     report = (report_path or manifest.raw_report).expanduser().resolve()
     if not report.is_file():
         raise OptimizerError(f"raw rollout report does not exist: {report}")
     try:
+        events = evaluation._read_events(report, "raw report")
+        artifact_provenance = _collection_provenance(events, manifest, parent)
         candidates, forced, ignored_auto_candidates = _load_candidates(manifest, report)
     except evaluation.EvalError as exc:
         raise OptimizerError(str(exc)) from exc
@@ -675,6 +937,7 @@ def _prepare_rewards(
             "sha256": dataset_payload["raw_report_sha256"],
             "candidate_generations": len(candidates),
             "auto_candidates_ignored": ignored_auto_candidates,
+            "artifact_provenance": artifact_provenance,
         },
         "judgments": {
             **judgment_summary,

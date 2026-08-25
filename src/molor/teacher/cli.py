@@ -93,6 +93,7 @@ def _parser() -> argparse.ArgumentParser:
             os.environ.get("MOLOR_ROUTER")
             or os.environ.get("MOLOR_ROUTER_CHECKPOINT")
             or _first_existing(
+                "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
                 "checkpoints/qwen3-1.7b-corpus-router-v3-mlp",
                 "checkpoints/qwen3-1.7b-corpus-router-v1",
             )

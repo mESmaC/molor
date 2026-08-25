@@ -7,13 +7,14 @@ earlier rank-8 experiments remain under `checkpoints/qwen3-1.7b-real-experts/`.
 
 ## Current rank-16 corpus experts
 
-All three use the same frozen local Qwen3-1.7B base and all seven attention/MLP projections.
+All four use the same frozen local Qwen3-1.7B base and all seven attention/MLP projections.
 
 | Adapter | Data split | Held-out result | Honest status |
 |---|---:|---|---|
 | `embedded-knowledge-v1` | 6,000 train / 512 file-held-out | NLL 3.6013 -> 1.4356; on 64 generations, character similarity was .1003 base / .1175 earlier rank-8 adapter / .3070 new expert | Clear corpus-use improvement, but generated code and technical claims are not mechanically verified. A separate 35-row seen-recall probe exists and is explicitly not held-out. |
 | `ocb-can-verified-v1` | 12,320 train / 1,024 message-group-held-out | NLL 4.0179 -> .07419; on 128 generations, structured-field accuracy rose .20295 -> .78771 and all-fields exact rose 0 -> 36 | Raw-value accuracy .359 and physical-value accuracy .344 are still weak, so deterministic decoding remains necessary. The completed run retains its warm-restart provenance. |
 | `software-architecture-v1` | 12,000 train / 1,000 validation; zero normalized-prompt overlap | NLL 2.4796 -> 1.2808; on 64 generations, term F1 rose .2661 -> .3657 and quality-signal recall .4243 -> .5776 | Concept recall was effectively flat (.4177 -> .4142). The generation slice spans 14/15 topic families; these lexical/reference metrics do not prove semantic correctness. A blind review pack is available. |
+| `verified-embedded-code-v1` | 920 compiler-verified training rows | Fresh executable sibling score 66.8 base -> 152.2; sealed executable score 303.4 prior Auto -> 502.6 forced | Strongest current executable-code adapter, but hidden-test failures remain; compiler/verifier feedback is still required. |
 
 The architecture blind pack is `runs/evaluation/software-architecture-v1-blind-28.jsonl`, with its
 separate key beside it. It is intended for blinded human/teacher comparison rather than being
@@ -27,6 +28,11 @@ counted as another automatic win.
 | `local-embedded-code` | 2,200 rows / 1,568 files | NLL 1.865 -> 1.001; character similarity 0.256 -> 0.314 on 50 file-held-out continuations | Useful local C/C++/asm/linker/build completion and style adapter; not a verified debugger |
 | `terminal-cli` | 540 traces | NLL 1.928 -> 1.002 on 60 task-held-out traces | Learns inspect/run/test behavior; requires a real command-result loop before autonomous use |
 | `grounded-can` | 226 rows | 21/26 definition audits fully correct, but only 14/26 payload raw values correct | Experimental definition explainer; deterministic DBC decoding must remain a tool |
+
+The quarantined rank-16 `financial-analysis-verified-r16-v1` follow-up is also a negative result.
+It improved held-out NLL to .2971, but on 149 eligible calculation rows reached only 38.3%
+numeric+unit accuracy, 38.9% verifier pass, and 61.1% calculation consistency, below the stronger
+rank-8 finance comparator. It is not part of the resident rack or router.
 
 `grounded-can-curriculum` is preserved as a negative result. Expanding training to 484 legal
 payload variants improved template/mechanics fields but reduced raw decode accuracy to 13/26. The
@@ -67,9 +73,9 @@ decoder.
 
 ## Run and retrain
 
-The desktop selects all three rank-16 corpus experts into one resident rack and loads the
-`qwen3-1.7b-corpus-router-v1` prompt router by default. Auto routing is primary; base/null and each
-expert remain force-selectable for ablations:
+The desktop selects all four promoted rank-16 corpus experts into one resident rack and loads the
+`qwen3-1.7b-corpus-router-v4-mlp-controlled` prompt router by default. Auto routing is primary;
+base/null and each expert remain force-selectable for ablations:
 
 ```powershell
 .\.venv\Scripts\molor-desktop.exe
@@ -79,9 +85,17 @@ Example retraining and evaluation commands:
 
 ```powershell
 .\.venv\Scripts\python.exe `
-  .\experiments\first-real-experts\build_router_dataset.py --per-route 3000
+  .\experiments\first-real-experts\build_router_v4_hard_negative_dataset.py `
+  --output-prefix .\experiments\first-real-experts\data\router-bootstrap-v4-hard-negative-s307
 
-.\.venv\Scripts\molor-train-router.exe --device cpu
+.\.venv\Scripts\molor-train-router.exe `
+  --train .\experiments\first-real-experts\data\router-bootstrap-v4-hard-negative-s307.train.jsonl `
+  --validation .\experiments\first-real-experts\data\router-bootstrap-v4-hard-negative-s307.validation.jsonl `
+  --test .\experiments\first-real-experts\data\router-bootstrap-v4-hard-negative-s307.test.jsonl `
+  --adapter verified-embedded-code-v1=.\checkpoints\qwen3-1.7b-corpus-experts\verified-embedded-code-v1 `
+  --output-dir .\checkpoints\qwen3-1.7b-corpus-router-v4-mlp-controlled `
+  --cache-dir .\runs\router-features\bootstrap-v4-hard-negative-s307 `
+  --device cpu --router-hidden-size 256 --seed 83
 
 .\.venv\Scripts\molor-train-experts.exe `
   .\experiments\first-real-experts\software-architecture-v1-recipe.json --local-files-only
@@ -93,38 +107,24 @@ Example retraining and evaluation commands:
   --limit 64 --batch-size 2 --max-length 1024
 ```
 
-The router curriculum contains 9,600 train, 1,200 validation, and 1,200 test prompts balanced over
-the three experts plus base/null. It uses training corpora only, excludes system/assistant text,
-has zero normalized-prompt and source-family overlap, and reserves 336 manually labelled intent
-prompts. The current linear embedding-mean head reached 99.3% validation and 99.0% test route-label
-accuracy. This is a routing-taxonomy bootstrap, not an end-to-end claim that the selected expert
-beats every forced route; reward/NLL distillation is still needed.
+The promoted curriculum contains 4,680 train, 650 validation, and 650 test prompts balanced over
+the four experts plus base/null. It excludes system/assistant text and has zero normalized-prompt
+and semantic-family overlap. Seed 83 reached 99.69% validation and 99.23% file-held-out test
+route-label accuracy. On a separately authored 60-prompt blind probe it improved acceptable
+routing over v3 from 66.7% to 73.3% and exact single-label accuracy from 64.0% to 72.0%. CAN rose
+from 5/10 to 8/10, embedded knowledge from 6/10 to 8/10, base/null stayed 9/10, and the executable
+suite tied v3 at 502.5604 with no case-level regression. Verified-code intent is still a weak lane:
+it moved from 2/10 to 1/10 on the blind probe and needs a new curriculum iteration.
 
-`evaluate_router.py` runs a separate 40-prompt intent probe that is never read by the dataset
-builder. With the desktop defaults it currently reaches 80.0% acceptable-route accuracy and 75.8%
-exact accuracy on the 33 single-label rows; the retained misses are the useful part of this probe.
+V4 adds split-owned CAN, terse embedded, and base/null hard-negative families without copying
+exact probe rows. Aggregate failures on the older probes informed those family choices, so the
+older probe scores are development diagnostics rather than blind evidence. An initial v4
+ablation that resampled unrelated v3 rows was rejected. The promoted controlled build keeps the
+original v3 selection seed 307, isolating the new rows. This is still a routing-taxonomy bootstrap,
+not proof that the selected expert beats every forced route; a new complete five-route reward
+matrix is required for further router RL.
 
-The staged router-v2 tooling adds `verified-embedded-code-v1` without changing the current router
-checkpoint or service. Build its five-route, semantic-group-disjoint corpus and, when ready, train
-to new output/cache directories:
-
-```powershell
-.\.venv\Scripts\python.exe `
-  .\experiments\first-real-experts\build_router_v2_dataset.py
-
-.\.venv\Scripts\molor-train-router.exe `
-  --train .\experiments\first-real-experts\data\router-bootstrap-v2.train.jsonl `
-  --validation .\experiments\first-real-experts\data\router-bootstrap-v2.validation.jsonl `
-  --test .\experiments\first-real-experts\data\router-bootstrap-v2.test.jsonl `
-  --adapter verified-embedded-code-v1=.\checkpoints\qwen3-1.7b-corpus-experts\verified-embedded-code-v1 `
-  --output-dir .\checkpoints\qwen3-1.7b-corpus-router-v2 `
-  --cache-dir .\runs\router-features\bootstrap-v2 --device cpu
-```
-
-After training, use `data/router-intent-probe-v2.jsonl` with `evaluate_router.py` to distinguish
-code implementation/compile requests from embedded reference questions and ordinary base traffic.
-
-The three current corpus experts use rank 16 LoRA over Qwen's seven attention/MLP projections. The
+The four current corpus experts use rank 16 LoRA over Qwen's seven attention/MLP projections. The
 adapters under `qwen3-1.7b-real-experts` are the older rank-8 experiments. Training uses BF16 and
 gradient checkpointing; recipe batch details vary by corpus. The older 4,096-token terminal recipe
 nearly saturates the 12 GB RTX 5070, so longer-context adapter training needs quantization, more

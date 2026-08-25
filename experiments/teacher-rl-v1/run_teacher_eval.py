@@ -14,9 +14,11 @@ the command can be resumed safely.
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext, redirect_stdout
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
+import io
 import json
 import math
 import os
@@ -29,12 +31,17 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
+from molor.benchmark.lock import lock_backend_identity
+
 
 SCHEMA_MANIFEST = "molor.teacher-eval.manifest.v1"
 SCHEMA_RAW = "molor.teacher-eval.raw.v1"
 SCHEMA_REVIEW = "molor.teacher-eval.review-pack.v1"
 SCHEMA_JUDGMENTS = "molor.teacher-eval.judgments.v1"
 SCHEMA_SUBMISSION = "molor.teacher-eval.submission.v1"
+SCHEMA_ARTIFACT_CONTRACT = "molor.teacher-eval.student-artifact-contract.v1"
+EXACT_ARTIFACT_PROVENANCE = "exact_local_artifact_bytes"
+LEGACY_ARTIFACT_PROVENANCE = "legacy_path_identity_only"
 DEFAULT_MANIFEST = Path(__file__).with_name("manifest.json")
 ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._/-]{0,127}$")
 MESSAGE_ROLES = {"system", "user", "assistant", "tool"}
@@ -83,6 +90,110 @@ def _file_fingerprint(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _local_directory(value: object, label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise EvalError(f"{label} must be a non-empty local directory path")
+    path = Path(value).expanduser().resolve()
+    if not path.is_dir():
+        raise EvalError(f"{label} is not an available local directory: {path}")
+    return str(path)
+
+
+def _string_array(value: object, label: str) -> list[str]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        raise EvalError(f"{label} must be an array")
+    result = list(value)
+    if any(not isinstance(item, str) or not item.strip() for item in result):
+        raise EvalError(f"{label} must contain only non-empty strings")
+    if len(result) != len(set(result)):
+        raise EvalError(f"{label} must not contain duplicates")
+    return result
+
+
+def _student_health_identity(health: Mapping[str, object]) -> dict[str, object]:
+    """Extract the strict, path-bound runtime identity used by collection provenance."""
+
+    if health.get("status") != "ok" or health.get("protocol_version") != "molor.teacher-api.v1":
+        raise EvalError("teacher health does not advertise the expected healthy v1 protocol")
+    if health.get("model_loaded") is not True:
+        raise EvalError("student must be loaded before artifact provenance can be recorded")
+    if health.get("router_loaded") is not True:
+        raise EvalError("student router must be loaded before artifact provenance can be recorded")
+
+    experts = _string_array(health.get("experts"), "health.experts")
+    expert_paths = _string_array(
+        health.get("configured_expert_paths"), "health.configured_expert_paths"
+    )
+    if len(experts) != len(expert_paths):
+        raise EvalError("health expert names and configured paths must have the same length")
+    resolved_experts = [
+        _local_directory(path, f"health.configured_expert_paths[{index}]")
+        for index, path in enumerate(expert_paths)
+    ]
+    return {
+        "model_id": _local_directory(health.get("model_id"), "health.model_id"),
+        "experts": experts,
+        "configured_expert_paths": resolved_experts,
+        "router_checkpoint": _local_directory(
+            health.get("router_checkpoint"), "health.router_checkpoint"
+        ),
+        "model_loaded": True,
+        "router_loaded": True,
+    }
+
+
+def _build_student_artifact_contract(
+    health: Mapping[str, object],
+    *,
+    show_progress: bool = True,
+) -> dict[str, object]:
+    """Bind one loaded local student stack to the bytes used for new rollouts."""
+
+    health_identity = _student_health_identity(health)
+    progress_context = nullcontext() if show_progress else redirect_stdout(io.StringIO())
+    with progress_context:
+        locked = lock_backend_identity(
+            health_identity,
+            # The benchmark locker deliberately performs a fresh full read and ignores this path.
+            cache_path=Path(__file__).with_name(".teacher-artifact-lock-cache.json"),
+        )
+    if locked.get("fully_content_addressed") is not True:
+        unresolved = locked.get("unresolved")
+        raise EvalError(f"student artifact stack is not fully content-addressed: {unresolved}")
+    artifacts = locked.get("artifacts")
+    if not isinstance(artifacts, list):
+        raise EvalError("student artifact locker returned no artifact list")
+    roles = [item.get("role") for item in artifacts if isinstance(item, Mapping)]
+    if roles.count("base") != 1 or roles.count("router") != 1 or roles.count("expert") != len(
+        health_identity["experts"]
+    ):
+        raise EvalError("student artifact stack does not match the loaded base/expert/router rack")
+
+    payload: dict[str, object] = {
+        "schema_version": SCHEMA_ARTIFACT_CONTRACT,
+        "hash_policy": locked.get("hash_policy"),
+        "health_identity": health_identity,
+        "artifacts": artifacts,
+        "stack_fingerprint": locked.get("stack_fingerprint"),
+    }
+    return {**payload, "contract_sha256": _fingerprint(payload)}
+
+
+def _validate_student_artifact_contract(value: object) -> dict[str, object]:
+    """Validate the self-fingerprint of a serialized collection contract."""
+
+    if not isinstance(value, Mapping):
+        raise EvalError("collection session has no student artifact contract")
+    contract = dict(value)
+    supplied = contract.pop("contract_sha256", None)
+    if contract.get("schema_version") != SCHEMA_ARTIFACT_CONTRACT:
+        raise EvalError("collection session uses an unsupported artifact contract schema")
+    expected = _fingerprint(contract)
+    if supplied != expected:
+        raise EvalError("collection session artifact contract fingerprint is invalid")
+    return {**contract, "contract_sha256": expected}
 
 
 def _load_object(path: Path, label: str) -> dict[str, Any]:
@@ -668,20 +779,31 @@ def _validate_generation_response(response: Mapping[str, object]) -> None:
 def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
     endpoint = _loopback_endpoint(args.endpoint or manifest.endpoint)
     report = (args.report or manifest.raw_report).expanduser().resolve()
+    # Collection is going to load the student on the first generation anyway.  Load it before
+    # recording the session so health includes the actual runtime expert names and router state.
+    _api_json(endpoint, "POST", "/v1/student/load", {}, manifest.request_timeout_seconds)
     health = _api_json(endpoint, "GET", "/health", None, manifest.request_timeout_seconds)
     capabilities = _api_json(
         endpoint, "GET", "/v1/capabilities", None, manifest.request_timeout_seconds
     )
     dynamic = _supports_dynamic_routing(capabilities)
     capability_sha = _fingerprint(capabilities)
+    artifact_contract = _build_student_artifact_contract(health)
+    artifact_contract_sha = str(artifact_contract["contract_sha256"])
     existing = _read_events(report, "raw report")
     successes = {
         event.get("request_key")
         for event in existing
         if event.get("event") == "rollout" and event.get("status") == "ok"
+        and event.get("artifact_contract_sha256") == artifact_contract_sha
     }
     terminal_attempts = {
-        (event.get("request_key"), event.get("capabilities_sha256"), event.get("status"))
+        (
+            event.get("request_key"),
+            event.get("capabilities_sha256"),
+            event.get("artifact_contract_sha256"),
+            event.get("status"),
+        )
         for event in existing
         if event.get("event") == "rollout"
     }
@@ -699,6 +821,8 @@ def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
             "capabilities": capabilities,
             "capabilities_sha256": capability_sha,
             "dynamic_routing_available": dynamic,
+            "artifact_provenance_status": EXACT_ARTIFACT_PROVENANCE,
+            "student_artifact_contract": artifact_contract,
         },
     )
 
@@ -715,7 +839,12 @@ def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
             print(f"[{ordinal}/{len(items)}] resume {item.prompt.prompt_id} / {item.route_id}")
             continue
         if patch is None:
-            if (request_key, capability_sha, "unsupported") in terminal_attempts:
+            if (
+                request_key,
+                capability_sha,
+                artifact_contract_sha,
+                "unsupported",
+            ) in terminal_attempts:
                 counts["resumed"] += 1
                 continue
             _append_event(
@@ -728,6 +857,7 @@ def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
                     "run_id": manifest.run_id,
                     "manifest_sha256": manifest.fingerprint,
                     "capabilities_sha256": capability_sha,
+                    "artifact_contract_sha256": artifact_contract_sha,
                     "request_key": request_key,
                     "prompt_id": item.prompt.prompt_id,
                     "route_id": item.route_id,
@@ -739,7 +869,12 @@ def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
             counts["unsupported"] += 1
             print(f"[{ordinal}/{len(items)}] unsupported {item.prompt.prompt_id} / {item.route_id}")
             continue
-        if not args.retry_errors and (request_key, capability_sha, "error") in terminal_attempts:
+        if not args.retry_errors and (
+            request_key,
+            capability_sha,
+            artifact_contract_sha,
+            "error",
+        ) in terminal_attempts:
             counts["resumed"] += 1
             continue
         started_at = _now()
@@ -765,6 +900,7 @@ def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
                 "run_id": manifest.run_id,
                 "manifest_sha256": manifest.fingerprint,
                 "capabilities_sha256": capability_sha,
+                "artifact_contract_sha256": artifact_contract_sha,
                 "request_key": request_key,
                 "prompt_id": item.prompt.prompt_id,
                 "route_id": item.route_id,
@@ -791,6 +927,7 @@ def collect(args: argparse.Namespace, manifest: EvalManifest) -> int:
                     "run_id": manifest.run_id,
                     "manifest_sha256": manifest.fingerprint,
                     "capabilities_sha256": capability_sha,
+                    "artifact_contract_sha256": artifact_contract_sha,
                     "request_key": request_key,
                     "prompt_id": item.prompt.prompt_id,
                     "route_id": item.route_id,

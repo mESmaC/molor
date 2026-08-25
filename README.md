@@ -32,10 +32,12 @@ current runtime.
   plus annotation, teacher-RL, benchmark, training, and context-lab tools;
 - a terminal command that compares base, each expert, and a 50/50 blend on the same prompt.
 
-The promoted router is the contrastive five-way MLP checkpoint; the small teacher-reward update
-was rejected because it increased base abstention without improving hard reward. Persistent
-cross-session memory and Memory-LoRA remain the next model-side pieces. The existing `docs/`
-directory contains design notes for those experiments.
+The promoted router is the controlled five-way v4 MLP checkpoint. Its hard-negative curriculum
+improved acceptable routing from 66.7% to 73.3% on a new 60-prompt blind probe while exactly tying
+v3 on the six-case executable lane. A six-trial conservative router-RL sweep selected no update,
+and a new rank-16 finance adapter improved NLL but regressed verifier-backed calculation quality.
+Persistent cross-session memory and Memory-LoRA remain the next model-side pieces. The existing
+`docs/` directory contains design notes for those experiments.
 
 ## Run the desktop app
 
@@ -168,18 +170,26 @@ loss is applied only to that final assistant response.
 
 The router sees only the latest user prompt. It masked-mean pools at most 256 frozen Qwen
 input-token embeddings and trains a small five-route MLP; it never loads or runs the causal
-transformer. Rebuild the contrastive training-only curriculum and retrain it on CPU with:
+transformer. Rebuild the controlled hard-negative curriculum and retrain it on CPU with:
 
 ```powershell
-.\.venv\Scripts\python.exe experiments/first-real-experts/build_router_v3_contrastive_dataset.py
-.\.venv\Scripts\molor-train-router.exe --train experiments/first-real-experts/data/router-bootstrap-v3-contrastive.train.jsonl --validation experiments/first-real-experts/data/router-bootstrap-v3-contrastive.validation.jsonl --test experiments/first-real-experts/data/router-bootstrap-v3-contrastive.test.jsonl --adapter verified-embedded-code-v1=checkpoints/qwen3-1.7b-corpus-experts/verified-embedded-code-v1 --output-dir checkpoints/qwen3-1.7b-corpus-router-v3-mlp --cache-dir runs/router-features/bootstrap-v3-contrastive --device cpu --router-hidden-size 256
+.\.venv\Scripts\python.exe experiments/first-real-experts/build_router_v4_hard_negative_dataset.py --output-prefix experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307
+.\.venv\Scripts\molor-train-router.exe --train experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.train.jsonl --validation experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.validation.jsonl --test experiments/first-real-experts/data/router-bootstrap-v4-hard-negative-s307.test.jsonl --adapter verified-embedded-code-v1=checkpoints/qwen3-1.7b-corpus-experts/verified-embedded-code-v1 --output-dir checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled --cache-dir runs/router-features/bootstrap-v4-hard-negative-s307 --device cpu --router-hidden-size 256 --seed 83
 ```
 
-The emitted `checkpoints/qwen3-1.7b-corpus-router-v3-mlp/` contains the router head and exact
-identity/metrics sidecar. Its 4,680 / 650 / 650 split is balanced across four experts plus base and
-has no normalized-prompt or semantic-family overlap. It scores 88.9% on the new held-out intent
-probe at the conservative 0.40 floor; the promoted 0.30 floor preserves 80.0% acceptable coverage
-on the legacy probe and scores 83.3% on the new probe.
+The emitted `checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled/` contains the router head and
+exact identity/metrics sidecar. Its 4,680 / 650 / 650 split is balanced across four experts plus
+base/null and has no normalized-prompt or semantic-family overlap. Seed 83 reached 99.69%
+validation and 99.23% file-held-out test accuracy. A separately authored 60-prompt blind probe
+raised acceptable-route accuracy from v3's 66.7% to 73.3% and exact single-label accuracy from
+64.0% to 72.0%; CAN rose from 50% to 80%, embedded knowledge from 60% to 80%, and base/null stayed
+at 90%. Verified-code intent remains weak and slipped from 2/10 to 1/10. The verifier-backed
+executable lane nevertheless tied v3 exactly at 502.5604, with zero per-case regressions.
+
+The hard-negative family choices were informed by aggregate failures on the older intent probes,
+so those older scores are development diagnostics, not blind promotion evidence. A first v4
+ablation also resampled unrelated v3 rows and was rejected; the promoted build holds the original
+v3 selection seed fixed at 307 so the comparison isolates the new hard negatives.
 
 The teacher-RL pilot evaluates 24 immutable prompts through base, all three experts, and auto, then
 trains only on a separate 32-prompt/128-rollout sibling set. Reproduce the collection and the
@@ -197,16 +207,32 @@ also fell from 13/24 to 12/24 as confidence rose. The real `top_k=2` blend was w
 (2 better / 17 tied / 5 worse), so top-1 remains the default. Full raw rollouts, blind judgments,
 exports, and the evaluation summary live under `runs/teacher-rl-v1/`.
 
-Run the separate 40-prompt intent probe with the desktop's default routing policy using:
+The optimizer now accepts an arbitrary expert bank while strictly binding the parent action axis,
+runtime aliases, adapter order, route mapping, and checkpoint bytes. New collections fingerprint
+the complete local base, router, and adapter artifacts and reject mixed or drifted rollout sets.
+Historical collections are retained only with an explicit `legacy_path_identity_only` status after
+strict runtime path/name checks. A follow-up beta/seed sweep over the complete legacy 32-prompt,
+four-route reward matrix selected epoch zero in all six trials: no split improved hard top-1 reward,
+and every saved candidate stayed byte-identical to its parent. That matrix omits
+`verified-embedded-code-v1`, so production RL requires a newly collected and judged five-route
+matrix rather than reusing the legacy grades.
+
+The quarantined `financial-analysis-verified-r16-v1` experiment trained 2,026 clean rows for one
+rank-16 epoch. Held-out NLL improved from 5.2249 to 0.2971, but the 149 eligible calculation rows
+scored only 38.3% numeric+unit accuracy, 38.9% verifier pass, and 61.1% calculation consistency,
+all below the stronger rank-8 comparator. It was not added to the rack. Exact hashes, seed results,
+gates, and decisions are recorded in `experiments/training-update-2026-08-24.json`.
+
+Run the blind intent probe with the desktop's default routing policy using:
 
 ```powershell
-.\.venv\Scripts\python.exe experiments/first-real-experts/evaluate_router.py
+.\.venv\Scripts\python.exe experiments/first-real-experts/evaluate_router.py --checkpoint checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled --probe experiments/first-real-experts/router-blind-probe-v3.jsonl --confidence-threshold 0.30
 ```
 
-The promoted 0.30 policy gets 80.0% acceptable-route accuracy and 72.7% exact accuracy on the
-legacy single-label rows, plus 83.3% on the separate 18-prompt code/reference/general probe. These
-are deliberately small diagnostics excluded from training; their misses and full probability
-vectors are retained under `runs/evaluation/`.
+The promoted 0.30 policy gets 73.3% acceptable-route accuracy and 72.0% exact accuracy on the new
+60-prompt blind probe. The older 40- and 18-prompt probes remain useful development diagnostics,
+but their aggregate failure patterns informed v4's curriculum and they are not promotion evidence.
+Misses and full probability vectors are retained under `runs/evaluation/`.
 
 ## Manual rewards and preference training
 
@@ -231,7 +257,7 @@ log-probabilities and only the new LoRA expert is updated.
 Start it from the desktop **Teacher RL** tab, or directly with the current expert rack and router:
 
 ```powershell
-.\.venv\Scripts\molor-teacher.exe serve --model .\models\Qwen3-1.7B --expert-a .\checkpoints\qwen3-1.7b-corpus-experts\embedded-knowledge-v1 --expert-b .\checkpoints\qwen3-1.7b-corpus-experts\ocb-can-verified-v1 --expert .\checkpoints\qwen3-1.7b-corpus-experts\software-architecture-v1 --expert .\checkpoints\qwen3-1.7b-corpus-experts\verified-embedded-code-v1 --router .\checkpoints\qwen3-1.7b-corpus-router-v3-mlp --port 8765
+.\.venv\Scripts\molor-teacher.exe serve --model .\models\Qwen3-1.7B --expert-a .\checkpoints\qwen3-1.7b-corpus-experts\embedded-knowledge-v1 --expert-b .\checkpoints\qwen3-1.7b-corpus-experts\ocb-can-verified-v1 --expert .\checkpoints\qwen3-1.7b-corpus-experts\software-architecture-v1 --expert .\checkpoints\qwen3-1.7b-corpus-experts\verified-embedded-code-v1 --router .\checkpoints\qwen3-1.7b-corpus-router-v4-mlp-controlled --port 8765
 ```
 
 The model is lazy-loaded on the first prompt. The API binds only to `127.0.0.1`; its rubric and

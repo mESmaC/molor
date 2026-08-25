@@ -604,8 +604,10 @@ class MolorWindow(QMainWindow):
 
         model_layout.addWidget(QLabel("Router checkpoint"))
         router_row = QHBoxLayout()
-        default_router = str(
-            (_WORKSPACE_ROOT / "checkpoints/qwen3-1.7b-corpus-router-v3-mlp").resolve()
+        default_router = _first_existing(
+            "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
+            "checkpoints/qwen3-1.7b-corpus-router-v3-mlp",
+            "checkpoints/qwen3-1.7b-corpus-router-v1",
         )
         self.router_input = QLineEdit(os.environ.get("MOLOR_ROUTER") or default_router)
         self.router_input.setPlaceholderText("Optional router checkpoint directory")

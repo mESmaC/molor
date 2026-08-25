@@ -1,0 +1,210 @@
+{
+  "schema_version": "molor.training-update-report.v1",
+  "created_on": "2026-08-24",
+  "live_state": {
+    "expert_bank": [
+      "embedded-knowledge-v1",
+      "ocb-can-verified-v1",
+      "software-architecture-v1",
+      "verified-embedded-code-v1"
+    ],
+    "router": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
+    "changed": true
+  },
+  "router_v4": {
+    "status": "promoted",
+    "builder": "experiments/first-real-experts/build_router_v4_hard_negative_dataset.py",
+    "checkpoint": "checkpoints/qwen3-1.7b-corpus-router-v4-mlp-controlled",
+    "checkpoint_sha256": "f05cc10074d3e6468dcae617fa27f1da8451594032f98cff75a9cbfd060bbe67",
+    "router_config_sha256": "00e9e2937e28fc4924fd691ad1c14c34a91dc5335e1f9e6a19f8bd29ab1840ff",
+    "dataset": {
+      "selection_seed": 307,
+      "route_count": 5,
+      "train_rows": 4680,
+      "validation_rows": 650,
+      "test_rows": 650,
+      "rows_per_route": {
+        "train": 936,
+        "validation": 130,
+        "test": 130
+      },
+      "train_sha256": "7455b6dedfd2c1eee605bf23074f32168b7eb735c70898af8b7bd9d1a5bd1dd1",
+      "validation_sha256": "627e60a656c8ad01feaf79e7010d678d909e37e768e4c9dc7530cb3fd6a76e2c",
+      "test_sha256": "9e0b7d4d0135111bffe4abce653850b81ae16cd47640a6b68ce1e5b883187dad",
+      "normalized_prompt_overlap": 0,
+      "semantic_group_overlap": 0,
+      "exact_probe_or_benchmark_rows_used": false,
+      "probe_gap_analysis_informed_curriculum": true,
+      "older_probe_scores_blind_for_v4": false,
+      "new_authored_rows": {
+        "train": 128,
+        "validation": 32,
+        "test": 32
+      }
+    },
+    "training": {
+      "seed": 83,
+      "best_epoch": 4,
+      "validation_accuracy": 0.9969230769230769,
+      "validation_loss": 0.06551517702065981,
+      "test_accuracy": 0.9923076923076923,
+      "test_loss": 0.065725751381654,
+      "selection_rule": "controlled ablation with the v3 selection seed held fixed; checkpoint selected by validation loss"
+    },
+    "blind_probe": {
+      "path": "experiments/first-real-experts/router-blind-probe-v3.jsonl",
+      "sha256": "0dba1baef4345cf2ff4414d8448e04bdb1f6cfa8a27d36737ba5db13399f52b0",
+      "prompt_count": 60,
+      "unique_prompt_count": 60,
+      "composition": "10 prompts for each single-label route and 10 mixed-route prompts",
+      "authored_without_repository_or_prior_probe_access": true,
+      "confidence_threshold": 0.3,
+      "v3": {
+        "acceptable_route_accuracy": 0.6666666666666666,
+        "exact_single_label_accuracy": 0.64,
+        "base_null_accuracy": 0.9,
+        "embedded_knowledge_accuracy": 0.6,
+        "ocb_can_accuracy": 0.5,
+        "software_architecture_accuracy": 1.0,
+        "verified_embedded_code_accuracy": 0.2,
+        "mixed_acceptable_accuracy": 0.8,
+        "result_sha256": "11d0fe77e041c7e0b74e3dbaf3e57c261dd5ad755a199f613d07dbc96a29bb65"
+      },
+      "v4": {
+        "acceptable_route_accuracy": 0.7333333333333333,
+        "exact_single_label_accuracy": 0.72,
+        "base_null_accuracy": 0.9,
+        "embedded_knowledge_accuracy": 0.8,
+        "ocb_can_accuracy": 0.8,
+        "software_architecture_accuracy": 1.0,
+        "verified_embedded_code_accuracy": 0.1,
+        "mixed_acceptable_accuracy": 0.8,
+        "result_sha256": "9a18057bd4996e3957b1513e0d0894dc31579825fa93b37b1591982f39281740"
+      },
+      "known_limitation": "verified-code intent remains weak and regressed by one of ten prompts"
+    },
+    "executable_evaluation": {
+      "run_id": "20260825-004344Z-qwen3-1.7b-router-v4-controlled-auto-executable",
+      "summary_sha256": "a80ef4a8bff5d33ca8dad43f021fb8ff2ec87517733c4cfc1d873886b5d99fa4",
+      "comparison_sha256": "98c4311df7386f66a6bdd3adb257fc985a33fc530916e49ae2b363de0ca63c95",
+      "quality_index": 502.5603953147877,
+      "v3_baseline_quality_index": 502.5603953147877,
+      "wins": 0,
+      "ties": 6,
+      "losses": 0,
+      "regression_flags": []
+    },
+    "development_probe_diagnostics": {
+      "status": "not_blind_for_v4",
+      "legacy_40_at_threshold_0_30": {
+        "v3_acceptable_accuracy": 0.8,
+        "v4_acceptable_accuracy": 0.825,
+        "v4_can_accuracy": 0.75,
+        "v4_architecture_accuracy": 0.875,
+        "v4_base_null_accuracy": 0.875
+      },
+      "code_reference_18_at_threshold_0_40": {
+        "v3_acceptable_accuracy": 0.8888888888888888,
+        "v4_acceptable_accuracy": 0.9444444444444444,
+        "v4_base_null_accuracy": 1.0,
+        "v4_embedded_reference_accuracy": 0.8333333333333334,
+        "v4_verified_code_accuracy": 1.0
+      }
+    },
+    "resampled_ablation": {
+      "status": "rejected",
+      "selection_seed": 409,
+      "selected_training_seed": 8419,
+      "selected_checkpoint_sha256": "424af25f2ecc0c861c4fa11fd9d783069916fd74af65f1bde4648e96f95238ab",
+      "validation_accuracy": 0.9923076923076923,
+      "test_accuracy": 0.9892307692307692,
+      "reason": "resampling unrelated architecture/code rows confounded the hard-negative ablation and missed the 0.99 file-held-out gate"
+    },
+    "decision": "promote the controlled v4 router; retain the same four-expert rack and target verified-code intent in the next curriculum iteration"
+  },
+  "finance_rank16": {
+    "status": "rejected_quarantined_candidate",
+    "recipe": "experiments/first-real-experts/finance-r16-candidate-recipe.json",
+    "output": "checkpoints/qwen3-1.7b-candidate-experts/financial-analysis-verified-r16-v1",
+    "dataset_sha256": "6555b321aa55177cd85131f2fcb17ad4652aa598feffd248aaebf7bb47f76aa6",
+    "adapter_sha256": "ba5d45aa4dec9f7873d643881e318ac22d75d0541993dc1f68470d20eaec2cdd",
+    "adapter_config_sha256": "9ddbe61e2a5bf6fa0278baa208f088871d8c054d359fe7c92027f8a6b4fde2fb",
+    "training": {
+      "examples": 2026,
+      "rank": 16,
+      "alpha": 32,
+      "epochs": 1,
+      "optimizer_steps": 254,
+      "final_training_loss": 0.04749787226319313,
+      "elapsed_seconds": 527.533347300021,
+      "seed": 840824
+    },
+    "heldout_nll": {
+      "examples": 241,
+      "base": 5.224907229019904,
+      "candidate": 0.2970813478016064,
+      "improvement_percent": 94.3141316241641
+    },
+    "heldout_generation": {
+      "eligible_calculations": 149,
+      "numeric_and_unit_accuracy": 0.3825503355704698,
+      "verifier_pass_rate": 0.38926174496644295,
+      "verifier_mean_reward": 0.5617449664429528,
+      "calculation_answer_consistency": 0.610738255033557,
+      "format_failures": 4,
+      "wrong": 87,
+      "passes": 58
+    },
+    "stronger_rank8_comparator": {
+      "numeric_and_unit_accuracy": 0.453125,
+      "verifier_pass_rate": 0.453125,
+      "verifier_mean_reward": 0.6156249999999998,
+      "calculation_answer_consistency": 0.6640625
+    },
+    "failed_gates": [
+      "numeric-and-unit accuracy was below 0.55 and below the stronger rank-8 comparator",
+      "verifier pass rate was below 0.55",
+      "mean verifier reward was below 0.67",
+      "calculation consistency was below 0.75",
+      "four format failures exceeded the two-percent ceiling"
+    ],
+    "decision": "do not add to the resident rack or router"
+  },
+  "router_rl_sweep": {
+    "status": "no_update_selected",
+    "method": "full_information_contextual_bandit_kl_v1",
+    "matrix": {
+      "prompts": 32,
+      "routes": 4,
+      "committed_grades": 128,
+      "compatible_parent": "checkpoints/qwen3-1.7b-corpus-router-v1",
+      "compatible_with_live_five_route_router": false,
+      "artifact_provenance": "legacy_path_identity_only"
+    },
+    "betas": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "seeds": [
+      8419,
+      27183
+    ],
+    "trials": 6,
+    "heldout_examples_per_trial": 9,
+    "unique_heldout_examples_across_seeds": 18,
+    "result": {
+      "qualifying_trials": 0,
+      "best_epoch_for_every_trial": 0,
+      "heldout_hard_reward_gain_for_every_trial": 0.0,
+      "route_changed_fraction_for_every_trial": 0.0,
+      "all_saved_weights_byte_identical_to_parent": true
+    },
+    "provenance_hardening": {
+      "new_collections": "content-addressed base, router, and adapter contract required",
+      "historical_collections": "accepted only after strict loaded path and runtime-name checks and labelled legacy_path_identity_only",
+      "runtime_adapter_aliases": "supported and validated independently from stable route IDs"
+    },
+    "decision": "preserve the parent; collect a fresh content-addressed five-route matrix before production RL"
+  }
+}
