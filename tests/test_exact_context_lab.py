@@ -1,4 +1,5 @@
 from collections import UserDict
+from contextlib import contextmanager
 import json
 from types import SimpleNamespace
 
@@ -9,15 +10,20 @@ from molor.experimental.exact_context_lab import (
     ContextRequest,
     _compare_run_token_identity,
     _manual_greedy_decode,
+    _parser,
     _seal_report,
+    _sdpa_backend_evidence,
+    _sdpa_kernel_context,
     _synthetic_prompt_ids,
     _token_id_sha256,
+    _validate_attention_policy,
     _validate_context_request,
     _validate_loaded_config_contract,
     _verify_report_integrity,
     _write_json_exclusive,
     main,
 )
+from torch.nn.attention import SDPBackend
 
 
 class CharacterTokenizer:
@@ -99,6 +105,98 @@ class IncrementingClock:
     def __call__(self) -> float:
         self.value += 0.25
         return self.value
+
+
+def test_attention_cli_defaults_to_validated_production_like_policy() -> None:
+    defaults = _parser().parse_args([])
+    deterministic = _parser().parse_args(["--sdpa-backend", "math", "--deterministic-algorithms"])
+
+    assert defaults.modes == ["offloaded", "dynamic"]
+    assert defaults.attn_implementation == "sdpa"
+    assert defaults.sdpa_backend == "cudnn"
+    assert defaults.deterministic_algorithms is False
+    assert deterministic.sdpa_backend == "math"
+    assert deterministic.deterministic_algorithms is True
+
+
+def test_attention_policy_rejects_incompatible_combinations_before_loading() -> None:
+    _validate_attention_policy(
+        attention_implementation="sdpa",
+        sdpa_backend="cudnn",
+        deterministic_algorithms=False,
+        device_type="cuda",
+    )
+    _validate_attention_policy(
+        attention_implementation="eager",
+        sdpa_backend="auto",
+        deterministic_algorithms=True,
+        device_type="cpu",
+    )
+
+    with pytest.raises(ValueError, match="eager attention"):
+        _validate_attention_policy(
+            attention_implementation="eager",
+            sdpa_backend="math",
+            deterministic_algorithms=False,
+            device_type="cpu",
+        )
+    with pytest.raises(ValueError, match="deterministic algorithms"):
+        _validate_attention_policy(
+            attention_implementation="sdpa",
+            sdpa_backend="cudnn",
+            deterministic_algorithms=True,
+            device_type="cuda",
+        )
+
+
+def test_sdpa_context_resolves_backend_and_wraps_every_fake_forward() -> None:
+    selected: list[object] = []
+    active = False
+
+    @contextmanager
+    def fake_kernel(backend):
+        selected.append(backend)
+        yield
+
+    with _sdpa_kernel_context("math", kernel_factory=fake_kernel):
+        assert selected == [SDPBackend.MATH]
+    with _sdpa_kernel_context("auto", kernel_factory=fake_kernel):
+        pass
+    assert selected == [SDPBackend.MATH]
+
+    @contextmanager
+    def fake_manual_context(name):
+        nonlocal active
+        assert name == "cudnn"
+        active = True
+        try:
+            yield
+        finally:
+            active = False
+
+    class ContextCheckingModel(FakeModel):
+        def __call__(self, **kwargs):
+            assert active is True
+            return super().__call__(**kwargs)
+
+    model = ContextCheckingModel()
+    _manual_greedy_decode(
+        model,
+        prompt_ids=torch.tensor([2, 3, 4]),
+        cache=FakeCache(offloading=True),
+        max_new_tokens=2,
+        device=torch.device("cpu"),
+        telemetry=FakeTelemetry(),
+        sdpa_backend="cudnn",
+        sdpa_context_factory=fake_manual_context,
+        clock=IncrementingClock(),
+    )
+    assert active is False
+    assert len(model.calls) == 2
+
+    evidence = _sdpa_backend_evidence("math", device_type="cpu")
+    assert evidence["resolved_pytorch_enum"] == "MATH"
+    assert evidence["availability"]["selected_build_or_library_available"] is True
 
 
 def test_synthetic_prompt_has_exact_repeatable_token_identity() -> None:

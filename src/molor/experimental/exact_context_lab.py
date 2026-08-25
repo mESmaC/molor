@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 from collections.abc import Mapping
+from contextlib import nullcontext
 import ctypes
 from dataclasses import dataclass
 import gc
@@ -30,7 +31,9 @@ SCHEMA_VERSION = "molor.exact-context-report.v1"
 DEFAULT_MODEL = Path("models/Qwen3-1.7B")
 DEFAULT_OUTPUT_DIRECTORY = Path("runs/exact-context-v1")
 DEFAULT_LENGTHS = (512, 2_048, 4_096)
-DEFAULT_MODES = ("dynamic", "offloaded")
+DEFAULT_MODES = ("offloaded", "dynamic")
+SDPA_BACKENDS = ("auto", "cudnn", "math", "efficient", "flash")
+DEFAULT_SDPA_BACKEND = "cudnn"
 MIB = 2**20
 GIB = 2**30
 
@@ -53,6 +56,107 @@ class _Telemetry(Protocol):
     def synchronize(self) -> None: ...
 
     def observe(self, label: str) -> dict[str, Any]: ...
+
+
+def _validate_attention_policy(
+    *,
+    attention_implementation: str,
+    sdpa_backend: str,
+    deterministic_algorithms: bool,
+    device_type: str,
+) -> None:
+    if attention_implementation not in {"sdpa", "eager"}:
+        raise ValueError("attention_implementation must be sdpa or eager")
+    if sdpa_backend not in SDPA_BACKENDS:
+        raise ValueError(f"sdpa_backend must be one of {', '.join(SDPA_BACKENDS)}")
+    if not isinstance(deterministic_algorithms, bool):
+        raise TypeError("deterministic_algorithms must be boolean")
+    if attention_implementation == "eager" and sdpa_backend != "auto":
+        raise ValueError("eager attention is incompatible with a forced SDPA backend")
+    if deterministic_algorithms and sdpa_backend == "cudnn":
+        raise ValueError("deterministic algorithms are incompatible with forced cuDNN SDPA")
+    if sdpa_backend in {"cudnn", "efficient", "flash"} and device_type != "cuda":
+        raise ValueError(f"forced {sdpa_backend} SDPA requires a CUDA device")
+
+
+def _sdpa_backend_enum(name: str) -> Any:
+    from torch.nn.attention import SDPBackend
+
+    mapping = {
+        "cudnn": SDPBackend.CUDNN_ATTENTION,
+        "math": SDPBackend.MATH,
+        "efficient": SDPBackend.EFFICIENT_ATTENTION,
+        "flash": SDPBackend.FLASH_ATTENTION,
+    }
+    if name not in mapping:
+        raise ValueError("auto SDPA has no single forced backend enum")
+    return mapping[name]
+
+
+def _sdpa_kernel_context(
+    name: str,
+    *,
+    kernel_factory: Callable[[Any], Any] | None = None,
+) -> Any:
+    """Return the selected PyTorch SDPA context, or a no-op for automatic selection."""
+
+    if name == "auto":
+        return nullcontext()
+    backend = _sdpa_backend_enum(name)
+    if kernel_factory is None:
+        from torch.nn.attention import sdpa_kernel
+
+        kernel_factory = sdpa_kernel
+    return kernel_factory(backend)
+
+
+def _sdpa_backend_evidence(name: str, *, device_type: str) -> dict[str, Any]:
+    cuda_backends = torch.backends.cuda
+    flash_available = bool(cuda_backends.is_flash_attention_available())
+    cudnn_available = bool(torch.backends.cudnn.is_available())
+    enabled_flags = {
+        "cudnn": bool(cuda_backends.cudnn_sdp_enabled()),
+        "flash": bool(cuda_backends.flash_sdp_enabled()),
+        "efficient": bool(cuda_backends.mem_efficient_sdp_enabled()),
+        "math": bool(cuda_backends.math_sdp_enabled()),
+    }
+    build_or_library_available: bool | None
+    if name in {"auto", "math"}:
+        build_or_library_available = True
+    elif name == "cudnn":
+        build_or_library_available = device_type == "cuda" and cudnn_available
+    elif name == "flash":
+        build_or_library_available = device_type == "cuda" and flash_available
+    else:
+        # Efficient attention has input-dependent probes but no tensor-free build probe.
+        build_or_library_available = None
+
+    evidence = {
+        "requested": name,
+        "forced": name != "auto",
+        "resolved_pytorch_enum": (
+            str(_sdpa_backend_enum(name)).split(".")[-1] if name != "auto" else None
+        ),
+        "enabled_flags_before_context": enabled_flags,
+        "availability": {
+            "selected_build_or_library_available": build_or_library_available,
+            "cudnn_library_available": cudnn_available,
+            "cudnn_version": torch.backends.cudnn.version(),
+            "flash_attention_build_available": flash_available,
+            "efficient_attention_tensor_free_probe": None,
+            "runtime_input_eligible": (
+                "proven only by a successful forced model forward"
+                if name != "auto"
+                else "backend chosen internally by PyTorch"
+            ),
+        },
+        "selection_scope": (
+            "torch.nn.attention.sdpa_kernel around every prefill/decode forward"
+            if name != "auto"
+            else "PyTorch automatic SDPA selection; no forcing context"
+        ),
+    }
+    return evidence
 
 
 @dataclass(frozen=True)
@@ -245,14 +349,18 @@ def _manual_greedy_decode(
     max_new_tokens: int,
     device: torch.device,
     telemetry: _Telemetry,
+    sdpa_backend: str = "auto",
+    sdpa_context_factory: Callable[[str], Any] = _sdpa_kernel_context,
     clock: Callable[[], float] = time.perf_counter,
 ) -> dict[str, Any]:
-    """Run an exact-length prefill and deterministic, no-sampling manual decode."""
+    """Run an exact-length prefill and greedy, no-sampling manual decode."""
 
     if prompt_ids.ndim != 1 or prompt_ids.numel() < 1:
         raise ValueError("prompt_ids must be a non-empty rank-1 tensor")
     if max_new_tokens < 1:
         raise ValueError("max_new_tokens must be positive")
+    if sdpa_backend not in SDPA_BACKENDS:
+        raise ValueError(f"sdpa_backend must be one of {', '.join(SDPA_BACKENDS)}")
 
     prompt_tokens = int(prompt_ids.numel())
     prompt = prompt_ids.to(device=device, dtype=torch.long).unsqueeze(0)
@@ -267,7 +375,7 @@ def _manual_greedy_decode(
     observations.append(telemetry.observe("before_prefill"))
     total_started = clock()
 
-    with torch.inference_mode():
+    with torch.inference_mode(), sdpa_context_factory(sdpa_backend):
         telemetry.synchronize()
         prefill_started = clock()
         outputs = model(
@@ -782,12 +890,13 @@ def _nominal_kv_bytes(config: Any, *, sequence_tokens: int, dtype: torch.dtype) 
     return 2 * layers * kv_heads * head_dim * sequence_tokens * element_bytes
 
 
-def _configure_determinism(seed: int) -> dict[str, Any]:
-    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+def _configure_arithmetic_policy(seed: int, *, deterministic_algorithms: bool) -> dict[str, Any]:
+    if deterministic_algorithms:
+        os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-    torch.use_deterministic_algorithms(True)
+    torch.use_deterministic_algorithms(deterministic_algorithms)
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.allow_tf32 = False
     if hasattr(torch.backends, "cuda") and hasattr(torch.backends.cuda, "matmul"):
@@ -797,6 +906,12 @@ def _configure_determinism(seed: int) -> dict[str, Any]:
         "greedy_argmax": True,
         "sampling": False,
         "eos_early_stopping": False,
+        "policy": (
+            "strict deterministic PyTorch algorithms"
+            if deterministic_algorithms
+            else "production-like PyTorch algorithms; nondeterministic kernels permitted"
+        ),
+        "requested_deterministic_algorithms": deterministic_algorithms,
         "torch_deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
         "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
         "cudnn_benchmark": torch.backends.cudnn.benchmark,
@@ -834,6 +949,21 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--dtype", choices=("bfloat16", "float16", "float32"), default="bfloat16")
     parser.add_argument("--attn-implementation", choices=("sdpa", "eager"), default="sdpa")
+    parser.add_argument(
+        "--sdpa-backend",
+        choices=SDPA_BACKENDS,
+        default=DEFAULT_SDPA_BACKEND,
+        help="force one PyTorch SDPA backend, or use auto selection",
+    )
+    parser.add_argument(
+        "--deterministic-algorithms",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help=(
+            "enable strict torch deterministic algorithms; disabled by default because the "
+            "validated cuDNN SDPA path requires production-like nondeterministic algorithms"
+        ),
+    )
     parser.add_argument(
         "--minimum-free-cuda-gib",
         type=float,
@@ -874,6 +1004,23 @@ def _run(args: argparse.Namespace, report: dict[str, Any]) -> None:
         or args.cuda_headroom_gib < 0
     ):
         raise ValueError("CUDA memory guards must be finite and non-negative")
+
+    requested_device = torch.device(args.device)
+    if requested_device.type not in {"cpu", "cuda"}:
+        raise ValueError("device must be cpu or cuda")
+    _validate_attention_policy(
+        attention_implementation=args.attn_implementation,
+        sdpa_backend=args.sdpa_backend,
+        deterministic_algorithms=args.deterministic_algorithms,
+        device_type=requested_device.type,
+    )
+    report["attention_policy"] = _sdpa_backend_evidence(
+        args.sdpa_backend, device_type=requested_device.type
+    )
+    if report["attention_policy"]["availability"]["selected_build_or_library_available"] is False:
+        raise RuntimeError(f"forced {args.sdpa_backend} SDPA is unavailable in this runtime")
+    if "offloaded" in request.modes and requested_device.type != "cuda":
+        raise ValueError("HF DynamicCache offloading requires a CUDA model device")
 
     try:
         import transformers
@@ -942,11 +1089,7 @@ def _run(args: argparse.Namespace, report: dict[str, Any]) -> None:
         )
     report["prompts"] = prompt_evidence
 
-    device = torch.device(args.device)
-    if device.type not in {"cpu", "cuda"}:
-        raise ValueError("device must be cpu or cuda")
-    if "offloaded" in request.modes and device.type != "cuda":
-        raise ValueError("HF DynamicCache offloading requires a CUDA model device")
+    device = requested_device
     if device.type == "cuda":
         if not torch.cuda.is_available():
             raise RuntimeError("CUDA was requested but is unavailable")
@@ -957,7 +1100,10 @@ def _run(args: argparse.Namespace, report: dict[str, Any]) -> None:
             raise RuntimeError("requested CUDA device does not support bfloat16")
     report["environment"] = _environment_identity(transformers, DynamicCache)
     report["environment"]["device"] = _device_identity(device)
-    report["determinism"] = _configure_determinism(args.seed)
+    report["arithmetic_policy"] = _configure_arithmetic_policy(
+        args.seed,
+        deterministic_algorithms=args.deterministic_algorithms,
+    )
 
     telemetry = RuntimeTelemetry(device)
     initial_observation = telemetry.observe("before_model_load")
@@ -1098,6 +1244,7 @@ def _run(args: argparse.Namespace, report: dict[str, Any]) -> None:
                             max_new_tokens=request.max_new_tokens,
                             device=device,
                             telemetry=telemetry,
+                            sdpa_backend=args.sdpa_backend,
                         )
                         result.update(
                             {
@@ -1157,6 +1304,12 @@ def main(argv: list[str] | None = None) -> int:
         "finished_at": None,
         "claim_scope": {
             "exact_cache_modes_only": True,
+            "exact_cache_meaning": (
+                "uncompressed model-produced K/V state; CPU offload does not approximate it"
+            ),
+            "arithmetic_exactness": (
+                "kernel arithmetic may be nondeterministic; greedy token parity remains mandatory"
+            ),
             "live_cache_modes": ["GPU-resident DynamicCache", "CPU-offloaded DynamicCache"],
             "snapshot_or_archive": False,
             "nvme_or_disk_backed_decode": False,
@@ -1176,6 +1329,8 @@ def main(argv: list[str] | None = None) -> int:
             "device": args.device,
             "dtype": args.dtype,
             "attention_implementation": args.attn_implementation,
+            "sdpa_backend": args.sdpa_backend,
+            "deterministic_algorithms": args.deterministic_algorithms,
             "logits_to_keep": 1,
             "mode_order": "declared CLI order inside each length and repeat; no warm-up",
             "minimum_free_cuda_gib": _finite_float_or_text(args.minimum_free_cuda_gib),
