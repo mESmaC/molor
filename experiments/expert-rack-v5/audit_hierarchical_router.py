@@ -90,6 +90,12 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--minimum-overall-rate", type=float, default=None)
     parser.add_argument("--minimum-specialist-rate", type=float, default=None)
+    parser.add_argument(
+        "--minimum-base-contract-rate",
+        type=float,
+        default=0.80,
+        help="minimum acceptable top-1 rate on base-only contract cases (default: 0.80)",
+    )
     parser.add_argument("--maximum-base-selection-rate", type=float, default=None)
     return parser
 
@@ -102,6 +108,15 @@ def _optional_probability(value: float | None, label: str) -> float | None:
     return value
 
 
+def _base_contract_gate_failed(value: object, minimum: float) -> bool:
+    """Fail closed for missing or malformed base-only contract evidence."""
+
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return True
+    rate = float(value)
+    return not math.isfinite(rate) or not 0.0 <= rate <= 1.0 or rate < minimum
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.feature_batch_size < 1:
@@ -110,6 +125,10 @@ def main(argv: list[str] | None = None) -> int:
     minimum_specialist = _optional_probability(
         args.minimum_specialist_rate, "minimum specialist rate"
     )
+    minimum_base_contract = _optional_probability(
+        args.minimum_base_contract_rate, "minimum base contract rate"
+    )
+    assert minimum_base_contract is not None
     maximum_base = _optional_probability(
         args.maximum_base_selection_rate, "maximum base selection rate"
     )
@@ -228,6 +247,7 @@ def main(argv: list[str] | None = None) -> int:
             {
                 "acceptable_top1_rate": audit["acceptable_top1_rate"],
                 "specialist_acceptable_top1_rate": audit["specialist_acceptable_top1_rate"],
+                "base_contract_acceptable_top1_rate": audit["base_contract_acceptable_top1_rate"],
                 "base_selection_rate": audit["base_selection_rate"],
                 "feature_max_abs_delta": max_feature_delta,
                 "runtime_probability_max_abs_delta": max_runtime_probability_delta,
@@ -245,6 +265,9 @@ def main(argv: list[str] | None = None) -> int:
         or (
             minimum_specialist is not None
             and audit["specialist_acceptable_top1_rate"] < minimum_specialist
+        )
+        or _base_contract_gate_failed(
+            audit["base_contract_acceptable_top1_rate"], minimum_base_contract
         )
         or (maximum_base is not None and audit["base_selection_rate"] > maximum_base)
     )

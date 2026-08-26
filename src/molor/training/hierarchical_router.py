@@ -466,26 +466,33 @@ def evaluate_hierarchical_router(
     confusion = torch.zeros((route_count, route_count), dtype=torch.long)
     for expected, predicted in zip(labels.tolist(), predictions.tolist(), strict=True):
         confusion[expected, predicted] += 1
+    safe_probabilities = probabilities.clamp_min(torch.finfo(probabilities.dtype).tiny)
+    row_nll = -safe_probabilities[torch.arange(len(labels)), labels].log()
     per_route: dict[str, Any] = {}
     recalls: list[float] = []
+    supported_route_nlls: list[float] = []
     unsupported_routes: list[str] = []
     for index, route_id in enumerate(router.axes.joint_routes):
         support = int(confusion[index].sum().item())
         predicted = int(confusion[:, index].sum().item())
         true_positive = int(confusion[index, index].item())
         recall = true_positive / support if support else None
+        route_nll = float(row_nll[labels == index].mean().item()) if support else None
         if recall is None:
             unsupported_routes.append(route_id)
         else:
             recalls.append(recall)
+            assert route_nll is not None
+            supported_route_nlls.append(route_nll)
         per_route[route_id] = {
             "support": support,
             "precision": true_positive / predicted if predicted else 0.0,
             "recall": recall,
+            "nll": route_nll,
         }
-    safe_probabilities = probabilities.clamp_min(torch.finfo(probabilities.dtype).tiny)
     result = {
         "loss": float(F.nll_loss(safe_probabilities.log(), labels).item()),
+        "supported_route_macro_nll": sum(supported_route_nlls) / len(supported_route_nlls),
         "accuracy": float((predictions == labels).float().mean().item()),
         "macro_recall": sum(recalls) / len(recalls),
         "unsupported_routes": unsupported_routes,
@@ -569,7 +576,7 @@ def fit_hierarchical_router(
     taxonomy: ExpertTaxonomy,
     training: RouterTrainingConfig = RouterTrainingConfig(),
 ) -> tuple[HierarchicalRouterHeads, dict[str, Any]]:
-    """Fit class-balanced hierarchical heads and retain the best joint validation loss."""
+    """Fit class-balanced heads and retain the best supported-route macro validation NLL."""
 
     axes = HierarchicalRouterAxes.from_taxonomy(taxonomy)
     train_targets = _encode_targets(train_route_ids, axes=axes, split="train")
@@ -619,7 +626,8 @@ def fit_hierarchical_router(
         shuffle=True,
         generator=generator,
     )
-    best_loss = math.inf
+    selection_metric = "validation.supported_route_macro_nll"
+    best_selection_value = math.inf
     best_epoch = 0
     best_state: dict[str, Tensor] | None = None
     stale_epochs = 0
@@ -656,12 +664,14 @@ def fit_hierarchical_router(
             "epoch": epoch,
             "train_objective": running / seen,
             "validation_loss": validation_metrics["loss"],
+            "validation_supported_route_macro_nll": validation_metrics["supported_route_macro_nll"],
             "validation_accuracy": validation_metrics["accuracy"],
             "validation_macro_recall": validation_metrics["macro_recall"],
         }
         history.append(epoch_metrics)
-        if validation_metrics["loss"] < best_loss - 1e-8:
-            best_loss = validation_metrics["loss"]
+        selection_value = float(validation_metrics["supported_route_macro_nll"])
+        if selection_value < best_selection_value - 1e-8:
+            best_selection_value = selection_value
             best_epoch = epoch
             stale_epochs = 0
             best_state = {
@@ -678,6 +688,12 @@ def fit_hierarchical_router(
     metrics = {
         "best_epoch": best_epoch,
         "epochs_completed": len(history),
+        "selection": {
+            "metric": selection_metric,
+            "mode": "min",
+            "best_value": best_selection_value,
+            "minimum_improvement": 1e-8,
+        },
         "history": history,
         "train": evaluate_hierarchical_router(
             router,

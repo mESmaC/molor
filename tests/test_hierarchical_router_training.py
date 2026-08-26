@@ -222,9 +222,7 @@ def test_runtime_device_equivalence_normalizes_unindexed_cuda(
     assert not hierarchical_router_module._same_runtime_device(
         torch.device("cuda:1"), torch.device("cuda")
     )
-    assert hierarchical_router_module._same_runtime_device(
-        torch.device("cpu"), torch.device("cpu")
-    )
+    assert hierarchical_router_module._same_runtime_device(torch.device("cpu"), torch.device("cpu"))
 
 
 def test_partial_test_evaluation_reports_unsupported_routes_without_inventing_rows() -> None:
@@ -245,6 +243,81 @@ def test_partial_test_evaluation_reports_unsupported_routes_without_inventing_ro
     assert metrics["unsupported_routes"] == [missing_route]
     assert metrics["per_route"][missing_route]["support"] == 0
     assert metrics["per_route"][missing_route]["recall"] is None
+    assert metrics["per_route"][missing_route]["nll"] is None
+
+
+def test_evaluation_reports_equal_weight_supported_route_macro_nll() -> None:
+    axes = HierarchicalRouterAxes.from_taxonomy(_taxonomy())
+    router = HierarchicalRouterHeads(hidden_size=4, axes=axes)
+    with torch.no_grad():
+        for parameter in router.parameters():
+            parameter.zero_()
+    routes = [BASE_ROUTE, BASE_ROUTE, BASE_ROUTE, BASE_ROUTE, axes.joint_routes[1]]
+    features = torch.ones(len(routes), 4)
+
+    metrics = evaluate_hierarchical_router(
+        router,
+        features,
+        routes,
+        batch_size=2,
+        device=torch.device("cpu"),
+        require_all_routes=False,
+    )
+    probabilities = router.joint_probabilities(features)
+    labels = torch.tensor([0, 0, 0, 0, 1])
+    row_nll = -probabilities[torch.arange(len(labels)), labels].log()
+    expected_macro = (row_nll[:4].mean() + row_nll[4:].mean()) / 2
+
+    assert metrics["loss"] == pytest.approx(float(row_nll.mean().item()))
+    assert metrics["supported_route_macro_nll"] == pytest.approx(float(expected_macro.item()))
+    assert metrics["supported_route_macro_nll"] != pytest.approx(metrics["loss"])
+
+
+def test_fit_selects_epoch_by_supported_route_macro_nll(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    features, routes = _features_and_routes(repeats=1)
+    validation_metrics = iter(
+        (
+            {"loss": 0.1, "supported_route_macro_nll": 0.9, "accuracy": 0.8, "macro_recall": 0.8},
+            {"loss": 0.2, "supported_route_macro_nll": 0.7, "accuracy": 0.8, "macro_recall": 0.8},
+            {"loss": 0.3, "supported_route_macro_nll": 0.6, "accuracy": 0.8, "macro_recall": 0.8},
+            {"loss": 0.4, "supported_route_macro_nll": 0.5, "accuracy": 0.8, "macro_recall": 0.8},
+        )
+    )
+
+    monkeypatch.setattr(
+        hierarchical_router_module,
+        "evaluate_hierarchical_router",
+        lambda *_args, **_kwargs: next(validation_metrics),
+    )
+    _router, metrics = fit_hierarchical_router(
+        features,
+        routes,
+        features,
+        routes,
+        taxonomy=_taxonomy(),
+        training=RouterTrainingConfig(
+            epochs=2,
+            batch_size=len(routes),
+            learning_rate=0.001,
+            weight_decay=0.0,
+            label_smoothing=0.0,
+            load_balance_weight=0.0,
+            z_loss_weight=0.0,
+            patience=2,
+            seed=83,
+            device="cpu",
+        ),
+    )
+
+    assert metrics["best_epoch"] == 2
+    assert metrics["selection"] == {
+        "metric": "validation.supported_route_macro_nll",
+        "mode": "min",
+        "best_value": 0.7,
+        "minimum_improvement": 1e-8,
+    }
 
 
 def test_router_jsonl_partial_support_is_explicit_opt_in(tmp_path: Path) -> None:
