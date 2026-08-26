@@ -1,0 +1,231 @@
+{
+  "schema_version": "molor.benchmark-route-contract.v1",
+  "contract_id": "molor-core-v1-rack-v5-routing",
+  "revision": "1",
+  "suite": {
+    "suite_id": "molor-core-v1",
+    "version": "1.0.0",
+    "content_sha256": "0f2be48bcdec9a29d412f4c56f1c671fc276af73df572d78046c841f7afc4de5"
+  },
+  "taxonomy": {
+    "taxonomy_id": "molor-inference-rack",
+    "revision": "1",
+    "content_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1"
+  },
+  "case_routes": {
+    "G01": [
+      "commonsense-logic"
+    ],
+    "G02": [
+      "commonsense-logic"
+    ],
+    "G03": [
+      "commonsense-logic"
+    ],
+    "G04": [
+      "quantitative-math"
+    ],
+    "G05": [
+      "commonsense-logic"
+    ],
+    "G06": [
+      "ml-data-reasoning",
+      "science-reasoning"
+    ],
+    "Q01": [
+      "quantitative-math"
+    ],
+    "Q02": [
+      "quantitative-math",
+      "business-finance"
+    ],
+    "Q03": [
+      "business-finance",
+      "quantitative-math"
+    ],
+    "Q04": [
+      "quantitative-math"
+    ],
+    "Q05": [
+      "scientific-engineering-reasoning",
+      "systems-distributed-engineering",
+      "quantitative-math"
+    ],
+    "Q06": [
+      "embedded-knowledge",
+      "quantitative-math"
+    ],
+    "P01": [
+      "general-code-generation",
+      "embedded-knowledge"
+    ],
+    "P02": [
+      "embedded-knowledge",
+      "general-code-generation"
+    ],
+    "P03": [
+      "general-code-generation"
+    ],
+    "P04": [
+      "embedded-knowledge",
+      "systems-distributed-engineering"
+    ],
+    "P05": [
+      "embedded-knowledge",
+      "systems-distributed-engineering"
+    ],
+    "P06": [
+      "general-code-generation",
+      "systems-distributed-engineering"
+    ],
+    "P07": [
+      "general-code-generation"
+    ],
+    "P08": [
+      "systems-distributed-engineering"
+    ],
+    "E01": [
+      "embedded-can-diagnostics"
+    ],
+    "E02": [
+      "embedded-can-diagnostics",
+      "embedded-knowledge"
+    ],
+    "E03": [
+      "embedded-can-diagnostics"
+    ],
+    "E04": [
+      "embedded-knowledge",
+      "embedded-can-diagnostics"
+    ],
+    "E05": [
+      "embedded-knowledge"
+    ],
+    "E06": [
+      "embedded-knowledge"
+    ],
+    "E07": [
+      "embedded-knowledge"
+    ],
+    "E08": [
+      "embedded-knowledge"
+    ],
+    "E09": [
+      "embedded-knowledge"
+    ],
+    "E10": [
+      "embedded-knowledge"
+    ],
+    "T01": [
+      "terminal-cli"
+    ],
+    "T02": [
+      "terminal-cli"
+    ],
+    "T03": [
+      "terminal-cli"
+    ],
+    "T04": [
+      "terminal-cli"
+    ],
+    "T05": [
+      "terminal-cli"
+    ],
+    "T06": [
+      "terminal-cli"
+    ],
+    "A01": [
+      "software-architecture-design",
+      "systems-distributed-engineering"
+    ],
+    "A02": [
+      "software-architecture-design",
+      "systems-distributed-engineering"
+    ],
+    "A03": [
+      "systems-distributed-engineering",
+      "software-architecture-design"
+    ],
+    "A04": [
+      "systems-distributed-engineering"
+    ],
+    "A05": [
+      "systems-distributed-engineering"
+    ],
+    "A06": [
+      "software-architecture-design",
+      "systems-distributed-engineering"
+    ],
+    "B01": [
+      "business-finance",
+      "growth-gtm"
+    ],
+    "B02": [
+      "business-finance"
+    ],
+    "B03": [
+      "business-finance",
+      "funding-capital"
+    ],
+    "B04": [
+      "growth-gtm"
+    ],
+    "B05": [
+      "business-finance"
+    ],
+    "B06": [
+      "growth-gtm",
+      "ml-data-reasoning"
+    ],
+    "F01": [
+      "funding-capital"
+    ],
+    "F02": [
+      "business-finance",
+      "investing-markets"
+    ],
+    "F03": [
+      "investing-markets"
+    ],
+    "F04": [
+      "investing-markets"
+    ],
+    "F05": [
+      "investing-markets"
+    ],
+    "I01": [
+      "strict-instruction-following"
+    ],
+    "I02": [
+      "strict-instruction-following"
+    ],
+    "I03": [
+      "strict-instruction-following"
+    ],
+    "I04": [
+      "strict-instruction-following"
+    ],
+    "I05": [
+      "strict-instruction-following"
+    ],
+    "I06": [
+      "strict-instruction-following"
+    ],
+    "X01": [
+      "base/null"
+    ],
+    "X02": [
+      "base/null"
+    ],
+    "X03": [
+      "base/null"
+    ],
+    "X04": [
+      "base/null"
+    ],
+    "X05": [
+      "base/null"
+    ]
+  },
+  "content_sha256": "757e933206bec154502227b950b0c5761d0257891afee7e3f9c590068976f196"
+}

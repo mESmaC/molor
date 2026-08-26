@@ -16,10 +16,12 @@ from molor.benchmark.backends import (
 )
 from molor.benchmark.evaluation import BenchmarkEvaluator
 from molor.benchmark.matrix import run_matrix
-from molor.benchmark.models import SuiteError, load_suite
+from molor.benchmark.models import BenchmarkSuite, SuiteError, load_suite
+from molor.benchmark.routing import RouteEvaluationContract, load_route_evaluation_contract
 from molor.benchmark.runner import BenchmarkRunner, RunOptions, compare_runs
 from molor.benchmark.scoring import SCORER_VERSION, validate_score_spec
 from molor.benchmark.standard import FAST_TASKS, NIGHTLY_TASKS, run_lm_eval
+from molor.experimental.expert_taxonomy import load_expert_taxonomy
 
 
 DEFAULT_SUITE = Path("benchmarks/suites/molor-core-v1.json")
@@ -90,6 +92,16 @@ def _parser() -> argparse.ArgumentParser:
         help="isolated OpenCode project containing the tool-free exam agent config",
     )
     run.add_argument("--route", default="auto")
+    run.add_argument(
+        "--route-contract",
+        type=Path,
+        help="content-pinned per-case acceptable routes for routing-only evaluation",
+    )
+    run.add_argument(
+        "--route-taxonomy",
+        type=Path,
+        help="expert taxonomy required with --route-contract",
+    )
     run.add_argument("--route-top-k", type=int, default=1)
     run.add_argument("--route-temperature", type=float, default=1.0)
     run.add_argument("--confidence-threshold", type=float, default=0.0)
@@ -131,6 +143,16 @@ def _parser() -> argparse.ArgumentParser:
     matrix.set_defaults(enable_thinking=None)
     matrix.add_argument("--endpoint", default="http://127.0.0.1:8765")
     matrix.add_argument("--expert", action="append", default=[])
+    matrix.add_argument(
+        "--route-contract",
+        type=Path,
+        help="content-pinned per-case acceptable routes for routing-only evaluation",
+    )
+    matrix.add_argument(
+        "--route-taxonomy",
+        type=Path,
+        help="expert taxonomy required with --route-contract",
+    )
     matrix.add_argument("--no-top2", action="store_true")
     matrix.add_argument("--route-temperature", type=float, default=1.0)
     matrix.add_argument("--confidence-threshold", type=float, default=0.0)
@@ -178,8 +200,22 @@ def _validate(path: Path) -> int:
     return 0
 
 
+def _route_contract(
+    suite: BenchmarkSuite,
+    contract_path: Path | None,
+    taxonomy_path: Path | None,
+) -> RouteEvaluationContract | None:
+    if (contract_path is None) != (taxonomy_path is None):
+        raise ValueError("--route-contract and --route-taxonomy must be provided together")
+    if contract_path is None or taxonomy_path is None:
+        return None
+    taxonomy = load_expert_taxonomy(taxonomy_path)
+    return load_route_evaluation_contract(contract_path, suite=suite, taxonomy=taxonomy)
+
+
 def _run(args: argparse.Namespace) -> int:
     suite = load_suite(args.suite)
+    route_contract = _route_contract(suite, args.route_contract, args.route_taxonomy)
     if args.backend == "teacher":
         backend = TeacherApiBackend(
             args.endpoint,
@@ -260,6 +296,7 @@ def _run(args: argparse.Namespace) -> int:
         options=options,
         run_directory=args.run_directory,
         evaluator=evaluator,
+        route_contract=route_contract,
     )
     runner.run(baseline_summary=args.baseline)
     return 0
@@ -308,8 +345,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "history":
             return _history(args.output_root)
         if args.command == "matrix":
+            suite = load_suite(args.suite)
             run_matrix(
-                load_suite(args.suite),
+                suite,
                 endpoint=args.endpoint,
                 label=args.label,
                 output_root=args.output_root,
@@ -325,6 +363,11 @@ def main(argv: list[str] | None = None) -> int:
                 timeout=args.timeout,
                 matrix_directory=args.matrix_directory,
                 enable_thinking_override=args.enable_thinking,
+                route_contract=_route_contract(
+                    suite,
+                    args.route_contract,
+                    args.route_taxonomy,
+                ),
             )
             return 0
         if args.command == "standard":

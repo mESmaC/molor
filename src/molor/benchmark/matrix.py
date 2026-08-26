@@ -3,14 +3,20 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 import re
 from typing import Any, Mapping, Sequence
 
 from molor.benchmark.backends import TeacherApiBackend
-from molor.benchmark.models import BenchmarkSuite
+from molor.benchmark.models import BenchmarkSuite, canonical_json
+from molor.benchmark.routing import RouteEvaluationContract
 from molor.benchmark.runner import BenchmarkRunner, RunOptions
+
+
+MATRIX_SCHEMA = "molor.benchmark-matrix.v1"
+MATRIX_CONTRACT_SCHEMA = "molor.benchmark-matrix-contract.v1"
 
 
 def _slug(value: str) -> str:
@@ -30,6 +36,54 @@ def _write_json(path: Path, value: object) -> None:
         json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+
+
+def _matrix_contract_fingerprint(contract: Mapping[str, object]) -> str:
+    return hashlib.sha256(canonical_json(contract).encode("utf-8")).hexdigest()
+
+
+def _matrix_manifest(
+    matrix_root: Path,
+    *,
+    proposed_matrix_id: str,
+    contract: dict[str, object],
+) -> dict[str, Any]:
+    """Create one matrix identity or validate and reuse it without overwriting drift."""
+
+    manifest_path = matrix_root / "matrix.json"
+    contract_fingerprint = _matrix_contract_fingerprint(contract)
+    if manifest_path.is_file():
+        existing = _read_json(manifest_path)
+        if existing.get("schema_version") != MATRIX_SCHEMA:
+            raise ValueError("existing matrix manifest uses an unsupported schema")
+        stored_contract = existing.get("matrix_contract")
+        stored_fingerprint = existing.get("matrix_contract_fingerprint")
+        if not isinstance(stored_contract, Mapping) or not isinstance(stored_fingerprint, str):
+            raise ValueError("existing fixed matrix has no resumable contract")
+        if _matrix_contract_fingerprint(stored_contract) != stored_fingerprint:
+            raise ValueError("existing matrix contract fingerprint is invalid")
+        for key, value in stored_contract.items():
+            if key != "schema_version" and existing.get(key) != value:
+                raise ValueError(f"existing matrix manifest disagrees with contract field {key!r}")
+        if dict(stored_contract) != contract or stored_fingerprint != contract_fingerprint:
+            raise ValueError("cannot resume a fixed matrix after its stable contract changed")
+        if not isinstance(existing.get("matrix_id"), str) or not existing["matrix_id"]:
+            raise ValueError("existing matrix manifest has no matrix_id")
+        if not isinstance(existing.get("created_at"), str) or not existing["created_at"]:
+            raise ValueError("existing matrix manifest has no created_at")
+        return existing
+
+    manifest = {
+        "schema_version": MATRIX_SCHEMA,
+        "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "matrix_id": proposed_matrix_id,
+        "matrix_contract_fingerprint": contract_fingerprint,
+        "matrix_contract": contract,
+        **{key: value for key, value in contract.items() if key != "schema_version"},
+    }
+    matrix_root.mkdir(parents=True, exist_ok=True)
+    _write_json(manifest_path, manifest)
+    return manifest
 
 
 def _oracle(
@@ -103,9 +157,12 @@ def run_matrix(
     timeout: float,
     matrix_directory: Path | None = None,
     enable_thinking_override: bool | None = None,
+    route_contract: RouteEvaluationContract | None = None,
 ) -> Path:
     if enable_thinking_override is not None and not isinstance(enable_thinking_override, bool):
         raise ValueError("enable_thinking_override must be boolean or None")
+    if route_contract is not None:
+        route_contract.validate_suite(suite)
     effective_enable_thinking = (
         enable_thinking_override
         if enable_thinking_override is not None
@@ -126,23 +183,19 @@ def run_matrix(
     if unknown:
         raise ValueError("unknown resident experts: " + ", ".join(sorted(unknown)))
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%SZ")
-    matrix_id = f"{timestamp}-{_slug(label)}"
+    proposed_matrix_id = f"{timestamp}-{_slug(label)}"
     matrix_root = (
         matrix_directory.expanduser().resolve()
         if matrix_directory is not None
-        else output_root.expanduser().resolve() / "matrices" / matrix_id
+        else output_root.expanduser().resolve() / "matrices" / proposed_matrix_id
     )
-    policies_root = matrix_root / "policies"
-    policies_root.mkdir(parents=True, exist_ok=True)
     policies: list[tuple[str, str, int, bool]] = [("base", "base/null", 1, True)]
     policies.extend((f"expert-{_slug(name)}", name, 1, True) for name in selected_experts)
     policies.append(("auto-top1", "auto", 1, False))
     if include_top2:
         policies.append(("auto-top2", "auto", 2, False))
-    matrix_manifest = {
-        "schema_version": "molor.benchmark-matrix.v1",
-        "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-        "matrix_id": matrix_id,
+    matrix_contract: dict[str, object] = {
+        "schema_version": MATRIX_CONTRACT_SCHEMA,
         "label": label,
         "suite_id": suite.suite_id,
         "suite_version": suite.version,
@@ -159,12 +212,21 @@ def run_matrix(
             "null_bias": null_bias,
         },
         "teacher_identity": identity,
+        "timeout_seconds": timeout,
+        "routing_evaluation": route_contract.provenance() if route_contract else None,
         "policies": [
             {"policy_id": policy_id, "route": route, "top_k": top_k}
             for policy_id, route, top_k, _forced in policies
         ],
     }
-    _write_json(matrix_root / "matrix.json", matrix_manifest)
+    matrix_manifest = _matrix_manifest(
+        matrix_root,
+        proposed_matrix_id=proposed_matrix_id,
+        contract=matrix_contract,
+    )
+    matrix_id = str(matrix_manifest["matrix_id"])
+    policies_root = matrix_root / "policies"
+    policies_root.mkdir(parents=True, exist_ok=True)
     print(
         f"Route matrix {matrix_id}: {len(policies)} policies over profile {profile}",
         flush=True,
@@ -196,6 +258,7 @@ def run_matrix(
                 enable_thinking_override=enable_thinking_override,
             ),
             run_directory=run_directory,
+            route_contract=route_contract,
         )
         runner.run(baseline_summary=base_summary)
         if policy_id == "base":
@@ -237,6 +300,8 @@ def run_matrix(
         "workload_fingerprint": summaries["base"].get("workload_fingerprint"),
         "enable_thinking_override": enable_thinking_override,
         "effective_enable_thinking": effective_enable_thinking,
+        "matrix_contract_fingerprint": matrix_manifest["matrix_contract_fingerprint"],
+        "routing_evaluation": route_contract.provenance() if route_contract else None,
         "policies": policy_table,
         "forced_route_oracle": oracle,
         "auto_top1_oracle_regret": float(oracle["quality_index"]) - auto_index,

@@ -1,0 +1,63 @@
+{
+  "schema_version": "molor.routed-rack-benchmark-launch.v1",
+  "repository_root": "../..",
+  "campaign_id": "qwen3-0.6b-expert-rack-v5-fast-r8-v1",
+  "model_directory": "models/Qwen3-0.6B",
+  "adapter_root": "checkpoints/qwen3-0.6b-expert-rack-v5-fast-r8-v1",
+  "router_checkpoint": "checkpoints/qwen3-0.6b-hierarchical-router-v1-fast-r8",
+  "taxonomy": {
+    "path": "experiments/expert-rack-v5/expert-taxonomy-v1.json",
+    "taxonomy_id": "molor-inference-rack",
+    "revision": "1",
+    "fingerprint": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1"
+  },
+  "suite": {
+    "path": "benchmarks/suites/molor-core-v1.json",
+    "suite_id": "molor-core-v1",
+    "version": "1.0.0",
+    "fingerprint": "0f2be48bcdec9a29d412f4c56f1c671fc276af73df572d78046c841f7afc4de5"
+  },
+  "route_contract": {
+    "path": "experiments/expert-rack-v5/molor-core-v1-rack-v5-route-contract-v1.json",
+    "fingerprint": "757e933206bec154502227b950b0c5761d0257891afee7e3f9c590068976f196"
+  },
+  "output_root": "runs/benchmarks/qwen3-0.6b-expert-rack-v5-fast-r8-v1",
+  "feedback_database": "runs/qwen3-0.6b-development/feedback/rack-v5-fast-r8-benchmark.sqlite3",
+  "endpoint": "http://127.0.0.1:8765",
+  "port": 8765,
+  "expert_rank": 8,
+  "experts": [
+    "agentic-planning",
+    "strict-instruction-following",
+    "terminal-cli",
+    "tool-use-execution",
+    "business-core",
+    "business-finance",
+    "business-operations",
+    "funding-capital",
+    "growth-gtm",
+    "investing-markets",
+    "embedded-can-diagnostics",
+    "embedded-code-generation",
+    "embedded-knowledge",
+    "commonsense-logic",
+    "formal-math",
+    "general-expert-reasoning",
+    "quantitative-math",
+    "science-reasoning",
+    "scientific-engineering-reasoning",
+    "agentic-code-debugging",
+    "frontend-visual-computing",
+    "general-code-generation",
+    "ml-data-reasoning",
+    "software-architecture-design",
+    "systems-distributed-engineering"
+  ],
+  "router_policy": {
+    "temperature": 1.0,
+    "confidence_threshold": 0.0,
+    "null_bias": 0.0
+  },
+  "timeout_seconds": 600.0,
+  "repetitions": 1
+}

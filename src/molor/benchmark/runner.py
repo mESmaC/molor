@@ -23,6 +23,7 @@ from molor.benchmark.backends import BenchmarkBackend, GenerationRequest
 from molor.benchmark.evaluation import BenchmarkEvaluator, UnscorableEvaluation
 from molor.benchmark.lock import lock_backend_identity
 from molor.benchmark.models import BenchmarkCase, BenchmarkSuite, canonical_json
+from molor.benchmark.routing import BASE_ROUTE, RouteEvaluationContract
 from molor.benchmark.scoring import SCORER_VERSION, score_response
 
 
@@ -353,11 +354,16 @@ class BenchmarkRunner:
         options: RunOptions,
         run_directory: Path | None = None,
         evaluator: BenchmarkEvaluator | None = None,
+        route_contract: RouteEvaluationContract | None = None,
     ) -> None:
         self.suite = suite
         self.backend = backend
         self.options = options
         self.evaluator = evaluator
+        self.route_contract = route_contract
+        if route_contract is not None:
+            route_contract.validate_suite(suite)
+        self.routing_evaluation = route_contract.provenance() if route_contract else None
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%SZ")
         self.run_id = f"{timestamp}-{_slug(options.label)}"
         self.run_directory = (
@@ -411,6 +417,10 @@ class BenchmarkRunner:
                 )
             if run_manifest.get("workload_contract") != workload_contract:
                 raise ValueError("cannot resume because the workload contract changed")
+            if run_manifest.get("routing_evaluation") != self.routing_evaluation:
+                raise ValueError(
+                    "cannot resume after the routing evaluation contract changed"
+                )
             current_lock = lock_backend_identity(
                 self.backend.identity(),
                 cache_path=self.run_directory.parent / ".artifact-hash-cache.json",
@@ -445,6 +455,7 @@ class BenchmarkRunner:
                 "evaluation_fingerprint": self.evaluation_fingerprint,
                 "workload_fingerprint": workload_fingerprint,
                 "workload_contract": workload_contract,
+                "routing_evaluation": self.routing_evaluation,
                 "profile": self.options.profile,
                 "categories": list(self.options.categories),
                 "case_ids": [case.case_id for case in cases],
@@ -531,6 +542,7 @@ class BenchmarkRunner:
             _read_json(self.run_path),
             records,
             evaluator=self.evaluator,
+            route_contract=self.route_contract,
         )
         summary["environment_after"] = {"gpus": _gpu_snapshot()}
         _atomic_json(self.summary_path, summary)
@@ -792,6 +804,7 @@ def summarize_run(
     records: Sequence[Mapping[str, object]],
     *,
     evaluator: BenchmarkEvaluator | None = None,
+    route_contract: RouteEvaluationContract | None = None,
 ) -> dict[str, Any]:
     workload_contract = run_manifest.get("workload_contract")
     workload_fingerprint = run_manifest.get("workload_fingerprint")
@@ -799,6 +812,11 @@ def summarize_run(
         raise ValueError("run manifest has no workload contract")
     if _fingerprint_workload(workload_contract) != workload_fingerprint:
         raise ValueError("run manifest workload fingerprint does not match its contract")
+    if route_contract is not None:
+        route_contract.validate_suite(suite)
+    routing_evaluation = route_contract.provenance() if route_contract is not None else None
+    if run_manifest.get("routing_evaluation") != routing_evaluation:
+        raise ValueError("run manifest routing evaluation contract does not match this summary")
     expected_cells = _contract_cells(workload_contract)
     case_lookup = {case.case_id: case for case in suite.cases}
     for key, expected in expected_cells.items():
@@ -845,7 +863,11 @@ def summarize_run(
                 "category": case.category,
                 "case_weight": case.weight,
                 "tags": list(case.tags),
-                "acceptable_routes": list(case.acceptable_routes),
+                "acceptable_routes": list(
+                    route_contract.acceptable_routes(case.case_id)
+                    if route_contract is not None
+                    else case.acceptable_routes
+                ),
             }
         )
         response = record.get("response")
@@ -957,8 +979,12 @@ def summarize_run(
         selected = decision.get("selected_routes")
         if not isinstance(selected, Sequence) or isinstance(selected, (str, bytes)) or not selected:
             continue
-        top1 = str(selected[0])
-        canonical_top1 = "base/null" if top1 == "base" else top1
+        top1 = selected[0]
+        canonical_top1 = (
+            route_contract.canonicalize_selected(top1)
+            if route_contract is not None
+            else (BASE_ROUTE if top1 == "base" else str(top1))
+        )
         route_utilization[canonical_top1] += 1
         if (
             isinstance(acceptable, Sequence)
@@ -1058,6 +1084,7 @@ def summarize_run(
             "acceptable_top1": routing_acceptable,
             "acceptable_top1_rate": (routing_acceptable / routing_total if routing_total else None),
             "top1_utilization": dict(sorted(route_utilization.items())),
+            "evaluation": routing_evaluation,
         },
         "artifacts": {
             "run_manifest": "run.json",
