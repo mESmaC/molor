@@ -72,11 +72,12 @@ class RouterFeatureContract:
             "pooling": "masked_mean",
             "prompt_scope": "user_content_only",
             "padding": "longest",
-            "truncation": "right",
         }
         for field_name, expected_value in expected.items():
             if getattr(self, field_name) != expected_value:
                 raise ValueError(f"{field_name} must be {expected_value!r} for router v1")
+        if self.truncation not in {"right", "head_tail"}:
+            raise ValueError("truncation must be 'right' or 'head_tail'")
         if not isinstance(self.add_special_tokens, bool):
             raise TypeError("add_special_tokens must be boolean")
         if not self.embedding_tensor:
@@ -245,9 +246,7 @@ def _model_embedding_artifact(
             index = json.loads(index_path.read_text(encoding="utf-8"))
             shard_name = index["weight_map"][tensor_name]
         except (json.JSONDecodeError, KeyError, TypeError) as exc:
-            raise ValueError(
-                f"model index does not map embedding tensor {tensor_name!r}"
-            ) from exc
+            raise ValueError(f"model index does not map embedding tensor {tensor_name!r}") from exc
         if not isinstance(shard_name, str) or Path(shard_name).name != shard_name:
             raise ValueError("embedding shard name in model index is unsafe")
         shard_path = model_dir / shard_name
@@ -268,7 +267,7 @@ def load_input_embedding(
     try:
         from safetensors import safe_open
     except ImportError as exc:  # pragma: no cover - optional dependency boundary
-        raise RuntimeError('install molor[hf] to train a router') from exc
+        raise RuntimeError("install molor[hf] to train a router") from exc
 
     root = Path(model_dir).expanduser().resolve()
     if not root.is_dir():
@@ -305,7 +304,7 @@ def load_router_tokenizer(model_dir: str | Path) -> Any:
     try:
         from transformers import AutoTokenizer
     except ImportError as exc:  # pragma: no cover - optional dependency boundary
-        raise RuntimeError('install molor[hf] to train a router') from exc
+        raise RuntimeError("install molor[hf] to train a router") from exc
     tokenizer = AutoTokenizer.from_pretrained(
         str(Path(model_dir).expanduser().resolve()),
         local_files_only=True,
@@ -318,6 +317,102 @@ def load_router_tokenizer(model_dir: str | Path) -> Any:
     if tokenizer.pad_token_id is None:
         raise ValueError("router tokenizer needs a pad or EOS token")
     return tokenizer
+
+
+def _tokenize_prompt_batch(
+    prompts: Sequence[str],
+    *,
+    tokenizer: Any,
+    contract: RouterFeatureContract,
+) -> tuple[Tensor, Tensor]:
+    """Tokenize one batch according to the sealed router feature contract."""
+
+    if not prompts:
+        raise ValueError("router prompt batch must not be empty")
+    if contract.truncation == "right":
+        encoded = tokenizer(
+            list(prompts),
+            padding=True,
+            truncation=True,
+            max_length=contract.max_tokens,
+            add_special_tokens=contract.add_special_tokens,
+            return_tensors="pt",
+        )
+        if not isinstance(encoded, Mapping):
+            raise ValueError("tokenizer must return a mapping for router prompts")
+        input_ids = encoded.get("input_ids")
+        attention_mask = encoded.get("attention_mask")
+        if attention_mask is None and isinstance(input_ids, Tensor):
+            attention_mask = torch.ones_like(input_ids)
+    else:
+        encoded = tokenizer(
+            list(prompts),
+            padding=False,
+            truncation=False,
+            add_special_tokens=contract.add_special_tokens,
+        )
+        if not isinstance(encoded, Mapping):
+            raise ValueError("tokenizer must return a mapping for router prompts")
+        raw_input_ids = encoded.get("input_ids")
+        if isinstance(raw_input_ids, Tensor):
+            if raw_input_ids.ndim != 2:
+                raise ValueError("tokenizer returned invalid input_ids for router prompts")
+            raw_rows: Sequence[object] = raw_input_ids.tolist()
+        elif isinstance(raw_input_ids, Sequence) and not isinstance(raw_input_ids, (str, bytes)):
+            raw_rows = raw_input_ids
+        else:
+            raise ValueError("tokenizer returned invalid input_ids for router prompts")
+        if len(raw_rows) != len(prompts):
+            raise ValueError("tokenizer input_ids do not align with router prompts")
+
+        head_tokens = (contract.max_tokens + 1) // 2
+        tail_tokens = contract.max_tokens // 2
+        retained_rows: list[list[int]] = []
+        for raw_row in raw_rows:
+            if isinstance(raw_row, Tensor):
+                if raw_row.ndim != 1:
+                    raise ValueError("tokenizer returned invalid input_ids for router prompts")
+                values = raw_row.tolist()
+            elif isinstance(raw_row, Sequence) and not isinstance(raw_row, (str, bytes)):
+                values = list(raw_row)
+            else:
+                raise ValueError("tokenizer returned invalid input_ids for router prompts")
+            if not values or any(
+                isinstance(token_id, bool) or not isinstance(token_id, int) for token_id in values
+            ):
+                raise ValueError("tokenizer returned invalid input_ids for router prompts")
+            if len(values) > contract.max_tokens:
+                values = values[:head_tokens] + (values[-tail_tokens:] if tail_tokens else [])
+            retained_rows.append(values)
+
+        pad_token_id = getattr(tokenizer, "pad_token_id", None)
+        if isinstance(pad_token_id, bool) or not isinstance(pad_token_id, int) or pad_token_id < 0:
+            raise ValueError("head_tail router tokenization requires a non-negative pad_token_id")
+        width = max(len(row) for row in retained_rows)
+        input_ids = torch.full((len(retained_rows), width), pad_token_id, dtype=torch.long)
+        attention_mask = torch.zeros((len(retained_rows), width), dtype=torch.long)
+        for row_index, values in enumerate(retained_rows):
+            input_ids[row_index, : len(values)] = torch.tensor(values, dtype=torch.long)
+            attention_mask[row_index, : len(values)] = 1
+
+    if (
+        not isinstance(input_ids, Tensor)
+        or input_ids.ndim != 2
+        or input_ids.shape[0] != len(prompts)
+        or input_ids.shape[1] < 1
+        or input_ids.shape[1] > contract.max_tokens
+        or input_ids.dtype == torch.bool
+        or input_ids.is_floating_point()
+    ):
+        raise ValueError("tokenizer returned invalid input_ids for router prompts")
+    if not isinstance(attention_mask, Tensor) or attention_mask.shape != input_ids.shape:
+        raise ValueError("tokenizer returned an invalid attention_mask for router prompts")
+    mask = attention_mask.to(device="cpu", dtype=torch.float32)
+    if not torch.all((mask == 0) | (mask == 1)).item():
+        raise ValueError("router attention_mask must contain only zeros and ones")
+    if torch.any(mask.sum(dim=1) <= 0).item():
+        raise ValueError("router attention_mask must retain at least one prompt token")
+    return input_ids.to(device="cpu", dtype=torch.long), mask
 
 
 def extract_prompt_features(
@@ -344,23 +439,25 @@ def extract_prompt_features(
     with torch.inference_mode():
         for start in range(0, len(examples), batch_size):
             batch = examples[start : start + batch_size]
-            tokenized = tokenizer(
+            input_ids, attention_mask = _tokenize_prompt_batch(
                 [example.prompt for example in batch],
-                padding=True,
-                truncation=True,
-                max_length=contract.max_tokens,
-                add_special_tokens=contract.add_special_tokens,
-                return_tensors="pt",
+                tokenizer=tokenizer,
+                contract=contract,
             )
-            input_ids = tokenized["input_ids"].to(device="cpu", dtype=torch.long)
-            attention_mask = tokenized["attention_mask"].to(device="cpu", dtype=torch.float32)
-            if input_ids.numel() and int(input_ids.max()) >= embedding.shape[0]:
+            embedding_device = embedding.device
+            input_ids = input_ids.to(device=embedding_device)
+            attention_mask = attention_mask.to(device=embedding_device)
+            if input_ids.numel() and (
+                int(input_ids.min().item()) < 0 or int(input_ids.max().item()) >= embedding.shape[0]
+            ):
                 raise ValueError("tokenizer vocabulary exceeds the input-embedding table")
             token_features = embedding[input_ids].float()
             denominator = attention_mask.sum(dim=1, keepdim=True)
             if torch.any(denominator == 0):
                 raise ValueError("tokenizer produced an empty prompt")
             pooled = (token_features * attention_mask.unsqueeze(-1)).sum(dim=1) / denominator
+            if not torch.isfinite(pooled).all().item():
+                raise ValueError("frozen prompt features contain non-finite values")
             feature_rows.append(pooled.cpu())
             try:
                 labels.extend(route_to_index[example.route_id] for example in batch)
@@ -390,7 +487,7 @@ def cached_prompt_features(
         from safetensors import safe_open
         from safetensors.torch import save_file
     except ImportError as exc:  # pragma: no cover - optional dependency boundary
-        raise RuntimeError('install molor[hf] to cache router features') from exc
+        raise RuntimeError("install molor[hf] to cache router features") from exc
 
     dataset = Path(dataset_path).resolve()
     cache = None if cache_path is None else Path(cache_path).resolve()
@@ -712,7 +809,7 @@ def train_router_checkpoint(
     try:
         from safetensors.torch import save_file
     except ImportError as exc:  # pragma: no cover - optional dependency boundary
-        raise RuntimeError('install molor[hf] to save a router checkpoint') from exc
+        raise RuntimeError("install molor[hf] to save a router checkpoint") from exc
 
     routes = tuple(route_ids)
     if len(routes) < 2 or routes[-1] != "base/null" or len(routes) != len(set(routes)):
@@ -721,9 +818,7 @@ def train_router_checkpoint(
     validation_source = Path(validation_path).resolve()
     test_source = None if test_path is None else Path(test_path).resolve()
     datasets = {
-        "train": load_router_jsonl(
-            train_source, route_ids=routes, limit_per_route=limit_per_route
-        ),
+        "train": load_router_jsonl(train_source, route_ids=routes, limit_per_route=limit_per_route),
         "validation": load_router_jsonl(
             validation_source, route_ids=routes, limit_per_route=limit_per_route
         ),
@@ -804,9 +899,7 @@ def train_router_checkpoint(
     save_file(tensor_state, checkpoint_path)
     adapter_metadata = _adapter_artifacts(adapters, routes)
     dataset_metadata = {
-        split: _artifact(path)
-        for split, path in source_paths.items()
-        if path is not None
+        split: _artifact(path) for split, path in source_paths.items() if path is not None
     }
     sidecar = {
         "schema_version": ROUTER_CHECKPOINT_SCHEMA,

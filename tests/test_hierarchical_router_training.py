@@ -29,6 +29,7 @@ from molor.training.router import (
     RouterExample,
     RouterFeatureContract,
     RouterTrainingConfig,
+    _tokenize_prompt_batch,
     load_router_jsonl,
 )
 
@@ -51,6 +52,40 @@ def _training_cli():
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
+
+
+class _TokenIdTokenizer:
+    pad_token_id = 0
+
+    def __init__(
+        self,
+        rows: dict[str, list[int]],
+        *,
+        bos_token_id: int = 101,
+        eos_token_id: int = 102,
+    ) -> None:
+        self.rows = rows
+        self.bos_token_id = bos_token_id
+        self.eos_token_id = eos_token_id
+
+    def __call__(self, prompts: list[str], **kwargs: object) -> dict[str, object]:
+        rows = [list(self.rows[prompt]) for prompt in prompts]
+        if kwargs.get("add_special_tokens"):
+            rows = [[self.bos_token_id, *row, self.eos_token_id] for row in rows]
+        if kwargs.get("truncation"):
+            maximum = int(kwargs["max_length"])
+            rows = [row[:maximum] for row in rows]
+        if not kwargs.get("padding"):
+            return {"input_ids": rows}
+        width = max(len(row) for row in rows)
+        padded = [row + [self.pad_token_id] * (width - len(row)) for row in rows]
+        masks = [[1] * len(row) + [0] * (width - len(row)) for row in rows]
+        if kwargs.get("return_tensors") == "pt":
+            return {
+                "input_ids": torch.tensor(padded, dtype=torch.long),
+                "attention_mask": torch.tensor(masks, dtype=torch.long),
+            }
+        return {"input_ids": padded, "attention_mask": masks}
 
 
 def _features_and_routes(*, repeats: int = 3):
@@ -172,6 +207,78 @@ def test_cli_rejects_duplicate_adapter_overrides() -> None:
                 f"{leaf_id}=second",
             ]
         )
+
+
+def test_cli_preserves_right_default_and_accepts_explicit_head_tail() -> None:
+    cli = _training_cli()
+    required = ["--train", "train.jsonl", "--validation", "validation.jsonl"]
+
+    assert cli._parser().parse_args(required).truncation == "right"
+    assert cli._parser().parse_args([*required, "--truncation", "head_tail"]).truncation == (
+        "head_tail"
+    )
+
+
+def test_head_tail_tokenization_preserves_rows_within_limit_and_right_pads() -> None:
+    tokenizer = _TokenIdTokenizer({"first": [1, 2, 3], "second": [4]})
+
+    input_ids, attention_mask = _tokenize_prompt_batch(
+        ["first", "second"],
+        tokenizer=tokenizer,
+        contract=RouterFeatureContract(
+            max_tokens=6,
+            truncation="head_tail",
+            add_special_tokens=False,
+        ),
+    )
+
+    assert torch.equal(input_ids, torch.tensor([[1, 2, 3], [4, 0, 0]]))
+    assert torch.equal(attention_mask, torch.tensor([[1, 1, 1], [1, 0, 0]]).float())
+
+
+@pytest.mark.parametrize(
+    ("maximum", "expected"),
+    [
+        (4, [1, 2, 6, 7]),
+        (5, [1, 2, 3, 6, 7]),
+    ],
+)
+def test_head_tail_tokenization_uses_deterministic_even_and_odd_halves(
+    maximum: int,
+    expected: list[int],
+) -> None:
+    tokenizer = _TokenIdTokenizer({"long": [1, 2, 3, 4, 5, 6, 7]})
+
+    input_ids, attention_mask = _tokenize_prompt_batch(
+        ["long"],
+        tokenizer=tokenizer,
+        contract=RouterFeatureContract(
+            max_tokens=maximum,
+            truncation="head_tail",
+            add_special_tokens=False,
+        ),
+    )
+
+    assert input_ids.tolist() == [expected]
+    assert attention_mask.tolist() == [[1.0] * maximum]
+
+
+def test_head_tail_tokenization_slices_after_adding_special_tokens() -> None:
+    tokenizer = _TokenIdTokenizer({"long": [1, 2, 3, 4, 5]})
+
+    input_ids, attention_mask = _tokenize_prompt_batch(
+        ["long"],
+        tokenizer=tokenizer,
+        contract=RouterFeatureContract(max_tokens=4, truncation="head_tail"),
+    )
+
+    assert input_ids.tolist() == [[101, 1, 5, 102]]
+    assert attention_mask.tolist() == [[1.0, 1.0, 1.0, 1.0]]
+
+
+def test_router_feature_contract_rejects_unknown_truncation() -> None:
+    with pytest.raises(ValueError, match="right.*head_tail"):
+        RouterFeatureContract(truncation="middle")
 
 
 def test_joint_probabilities_are_normalized_exact_hierarchical_products() -> None:

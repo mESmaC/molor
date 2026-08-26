@@ -24,7 +24,11 @@ from molor.training.hierarchical_router import (
     _artifact,
     _seal_checkpoint_bundle,
 )
-from molor.training.router import RouterFeatureContract
+from molor.training.router import (
+    RouterExample,
+    RouterFeatureContract,
+    extract_prompt_features,
+)
 
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -44,9 +48,24 @@ class _Tokenizer:
         }
 
 
+class _HeadTailTokenizer:
+    pad_token_id = 0
+    truncation_side = "right"
+
+    def __init__(self) -> None:
+        self.calls: list[tuple[object, dict[str, object]]] = []
+
+    def __call__(self, prompts: object, **kwargs: object) -> dict[str, object]:
+        self.calls.append((prompts, kwargs))
+        return {"input_ids": [[1, 2, 3, 4, 5, 6]]}
+
+
 def _checkpoint_fixture(
     tmp_path: Path,
-) -> tuple[Path, Path, dict[str, Path], nn.Embedding, _Tokenizer]:
+    *,
+    feature_contract: RouterFeatureContract | None = None,
+    tokenizer: Any | None = None,
+) -> tuple[Path, Path, dict[str, Path], nn.Embedding, Any]:
     taxonomy = load_expert_taxonomy(TAXONOMY_PATH)
     axes = HierarchicalRouterAxes.from_taxonomy(taxonomy)
     router = HierarchicalRouterHeads(hidden_size=4, axes=axes)
@@ -109,7 +128,7 @@ def _checkpoint_fixture(
             "tokenizer_artifacts": [_artifact(tokenizer_config)],
         },
         "adapters": adapter_metadata,
-        "feature_contract": RouterFeatureContract(max_tokens=32).to_dict(),
+        "feature_contract": (feature_contract or RouterFeatureContract(max_tokens=32)).to_dict(),
         "head_config": {
             "hidden_size": 4,
             "router_hidden_size": None,
@@ -131,7 +150,7 @@ def _checkpoint_fixture(
     embedding = nn.Embedding(8, 4)
     with torch.no_grad():
         embedding.weight.copy_(torch.arange(32, dtype=torch.float32).reshape(8, 4))
-    return checkpoint, model, adapters, embedding, _Tokenizer()
+    return checkpoint, model, adapters, embedding, tokenizer or _Tokenizer()
 
 
 def test_checkpoint_runtime_extracts_exact_features_and_adapts_decision(
@@ -180,6 +199,60 @@ def test_checkpoint_runtime_extracts_exact_features_and_adapts_decision(
     assert sum(decision.probability_map.values()) == pytest.approx(1.0)
     assert "base/null" not in decision.probability_map
     assert decision.checkpoint_loaded is True
+
+
+def test_head_tail_runtime_features_match_training_extraction(tmp_path: Path) -> None:
+    contract = RouterFeatureContract(
+        max_tokens=4,
+        truncation="head_tail",
+        add_special_tokens=False,
+    )
+    tokenizer = _HeadTailTokenizer()
+    checkpoint, model, adapters, embedding, tokenizer = _checkpoint_fixture(
+        tmp_path,
+        feature_contract=contract,
+        tokenizer=tokenizer,
+    )
+    taxonomy = load_expert_taxonomy(TAXONOMY_PATH)
+    runtime = HierarchicalPromptAutoRouter.load_checkpoint(
+        checkpoint,
+        tokenizer=tokenizer,
+        input_embeddings=embedding,
+        available_experts=taxonomy.leaf_ids,
+        adapters=adapters,
+        expected_model_id=model,
+    )
+    training_features, _labels = extract_prompt_features(
+        [RouterExample("long prompt", BASE_ROUTE)],
+        tokenizer=tokenizer,
+        embedding=embedding.weight,
+        route_ids=(BASE_ROUTE,),
+        contract=contract,
+        batch_size=1,
+    )
+
+    runtime_features = runtime._prompt_features("long prompt")
+
+    assert torch.equal(runtime_features.cpu(), training_features)
+    assert runtime_features.shape == (1, embedding.embedding_dim)
+    assert tokenizer.calls == [
+        (
+            ["long prompt"],
+            {
+                "padding": False,
+                "truncation": False,
+                "add_special_tokens": False,
+            },
+        ),
+        (
+            ["long prompt"],
+            {
+                "padding": False,
+                "truncation": False,
+                "add_special_tokens": False,
+            },
+        ),
+    ]
 
 
 def test_runtime_requires_every_checkpoint_adapter_to_be_resident(tmp_path: Path) -> None:

@@ -51,6 +51,7 @@ def _parser() -> argparse.ArgumentParser:
         help="override one canonical leaf adapter; repeat as needed",
     )
     parser.add_argument("--max-tokens", type=int, default=256)
+    parser.add_argument("--truncation", choices=("right", "head_tail"), default="right")
     parser.add_argument("--feature-batch-size", type=int, default=128)
     parser.add_argument("--epochs", type=int, default=30)
     parser.add_argument("--batch-size", type=int, default=256)
@@ -109,7 +110,10 @@ def main(argv: list[str] | None = None) -> None:
         model_dir=args.model_dir,
         adapters=adapters,
         output_dir=args.output_dir,
-        feature_contract=RouterFeatureContract(max_tokens=args.max_tokens),
+        feature_contract=RouterFeatureContract(
+            max_tokens=args.max_tokens,
+            truncation=args.truncation,
+        ),
         training=training,
         feature_batch_size=args.feature_batch_size,
         cache_dir=None if args.no_cache else args.cache_dir,

@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-import torch
 from torch import Tensor, nn
 
 from molor.experimental.autorouter import (
@@ -27,6 +26,7 @@ from molor.training.hierarchical_router import (
     HierarchicalRouterCheckpoint,
     load_hierarchical_router_checkpoint,
 )
+from molor.training.router import RouterExample, extract_prompt_features
 
 
 def _expert_names(values: Sequence[str]) -> tuple[str, ...]:
@@ -200,52 +200,20 @@ class HierarchicalPromptAutoRouter:
         )
 
     def _prompt_features(self, prompt: str) -> Tensor:
-        encoded = self.tokenizer(
-            [prompt],
-            padding=True,
-            truncation=True,
-            max_length=self.max_prompt_tokens,
-            add_special_tokens=self.add_special_tokens,
-            return_tensors="pt",
-        )
-        if not isinstance(encoded, Mapping):
-            raise ValueError("tokenizer must return a mapping for prompt routing")
-        input_ids = encoded.get("input_ids")
-        if (
-            not isinstance(input_ids, Tensor)
-            or input_ids.ndim != 2
-            or input_ids.shape[0] != 1
-            or input_ids.shape[1] < 1
-            or input_ids.dtype == torch.bool
-            or input_ids.is_floating_point()
-        ):
-            raise ValueError("tokenizer returned invalid input_ids for prompt routing")
-        attention_mask = encoded.get("attention_mask")
-        if attention_mask is None:
-            attention_mask = torch.ones_like(input_ids)
-        if not isinstance(attention_mask, Tensor) or attention_mask.shape != input_ids.shape:
-            raise ValueError("tokenizer returned an invalid attention_mask")
-
         weight = _embedding_weight(self.input_embeddings)
         if weight._version != self._embedding_version:
             raise RuntimeError("frozen input embeddings changed after router initialization")
-        input_ids = input_ids.to(device=weight.device, dtype=torch.long)
-        attention_mask = attention_mask.to(device=weight.device, dtype=torch.float32)
-        if not torch.all((attention_mask == 0) | (attention_mask == 1)).item():
-            raise ValueError("tokenizer attention_mask must contain only zeros and ones")
-        if int(input_ids.min().item()) < 0 or int(input_ids.max().item()) >= weight.shape[0]:
-            raise ValueError("tokenizer IDs fall outside the frozen input-embedding table")
-        denominator = attention_mask.sum(dim=1, keepdim=True)
-        if torch.any(denominator <= 0).item():
-            raise ValueError("tokenizer attention_mask must retain at least one prompt token")
-        with torch.inference_mode():
-            token_features = weight[input_ids].float()
-            if token_features.shape != (*input_ids.shape, self.checkpoint.router.hidden_size):
-                raise ValueError("input_embeddings returned an invalid prompt feature shape")
-            features = (token_features * attention_mask.unsqueeze(-1)).sum(dim=1) / denominator
-        if not torch.isfinite(features).all().item():
-            raise ValueError("frozen prompt features contain non-finite values")
-        return features
+        features, _labels = extract_prompt_features(
+            [RouterExample(prompt=prompt, route_id=BASE_ROUTE)],
+            tokenizer=self.tokenizer,
+            embedding=weight,
+            route_ids=(BASE_ROUTE,),
+            contract=self.feature_contract,
+            batch_size=1,
+        )
+        if features.shape != (1, self.checkpoint.router.hidden_size):
+            raise ValueError("input_embeddings returned an invalid prompt feature shape")
+        return features.to(device=weight.device)
 
     def decide(self, prompt: str, policy: AutoRouterPolicy) -> AutoRouteDecision:
         """Route one prompt and adapt the hierarchy to the stable desktop decision contract."""
