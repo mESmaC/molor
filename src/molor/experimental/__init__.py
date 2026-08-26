@@ -5,6 +5,7 @@ from molor.experimental.autorouter import (
     AutoRouterPolicy,
     NULL_ROUTE_ID,
     PromptAutoRouter,
+    PromptRouter,
     ROUTER_CHECKPOINT_SCHEMA,
     base_fallback_decision,
     manual_route_decision,
@@ -41,8 +42,10 @@ __all__ = [
     "HashedKVConfig",
     "HashedKVShadowResult",
     "IncrementalPromptAutoRouter",
+    "HierarchicalPromptAutoRouter",
     "NULL_ROUTE_ID",
     "PromptAutoRouter",
+    "PromptRouter",
     "PageSelection",
     "PageSpan",
     "QWEN3_TARGET_MODULES",
@@ -61,3 +64,13 @@ __all__ = [
     "manual_route_decision",
     "select_minmax_pages",
 ]
+
+
+def __getattr__(name: str) -> object:
+    """Lazily expose runtimes that depend on training checkpoint schemas."""
+
+    if name == "HierarchicalPromptAutoRouter":
+        from molor.experimental.hierarchical_prompt_router import HierarchicalPromptAutoRouter
+
+        return HierarchicalPromptAutoRouter
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

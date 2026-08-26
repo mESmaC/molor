@@ -14,9 +14,13 @@ from molor.experimental.autorouter import (
     AutoRouteDecision,
     AutoRouterPolicy,
     PromptAutoRouter,
+    PromptRouter,
+    ROUTER_CHECKPOINT_SCHEMA,
     base_fallback_decision,
     manual_route_decision,
 )
+from molor.experimental.hierarchical_prompt_router import HierarchicalPromptAutoRouter
+from molor.training.hierarchical_router import HIERARCHICAL_ROUTER_CHECKPOINT_SCHEMA
 
 
 @dataclass(frozen=True, slots=True)
@@ -287,7 +291,7 @@ class DesktopSession:
         engine: Any,
         info: DesktopModelInfo,
         *,
-        auto_router: PromptAutoRouter | None = None,
+        auto_router: PromptRouter | None = None,
         router_unavailable_reason: str = "No router checkpoint was configured.",
     ) -> None:
         self.engine = engine
@@ -336,6 +340,7 @@ class DesktopSession:
             local_files_only=is_local_model,
         )
         loaded_by_path: dict[str, str] = {}
+        adapter_paths_by_name: dict[str, Path] = {}
         loaded_names: set[str] = set()
         slot_names: list[str] = []
         for raw_path in requested_paths:
@@ -352,11 +357,12 @@ class DesktopSession:
                 loaded_name = cls._load_real_expert(engine, path, loaded_names)
                 loaded_by_path[path_key] = loaded_name
                 loaded_names.add(loaded_name)
+                adapter_paths_by_name[loaded_name] = path.resolve()
             slot_names.append(loaded_name)
 
         expert_a = slot_names[0]
         expert_b = slot_names[1]
-        router: PromptAutoRouter | None = None
+        router: PromptRouter | None = None
         router_path_text = options.router_checkpoint.strip()
         router_display: str | None = None
         router_reason = "No router checkpoint was configured."
@@ -367,11 +373,12 @@ class DesktopSession:
             except OSError:
                 router_display = str(router_path)
             if router_path.is_dir():
-                router = PromptAutoRouter.load_checkpoint(
+                router = cls._load_prompt_router_checkpoint(
                     router_path,
                     tokenizer=engine.tokenizer,
                     input_embeddings=engine.model.get_input_embeddings(),
                     available_experts=engine.expert_names,
+                    adapters=adapter_paths_by_name,
                     expected_model_id=engine.base_model_id,
                 )
                 router_reason = "Router checkpoint loaded."
@@ -397,6 +404,62 @@ class DesktopSession:
             auto_router=router,
             router_unavailable_reason=router_reason,
         )
+
+    @staticmethod
+    def _load_prompt_router_checkpoint(
+        checkpoint_directory: Path,
+        *,
+        tokenizer: Any,
+        input_embeddings: Any,
+        available_experts: Sequence[str],
+        adapters: Mapping[str, Path],
+        expected_model_id: str,
+    ) -> PromptRouter:
+        """Dispatch serving checkpoints by their explicit schema version."""
+
+        config_path = checkpoint_directory / "router_config.json"
+        if not config_path.is_file():
+            raise FileNotFoundError(f"Router config does not exist: {config_path}")
+
+        def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+            result: dict[str, Any] = {}
+            for key, value in pairs:
+                if key in result:
+                    raise ValueError(f"Router config contains duplicate key {key!r}.")
+                result[key] = value
+            return result
+
+        try:
+            payload = json.loads(
+                config_path.read_text(encoding="utf-8"),
+                object_pairs_hook=reject_duplicates,
+                parse_constant=lambda value: (_ for _ in ()).throw(
+                    ValueError(f"Router config contains unsupported constant {value!r}.")
+                ),
+            )
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError("Router config must be valid UTF-8 JSON.") from exc
+        if not isinstance(payload, dict):
+            raise ValueError("Router config must contain a JSON object.")
+        schema = payload.get("schema_version")
+        if schema == ROUTER_CHECKPOINT_SCHEMA:
+            return PromptAutoRouter.load_checkpoint(
+                checkpoint_directory,
+                tokenizer=tokenizer,
+                input_embeddings=input_embeddings,
+                available_experts=available_experts,
+                expected_model_id=expected_model_id,
+            )
+        if schema == HIERARCHICAL_ROUTER_CHECKPOINT_SCHEMA:
+            return HierarchicalPromptAutoRouter.load_checkpoint(
+                checkpoint_directory,
+                tokenizer=tokenizer,
+                input_embeddings=input_embeddings,
+                available_experts=available_experts,
+                adapters=adapters,
+                expected_model_id=expected_model_id,
+            )
+        raise ValueError(f"Unsupported router checkpoint schema: {schema!r}")
 
     @staticmethod
     def _adapter_target_modules(*raw_paths: str) -> tuple[str, ...] | None:

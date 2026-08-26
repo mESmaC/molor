@@ -14,7 +14,7 @@ import json
 import math
 from pathlib import Path
 from types import MappingProxyType
-from typing import Any, Literal
+from typing import Any, Literal, Protocol
 
 import torch
 from torch import Tensor, nn
@@ -202,6 +202,15 @@ class AutoRouteDecision:
             "reason": self.reason,
             "checkpoint_loaded": self.checkpoint_loaded,
         }
+
+
+class PromptRouter(Protocol):
+    """Minimal request-time contract shared by flat and hierarchical routers."""
+
+    def decide(self, prompt: str, policy: AutoRouterPolicy) -> AutoRouteDecision:
+        """Return one fixed route decision for the current user prompt."""
+
+        ...
 
 
 def base_fallback_decision(
@@ -567,6 +576,7 @@ __all__ = [
     "AutoRouterPolicy",
     "NULL_ROUTE_ID",
     "PromptAutoRouter",
+    "PromptRouter",
     "ROUTER_CHECKPOINT_SCHEMA",
     "base_fallback_decision",
     "manual_route_decision",
