@@ -393,6 +393,19 @@ def _calibration_metrics(probabilities: Tensor, labels: Tensor) -> dict[str, Any
     }
 
 
+def _same_runtime_device(left: torch.device, right: torch.device) -> bool:
+    """Treat an unindexed CUDA device as the process's current CUDA device."""
+
+    if left.type != right.type:
+        return False
+    if left.type != "cuda":
+        return left == right
+    current_index = torch.cuda.current_device()
+    left_index = current_index if left.index is None else left.index
+    right_index = current_index if right.index is None else right.index
+    return left_index == right_index
+
+
 def evaluate_hierarchical_router(
     router: HierarchicalRouterHeads,
     features: Tensor,
@@ -419,7 +432,7 @@ def evaluate_hierarchical_router(
         require_all_routes=require_all_routes,
     )
     parameter_device = next(router.parameters()).device
-    if parameter_device != device:
+    if not _same_runtime_device(parameter_device, device):
         raise ValueError(
             f"router parameters are on {parameter_device}, but evaluation requested {device}"
         )

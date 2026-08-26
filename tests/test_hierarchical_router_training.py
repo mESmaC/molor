@@ -211,6 +211,22 @@ def test_evaluation_fails_closed_when_a_leaf_has_no_support() -> None:
         )
 
 
+def test_runtime_device_equivalence_normalizes_unindexed_cuda(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(torch.cuda, "current_device", lambda: 0)
+
+    assert hierarchical_router_module._same_runtime_device(
+        torch.device("cuda:0"), torch.device("cuda")
+    )
+    assert not hierarchical_router_module._same_runtime_device(
+        torch.device("cuda:1"), torch.device("cuda")
+    )
+    assert hierarchical_router_module._same_runtime_device(
+        torch.device("cpu"), torch.device("cpu")
+    )
+
+
 def test_partial_test_evaluation_reports_unsupported_routes_without_inventing_rows() -> None:
     features, routes = _features_and_routes(repeats=1)
     axes = HierarchicalRouterAxes.from_taxonomy(_taxonomy())
