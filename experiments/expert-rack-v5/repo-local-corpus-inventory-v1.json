@@ -1,0 +1,1982 @@
+{
+  "artifacts": [
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "auxiliary",
+      "bytes": 4298,
+      "canonical_dataset_id": "legacy-first-real-experts-build-v1",
+      "dataset_disposition": "lineage-only",
+      "group_id": "legacy-multidomain-build",
+      "jsonl_rows": null,
+      "note": "Aggregate receipt for an older multi-domain build; it is not a trainable shard.",
+      "path": "build_report.json",
+      "sha256": "348b28f1623c27c7595821158187117f21edbd6b764642232ece66a7cc2e5d86",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 1940633,
+      "canonical_dataset_id": "multidogo-customer-support-quarantine-v1",
+      "dataset_disposition": "quarantined",
+      "group_id": "multidogo-customer-support",
+      "jsonl_rows": 2048,
+      "note": "Customer-support dialogs are not GTM expertise and remain excluded pending a privacy and duplication rebuild.",
+      "path": "customer-gtm.jsonl",
+      "sha256": "221af8971e0bac9f5d4c1350c3a875296750493061c64b831d39378b121a125c",
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 309598,
+      "canonical_dataset_id": "multidogo-customer-support-quarantine-v1",
+      "dataset_disposition": "quarantined",
+      "group_id": "multidogo-customer-support",
+      "jsonl_rows": 2048,
+      "note": "Customer-support dialogs are not GTM expertise and remain excluded pending a privacy and duplication rebuild.",
+      "path": "customer-gtm.provenance.jsonl",
+      "sha256": "e750aeef6cc564d0bfb33d98c38b926d1eb3d5fc9732278370170ef1b092a914",
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 489864,
+      "canonical_dataset_id": "multidogo-customer-support-quarantine-v1",
+      "dataset_disposition": "quarantined",
+      "group_id": "multidogo-customer-support",
+      "jsonl_rows": 512,
+      "note": "Customer-support dialogs are not GTM expertise and remain excluded pending a privacy and duplication rebuild.",
+      "path": "customer-gtm.validation.jsonl",
+      "sha256": "36b8e11b641a268b7a546c31dd70f39a1173006e510bc68127f29e6c09f85346",
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 77083,
+      "canonical_dataset_id": "multidogo-customer-support-quarantine-v1",
+      "dataset_disposition": "quarantined",
+      "group_id": "multidogo-customer-support",
+      "jsonl_rows": 512,
+      "note": "Customer-support dialogs are not GTM expertise and remain excluded pending a privacy and duplication rebuild.",
+      "path": "customer-gtm.validation.provenance.jsonl",
+      "sha256": "f0075ac04981aed19d3144342606745de82f84efe3836bb297aa195224612602",
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2869994,
+      "canonical_dataset_id": "legacy-embedded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-embedded-can",
+      "jsonl_rows": 4096,
+      "note": "Superseded by verified OCB/CAN materializations.",
+      "path": "embedded-can.jsonl",
+      "sha256": "09b85432869ba2c3a30869e44a86c3ced2c65cd6b02ab20e5bc3fbe13b373b0d",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 965549,
+      "canonical_dataset_id": "legacy-embedded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-embedded-can",
+      "jsonl_rows": 4096,
+      "note": "Superseded by verified OCB/CAN materializations.",
+      "path": "embedded-can.provenance.jsonl",
+      "sha256": "1fc7c4a162803a3a5939f179ac1fd3598d7b9a3faefc08d05d77ca3b5f8ac5c4",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 359211,
+      "canonical_dataset_id": "legacy-embedded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-embedded-can",
+      "jsonl_rows": 512,
+      "note": "Superseded by verified OCB/CAN materializations.",
+      "path": "embedded-can.validation.jsonl",
+      "sha256": "04b1b3f0049366065fbd91ea325cb0b0c729879304069848a8088ed0e0df18b7",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 122772,
+      "canonical_dataset_id": "legacy-embedded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-embedded-can",
+      "jsonl_rows": 512,
+      "note": "Superseded by verified OCB/CAN materializations.",
+      "path": "embedded-can.validation.provenance.jsonl",
+      "sha256": "dcc0bd20e4b18fe9ccef93add1986cc9dd3ae5a117f6d2a6e21a8c3e34079a2a",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": true,
+      "artifact_role": "training",
+      "bytes": 6091573,
+      "canonical_dataset_id": "embedded-knowledge-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "embedded-knowledge",
+      "jsonl_rows": 6000,
+      "note": "Existing file-held-out embedded knowledge SFT remains an admitted supplement.",
+      "path": "embedded-knowledge-v1.jsonl",
+      "sha256": "c588df6fc0ca61ce14938d6bda96dcf3a873e70bb4dde98b44634f495cbcec78",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 10881,
+      "canonical_dataset_id": "embedded-knowledge-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "embedded-knowledge",
+      "jsonl_rows": null,
+      "note": "Existing file-held-out embedded knowledge SFT remains an admitted supplement.",
+      "path": "embedded-knowledge-v1.report.json",
+      "sha256": "fa4ee385724517678d22ad107e39aa9b5bb694bc4c844d9ed71dcdb0b942c7b7",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 27929,
+      "canonical_dataset_id": "embedded-knowledge-seen-recall-probe-v1",
+      "dataset_disposition": "evaluation-only",
+      "group_id": "embedded-knowledge-seen-probe",
+      "jsonl_rows": 35,
+      "note": "Seen-recall diagnostic is explicitly not a held-out training source.",
+      "path": "embedded-knowledge-v1.seen-recall-probe.jsonl",
+      "sha256": "d6e02535a626130b9396bf92f764e06e86b5a73a2198ccbeeb22ddd0e81a2c2c",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 32090,
+      "canonical_dataset_id": "embedded-knowledge-seen-recall-probe-v1",
+      "dataset_disposition": "evaluation-only",
+      "group_id": "embedded-knowledge-seen-probe",
+      "jsonl_rows": 35,
+      "note": "Seen-recall diagnostic is explicitly not a held-out training source.",
+      "path": "embedded-knowledge-v1.seen-recall-probe.provenance.jsonl",
+      "sha256": "1bd65c120cbb7bcc8d807862b77c6fbb86d846cd69afeec953743eb829296c35",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 5839,
+      "canonical_dataset_id": "embedded-knowledge-seen-recall-probe-v1",
+      "dataset_disposition": "evaluation-only",
+      "group_id": "embedded-knowledge-seen-probe",
+      "jsonl_rows": null,
+      "note": "Seen-recall diagnostic is explicitly not a held-out training source.",
+      "path": "embedded-knowledge-v1.seen-recall-probe.report.json",
+      "sha256": "9ef12377a70310b318c8e7de9c155c1e3ff3a324a31c72bfe15b026a6ccb7c1f",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 4692079,
+      "canonical_dataset_id": "embedded-knowledge-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "embedded-knowledge",
+      "jsonl_rows": 6000,
+      "note": "Existing file-held-out embedded knowledge SFT remains an admitted supplement.",
+      "path": "embedded-knowledge-v1.train.provenance.jsonl",
+      "sha256": "f4d5c40d2a62a00c3ce6cbcddc54bc0b675db6dfbd9c9852c8de8ca3acd4ad76",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 499991,
+      "canonical_dataset_id": "embedded-knowledge-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "embedded-knowledge",
+      "jsonl_rows": 512,
+      "note": "Existing file-held-out embedded knowledge SFT remains an admitted supplement.",
+      "path": "embedded-knowledge-v1.validation.jsonl",
+      "sha256": "4e92f16ba1cf7982a2c60baeb4c6b9427d97a0f76b73385e47d7c9d94d4a19ce",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 406044,
+      "canonical_dataset_id": "embedded-knowledge-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "embedded-knowledge",
+      "jsonl_rows": 512,
+      "note": "Existing file-held-out embedded knowledge SFT remains an admitted supplement.",
+      "path": "embedded-knowledge-v1.validation.provenance.jsonl",
+      "sha256": "49525c7203772080795938f908cae67ce376413f69a5cffd537b66579d933c5c",
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 3203359,
+      "canonical_dataset_id": "financial-analysis-verified-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-financial-analysis-verified",
+      "jsonl_rows": 2026,
+      "note": "Subset of FinQA/TAT-QA superseded by the full split-preserving finance supervision build.",
+      "path": "financial-analysis-verified.jsonl",
+      "sha256": "6555b321aa55177cd85131f2fcb17ad4652aa598feffd248aaebf7bb47f76aa6",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1034391,
+      "canonical_dataset_id": "financial-analysis-verified-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-financial-analysis-verified",
+      "jsonl_rows": 2026,
+      "note": "Subset of FinQA/TAT-QA superseded by the full split-preserving finance supervision build.",
+      "path": "financial-analysis-verified.provenance.jsonl",
+      "sha256": "4fcc5ffdc7129f2a7dd026848908ad35035eeb2bb9bf33c03b447204fa715e20",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 20174,
+      "canonical_dataset_id": "financial-analysis-verified-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-financial-analysis-verified",
+      "jsonl_rows": null,
+      "note": "Subset of FinQA/TAT-QA superseded by the full split-preserving finance supervision build.",
+      "path": "financial-analysis-verified.report.json",
+      "sha256": "c9b2d565a3d7b0e94c990b93349172cd72c695c0d2e18ef226979c9426c0924f",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 391813,
+      "canonical_dataset_id": "financial-analysis-verified-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-financial-analysis-verified",
+      "jsonl_rows": 241,
+      "note": "Subset of FinQA/TAT-QA superseded by the full split-preserving finance supervision build.",
+      "path": "financial-analysis-verified.validation.jsonl",
+      "sha256": "dd1f909220aa1497626e66a0cf25ef49b5cf3dc480bcdedb68406b81efc451c8",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 122984,
+      "canonical_dataset_id": "financial-analysis-verified-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-financial-analysis-verified",
+      "jsonl_rows": 241,
+      "note": "Subset of FinQA/TAT-QA superseded by the full split-preserving finance supervision build.",
+      "path": "financial-analysis-verified.validation.provenance.jsonl",
+      "sha256": "5bd11a2b0aa40612fb89d0f8d26fcb119e4591aa4e66718121362734db696305",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 3200821,
+      "canonical_dataset_id": "financial-analysis-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-financial-analysis",
+      "jsonl_rows": 2048,
+      "note": "Unverified predecessor retained only for comparison.",
+      "path": "financial-analysis.jsonl",
+      "sha256": "68239f40c970fce2d703528f6efdb556c1e3b273e21267194b879005439cc5a1",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 315960,
+      "canonical_dataset_id": "financial-analysis-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-financial-analysis",
+      "jsonl_rows": 2048,
+      "note": "Unverified predecessor retained only for comparison.",
+      "path": "financial-analysis.provenance.jsonl",
+      "sha256": "4655d18f77595fe4f6e929bd8f37453f99ab41ab8537560e07982f515b4725f9",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 796233,
+      "canonical_dataset_id": "financial-analysis-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-financial-analysis",
+      "jsonl_rows": 512,
+      "note": "Unverified predecessor retained only for comparison.",
+      "path": "financial-analysis.validation.jsonl",
+      "sha256": "47f93dba6bdd412819531f48bbb347513eea6161e6ddad8680ad0a2b7b9cb770",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 78909,
+      "canonical_dataset_id": "financial-analysis-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-financial-analysis",
+      "jsonl_rows": 512,
+      "note": "Unverified predecessor retained only for comparison.",
+      "path": "financial-analysis.validation.provenance.jsonl",
+      "sha256": "4384231d32cc27a4d575221349beee1ac668b62a39b64bc0bb2c511461d4ea15",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 112272,
+      "canonical_dataset_id": "grounded-can-curriculum-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "grounded-can-curriculum",
+      "jsonl_rows": null,
+      "note": "Recorded negative curriculum result; excluded from new mixtures.",
+      "path": "grounded-can-curriculum.report.json",
+      "sha256": "f9e1798561470eb801dfc4cc3a6e75a495b6257e1adc9e836fd85a0d12d2e2ae",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 1167862,
+      "canonical_dataset_id": "grounded-can-curriculum-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "grounded-can-curriculum",
+      "jsonl_rows": 597,
+      "note": "Recorded negative curriculum result; excluded from new mixtures.",
+      "path": "grounded-can-curriculum.train.jsonl",
+      "sha256": "b21ba2164addf89e4910ff1cd30bbc46545abdc643b057f67489b319b322f9a9",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1126580,
+      "canonical_dataset_id": "grounded-can-curriculum-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "grounded-can-curriculum",
+      "jsonl_rows": 597,
+      "note": "Recorded negative curriculum result; excluded from new mixtures.",
+      "path": "grounded-can-curriculum.train.provenance.jsonl",
+      "sha256": "60735d15ceb2b52a5ef857b383ca6bd836209becf0191487cf6394d1a80bb5ca",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 14050,
+      "canonical_dataset_id": "grounded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "grounded-can",
+      "jsonl_rows": null,
+      "note": "Narrow grounded predecessor superseded by the verified OCB/CAN build.",
+      "path": "grounded-can.report.json",
+      "sha256": "2215d0227184f13da1eef579798cf3828f87b6af79217bad87d52e3f4a97bdcf",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 460951,
+      "canonical_dataset_id": "grounded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "grounded-can",
+      "jsonl_rows": 226,
+      "note": "Narrow grounded predecessor superseded by the verified OCB/CAN build.",
+      "path": "grounded-can.train.jsonl",
+      "sha256": "042cb9c897ac27876e5751321b78796b15108448d829206b2fb897e88731864b",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 348332,
+      "canonical_dataset_id": "grounded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "grounded-can",
+      "jsonl_rows": 226,
+      "note": "Narrow grounded predecessor superseded by the verified OCB/CAN build.",
+      "path": "grounded-can.train.provenance.jsonl",
+      "sha256": "442753845fc95e69c04077be66b3ea656a336ece94e83ad1ec8eba2b9d82fce4",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 106370,
+      "canonical_dataset_id": "grounded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "grounded-can",
+      "jsonl_rows": 52,
+      "note": "Narrow grounded predecessor superseded by the verified OCB/CAN build.",
+      "path": "grounded-can.validation.jsonl",
+      "sha256": "7afecf7a788f8fe48e28f62691af1ba2cee294ad8951d446b3fcec7859c4e1e4",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 80201,
+      "canonical_dataset_id": "grounded-can-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "grounded-can",
+      "jsonl_rows": 52,
+      "note": "Narrow grounded predecessor superseded by the verified OCB/CAN build.",
+      "path": "grounded-can.validation.provenance.jsonl",
+      "sha256": "babac9f0b874e99aafb87b0786da78d8d8abed687bf054eb09da1b2fb45386ac",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": true,
+      "artifact_role": "training",
+      "bytes": 7483378,
+      "canonical_dataset_id": "local-embedded-code-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "local-embedded-code",
+      "jsonl_rows": 2200,
+      "note": "File-separated local code continuation data remains an admitted supplement.",
+      "path": "local-embedded-code.jsonl",
+      "sha256": "f88bae4f0c1b791d268d7eabe523608429030b3dc65e1f91781207a80e43b672",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 6290,
+      "canonical_dataset_id": "local-embedded-code-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "local-embedded-code",
+      "jsonl_rows": null,
+      "note": "File-separated local code continuation data remains an admitted supplement.",
+      "path": "local-embedded-code.report.json",
+      "sha256": "a487c394e37098f4ba492cedb628420ea8f669cac993036279e24d08ea5f0bc5",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1123098,
+      "canonical_dataset_id": "local-embedded-code-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "local-embedded-code",
+      "jsonl_rows": 2200,
+      "note": "File-separated local code continuation data remains an admitted supplement.",
+      "path": "local-embedded-code.train.provenance.jsonl",
+      "sha256": "03c11fe24fcf3c2bb4d1b87ceb66331ccdad3118ca3015e03ddc0769465b6405",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 188664,
+      "canonical_dataset_id": "local-embedded-code-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "local-embedded-code",
+      "jsonl_rows": 50,
+      "note": "File-separated local code continuation data remains an admitted supplement.",
+      "path": "local-embedded-code.validation.jsonl",
+      "sha256": "1f642f192b1e752e22225ba7fb56acc3966562bacc9d9f5474cde6a177d5443d",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 25978,
+      "canonical_dataset_id": "local-embedded-code-v1",
+      "dataset_disposition": "supplemental",
+      "group_id": "local-embedded-code",
+      "jsonl_rows": 50,
+      "note": "File-separated local code continuation data remains an admitted supplement.",
+      "path": "local-embedded-code.validation.provenance.jsonl",
+      "sha256": "74e50dd38f093c9d75491021dcb321c5c14dffe3edc94bd1c13d64554d973350",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 6706,
+      "canonical_dataset_id": "ocb-can-verified-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "ocb-can-verified",
+      "jsonl_rows": null,
+      "note": "Verified and message-group-separated OCB/CAN supervision.",
+      "path": "ocb-can-verified.report.json",
+      "sha256": "dc831696fb535bf686482b586c53a429d8a98c54bf12009af7ac8cf3404d0594",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": true,
+      "artifact_role": "training",
+      "bytes": 15419634,
+      "canonical_dataset_id": "ocb-can-verified-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "ocb-can-verified",
+      "jsonl_rows": 12320,
+      "note": "Verified and message-group-separated OCB/CAN supervision.",
+      "path": "ocb-can-verified.train.jsonl",
+      "sha256": "927f5065752bcde004be53506cd8140dc2bd12660c39cd271faa695be98e5c80",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 21804944,
+      "canonical_dataset_id": "ocb-can-verified-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "ocb-can-verified",
+      "jsonl_rows": 12320,
+      "note": "Verified and message-group-separated OCB/CAN supervision.",
+      "path": "ocb-can-verified.train.provenance.jsonl",
+      "sha256": "5e4b248da5e3acc91be02707410348b0292b3d3c2bb652146abf73e04672aa58",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 1288473,
+      "canonical_dataset_id": "ocb-can-verified-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "ocb-can-verified",
+      "jsonl_rows": 1024,
+      "note": "Verified and message-group-separated OCB/CAN supervision.",
+      "path": "ocb-can-verified.validation.jsonl",
+      "sha256": "eab9c20432310defeac4e875c0b7fba1cd7d875bf5820d8679d57a5d690f93ca",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1818269,
+      "canonical_dataset_id": "ocb-can-verified-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "ocb-can-verified",
+      "jsonl_rows": 1024,
+      "note": "Verified and message-group-separated OCB/CAN supervision.",
+      "path": "ocb-can-verified.validation.provenance.jsonl",
+      "sha256": "c975b9cbd951beb5c4e3df410e5ac8d459aa2b611aacebaf7b58128a0a975d2b",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 10328,
+      "canonical_dataset_id": "router-bootstrap-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v1",
+      "jsonl_rows": null,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v1.report.json",
+      "sha256": "7854436d3f25e2727d03dd17cda3fb43e4abc276ed4756160820abfde93dcd56",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 638593,
+      "canonical_dataset_id": "router-bootstrap-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v1",
+      "jsonl_rows": 1200,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v1.test.jsonl",
+      "sha256": "1a0c7926ae1fc3c6ce900bb390301a44e48852dab99adc2cbb04dc8983cabd7a",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 5295384,
+      "canonical_dataset_id": "router-bootstrap-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v1",
+      "jsonl_rows": 9600,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v1.train.jsonl",
+      "sha256": "e4e2d6d521266a3e1a68f9bc6b8fb71f0a9eb338f4a7521dd0f15cef8e3bbcdf",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 641952,
+      "canonical_dataset_id": "router-bootstrap-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v1",
+      "jsonl_rows": 1200,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v1.validation.jsonl",
+      "sha256": "d619eb687c098fe66090aed7b0943abdac39d2724f06a36c15bfcd25bf9f0134",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 4839,
+      "canonical_dataset_id": "router-bootstrap-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v2",
+      "jsonl_rows": null,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v2.report.json",
+      "sha256": "6a40896cb0e6f20db020e2785400a3b71bed3e547460ffa75df7938b647e2516",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 267303,
+      "canonical_dataset_id": "router-bootstrap-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v2",
+      "jsonl_rows": 530,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v2.test.jsonl",
+      "sha256": "25968287df7a68dd413d390b28f12a1d467eed4ef6c6ba8cbe32c09fd81a2271",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2201104,
+      "canonical_dataset_id": "router-bootstrap-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v2",
+      "jsonl_rows": 4200,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v2.train.jsonl",
+      "sha256": "f92164ad88586b34ea7f3d6560fde44df46ad2e6afa15177ed699619d476e5bf",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 268949,
+      "canonical_dataset_id": "router-bootstrap-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v2",
+      "jsonl_rows": 530,
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "path": "router-bootstrap-v2.validation.jsonl",
+      "sha256": "0ba9c0b2b0fe61deeebf889a63acbd5309d6e6dea7fd74e83c61b8d006f275be",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 7738,
+      "canonical_dataset_id": "router-bootstrap-v3-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v3",
+      "jsonl_rows": null,
+      "note": "Legacy flat-router contrastive data does not match the granular hierarchy.",
+      "path": "router-bootstrap-v3-contrastive.report.json",
+      "sha256": "179c358b9a4e38caed4cd5c1701682e2c0cd8f26ab2569c94feea2748e7cc77f",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 324170,
+      "canonical_dataset_id": "router-bootstrap-v3-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v3",
+      "jsonl_rows": 650,
+      "note": "Legacy flat-router contrastive data does not match the granular hierarchy.",
+      "path": "router-bootstrap-v3-contrastive.test.jsonl",
+      "sha256": "e033a91deadafcf989f0b83939747f34669c0d5129f4a5a55b4589a516ec049e",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2314533,
+      "canonical_dataset_id": "router-bootstrap-v3-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v3",
+      "jsonl_rows": 4680,
+      "note": "Legacy flat-router contrastive data does not match the granular hierarchy.",
+      "path": "router-bootstrap-v3-contrastive.train.jsonl",
+      "sha256": "5d71c62349bab376a62d6c8bcc7657837eabb327b52a914d3c3f71bdc69009e2",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 299281,
+      "canonical_dataset_id": "router-bootstrap-v3-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v3",
+      "jsonl_rows": 650,
+      "note": "Legacy flat-router contrastive data does not match the granular hierarchy.",
+      "path": "router-bootstrap-v3-contrastive.validation.jsonl",
+      "sha256": "693d546f16e78093633a1c76563522a279e990d6c4ca2e280aeb08514df5d645",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 10614,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative-s307",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4-s307",
+      "jsonl_rows": null,
+      "note": "Selected legacy flat-router dataset; labels do not match the granular hierarchy.",
+      "path": "router-bootstrap-v4-hard-negative-s307.report.json",
+      "sha256": "b566cde269bbc4e9a2886685de5844a99dff8c6b343355800355dd72513bbddb",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 304309,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative-s307",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4-s307",
+      "jsonl_rows": 650,
+      "note": "Selected legacy flat-router dataset; labels do not match the granular hierarchy.",
+      "path": "router-bootstrap-v4-hard-negative-s307.test.jsonl",
+      "sha256": "9e0b7d4d0135111bffe4abce653850b81ae16cd47640a6b68ce1e5b883187dad",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2252242,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative-s307",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4-s307",
+      "jsonl_rows": 4680,
+      "note": "Selected legacy flat-router dataset; labels do not match the granular hierarchy.",
+      "path": "router-bootstrap-v4-hard-negative-s307.train.jsonl",
+      "sha256": "7455b6dedfd2c1eee605bf23074f32168b7eb735c70898af8b7bd9d1a5bd1dd1",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 281321,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative-s307",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4-s307",
+      "jsonl_rows": 650,
+      "note": "Selected legacy flat-router dataset; labels do not match the granular hierarchy.",
+      "path": "router-bootstrap-v4-hard-negative-s307.validation.jsonl",
+      "sha256": "627e60a656c8ad01feaf79e7010d678d909e37e768e4c9dc7530cb3fd6a76e2c",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 10599,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4",
+      "jsonl_rows": null,
+      "note": "Non-selected legacy flat-router dataset.",
+      "path": "router-bootstrap-v4-hard-negative.report.json",
+      "sha256": "4a171dfd2a20640518aebb178e3dc89adb69c5f83bce6455a0d08e9f475f88aa",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 266326,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4",
+      "jsonl_rows": 650,
+      "note": "Non-selected legacy flat-router dataset.",
+      "path": "router-bootstrap-v4-hard-negative.test.jsonl",
+      "sha256": "966c9d0ca7a60117dfc7dd6afe7e134c2eff2ef4c5612aea604983953758ac03",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2263092,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4",
+      "jsonl_rows": 4680,
+      "note": "Non-selected legacy flat-router dataset.",
+      "path": "router-bootstrap-v4-hard-negative.train.jsonl",
+      "sha256": "66614e7601d133e7b39e8b3d1b7cc333e45bd878865e27732c29955470606ae8",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 274823,
+      "canonical_dataset_id": "router-bootstrap-v4-hard-negative",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v4",
+      "jsonl_rows": 650,
+      "note": "Non-selected legacy flat-router dataset.",
+      "path": "router-bootstrap-v4-hard-negative.validation.jsonl",
+      "sha256": "504f69418c4af754a00c2b97acbc75ca79bbcf5eb39473e7d8499257b8ca2dc1",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 11025,
+      "canonical_dataset_id": "router-bootstrap-v5-verified-code-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v5",
+      "jsonl_rows": null,
+      "note": "Legacy flat-router curriculum; source prompts may be rematerialized only under the new labels.",
+      "path": "router-bootstrap-v5-verified-code-contrastive.report.json",
+      "sha256": "43342ceb5bcadb19292ce3332096813b7efd366ae24056b34f35d4329e7a2de1",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 304127,
+      "canonical_dataset_id": "router-bootstrap-v5-verified-code-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v5",
+      "jsonl_rows": 650,
+      "note": "Legacy flat-router curriculum; source prompts may be rematerialized only under the new labels.",
+      "path": "router-bootstrap-v5-verified-code-contrastive.test.jsonl",
+      "sha256": "460556efaecd6933df51d058525a9e9eec407d05ea71c3e6896d89de8a4dbf54",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2248549,
+      "canonical_dataset_id": "router-bootstrap-v5-verified-code-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v5",
+      "jsonl_rows": 4680,
+      "note": "Legacy flat-router curriculum; source prompts may be rematerialized only under the new labels.",
+      "path": "router-bootstrap-v5-verified-code-contrastive.train.jsonl",
+      "sha256": "0c55a3e71eb625bb63d37b581cf2bb1f8cb63bd98e96a4f971f08f273f1c0e32",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 281296,
+      "canonical_dataset_id": "router-bootstrap-v5-verified-code-contrastive",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-router-v5",
+      "jsonl_rows": 650,
+      "note": "Legacy flat-router curriculum; source prompts may be rematerialized only under the new labels.",
+      "path": "router-bootstrap-v5-verified-code-contrastive.validation.jsonl",
+      "sha256": "cd91f0659ea3e429e77491bee084dfcb9f9c6c7e4ddcdbe8a17e2aa4e84eaac6",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 44216,
+      "canonical_dataset_id": "router-bootstrap-v6-taskmaster",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v6",
+      "jsonl_rows": null,
+      "note": "Taskmaster flat-router registration failed its declared gates.",
+      "path": "router-bootstrap-v6-taskmaster.report.json",
+      "sha256": "4a47892f7aef275483a9915a56a553f510ebccef9d578336d6f42cafa40c4673",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 412314,
+      "canonical_dataset_id": "router-bootstrap-v6-taskmaster",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v6",
+      "jsonl_rows": 780,
+      "note": "Taskmaster flat-router registration failed its declared gates.",
+      "path": "router-bootstrap-v6-taskmaster.test.jsonl",
+      "sha256": "51a4692d5729685c1a8ae8e296474671f0576dabaefeb1e9a1bf78742c5c08c7",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 3100035,
+      "canonical_dataset_id": "router-bootstrap-v6-taskmaster",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v6",
+      "jsonl_rows": 5616,
+      "note": "Taskmaster flat-router registration failed its declared gates.",
+      "path": "router-bootstrap-v6-taskmaster.train.jsonl",
+      "sha256": "0dd1d8fada18d0c306a12eb5cc4fbfcfa04e31290dd3112dfcc89791fae9c31f",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 378704,
+      "canonical_dataset_id": "router-bootstrap-v6-taskmaster",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v6",
+      "jsonl_rows": 780,
+      "note": "Taskmaster flat-router registration failed its declared gates.",
+      "path": "router-bootstrap-v6-taskmaster.validation.jsonl",
+      "sha256": "0b9203e5c5778017f6580a9139201e950fd275a6b68dc104807b46cfe0f04220",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 2974,
+      "canonical_dataset_id": "router-bootstrap-v7-taskmaster-gate",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v7",
+      "jsonl_rows": null,
+      "note": "Taskmaster admission gate failed its declared one-shot gates.",
+      "path": "router-bootstrap-v7-taskmaster-gate.report.json",
+      "sha256": "aefd55324fde12052d20275e52190656e90e728f5a536f0cdb62b5aea2594876",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 3050427,
+      "canonical_dataset_id": "router-bootstrap-v7-taskmaster-gate",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v7",
+      "jsonl_rows": 5616,
+      "note": "Taskmaster admission gate failed its declared one-shot gates.",
+      "path": "router-bootstrap-v7-taskmaster-gate.train.jsonl",
+      "sha256": "96196ece3c4808c20ac28676727e536f40455dc78a860770bd207a4bf57d09d4",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 371814,
+      "canonical_dataset_id": "router-bootstrap-v7-taskmaster-gate",
+      "dataset_disposition": "historical-negative",
+      "group_id": "legacy-router-v7",
+      "jsonl_rows": 780,
+      "note": "Taskmaster admission gate failed its declared one-shot gates.",
+      "path": "router-bootstrap-v7-taskmaster-gate.validation.jsonl",
+      "sha256": "93f9b74e08acf6556c5ac6a30265f5588fd936eab188045743d8050b8fe47421",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 10960,
+      "canonical_dataset_id": "router-intent-probe-v1",
+      "dataset_disposition": "evaluation-only",
+      "group_id": "router-intent-probe-v1",
+      "jsonl_rows": 40,
+      "note": "Previously used router probe; permanently excluded from training and tuning.",
+      "path": "router-intent-probe-v1.jsonl",
+      "sha256": "ed316a602331eb2c902e9f28449672e7aabe94213ca58bf13d85afbc8630d299",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 5600,
+      "canonical_dataset_id": "router-intent-probe-v2",
+      "dataset_disposition": "evaluation-only",
+      "group_id": "router-intent-probe-v2",
+      "jsonl_rows": 18,
+      "note": "Previously used router probe; permanently excluded from training and tuning.",
+      "path": "router-intent-probe-v2.jsonl",
+      "sha256": "9c6e8c2081cf28b2024e0dacb07fe2136e79456edc3ba4886851bf59123822bb",
+      "target_leaves": []
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 26597238,
+      "canonical_dataset_id": "software-architecture-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture-v1",
+      "jsonl_rows": 12000,
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "path": "software-architecture-v1.jsonl",
+      "sha256": "00f7af6b988bb602b9784219bb8a18bcef16fba77a2af395d1f7061fd91e05fc",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 7974156,
+      "canonical_dataset_id": "software-architecture-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture-v1",
+      "jsonl_rows": 12000,
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "path": "software-architecture-v1.provenance.jsonl",
+      "sha256": "2e60be6550175b6b4605873b2c59a17b1845a6b67756428e8188236255e766ee",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 6274,
+      "canonical_dataset_id": "software-architecture-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture-v1",
+      "jsonl_rows": null,
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "path": "software-architecture-v1.report.json",
+      "sha256": "8212ef5e4600e52e7397f4090a0b1da2f3e7356f1d5e9adb573cb7dfe39c387c",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "auxiliary",
+      "bytes": 1816,
+      "canonical_dataset_id": "software-architecture-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture-v1",
+      "jsonl_rows": null,
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "path": "software-architecture-v1.token-lengths.json",
+      "sha256": "b48ccda46fd748873a0692cc5e5b69702ec2e46f0ab3d5708bc3600031df9e4f",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 2198955,
+      "canonical_dataset_id": "software-architecture-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture-v1",
+      "jsonl_rows": 1000,
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "path": "software-architecture-v1.validation.jsonl",
+      "sha256": "77f4e62f18838d70da9072aab1a8a83976fdf6b452a13f3300be5ce091fb31dd",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 664820,
+      "canonical_dataset_id": "software-architecture-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture-v1",
+      "jsonl_rows": 1000,
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "path": "software-architecture-v1.validation.provenance.jsonl",
+      "sha256": "f36b307dfbee29dd18d6a7a9445a54e4a92257e9cee961c25552b2df16ccf1a4",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 4081137,
+      "canonical_dataset_id": "software-architecture-legacy-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture",
+      "jsonl_rows": 2048,
+      "note": "Older architecture subset superseded by the repaired and full granular builds.",
+      "path": "software-architecture.jsonl",
+      "sha256": "0f9b9d3bf2b52430e0210099aafad0288d609a2bb63545a7de1bd271408f7435",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 437165,
+      "canonical_dataset_id": "software-architecture-legacy-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture",
+      "jsonl_rows": 2048,
+      "note": "Older architecture subset superseded by the repaired and full granular builds.",
+      "path": "software-architecture.provenance.jsonl",
+      "sha256": "d973642a238370973d9335cf75ae574c8f95ade1dcc47b85104158b345ff7885",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 1031440,
+      "canonical_dataset_id": "software-architecture-legacy-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture",
+      "jsonl_rows": 512,
+      "note": "Older architecture subset superseded by the repaired and full granular builds.",
+      "path": "software-architecture.validation.jsonl",
+      "sha256": "0b594991a1b4759049d4a34c07e06b0b845c7644ad232ab20181511e9126bd88",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 111508,
+      "canonical_dataset_id": "software-architecture-legacy-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "legacy-software-architecture",
+      "jsonl_rows": 512,
+      "note": "Older architecture subset superseded by the repaired and full granular builds.",
+      "path": "software-architecture.validation.provenance.jsonl",
+      "sha256": "ff70e1655d966f68698083a4fede795d4bfba9c8faa7d27d0089ef704aa10185",
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 7446,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": null,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.build-report.json",
+      "sha256": "e3b11439deb94cc5791cd4574bc41414b48b87f9041ab78611959055973d684e",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "quarantine",
+      "bytes": 260123,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 476,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.quarantine.jsonl",
+      "sha256": "04b9966c2abb62daaf8cdf5fc8ad7aadab3f6ffa5ffd02ed57953de531285829",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 256305,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 145,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.test.evaluation.jsonl",
+      "sha256": "dbc04384ef9b0481655494bdcd8edb15979944d532fd609d0670b43472dc07c1",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 191759,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 145,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.test.jsonl",
+      "sha256": "9c0f018e516728bb6233d93b808f59acd9c529ed95dfd8c63842c5598c4f297f",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 124952,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 145,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.test.provenance.jsonl",
+      "sha256": "438ff0bdc6cc797032c355bc5f7183ef83649f00de78e2d47c9551e59dd73512",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 1535285,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 1176,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.train.jsonl",
+      "sha256": "81df15e918a9234bfcd65a0fb7e79618ba2203c0dad1615d9a45e86eb90894eb",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1018022,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 1176,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.train.provenance.jsonl",
+      "sha256": "fb899b11435b6a9eea1530599efc50fb848590f256f18c7ea221e80063930906",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 332365,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 181,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.validation.evaluation.jsonl",
+      "sha256": "e866002238b2a949c101e57beed8d77a436e88dfc9bed9a0955f377f2ed28200",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 251977,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 181,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.validation.jsonl",
+      "sha256": "a28c7e7fa97e785bac8f149d5aa1d7d0148c0e0c5e73984d833e2573fcfa7f3c",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 159534,
+      "canonical_dataset_id": "taskmaster-coffee-api-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "taskmaster-coffee-api-v1",
+      "jsonl_rows": 181,
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "path": "taskmaster-coffee-api-v1.validation.provenance.jsonl",
+      "sha256": "97d93f8e040cd895af0340b7bb594336dcb1e187f4b2ce6b83c3a9b89293640b",
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 10953,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": null,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.build-report.json",
+      "sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "quarantine",
+      "bytes": 119629,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 222,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.quarantine.jsonl",
+      "sha256": "b8c01461d190f7742dcf1833861786fcca0aa24071aa7d5a6c52cde95994a6f1",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 5032208,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 1430,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.test.evaluation.jsonl",
+      "sha256": "976d98a50292f75f1eb4c4e68bcd76cb0921a13c39ea3e6afe2772ed2c3bc57a",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 4412009,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 1430,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.test.jsonl",
+      "sha256": "23812f280bff6eeb2495e655d0a15dc1887abae1be09cc03de5fdeeb3dfc7574",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1903205,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 1430,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.test.provenance.jsonl",
+      "sha256": "9de612bfd97db2e7092331b377cc78672acb27b0383cbe2bebb41d6d908ef6c5",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "auxiliary",
+      "bytes": 3189,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": null,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.tool-catalog.json",
+      "sha256": "7207662fbccd1146fc8582a40be350de83e9a1053f477db3883bbb76614c88d1",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": true,
+      "artifact_role": "training",
+      "bytes": 35960395,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 11626,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.train.jsonl",
+      "sha256": "500ac9caa235497f9fb86d1749911d50c0a494136050eb91cd1b807c8689d209",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 15492514,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 11626,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.train.provenance.jsonl",
+      "sha256": "145dfcd83f734f57be0196ac36e58a1a1e1728464cd96cc53e6b1db6849efa0f",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 4831503,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 1380,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.validation.evaluation.jsonl",
+      "sha256": "b92ccb3f2334c7aed710f7ae4f166383ff940680146262550aed0d458041930b",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 4232884,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 1380,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.validation.jsonl",
+      "sha256": "214aac61ddeca261d70a4381a15a973d17ac89d39d20007c2541f3724205176f",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 1845272,
+      "canonical_dataset_id": "taskmaster-coffee-api-v2",
+      "dataset_disposition": "canonical",
+      "group_id": "taskmaster-coffee-api-v2",
+      "jsonl_rows": 1380,
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "path": "taskmaster-coffee-api-v2.validation.provenance.jsonl",
+      "sha256": "c315ae5e4db52ee37cbb760c60745fdea5b371f2c451cfb1b90919883fae30e4",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 21079,
+      "canonical_dataset_id": "terminal-cli-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "terminal-cli",
+      "jsonl_rows": null,
+      "note": "Task-family-separated terminal execution traces.",
+      "path": "terminal-cli.build-report.json",
+      "sha256": "786dd47605601da117b25926d24818eaa133615a30754730c8e3b94377e6dafc",
+      "target_leaves": [
+        "terminal-cli"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": true,
+      "artifact_role": "training",
+      "bytes": 4797145,
+      "canonical_dataset_id": "terminal-cli-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "terminal-cli",
+      "jsonl_rows": 540,
+      "note": "Task-family-separated terminal execution traces.",
+      "path": "terminal-cli.jsonl",
+      "sha256": "25255afec88d5071501416099db3b74f67698769dd159123415a7c84e8c6ec39",
+      "target_leaves": [
+        "terminal-cli"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 271095,
+      "canonical_dataset_id": "terminal-cli-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "terminal-cli",
+      "jsonl_rows": 540,
+      "note": "Task-family-separated terminal execution traces.",
+      "path": "terminal-cli.provenance.jsonl",
+      "sha256": "33b12a3fbc4461cfcdefa23978916030c17e480c1e4fbdc3fc073004a2488cd2",
+      "target_leaves": [
+        "terminal-cli"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 528564,
+      "canonical_dataset_id": "terminal-cli-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "terminal-cli",
+      "jsonl_rows": 60,
+      "note": "Task-family-separated terminal execution traces.",
+      "path": "terminal-cli.validation.jsonl",
+      "sha256": "ab55f470dfcee9465fbbdbcc62c66c92e0017ce75cb97395c9d3804d004309b8",
+      "target_leaves": [
+        "terminal-cli"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 30179,
+      "canonical_dataset_id": "terminal-cli-v1",
+      "dataset_disposition": "canonical",
+      "group_id": "terminal-cli",
+      "jsonl_rows": 60,
+      "note": "Task-family-separated terminal execution traces.",
+      "path": "terminal-cli.validation.provenance.jsonl",
+      "sha256": "2e395bb345e8acbbbd7ffd1c590919262a490bd0e16a33272c1c770225c77a55",
+      "target_leaves": [
+        "terminal-cli"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 6942,
+      "canonical_dataset_id": "trusted-can-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "trusted-can",
+      "jsonl_rows": null,
+      "note": "Invalid lookup/memorization experiment retained only for historical accounting.",
+      "path": "trusted-can.report.json",
+      "sha256": "04bb31d6b39487236e639578804367ed44b3397dc55388ac6287abce1d6cf53e",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 167059,
+      "canonical_dataset_id": "trusted-can-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "trusted-can",
+      "jsonl_rows": 226,
+      "note": "Invalid lookup/memorization experiment retained only for historical accounting.",
+      "path": "trusted-can.train.jsonl",
+      "sha256": "c0e915a07443240dcd6c0ed40cb31432007a4e241d17972f103896c3c2b882d8",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 182592,
+      "canonical_dataset_id": "trusted-can-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "trusted-can",
+      "jsonl_rows": 226,
+      "note": "Invalid lookup/memorization experiment retained only for historical accounting.",
+      "path": "trusted-can.train.provenance.jsonl",
+      "sha256": "b2000829f661438aa49ab873347bf417917268775d97d5b40830a12689385eda",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 38385,
+      "canonical_dataset_id": "trusted-can-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "trusted-can",
+      "jsonl_rows": 52,
+      "note": "Invalid lookup/memorization experiment retained only for historical accounting.",
+      "path": "trusted-can.validation.jsonl",
+      "sha256": "92a924f2680e16c0ecd03415f65a7280a983779925af6d2bcead2b8e277a5d38",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "provenance",
+      "bytes": 42031,
+      "canonical_dataset_id": "trusted-can-v1",
+      "dataset_disposition": "historical-negative",
+      "group_id": "trusted-can",
+      "jsonl_rows": 52,
+      "note": "Invalid lookup/memorization experiment retained only for historical accounting.",
+      "path": "trusted-can.validation.provenance.jsonl",
+      "sha256": "7bfe37bbe56caeb97372c2c14f103b37af558ac48f1b7f3e7c6aafb4490e3555",
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 2183828,
+      "canonical_dataset_id": "verified-embedded-code-v1-plus-v3",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-union",
+      "jsonl_rows": 1550,
+      "note": "Materialized union is an alias of versioned constituents and must not be double counted.",
+      "path": "verified-embedded-code-v1-plus-v3.train.jsonl",
+      "sha256": "de31e2e24a27d24a4041dfb33edc7fb5440cc17f8a7488b4bb97530da2c137ff",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 1493,
+      "canonical_dataset_id": "verified-embedded-code-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-v1",
+      "jsonl_rows": null,
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "path": "verified-embedded-code-v1.manifest.json",
+      "sha256": "6a4277ede155e891b45b83b5642810c165f793df1c5e70dfc9158c1380fdbe89",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 743120,
+      "canonical_dataset_id": "verified-embedded-code-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-v1",
+      "jsonl_rows": 920,
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "path": "verified-embedded-code-v1.train.jsonl",
+      "sha256": "5a055fe5cd62e9b129b650678748543f95d08053e47150cc6d3f193f38b3c02c",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 102530,
+      "canonical_dataset_id": "verified-embedded-code-v1",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-v1",
+      "jsonl_rows": 132,
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "path": "verified-embedded-code-v1.validation.jsonl",
+      "sha256": "a9f438bad709d4f9d48b9d949c071418891abec1d1fd81b9814cc62c57f7c016",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 2202,
+      "canonical_dataset_id": "verified-embedded-code-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-v2",
+      "jsonl_rows": null,
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "path": "verified-embedded-code-v2.manifest.json",
+      "sha256": "33b5e17cde2c85fd28bc45182b3c09f8dd3147f6cea317fb5fcecf2840da8c89",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "training",
+      "bytes": 688265,
+      "canonical_dataset_id": "verified-embedded-code-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-v2",
+      "jsonl_rows": 422,
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "path": "verified-embedded-code-v2.train.jsonl",
+      "sha256": "e4a4dcba5f622867ede680c3fd88e3f497fb0928b05aceabade69752fae04904",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 96333,
+      "canonical_dataset_id": "verified-embedded-code-v2",
+      "dataset_disposition": "superseded",
+      "group_id": "verified-embedded-code-v2",
+      "jsonl_rows": 58,
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "path": "verified-embedded-code-v2.validation.jsonl",
+      "sha256": "fc85784ca8199297a901e9493991d32bf8d3b0cae354522a4394695f66c2d1eb",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "report",
+      "bytes": 4274,
+      "canonical_dataset_id": "verified-embedded-code-v3",
+      "dataset_disposition": "supplemental",
+      "group_id": "verified-embedded-code-v3",
+      "jsonl_rows": null,
+      "note": "Newest compiler-verified embedded-code curriculum remains an admitted supplement.",
+      "path": "verified-embedded-code-v3.manifest.json",
+      "sha256": "8fd0dfcdc876ae405c30510ff967f1738300161e4b9fdc2497baf10ef1d586ce",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": true,
+      "artifact_role": "training",
+      "bytes": 1440708,
+      "canonical_dataset_id": "verified-embedded-code-v3",
+      "dataset_disposition": "supplemental",
+      "group_id": "verified-embedded-code-v3",
+      "jsonl_rows": 630,
+      "note": "Newest compiler-verified embedded-code curriculum remains an admitted supplement.",
+      "path": "verified-embedded-code-v3.train.jsonl",
+      "sha256": "355efe92b2d68320626fceeb5d06e348625d972b04280f97f85dfc5bc8d5f54b",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "admitted_for_new_expert_training": false,
+      "artifact_role": "evaluation",
+      "bytes": 205773,
+      "canonical_dataset_id": "verified-embedded-code-v3",
+      "dataset_disposition": "supplemental",
+      "group_id": "verified-embedded-code-v3",
+      "jsonl_rows": 90,
+      "note": "Newest compiler-verified embedded-code curriculum remains an admitted supplement.",
+      "path": "verified-embedded-code-v3.validation.jsonl",
+      "sha256": "24d46b6daa189aa6bd744507b514127285b16798b70be85358f3ae2a230b9e27",
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    }
+  ],
+  "content_sha256": "1479a4fb60a2386627fea8b6ccb13ae82ac826603fbd6b8e347d120a358e29ae",
+  "inventory_id": "first-real-experts-repo-local-v1",
+  "restricted_entry_policy": "prune-before-stat-hash-or-traversal",
+  "revision": "1",
+  "roots": {
+    "data": "data",
+    "sources": "sources"
+  },
+  "schema_version": "molor.repo-local-corpus-inventory.v1",
+  "source_containers": [
+    {
+      "canonical_dataset_id": "finqa-upstream-source",
+      "dataset_disposition": "superseded",
+      "eligible_nested_bytes": 170326576,
+      "eligible_nested_files": 78,
+      "group_id": "repo-finqa-source",
+      "note": "Repo-local source clone aliases the pinned acquisition snapshot used by the full finance build.",
+      "path": "finqa",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "canonical_dataset_id": "multidogo-upstream-source",
+      "dataset_disposition": "quarantined",
+      "eligible_nested_bytes": 371633672,
+      "eligible_nested_files": 156,
+      "group_id": "repo-multidogo-source",
+      "note": "Support transcripts are excluded pending a privacy-safe task-appropriate rebuild.",
+      "path": "multidogo",
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "canonical_dataset_id": "taskmaster-upstream-source",
+      "dataset_disposition": "canonical",
+      "eligible_nested_bytes": 1158600204,
+      "eligible_nested_files": 180,
+      "group_id": "repo-taskmaster-source",
+      "note": "Pinned upstream source for the component-disjoint Taskmaster v2 materialization.",
+      "path": "taskmaster",
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "canonical_dataset_id": "tat-qa-upstream-source",
+      "dataset_disposition": "superseded",
+      "eligible_nested_bytes": 48077420,
+      "eligible_nested_files": 106,
+      "group_id": "repo-tat-qa-source",
+      "note": "Repo-local source clone aliases the pinned acquisition snapshot used by the full finance build.",
+      "path": "tat-qa",
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    }
+  ],
+  "summary": {
+    "admitted_training_rows_before_cross-corpus-dedup": 33316,
+    "artifact_roles": {
+      "auxiliary": 3,
+      "evaluation": 41,
+      "provenance": 32,
+      "quarantine": 2,
+      "report": 23,
+      "training": 27
+    },
+    "contains_corpus_content": false,
+    "dataset_dispositions": {
+      "canonical": 21,
+      "evaluation-only": 5,
+      "historical-negative": 29,
+      "lineage-only": 1,
+      "quarantined": 4,
+      "superseded": 55,
+      "supplemental": 13
+    },
+    "eligible_data_artifacts": 128,
+    "eligible_data_bytes": 241451300,
+    "eligible_jsonl_rows": 197220,
+    "eligible_source_containers": 4,
+    "eligible_source_nested_bytes": 1748637872,
+    "eligible_source_nested_files": 520,
+    "restricted_data_entries_pruned": 0,
+    "restricted_nested_source_entries_pruned": 0,
+    "restricted_source_entries_pruned": 0,
+    "unlisted_eligible_data_artifacts": 0,
+    "unlisted_eligible_source_containers": 0,
+    "zero_silent_eligible_omissions": true
+  },
+  "taxonomy": {
+    "file_sha256": "ff1833a13d82b406dce7197fd6a9d9e54d1f76a13f9996e15bdf83db167a355f",
+    "revision": "1",
+    "semantic_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1",
+    "taxonomy_id": "molor-inference-rack"
+  }
+}

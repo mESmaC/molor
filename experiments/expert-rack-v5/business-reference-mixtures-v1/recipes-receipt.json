@@ -1,0 +1,28 @@
+{
+  "content_sha256": "c9971339f8de22e032077e6a4f9f4ddda91e8c4ff43daa4293332e5e347093a6",
+  "recipes": {
+    "test.recipe.json": {
+      "bytes": 8676,
+      "content_sha256": "afd7594eda77ac608ac32399e84adba66a279332a19c99cdc34385f66dac4d85",
+      "sha256": "a3d29848645f8f3e346f59921eddf8dfb8886e3001186e071920820690e826d7",
+      "target_records": 364
+    },
+    "train.recipe.json": {
+      "bytes": 8678,
+      "content_sha256": "51bfc5e772430fedda179e430f22cffc831db1f5d8811d4a700c1c1d1f84399d",
+      "sha256": "275f5fdc95e25e7933dfb08d28a188c011091d0577836883cb9743c822f3d08a",
+      "target_records": 7132
+    },
+    "validation.recipe.json": {
+      "bytes": 8694,
+      "content_sha256": "f192d9724ca8f30e2d4c3be8ce60d57b5d3b2bec0197a913a8e60a6d6e376f21",
+      "sha256": "75e0e556411dfcbaca4eb2d99d847553601b856fcb9aef95a2e267af6d9d3ebc",
+      "target_records": 435
+    }
+  },
+  "schema_version": "molor.business-reference-mixture-recipes-receipt.v1",
+  "source_manifest": {
+    "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\manifest.json",
+    "sha256": "294a4306c1bacddba7cf24556396e89d55aa5592129cf7d01d1d86106e1c16bb"
+  }
+}

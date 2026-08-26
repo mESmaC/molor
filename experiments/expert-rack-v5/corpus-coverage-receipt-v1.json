@@ -1,0 +1,71 @@
+{
+  "blocked_root_entries_pruned_before_traversal": 1,
+  "canonical_dataset_lineage": {
+    "broad-distillation-experts-v1": 1,
+    "broad-distillation-pool-v1": 3,
+    "business-sources-v1": 1,
+    "dataset-preparation-tooling-v1": 3,
+    "fable-max-long-trace-auxiliary-v1": 1,
+    "local-embedded-code-pool-v1": 27,
+    "ocb-can-signal-db-v1": 3,
+    "prepared-canonical-container-v1": 1,
+    "processed-derived-container-v1": 1,
+    "qwen38-distillation-experts-v2": 1,
+    "software-architecture-experts-v1": 1
+  },
+  "contains_corpus_content": false,
+  "dataset_root_label": "datasets",
+  "dispositions": {
+    "canonical-container": 1,
+    "derived-container": 2,
+    "preparation-tooling": 3,
+    "raw-source": 33,
+    "reference-source": 1,
+    "source-database": 1,
+    "source-sidecar": 2
+  },
+  "eligible_root_entries": 43,
+  "ledger": {
+    "ledger_id": "molor-local-corpora",
+    "revision": "1",
+    "semantic_sha256": "757aee73abfb42ebf56678bfe79f223687985c6c657e41e088e76cbbae084d6d",
+    "sha256": "0713a93d06d48354b9b087f59ef15636cec2c808d8afe23c559c8d6679f4854c"
+  },
+  "missing_ledger_entries": 0,
+  "schema_version": "molor.corpus-coverage-receipt.v1",
+  "target_leaf_assignments": {
+    "agentic-code-debugging": 4,
+    "agentic-planning": 3,
+    "business-core": 1,
+    "business-finance": 1,
+    "business-operations": 1,
+    "commonsense-logic": 1,
+    "embedded-can-diagnostics": 15,
+    "embedded-code-generation": 27,
+    "embedded-knowledge": 27,
+    "formal-math": 5,
+    "frontend-visual-computing": 5,
+    "funding-capital": 1,
+    "general-code-generation": 5,
+    "general-expert-reasoning": 5,
+    "growth-gtm": 1,
+    "investing-markets": 1,
+    "ml-data-reasoning": 4,
+    "quantitative-math": 5,
+    "science-reasoning": 5,
+    "scientific-engineering-reasoning": 3,
+    "software-architecture-design": 3,
+    "strict-instruction-following": 3,
+    "systems-distributed-engineering": 3,
+    "tool-use-execution": 3
+  },
+  "taxonomy": {
+    "revision": "1",
+    "semantic_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1",
+    "sha256": "ff1833a13d82b406dce7197fd6a9d9e54d1f76a13f9996e15bdf83db167a355f",
+    "taxonomy_id": "molor-inference-rack"
+  },
+  "unlisted_eligible_entries": 0,
+  "wrong_kind_entries": 0,
+  "zero_silent_root_omissions": true
+}

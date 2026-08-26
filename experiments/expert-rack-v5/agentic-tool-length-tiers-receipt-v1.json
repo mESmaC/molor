@@ -1,0 +1,142 @@
+{
+  "schema_version": "molor.agentic-tool-length-tier-receipt.v1",
+  "policy": {
+    "semantic_assignment": "agentic/tool-use and terminal expert leaves",
+    "chat_render_mode": "direct",
+    "chat_render_mode_reason": "The source rows are system/user/assistant SFT and contain no literal tool-role turn.",
+    "split_isolation": true,
+    "template_mode_isolation": true,
+    "truncation": false,
+    "taskmaster_test_is_evaluation_only": true
+  },
+  "inputs": {
+    "repo_local_inventory": {
+      "path": "repo-local-corpus-inventory-v1.json",
+      "sha256": "575626ebb6626b641b663302d0c068a81aa948c42ea3397bcad5351d601ff559"
+    },
+    "taskmaster_build_report": {
+      "path": "../first-real-experts/data/taskmaster-coffee-api-v2.build-report.json",
+      "sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15"
+    },
+    "terminal_build_report": {
+      "path": "../first-real-experts/data/terminal-cli.build-report.json",
+      "sha256": "786dd47605601da117b25926d24818eaa133615a30754730c8e3b94377e6dafc"
+    },
+    "length_tier_builder": {
+      "path": "src/molor/experimental/length_tier_shards.py",
+      "sha256": "e0760b3770abfce5be6f8536b79cbe6b3a315d0e7df9e8363f833cd6353acfd9"
+    },
+    "tokenizer": {
+      "path": "models/Qwen3-0.6B",
+      "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+      "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    "plans": [
+      {
+        "path": "agentic-tool-length-plans/taskmaster-tool-test.json",
+        "sha256": "604e410fe6ea2b1f02714d5a3a10a48559172003744161bec982907243b01392"
+      },
+      {
+        "path": "agentic-tool-length-plans/taskmaster-tool-train.json",
+        "sha256": "931ce668cf424bd5b66d23d70361b253ab325d019f524444abb2116625549267"
+      },
+      {
+        "path": "agentic-tool-length-plans/taskmaster-tool-validation.json",
+        "sha256": "63e0fc4b5d4993cb7b1a4dcbc3150a146bedd74eb87df0dd65534b73b2f08bee"
+      },
+      {
+        "path": "agentic-tool-length-plans/terminal-cli-train.json",
+        "sha256": "7dd0ba196e14cc207e7fc2fc5663a510bcbc0e3040299aba807fbf333ce6504a"
+      },
+      {
+        "path": "agentic-tool-length-plans/terminal-cli-validation.json",
+        "sha256": "a88617cb805fded8e7f7c50fb27a91bdb427f9209019feb1a77f3c36705aef05"
+      }
+    ]
+  },
+  "source_split_contracts": {
+    "taskmaster": {
+      "component_disjoint": true,
+      "train_rows": 11626,
+      "validation_rows": 1380,
+      "test_rows": 1430,
+      "v1_source_conversation_overlap": 0
+    },
+    "terminal_cli": {
+      "task_family_grouped_before_selection": true,
+      "train_rows": 540,
+      "validation_rows": 60,
+      "train_validation_task_overlap": 0
+    }
+  },
+  "accounting": {
+    "input_records": 15036,
+    "accepted_records": 15036,
+    "quarantined_records": 0,
+    "by_split": {
+      "train": 12166,
+      "validation": 1440,
+      "test": 1430
+    },
+    "by_mode_and_tier": {
+      "direct": {
+        "le-1024": 14106,
+        "1025-4096": 913,
+        "4097-8192": 17,
+        "8193-32768": 0,
+        "deferred-gt32768": 0
+      },
+      "tool": {
+        "le-1024": 0,
+        "1025-4096": 0,
+        "4097-8192": 0,
+        "8193-32768": 0,
+        "deferred-gt32768": 0
+      },
+      "trace": {
+        "le-1024": 0,
+        "1025-4096": 0,
+        "4097-8192": 0,
+        "8193-32768": 0,
+        "deferred-gt32768": 0
+      }
+    },
+    "fully_reconciled": true,
+    "zero_silent_drops": true
+  },
+  "outputs": [
+    {
+      "path": "taskmaster-coffee-api-v2/test/manifest.json",
+      "sha256": "8a0b08e0449409b2bab1be849ea1b4736b8e362411e49543e51100ca34ddd389"
+    },
+    {
+      "path": "taskmaster-coffee-api-v2/train/manifest.json",
+      "sha256": "5172bf2b38910f4f67f11a8ff98430ffaac93733954e50c03ca3d094f66586f4"
+    },
+    {
+      "path": "taskmaster-coffee-api-v2/validation/manifest.json",
+      "sha256": "eb55c7eec3227ef92de39aef4a33849527429fc2b8a84395a8e1359f1605beef"
+    },
+    {
+      "path": "terminal-cli/train/manifest.json",
+      "sha256": "c8319392f22bb91489695c6ba2e6f25765283505a411414c675e45b20163dec7"
+    },
+    {
+      "path": "terminal-cli/validation/manifest.json",
+      "sha256": "d20013c10a44aa97b9e08eaa53a2e4b8a4802d70a920231b66f1d51a219c7410"
+    }
+  ],
+  "preflight_rejection": {
+    "path": "C:/Users/engin/Documents/datasets/processed/molor-agentic-tool-length-tiers-v1-rejected-only",
+    "reason": "An initial tool-role rendering plan was correctly rejected because every source row lacks a literal tool-role turn.",
+    "admitted_records": 0,
+    "ingestible": false,
+    "replaced_by_canonical_output": "C:/Users/engin/Documents/datasets/processed/molor-agentic-tool-length-tiers-v1"
+  },
+  "reproducibility_check": {
+    "independent_rebuild_files": 85,
+    "byte_identical_files": 85,
+    "mismatches": 0,
+    "passed": true
+  }
+}

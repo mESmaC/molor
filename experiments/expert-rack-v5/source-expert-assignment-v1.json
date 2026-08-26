@@ -1,0 +1,390 @@
+{
+  "schema_version": "molor.source-expert-assignment.v1",
+  "matrix_id": "molor-nonblocked-source-expert-matrix",
+  "revision": "1",
+  "coverage_contract": {
+    "ledger_id": "molor-local-corpora",
+    "revision": "1",
+    "semantic_sha256": "757aee73abfb42ebf56678bfe79f223687985c6c657e41e088e76cbbae084d6d"
+  },
+  "taxonomy_contract": {
+    "taxonomy_id": "molor-inference-rack",
+    "revision": "1",
+    "semantic_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1"
+  },
+  "source_groups": [
+    {
+      "group_id": "administrative-aliases",
+      "source_paths": [
+        "prepare_code_and_db.py",
+        "prepare_datasets.py",
+        "prepare_repos.py",
+        "prepared",
+        "processed"
+      ],
+      "policies": [
+        {
+          "target_leaves": [
+            "agentic-code-debugging",
+            "agentic-planning",
+            "business-core",
+            "business-finance",
+            "business-operations",
+            "commonsense-logic",
+            "embedded-can-diagnostics",
+            "embedded-code-generation",
+            "embedded-knowledge",
+            "formal-math",
+            "frontend-visual-computing",
+            "funding-capital",
+            "general-code-generation",
+            "general-expert-reasoning",
+            "growth-gtm",
+            "investing-markets",
+            "ml-data-reasoning",
+            "quantitative-math",
+            "science-reasoning",
+            "scientific-engineering-reasoning",
+            "software-architecture-design",
+            "strict-instruction-following",
+            "systems-distributed-engineering",
+            "tool-use-execution"
+          ],
+          "role": "alias",
+          "materialization_status": "not-applicable",
+          "materialization_ids": [],
+          "gap_reason": null
+        }
+      ],
+      "note": "Preparation programs and aggregate output containers are explicit non-training aliases scoped to every leaf already represented by corpus-bearing roots."
+    },
+    {
+      "group_id": "broad-complete",
+      "source_paths": ["Complete-FABLE.5-traces-2M"],
+      "policies": [
+        {
+          "target_leaves": [
+            "agentic-code-debugging",
+            "agentic-planning",
+            "formal-math",
+            "frontend-visual-computing",
+            "general-code-generation",
+            "general-expert-reasoning",
+            "ml-data-reasoning",
+            "quantitative-math",
+            "science-reasoning",
+            "scientific-engineering-reasoning",
+            "software-architecture-design",
+            "strict-instruction-following",
+            "systems-distributed-engineering",
+            "tool-use-execution"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["broad-distillation-experts-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "Renderable broad supervision is split by granular leaf, mode, and length before mixture admission."
+    },
+    {
+      "group_id": "broad-materialized",
+      "source_paths": ["broad-distillation-experts-v1"],
+      "policies": [
+        {
+          "target_leaves": [
+            "agentic-code-debugging",
+            "agentic-planning",
+            "formal-math",
+            "frontend-visual-computing",
+            "general-code-generation",
+            "general-expert-reasoning",
+            "ml-data-reasoning",
+            "quantitative-math",
+            "science-reasoning",
+            "scientific-engineering-reasoning",
+            "software-architecture-design",
+            "strict-instruction-following",
+            "systems-distributed-engineering",
+            "tool-use-execution"
+          ],
+          "role": "alias",
+          "materialization_status": "not-applicable",
+          "materialization_ids": [],
+          "gap_reason": null
+        }
+      ],
+      "note": "Canonical output container for the three broad source groups; recorded as an alias to prevent source/output double counting."
+    },
+    {
+      "group_id": "broad-mythos",
+      "source_paths": ["claude_mythos_distilled_25k"],
+      "policies": [
+        {
+          "target_leaves": [
+            "agentic-planning",
+            "formal-math",
+            "general-code-generation",
+            "general-expert-reasoning",
+            "ml-data-reasoning",
+            "quantitative-math",
+            "science-reasoning",
+            "scientific-engineering-reasoning"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["broad-distillation-experts-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "Prepared non-guarded categories are routed into granular reasoning and software leaves."
+    },
+    {
+      "group_id": "broad-premium",
+      "source_paths": ["fable-5-premium"],
+      "policies": [
+        {
+          "target_leaves": [
+            "agentic-code-debugging",
+            "general-expert-reasoning",
+            "tool-use-execution"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["broad-distillation-experts-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "Only the canonical logical representation is admitted; alternate serialized forms remain lineage aliases."
+    },
+    {
+      "group_id": "business-sources",
+      "source_paths": ["business-sources-v1"],
+      "policies": [
+        {
+          "target_leaves": [
+            "business-core",
+            "business-operations",
+            "funding-capital",
+            "growth-gtm"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["business-grounded-reconstruction-v1"],
+          "gap_reason": null
+        },
+        {
+          "target_leaves": ["business-finance", "investing-markets"],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": [
+            "business-finance-supervision-v1",
+            "business-grounded-reconstruction-v1"
+          ],
+          "gap_reason": null
+        }
+      ],
+      "note": "All six leaves use title/topic-grounded verbatim source-passage reconstruction supervision; this is not synthetic QA and does not prove answer quality. Finance and investing additionally retain calculation supervision."
+    },
+    {
+      "group_id": "embedded-can-code-reference",
+      "source_paths": [
+        "aevit2-can-fd-interceptor",
+        "aevit3_arb",
+        "aevit3_can_tool",
+        "aevit3_control",
+        "aevit3_drive",
+        "aevit3_interceptor",
+        "aevit3_vehicle",
+        "control",
+        "drive",
+        "obd-can-mod",
+        "ocb",
+        "relay"
+      ],
+      "policies": [
+        {
+          "target_leaves": [
+            "embedded-can-diagnostics",
+            "embedded-code-generation",
+            "embedded-knowledge"
+          ],
+          "role": "reference/pretraining",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-source-experts-v1"],
+          "gap_reason": null
+        },
+        {
+          "target_leaves": [
+            "embedded-code-generation",
+            "embedded-knowledge"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-grounded-reconstruction-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "CAN-oriented repository lineage remains accounted as split-safe reference material. Its embedded code-generation and knowledge rows also have honest verbatim-chunk reconstruction SFT; the raw reference_cpt rows are not independently chat-sampled, avoiding double count."
+    },
+    {
+      "group_id": "embedded-code-reference",
+      "source_paths": [
+        "aevit-base",
+        "AEVIT-Ecosystem-Programming-Documentation",
+        "aevit-lcd-manifest",
+        "aevit-m4-app",
+        "aevit2-app",
+        "aevit2-bsp-repo",
+        "aevit3-app",
+        "aevit3-bsp",
+        "aevit3-bsp-repo",
+        "aevit3-bsp-scfw",
+        "aevit3-m4-app",
+        "AIC",
+        "common"
+      ],
+      "policies": [
+        {
+          "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+          "role": "reference/pretraining",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-source-experts-v1"],
+          "gap_reason": null
+        },
+        {
+          "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-grounded-reconstruction-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "General embedded repository lineage remains accounted in split-safe reference shards and is supervised through honest verbatim-chunk reconstruction. Raw reference_cpt rows are not independently chat-sampled, avoiding double count."
+    },
+    {
+      "group_id": "embedded-visual-reference",
+      "source_paths": ["aevit3_lcd_common", "display_qt_app"],
+      "policies": [
+        {
+          "target_leaves": [
+            "embedded-code-generation",
+            "embedded-knowledge",
+            "frontend-visual-computing"
+          ],
+          "role": "reference/pretraining",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-source-experts-v1"],
+          "gap_reason": null
+        },
+        {
+          "target_leaves": [
+            "embedded-code-generation",
+            "embedded-knowledge"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-grounded-reconstruction-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "Display-oriented repository lineage remains accounted for embedded and visual reference use. Its embedded code-generation and knowledge rows use honest verbatim-chunk reconstruction SFT; raw reference_cpt rows are not independently chat-sampled."
+    },
+    {
+      "group_id": "fable-max-auxiliary",
+      "source_paths": ["Fable-5-Max-Reasoning-Filtered-250x"],
+      "policies": [
+        {
+          "target_leaves": [
+            "formal-math",
+            "general-expert-reasoning",
+            "quantitative-math",
+            "science-reasoning"
+          ],
+          "role": "auxiliary",
+          "materialization_status": "deferred",
+          "materialization_ids": ["fable-max-long-trace-auxiliary-v1"],
+          "gap_reason": "Long trace-only records remain auxiliary until a validated final-answer training objective is defined."
+        }
+      ],
+      "note": "The source is explicitly accounted without admitting trace-only records to inference SFT."
+    },
+    {
+      "group_id": "ocb-database",
+      "source_paths": ["ocb_ocb.db"],
+      "policies": [
+        {
+          "target_leaves": ["embedded-can-diagnostics"],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["embedded-source-experts-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "The canonical database is materialized into split-safe structured CAN supervision in the unified embedded source build."
+    },
+    {
+      "group_id": "ocb-sidecars",
+      "source_paths": ["ocb_ocb.db-shm", "ocb_ocb.db-wal"],
+      "policies": [
+        {
+          "target_leaves": ["embedded-can-diagnostics"],
+          "role": "alias",
+          "materialization_status": "not-applicable",
+          "materialization_ids": [],
+          "gap_reason": null
+        }
+      ],
+      "note": "Database sidecars are explicit lineage aliases and never independent training sources."
+    },
+    {
+      "group_id": "qwen-distillation",
+      "source_paths": ["qwen3.8-max-distillation-50k"],
+      "policies": [
+        {
+          "target_leaves": [
+            "commonsense-logic",
+            "formal-math",
+            "general-code-generation",
+            "quantitative-math",
+            "science-reasoning",
+            "strict-instruction-following"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["qwen38-distillation-experts-v2"],
+          "gap_reason": null
+        }
+      ],
+      "note": "Canonical direct and trace shards are separated by granular expert and token-length tier."
+    },
+    {
+      "group_id": "software-architecture",
+      "source_paths": ["Software-Architecture"],
+      "policies": [
+        {
+          "target_leaves": [
+            "agentic-code-debugging",
+            "frontend-visual-computing",
+            "general-code-generation",
+            "ml-data-reasoning",
+            "software-architecture-design",
+            "systems-distributed-engineering"
+          ],
+          "role": "sft",
+          "materialization_status": "ready",
+          "materialization_ids": ["software-architecture-experts-v1"],
+          "gap_reason": null
+        }
+      ],
+      "note": "The full prepared split is leaf-stratified across six warranted software domains; prior 12k/1k subsets are lineage aliases only."
+    }
+  ],
+  "taxonomy_leaf_gaps": [
+    {
+      "leaf_id": "terminal-cli",
+      "reason": "No eligible top-level corpus source in the pinned coverage ledger is assigned to this taxonomy leaf."
+    }
+  ],
+  "content_sha256": "089ca9526bd3ac605359547d0cf1e7912ff91d1b5afb847cb5356518a30b1f75"
+}

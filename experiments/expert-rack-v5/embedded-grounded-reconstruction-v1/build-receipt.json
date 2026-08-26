@@ -1,0 +1,143 @@
+{
+  "accounting": {
+    "by_leaf_split": [
+      {
+        "emitted_characters": 19750150,
+        "emitted_chunks": 2860,
+        "leaf_id": "embedded-code-generation",
+        "source_characters": 19750150,
+        "source_rows": 1993,
+        "split": "train",
+        "tiers": {
+          "1025-4096": 1707,
+          "le-1024": 1153
+        }
+      },
+      {
+        "emitted_characters": 1602429,
+        "emitted_chunks": 192,
+        "leaf_id": "embedded-code-generation",
+        "source_characters": 1602429,
+        "source_rows": 129,
+        "split": "validation",
+        "tiers": {
+          "1025-4096": 141,
+          "le-1024": 51
+        }
+      },
+      {
+        "emitted_characters": 1785768,
+        "emitted_chunks": 255,
+        "leaf_id": "embedded-code-generation",
+        "source_characters": 1785768,
+        "source_rows": 135,
+        "split": "test",
+        "tiers": {
+          "1025-4096": 187,
+          "le-1024": 68
+        }
+      },
+      {
+        "emitted_characters": 3491241,
+        "emitted_chunks": 562,
+        "leaf_id": "embedded-knowledge",
+        "source_characters": 3491241,
+        "source_rows": 437,
+        "split": "train",
+        "tiers": {
+          "1025-4096": 330,
+          "le-1024": 232
+        }
+      },
+      {
+        "emitted_characters": 574657,
+        "emitted_chunks": 79,
+        "leaf_id": "embedded-knowledge",
+        "source_characters": 574657,
+        "source_rows": 47,
+        "split": "validation",
+        "tiers": {
+          "1025-4096": 45,
+          "le-1024": 34
+        }
+      },
+      {
+        "emitted_characters": 24287,
+        "emitted_chunks": 8,
+        "leaf_id": "embedded-knowledge",
+        "source_characters": 24287,
+        "source_rows": 8,
+        "split": "test",
+        "tiers": {
+          "1025-4096": 2,
+          "le-1024": 6
+        }
+      }
+    ],
+    "characters_duplicated": 0,
+    "characters_omitted": 0,
+    "characters_reordered": 0,
+    "deferred_rows": 0,
+    "emitted_characters": 27228532,
+    "emitted_message_records": 3956,
+    "every_source_concatenation_exact": true,
+    "selected_input_rows": 2749,
+    "source_characters": 27228532,
+    "truncated_rows": 0,
+    "zero_silent_omissions": true
+  },
+  "artifacts": {
+    "accounting_jsonl": {
+      "bytes": 2952807,
+      "sha256": "ea7284a8a93edfe35f1a740469346102399a734074d75c9ea3ebfebc12a0d98c"
+    },
+    "aggregate_report": {
+      "bytes": 10244,
+      "sha256": "905ee16401f8eac33c6d5d0d84856f1f174c2ddb6d3c45628c00986353c10221"
+    },
+    "manifest": {
+      "bytes": 19025,
+      "content_sha256": "4e676208b5e26460367bd7b0badd6f798c007bc7fbe27c6dc44143637da8f348",
+      "sha256": "46c109be7a780a7cb0732f819d10a4ec1b013a0c17928622d3775f61c20936db"
+    },
+    "sha256sums": {
+      "bytes": 3139,
+      "sha256": "1b886610b1f144a27bc1c250644197fa90ea852464c531b54fbcfc141282fd86"
+    }
+  },
+  "independent_rebuild": {
+    "byte_identical": true,
+    "files_compared": 28,
+    "primary_bytes": 40613769,
+    "primary_files": 28,
+    "primary_root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-grounded-reconstruction-v1",
+    "verification_bytes": 40613769,
+    "verification_files": 28,
+    "verification_manifest_sha256": "46c109be7a780a7cb0732f819d10a4ec1b013a0c17928622d3775f61c20936db",
+    "verification_root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-grounded-reconstruction-v1-verify"
+  },
+  "schema_version": "molor.embedded-grounded-reconstruction-build-receipt.v1",
+  "scope": {
+    "leaves": [
+      "embedded-code-generation",
+      "embedded-knowledge"
+    ],
+    "modality": "reference_cpt",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ]
+  },
+  "source_manifest_sha256": "672d621eaf7c3ad74a2aefcae810c7ce5927714bd3d32835ac5f176ddc1fe389",
+  "tests": {
+    "command": "$env:PYTHONPATH = 'src'; .\\.venv\\Scripts\\python.exe -m pytest -q tests\\test_embedded_grounded_reconstruction.py",
+    "passed": 3
+  },
+  "tokenizer": {
+    "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "model": "Qwen3-0.6B"
+  },
+  "training_run_started": false
+}

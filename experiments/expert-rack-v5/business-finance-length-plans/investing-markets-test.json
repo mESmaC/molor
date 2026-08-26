@@ -1,0 +1,22 @@
+{
+  "schema_version": "molor.length-tier-plan.v1",
+  "tokenizer": {
+    "path": "../../../models/Qwen3-0.6B",
+    "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+  },
+  "inputs": [
+    {
+      "path": "../../../../datasets/processed/molor-business-finance-supervision-v1-r2/investing-markets/direct/test.jsonl",
+      "sha256": "0f7abb8733db3013b2c02d2ca2f39f04ef2fa9ca3fa791bd20c2cb2c4eb16ae7",
+      "record_count": 594,
+      "template_mode": "direct"
+    },
+    {
+      "path": "../../../../datasets/processed/molor-business-finance-supervision-v1-r2/investing-markets/trace/test.jsonl",
+      "sha256": "fa3fbefa59b72d33f39a63567898cced65f985602d9b94761bb47c488e8f44be",
+      "record_count": 362,
+      "template_mode": "trace"
+    }
+  ]
+}

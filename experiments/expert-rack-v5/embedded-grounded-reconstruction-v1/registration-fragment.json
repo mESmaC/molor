@@ -1,0 +1,38 @@
+{
+  "contract": {
+    "assistant_target": "contiguous verbatim source-text chunk",
+    "contains_synthetic_question_answering": false,
+    "grounded_reference_reconstruction": true,
+    "proves_answer_quality": false,
+    "truncation": false
+  },
+  "control_plane_integration": {
+    "combined_status_file_sha256": "b405eec89c3850f453a7bfc94af7277e98042a24c8abaa331db33804a436a0cd",
+    "combined_status_semantic_sha256": "d22e79130946b6cf294207acae9393906bde329e3570fc2a69694ba51458b5f2",
+    "independent_raw_reference_cpt_chat_sampling": false,
+    "raw_reference_materialization_id": "embedded-source-experts-v1",
+    "source_assignment_file_sha256": "947e8c1ea480aa1a2368db3af2abebee8b78014df4b9c72ddd9a52262981b7d8",
+    "source_assignment_semantic_sha256": "089ca9526bd3ac605359547d0cf1e7912ff91d1b5afb847cb5356518a30b1f75",
+    "sft_registration_ids": [
+      "external/embedded-can-code-reference/01",
+      "external/embedded-code-reference/01",
+      "external/embedded-visual-reference/01"
+    ],
+    "zero_double_counted_derived_chat_views": true
+  },
+  "leaves": [
+    "embedded-code-generation",
+    "embedded-knowledge"
+  ],
+  "logical_id": "embedded-grounded-reconstruction-v1",
+  "manifest_content_sha256": "4e676208b5e26460367bd7b0badd6f798c007bc7fbe27c6dc44143637da8f348",
+  "manifest_path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-grounded-reconstruction-v1\\manifest.json",
+  "manifest_sha256": "46c109be7a780a7cb0732f819d10a4ec1b013a0c17928622d3775f61c20936db",
+  "schema_version": "molor.data-plane-registration-fragment.v1",
+  "splits": [
+    "train",
+    "validation",
+    "test"
+  ],
+  "state": "supervised_ready"
+}

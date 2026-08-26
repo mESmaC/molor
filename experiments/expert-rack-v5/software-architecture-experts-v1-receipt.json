@@ -1,0 +1,254 @@
+{
+  "schema_version": "molor.software-architecture-experts.receipt.v1",
+  "artifact": {
+    "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-software-architecture-experts-v1",
+    "bytes": 1088137187,
+    "files": 633,
+    "quality_manifest_sha256": "15679dcc2ca0d2b49239907897ffafbcd86908079c5442ce9a620771374a4719",
+    "sha256sums_sha256": "4ed8ebf519840fedfd67783773f5d18abeae9d1fa1cbbb3375e821ef755b0394"
+  },
+  "pins": {
+    "prepared_train": {
+      "records": 443617,
+      "sha256": "400b2c334b4b9108d21d73ce1948bb3355d12d22141f1106da76177b52b30146"
+    },
+    "prepared_heldout": {
+      "records": 4436,
+      "sha256": "26ae1dc9facc78a12a4ef7c25a865061da63eaf6db516afab1d95e7473071cca"
+    },
+    "qwen3_0_6b_tokenizer": {
+      "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+      "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    "builder_sha256": "b5bfb320576961c2db2e86f32118fde9c00b37c7f9f3cafcf70a3a1ae379e17b",
+    "cli_sha256": "cec7a2112f863556f758545e9c0f44db95fc9b38ed6680e6a4da40cd0d5c18f0",
+    "tests_sha256": "f3f80f266e08b8e49c72b19a7027d63fd60e92d71162985c4ca3703f7623bb98"
+  },
+  "accounting": {
+    "input_records": 448053,
+    "emitted_records": 445823,
+    "quarantined_records": 2230,
+    "quarantine_reasons": {
+      "heldout_train_exact_prompt_overlap": 2210,
+      "heldout_train_prompt_family_overlap": 20
+    },
+    "emitted_splits": {
+      "train": 443617,
+      "validation": 1105,
+      "test": 1101
+    },
+    "emitted_modes": {
+      "direct": 445823,
+      "trace": 0,
+      "tool": 0
+    },
+    "emitted_token_tiers": {
+      "le-1024": 445821,
+      "1025-4096": 2,
+      "4097-8192": 0,
+      "8193-32768": 0,
+      "deferred-gt32768": 0
+    },
+    "rendered_tokens": 139456717,
+    "zero_silent_omissions": true,
+    "fully_reconciled": true
+  },
+  "emitted_by_leaf": {
+    "software_architecture_design": 289804,
+    "systems_distributed_engineering": 125204,
+    "general_code_generation": 277,
+    "agentic_code_debugging": 15929,
+    "frontend_visual_computing": 1347,
+    "ml_data_reasoning": 13262,
+    "terminal_cli": 0
+  },
+  "nonempty_direct_shards": [
+    {
+      "leaf": "software_architecture_design",
+      "split": "train",
+      "tier": "le-1024",
+      "records": 288355,
+      "rendered_tokens": 90731059,
+      "sha256": "370de39496a14c1aa4e782adc677b55a84da1e09b9e9837fa06f0a89904134de",
+      "provenance_sha256": "22d6ca6cfebe466877cec0069a575483fc7c6811e9ae59546547f8c61becd739"
+    },
+    {
+      "leaf": "software_architecture_design",
+      "split": "validation",
+      "tier": "le-1024",
+      "records": 720,
+      "rendered_tokens": 230995,
+      "sha256": "ce6a06c433bddaea4b9173ee3932151ca3247b006b2dcf0e91f2678bb6bfa695",
+      "provenance_sha256": "f5e07e16d3fcd0586b73d959ba267a16cd0844487a9f52059dd89ba51eafc0f3"
+    },
+    {
+      "leaf": "software_architecture_design",
+      "split": "test",
+      "tier": "le-1024",
+      "records": 729,
+      "rendered_tokens": 229701,
+      "sha256": "d10e98290e6d48845068495d6a8eb2e26a7c5ac6832e70064e76caf538241140",
+      "provenance_sha256": "c32f63273d8f4364afce592321aad6ae4302774f0e65b8844188a50c26b5b1f4"
+    },
+    {
+      "leaf": "systems_distributed_engineering",
+      "split": "train",
+      "tier": "le-1024",
+      "records": 124570,
+      "rendered_tokens": 36950097,
+      "sha256": "16cc971a153fb88103926bd003de552c20af99dd5a49db1d0cd036c8c1555e22",
+      "provenance_sha256": "d7eee7f359ef3bda41cfbe4426b3ea264c57fdde39c4d7a7be0e0ba8f008666c"
+    },
+    {
+      "leaf": "systems_distributed_engineering",
+      "split": "validation",
+      "tier": "le-1024",
+      "records": 323,
+      "rendered_tokens": 94328,
+      "sha256": "2024e89b32df6a5f7672ad434cec24ec2587191e44e4a6b8a020be5b39e15154",
+      "provenance_sha256": "229000927bd83863c169255f482d9ef0d7c10b65f2741299ee98dc2a21501a51"
+    },
+    {
+      "leaf": "systems_distributed_engineering",
+      "split": "test",
+      "tier": "le-1024",
+      "records": 309,
+      "rendered_tokens": 94077,
+      "sha256": "9d6320b0e94095eb77251259e52ea115a29f00dd5d697532a251f3200f1ffad6",
+      "provenance_sha256": "7d525ea8b93a0cb2be54d0f657ad5f01cd7ae3574cb3af181b9e6210ae2f341a"
+    },
+    {
+      "leaf": "systems_distributed_engineering",
+      "split": "train",
+      "tier": "1025-4096",
+      "records": 2,
+      "rendered_tokens": 2085,
+      "sha256": "1fc775a7dd0c7bca288a97a059e03e80eb9aab603d6f6b6c2902be4c7a4b7ae8",
+      "provenance_sha256": "f3ad2678680a15af26622df62952b22166ddf3078e7fda4b951044c97249d52d"
+    },
+    {
+      "leaf": "general_code_generation",
+      "split": "train",
+      "tier": "le-1024",
+      "records": 275,
+      "rendered_tokens": 111383,
+      "sha256": "4a688e97dbd3619744414398687bd4c474ace4c7f390f66e54c03d90be4b6e39",
+      "provenance_sha256": "ba0377890655d3a8affdfc69c981cbe8c4bf1958f4cd905717c743bfd3350665"
+    },
+    {
+      "leaf": "general_code_generation",
+      "split": "validation",
+      "tier": "le-1024",
+      "records": 1,
+      "rendered_tokens": 418,
+      "sha256": "ee88a1c3db969f323e777266d275e9026270f96613135aea6e4bc6d4bdf4e6bd",
+      "provenance_sha256": "464d8a7b854e0ca34cd1268f37f6722bb8dd6364213c7318e881efee30a2e5fe"
+    },
+    {
+      "leaf": "general_code_generation",
+      "split": "test",
+      "tier": "le-1024",
+      "records": 1,
+      "rendered_tokens": 626,
+      "sha256": "ab324a013f51f7e70c2b4dddffcbffc042f39d4ec926193fd0aacf54a12a67bd",
+      "provenance_sha256": "cd7c77713f9bc0d190c803b5fe1680bcdd3259f3cdc88a8d70003f716e77c583"
+    },
+    {
+      "leaf": "agentic_code_debugging",
+      "split": "train",
+      "tier": "le-1024",
+      "records": 15864,
+      "rendered_tokens": 4724150,
+      "sha256": "7d83459f5cb7f83e9ad03d787ef4a46d3339d732481f250924c99b90ff3dbd33",
+      "provenance_sha256": "5c5da0fa1992099b385da9c77cf995225627c419e34ddf82c0542e56f408462c"
+    },
+    {
+      "leaf": "agentic_code_debugging",
+      "split": "validation",
+      "tier": "le-1024",
+      "records": 29,
+      "rendered_tokens": 9680,
+      "sha256": "bb9260b9eba11e6f8a6cb73fc7dab7cfea3a9c586acee2ff22af5819eead70ce",
+      "provenance_sha256": "9f3b6784b10be0a518b0ade1bde87c8b1961f2bc371e62eda78a588935b777b8"
+    },
+    {
+      "leaf": "agentic_code_debugging",
+      "split": "test",
+      "tier": "le-1024",
+      "records": 36,
+      "rendered_tokens": 10413,
+      "sha256": "5df4251a0386b8b8d3c7955781bbeef19a2d1a74f123f3400b455e3114c01c3f",
+      "provenance_sha256": "2a0552a136f01e5bda48fb34386d0a83a8f92f5de99821b48be62a825c9cafef"
+    },
+    {
+      "leaf": "frontend_visual_computing",
+      "split": "train",
+      "tier": "le-1024",
+      "records": 1346,
+      "rendered_tokens": 394460,
+      "sha256": "d547f3920f6832bb8657e9d7790935f89929e5e2a30dcfbc953caa9b09ea4498",
+      "provenance_sha256": "3247698e5b38d46ba89fbfe52aa0b21cd81d66c01e0525508a215d1d7489f9df"
+    },
+    {
+      "leaf": "frontend_visual_computing",
+      "split": "test",
+      "tier": "le-1024",
+      "records": 1,
+      "rendered_tokens": 199,
+      "sha256": "05836af28531e5050611c7c072ece635e7c2b70b4dccc8bd097d349ea6a0cf6e",
+      "provenance_sha256": "3d9fc8819a4f42a71afd8fff99c0fd42f4ee835ad0e27e2f63f99a59d8100d97"
+    },
+    {
+      "leaf": "ml_data_reasoning",
+      "split": "train",
+      "tier": "le-1024",
+      "records": 13205,
+      "rendered_tokens": 5847952,
+      "sha256": "2003cf5359d3e48aa904659b4ad88cb6ba8833a52676209cf257013ca28294fa",
+      "provenance_sha256": "df24e9372fc1a452d0c8011d865a9d519656d00f9c3f86578759d111147f0c31"
+    },
+    {
+      "leaf": "ml_data_reasoning",
+      "split": "validation",
+      "tier": "le-1024",
+      "records": 32,
+      "rendered_tokens": 13786,
+      "sha256": "d4f07df095b5a33e80440a61c18a6a72931bee3a614fad4272f64b1623d59841",
+      "provenance_sha256": "5b6691bbae28463d32bb5fd1c39d3e18f1c82083189e178ef039fa7d47a70f10"
+    },
+    {
+      "leaf": "ml_data_reasoning",
+      "split": "test",
+      "tier": "le-1024",
+      "records": 25,
+      "rendered_tokens": 11308,
+      "sha256": "bb89656be74ac761cb2fca85445750f6204f54135cdb0104c612541cf045978b",
+      "provenance_sha256": "80d2edefc2fb3f674bdb2a70a6cbe11d62fa8338525d043da4da8a76e7ed2493"
+    }
+  ],
+  "empty_shard_policy": "All unlisted leaf/split/tier combinations have zero records. Their empty-file hashes, including every trace/tool shard and terminal_cli shard, are pinned in quality-manifest.json and sha256sums.txt.",
+  "leakage": {
+    "train_validation_prompt_overlap": 0,
+    "train_test_prompt_overlap": 0,
+    "validation_test_prompt_overlap": 0,
+    "train_validation_prompt_family_overlap": 0,
+    "train_test_prompt_family_overlap": 0,
+    "validation_test_prompt_family_overlap": 0
+  },
+  "lineage": {
+    "superseded_artifacts_hashed": 10,
+    "superseded_artifact_rows_ingested": 0,
+    "double_counted": false
+  },
+  "verification": {
+    "focused_tests": "5 passed",
+    "ruff": "clean",
+    "listed_artifacts_rehashed": 632,
+    "all_rows_and_sidecars_read_back": true,
+    "messages_only_training_schema_verified": true,
+    "content_free_sidecars_and_quarantine_verified": true,
+    "second_full_materialization": "byte-identical manifest and sha256sums.txt",
+    "determinism_check_path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-software-architecture-experts-v1-determinism-check",
+    "determinism_check_ingestible": false
+  }
+}

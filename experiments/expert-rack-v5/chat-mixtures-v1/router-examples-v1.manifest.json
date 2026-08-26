@@ -1,0 +1,2875 @@
+{
+  "accounting": {
+    "base_null_occurrences_admitted": 1196,
+    "base_prompts_length_bounded": 0,
+    "base_source_rows_observed": 7176,
+    "capped_unique_prompts": 512370,
+    "chat_occurrences": 883073,
+    "chat_prompts_length_bounded": 5325,
+    "digest_collision_digests": 0,
+    "duplicate_or_cross_split_occurrences": 272961,
+    "fully_reconciled": true,
+    "legacy_expert_rows_not_admitted": 5980,
+    "resolved_conflict_digests": 601,
+    "resolved_conflict_losing_occurrences": 3774,
+    "route_conflict_occurrences": 5620,
+    "selected_rows": 93318,
+    "unresolved_conflict_digests": 638,
+    "unresolved_conflict_occurrences": 1846,
+    "zero_silent_drops": true
+  },
+  "content_sha256": "45a7a78274955744711481adb6829172758e5e225a296208c5a7ff2000d0a3dc",
+  "dataset_id": "molor-hierarchical-router-examples-v1",
+  "evaluation_contract": {
+    "evidence_scope": "router-selection evaluation only; not expert-answer-quality evidence",
+    "test": {
+      "coverage": "partial-route-support-permitted-and-explicit",
+      "macro_metrics": "supported-routes-only",
+      "unsupported_route_recall": null,
+      "unsupported_route_support": 0
+    },
+    "train_and_validation": "fail-closed-full-route-support"
+  },
+  "normalized_prompt_overlap": {
+    "train_test": 0,
+    "train_validation": 0,
+    "validation_test": 0
+  },
+  "outputs": {
+    "test": {
+      "bytes": 10819598,
+      "path": "router-examples-v1.test.jsonl",
+      "records": 8120,
+      "sha256": "baf9f980fe17c21b10a3eb725cb32e2a5298f0602e4dce2a1df3b7b815a4a12c"
+    },
+    "train": {
+      "bytes": 85035781,
+      "path": "router-examples-v1.train.jsonl",
+      "records": 77079,
+      "sha256": "862501ebb0df754b716595e747bd8e401f41ca51396e917dde885c1d074cf900"
+    },
+    "validation": {
+      "bytes": 10631291,
+      "path": "router-examples-v1.validation.jsonl",
+      "records": 8119,
+      "sha256": "7e96f1c6187bf4118a6850ae817f9eaf4c87e6597304f9037405da28e202c58d"
+    }
+  },
+  "revision": "1",
+  "route_balance": {
+    "test": {
+      "agentic-code-debugging": 368,
+      "agentic-planning": 52,
+      "base/null": 130,
+      "business-core": 31,
+      "business-finance": 512,
+      "business-operations": 45,
+      "commonsense-logic": 246,
+      "embedded-can-diagnostics": 512,
+      "embedded-code-generation": 255,
+      "embedded-knowledge": 8,
+      "formal-math": 512,
+      "frontend-visual-computing": 444,
+      "funding-capital": 10,
+      "general-code-generation": 512,
+      "general-expert-reasoning": 512,
+      "growth-gtm": 81,
+      "investing-markets": 512,
+      "ml-data-reasoning": 145,
+      "quantitative-math": 512,
+      "science-reasoning": 512,
+      "scientific-engineering-reasoning": 161,
+      "software-architecture-design": 512,
+      "strict-instruction-following": 512,
+      "systems-distributed-engineering": 512,
+      "tool-use-execution": 512
+    },
+    "train": {
+      "agentic-code-debugging": 4096,
+      "agentic-planning": 837,
+      "base/null": 930,
+      "business-core": 705,
+      "business-finance": 4096,
+      "business-operations": 935,
+      "commonsense-logic": 4096,
+      "embedded-can-diagnostics": 4096,
+      "embedded-code-generation": 2860,
+      "embedded-knowledge": 562,
+      "formal-math": 4096,
+      "frontend-visual-computing": 4096,
+      "funding-capital": 117,
+      "general-code-generation": 4096,
+      "general-expert-reasoning": 4096,
+      "growth-gtm": 1343,
+      "investing-markets": 4096,
+      "ml-data-reasoning": 4096,
+      "quantitative-math": 4096,
+      "science-reasoning": 4096,
+      "scientific-engineering-reasoning": 2714,
+      "software-architecture-design": 4096,
+      "strict-instruction-following": 4096,
+      "systems-distributed-engineering": 4096,
+      "terminal-cli": 540,
+      "tool-use-execution": 4096
+    },
+    "validation": {
+      "agentic-code-debugging": 298,
+      "agentic-planning": 53,
+      "base/null": 130,
+      "business-core": 39,
+      "business-finance": 512,
+      "business-operations": 57,
+      "commonsense-logic": 250,
+      "embedded-can-diagnostics": 512,
+      "embedded-code-generation": 192,
+      "embedded-knowledge": 79,
+      "formal-math": 512,
+      "frontend-visual-computing": 422,
+      "funding-capital": 8,
+      "general-code-generation": 512,
+      "general-expert-reasoning": 512,
+      "growth-gtm": 88,
+      "investing-markets": 512,
+      "ml-data-reasoning": 139,
+      "quantitative-math": 512,
+      "science-reasoning": 512,
+      "scientific-engineering-reasoning": 160,
+      "software-architecture-design": 512,
+      "strict-instruction-following": 512,
+      "systems-distributed-engineering": 512,
+      "terminal-cli": 60,
+      "tool-use-execution": 512
+    }
+  },
+  "route_conflict_sets": [
+    {
+      "digests": 438,
+      "routes": [
+        "agentic-code-debugging",
+        "general-expert-reasoning"
+      ],
+      "total_occurrences": 1261,
+      "unresolved_digests": 438
+    },
+    {
+      "digests": 16,
+      "routes": [
+        "agentic-code-debugging",
+        "general-expert-reasoning",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 63,
+      "unresolved_digests": 16
+    },
+    {
+      "digests": 3,
+      "routes": [
+        "agentic-code-debugging",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 6,
+      "unresolved_digests": 3
+    },
+    {
+      "digests": 6,
+      "routes": [
+        "agentic-planning",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 16,
+      "unresolved_digests": 6
+    },
+    {
+      "digests": 6,
+      "losing_occurrences": 6,
+      "resolved_digests": 6,
+      "routes": [
+        "base/null",
+        "tool-use-execution"
+      ],
+      "total_occurrences": 22
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "formal-math",
+        "general-code-generation"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 20,
+      "routes": [
+        "formal-math",
+        "quantitative-math"
+      ],
+      "total_occurrences": 40,
+      "unresolved_digests": 20
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "formal-math",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "frontend-visual-computing",
+        "general-code-generation"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 3,
+      "routes": [
+        "frontend-visual-computing",
+        "ml-data-reasoning"
+      ],
+      "total_occurrences": 6,
+      "unresolved_digests": 3
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "frontend-visual-computing",
+        "quantitative-math"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 5,
+      "routes": [
+        "general-code-generation",
+        "ml-data-reasoning"
+      ],
+      "total_occurrences": 10,
+      "unresolved_digests": 5
+    },
+    {
+      "digests": 2,
+      "routes": [
+        "general-code-generation",
+        "quantitative-math"
+      ],
+      "total_occurrences": 4,
+      "unresolved_digests": 2
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "general-code-generation",
+        "science-reasoning"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 7,
+      "routes": [
+        "general-code-generation",
+        "scientific-engineering-reasoning"
+      ],
+      "total_occurrences": 14,
+      "unresolved_digests": 7
+    },
+    {
+      "digests": 11,
+      "routes": [
+        "general-code-generation",
+        "software-architecture-design"
+      ],
+      "total_occurrences": 22,
+      "unresolved_digests": 11
+    },
+    {
+      "digests": 6,
+      "routes": [
+        "general-code-generation",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 19,
+      "unresolved_digests": 6
+    },
+    {
+      "digests": 7,
+      "routes": [
+        "general-code-generation",
+        "systems-distributed-engineering"
+      ],
+      "total_occurrences": 14,
+      "unresolved_digests": 7
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "general-expert-reasoning",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 3,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 7,
+      "routes": [
+        "general-expert-reasoning",
+        "tool-use-execution"
+      ],
+      "total_occurrences": 14,
+      "unresolved_digests": 7
+    },
+    {
+      "digests": 2,
+      "routes": [
+        "ml-data-reasoning",
+        "quantitative-math"
+      ],
+      "total_occurrences": 4,
+      "unresolved_digests": 2
+    },
+    {
+      "digests": 2,
+      "routes": [
+        "ml-data-reasoning",
+        "software-architecture-design"
+      ],
+      "total_occurrences": 4,
+      "unresolved_digests": 2
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "ml-data-reasoning",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "ml-data-reasoning",
+        "systems-distributed-engineering"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 2,
+      "routes": [
+        "quantitative-math",
+        "science-reasoning"
+      ],
+      "total_occurrences": 4,
+      "unresolved_digests": 2
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "quantitative-math",
+        "scientific-engineering-reasoning"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 9,
+      "routes": [
+        "quantitative-math",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 21,
+      "unresolved_digests": 9
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "science-reasoning",
+        "scientific-engineering-reasoning"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 60,
+      "routes": [
+        "science-reasoning",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 259,
+      "unresolved_digests": 60
+    },
+    {
+      "digests": 15,
+      "routes": [
+        "scientific-engineering-reasoning",
+        "software-architecture-design"
+      ],
+      "total_occurrences": 30,
+      "unresolved_digests": 15
+    },
+    {
+      "digests": 2,
+      "routes": [
+        "scientific-engineering-reasoning",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 4,
+      "unresolved_digests": 2
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "scientific-engineering-reasoning",
+        "systems-distributed-engineering"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 3,
+      "routes": [
+        "software-architecture-design",
+        "strict-instruction-following"
+      ],
+      "total_occurrences": 6,
+      "unresolved_digests": 3
+    },
+    {
+      "digests": 1,
+      "routes": [
+        "strict-instruction-following",
+        "systems-distributed-engineering"
+      ],
+      "total_occurrences": 2,
+      "unresolved_digests": 1
+    },
+    {
+      "digests": 595,
+      "losing_occurrences": 3768,
+      "resolved_digests": 595,
+      "routes": [
+        "terminal-cli",
+        "tool-use-execution"
+      ],
+      "total_occurrences": 4363
+    }
+  ],
+  "route_contract": {
+    "expert_routes": [
+      "agentic-code-debugging",
+      "agentic-planning",
+      "business-core",
+      "business-finance",
+      "business-operations",
+      "commonsense-logic",
+      "embedded-can-diagnostics",
+      "embedded-code-generation",
+      "embedded-knowledge",
+      "formal-math",
+      "frontend-visual-computing",
+      "funding-capital",
+      "general-code-generation",
+      "general-expert-reasoning",
+      "growth-gtm",
+      "investing-markets",
+      "ml-data-reasoning",
+      "quantitative-math",
+      "science-reasoning",
+      "scientific-engineering-reasoning",
+      "software-architecture-design",
+      "strict-instruction-following",
+      "systems-distributed-engineering",
+      "terminal-cli",
+      "tool-use-execution"
+    ],
+    "family_lookup": {
+      "agentic-code-debugging": "software",
+      "agentic-planning": "agentic-tools",
+      "business-core": "business",
+      "business-finance": "business",
+      "business-operations": "business",
+      "commonsense-logic": "reasoning",
+      "embedded-can-diagnostics": "embedded-systems",
+      "embedded-code-generation": "embedded-systems",
+      "embedded-knowledge": "embedded-systems",
+      "formal-math": "reasoning",
+      "frontend-visual-computing": "software",
+      "funding-capital": "business",
+      "general-code-generation": "software",
+      "general-expert-reasoning": "reasoning",
+      "growth-gtm": "business",
+      "investing-markets": "business",
+      "ml-data-reasoning": "software",
+      "quantitative-math": "reasoning",
+      "science-reasoning": "reasoning",
+      "scientific-engineering-reasoning": "reasoning",
+      "software-architecture-design": "software",
+      "strict-instruction-following": "agentic-tools",
+      "systems-distributed-engineering": "software",
+      "terminal-cli": "agentic-tools",
+      "tool-use-execution": "agentic-tools"
+    },
+    "negative_route": "base/null"
+  },
+  "route_coverage": {
+    "test": {
+      "base_null_support": 130,
+      "expert_routes_missing": [
+        "terminal-cli"
+      ],
+      "expert_routes_present": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "business-core",
+        "business-finance",
+        "business-operations",
+        "commonsense-logic",
+        "embedded-can-diagnostics",
+        "embedded-code-generation",
+        "embedded-knowledge",
+        "formal-math",
+        "frontend-visual-computing",
+        "funding-capital",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "growth-gtm",
+        "investing-markets",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "tool-use-execution"
+      ],
+      "full_expert_route_support": false
+    },
+    "train": {
+      "base_null_support": 930,
+      "expert_routes_missing": [],
+      "expert_routes_present": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "business-core",
+        "business-finance",
+        "business-operations",
+        "commonsense-logic",
+        "embedded-can-diagnostics",
+        "embedded-code-generation",
+        "embedded-knowledge",
+        "formal-math",
+        "frontend-visual-computing",
+        "funding-capital",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "growth-gtm",
+        "investing-markets",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "terminal-cli",
+        "tool-use-execution"
+      ],
+      "full_expert_route_support": true
+    },
+    "validation": {
+      "base_null_support": 130,
+      "expert_routes_missing": [],
+      "expert_routes_present": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "business-core",
+        "business-finance",
+        "business-operations",
+        "commonsense-logic",
+        "embedded-can-diagnostics",
+        "embedded-code-generation",
+        "embedded-knowledge",
+        "formal-math",
+        "frontend-visual-computing",
+        "funding-capital",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "growth-gtm",
+        "investing-markets",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "terminal-cli",
+        "tool-use-execution"
+      ],
+      "full_expert_route_support": true
+    }
+  },
+  "row_contract": {
+    "exact_keys": [
+      "prompt",
+      "route_id"
+    ]
+  },
+  "schema_version": "molor.hierarchical-router-examples.v1",
+  "selection": {
+    "cross_split_policy": "test-then-validation-then-train",
+    "maximum_prompt_characters": 8192,
+    "normalized_prompt": "NFKC+casefold+collapsed-whitespace",
+    "overlength_prompt_policy": "retain-balanced-prefix-and-suffix-with-marker",
+    "per_route_caps": {
+      "test": 512,
+      "train": 4096,
+      "validation": 512
+    },
+    "route_conflicts": "lowest-source-priority-route-wins; equal-priority-ambiguity-excluded",
+    "seed": "molor-router-v1",
+    "source_priorities": {
+      "agentic-tool-length-tiers-v1": 0,
+      "base/null": 100,
+      "broad-distillation-experts-v1": 2,
+      "business-finance-length-tiers-v1": 0,
+      "business-grounded-reconstruction-v1": 0,
+      "embedded-grounded-reconstruction-v1": 0,
+      "embedded-source-experts-v1": 0,
+      "qwen38-distillation-experts-v2": 3,
+      "software-architecture-experts-v1": 1,
+      "unlisted-source-default": 50
+    }
+  },
+  "sources": {
+    "base_null": {
+      "admission": "base-null-rows-only",
+      "outputs": [
+        {
+          "base_null_records": 936,
+          "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\router-bootstrap-v6-taskmaster.train.jsonl",
+          "records": 5616,
+          "sha256": "0dd1d8fada18d0c306a12eb5cc4fbfcfa04e31290dd3112dfcc89791fae9c31f",
+          "split": "train"
+        },
+        {
+          "base_null_records": 130,
+          "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\router-bootstrap-v6-taskmaster.validation.jsonl",
+          "records": 780,
+          "sha256": "0b9203e5c5778017f6580a9139201e950fd275a6b68dc104807b46cfe0f04220",
+          "split": "validation"
+        },
+        {
+          "base_null_records": 130,
+          "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\router-bootstrap-v6-taskmaster.test.jsonl",
+          "records": 780,
+          "sha256": "51a4692d5729685c1a8ae8e296474671f0576dabaefeb1e9a1bf78742c5c08c7",
+          "split": "test"
+        }
+      ],
+      "report": {
+        "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\router-bootstrap-v6-taskmaster.report.json",
+        "sha256": "4a47892f7aef275483a9915a56a553f510ebccef9d578336d6f42cafa40c4673"
+      }
+    },
+    "chat_shards": [
+      {
+        "records": 476,
+        "sha256": "251642af934d5283a0f145bbad6dcba4130a284dab763002c6f767ab72c6be43",
+        "shard_id": "agentic-tool-length-tiers-v1/terminal-cli/direct/1025-4096/train",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 50,
+        "sha256": "57847e6621537260a372a8203f1373ceb5034e4306aa1ba5939002de6e2c0318",
+        "shard_id": "agentic-tool-length-tiers-v1/terminal-cli/direct/1025-4096/validation",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 15,
+        "sha256": "5761d60ebf845b4c579e77d03b792ae6dfd20a82b8529b2ee53c3bfe8e2b2f8c",
+        "shard_id": "agentic-tool-length-tiers-v1/terminal-cli/direct/4097-8192/train",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 2,
+        "sha256": "c21b367e5ac43b74be4031bda0812b8bd224b56777dd7f1c232cc2731178d9fc",
+        "shard_id": "agentic-tool-length-tiers-v1/terminal-cli/direct/4097-8192/validation",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 49,
+        "sha256": "0922b585ce12d3626d0aaec55ef26e5bdee9556a95487d54e7e0ef452b61f6fc",
+        "shard_id": "agentic-tool-length-tiers-v1/terminal-cli/direct/le-1024/train",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 8,
+        "sha256": "716410b1fb060de00ee92265fdb370fc1a59aa29dc2186ffd0b76c698c90350a",
+        "shard_id": "agentic-tool-length-tiers-v1/terminal-cli/direct/le-1024/validation",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 46,
+        "sha256": "9acb292aadc478e54d68001d8c981b3f84ab8412a03b44d3d8893c083ffa7686",
+        "shard_id": "agentic-tool-length-tiers-v1/tool-use-execution/tool/1025-4096/test",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 310,
+        "sha256": "19ca16b98ba57019c89c4210e48caa3e4f20524efba07ce04c4457da1ba72d83",
+        "shard_id": "agentic-tool-length-tiers-v1/tool-use-execution/tool/1025-4096/train",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 31,
+        "sha256": "b0548f5f9a61a52c26d3fe1462427812dd6c94b9fac0ff306efd7604d229bdf3",
+        "shard_id": "agentic-tool-length-tiers-v1/tool-use-execution/tool/1025-4096/validation",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 1384,
+        "sha256": "5265800a4c43eb064f3ba20447ffb3d86bac7f48417848c7eb34b07f930e9e6f",
+        "shard_id": "agentic-tool-length-tiers-v1/tool-use-execution/tool/le-1024/test",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 11316,
+        "sha256": "b7939bea2143b1f98d707fd2fbce8378ced94d10120c4e9ddca2bd99ed61205a",
+        "shard_id": "agentic-tool-length-tiers-v1/tool-use-execution/tool/le-1024/train",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 1349,
+        "sha256": "89a1e277095969afa7042508df1696aeb4e512ac143869196011d268c8a99dff",
+        "shard_id": "agentic-tool-length-tiers-v1/tool-use-execution/tool/le-1024/validation",
+        "shard_revision": "1bdbf2e7f0e7a93ee5e915fc99d30fa583c5b4df2e41890a07bea93b0204a59e"
+      },
+      {
+        "records": 38,
+        "sha256": "a7b879a9b90fe80f41c8987edd128ff0f5819c13692584b0d8748e5287dde44a",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/1k-to-4k/test/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 517,
+        "sha256": "53911ff9ce96460a0dad5b4581799d94aaf2d7b4bfbbe59f34fa469d935b9353",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/1k-to-4k/train/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 27,
+        "sha256": "a69e1e608af8365f61a61ccfaf6a5aabb71e8b50dac4da5ac3da6a7f4be42f5a",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/1k-to-4k/validation/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10,
+        "sha256": "b3173117b24db50080f6f5afece2355d5ff052e0965a00131c85b7a64031a054",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/4k-to-8k/train/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "266505c726d9e02d7628311b85e2e4dc77cd918921fd3076048bbc5e1e39ecd7",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/4k-to-8k/validation/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 38,
+        "sha256": "4edf7efe306c73ecfadaadac4ed4e6ed4d7e9fc6657fd93a876bbf658fe57c0e",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 750,
+        "sha256": "dc8ef0d49eb1eaa7745154921c68a369694927c70feacfdf1159b3fd82dba7f1",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 40,
+        "sha256": "1714bedd2739f8e3ad265e2ec63b355c95680a061a2fcd42f012c046a110d5c8",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 236,
+        "sha256": "dc798f0a44b3a12e2eae880428d423907a642d4fae92e86df594a8b071a1d395",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 3393,
+        "sha256": "096c4f1169da354be94246d083bfaf8245a53d4155a1ecb89d51448473004b9e",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 191,
+        "sha256": "521cba880dc313d0dcfdb1b6bca62ed13abdebb7c83a942c64681e1886c3db61",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 21,
+        "sha256": "b2493cf1ae37dfa2656cb6f09d19d7fce48469e8b21a6031a3554d25ccab30c3",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/4k-to-8k/test/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 240,
+        "sha256": "a48a39daa3fe187a57a219eb15224b8c39d14cab269253c2d1691154458ea835",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 12,
+        "sha256": "701db552b3799e767c21f10a9ab3bbec1f68115190ab6faf5ceef063a3684417",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/4k-to-8k/validation/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "59c3735a0e252a454cdcd010ac23c4bacf504738ddf61e1ec99cf94247f63837",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/8k-to-32k/test/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 28,
+        "sha256": "903645b1980a20a54afe540d46289de1279ad4b8fd89dc3e55635caa60d1ff2b",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/8k-to-32k/train/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "d24791743a76c3083a181222774701146e4a279ce90fc92fe15631e9dc919ee4",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/8k-to-32k/validation/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 22,
+        "sha256": "0d22bc268a24bcf1d025cfa46101976ff66c9308c99d518bb1fde4b673ec5327",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 242,
+        "sha256": "83e065b65a55535f6820940cf7f0ed35bbaf22b3648e73d89cb3969e7191a4c7",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 12,
+        "sha256": "d1d9eb9577111f90315db55ce015c71984c2bf900d101722b07d387463f18607",
+        "shard_id": "broad-distillation-experts-v1/agentic-code-debugging/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 12,
+        "sha256": "bea196357381c85efd04be5d47ea2551314d396aecae9d2ea7b0c5691455270b",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 74,
+        "sha256": "e672aa9650ed00ec703359af003135e9f238aab3d09ea8496a2f44a9e78f2989",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 6,
+        "sha256": "f14651335ce8b70fc7c2d038e023fc6df17f1c8c7945b0f4fc0f5e993f061590",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 9,
+        "sha256": "3332bc137ac671b1136d1801a3b65e3ff79a45dff3497e7c8eacda8eacd4b0be",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 238,
+        "sha256": "1dae1beffdcb1c6aed365fed67aeb7de5158530b2619ca9b4c332e72d43f029f",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10,
+        "sha256": "cfc36c91304da86cc5b4b1acf66a193f06b717abd8153914d23d177ab5bd6658",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 42,
+        "sha256": "d4a7cb433bcfeeef30e87c659591151af5fc32f5f0ecfa4965aa34e3f3201dd9",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 596,
+        "sha256": "f24b87939978ac65dc3e8e30c3ca5c5143624be278f6c6c8d4414c575a7f0979",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 42,
+        "sha256": "0ccb53f92af1f95aa3ac35660d63f009c0a800aa099fa8757796aa679b90d53a",
+        "shard_id": "broad-distillation-experts-v1/agentic-planning/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "17c429d42d93bcbb54af4ffc9a63f2262a3d8af9f8688edb418b3a4e87b1476e",
+        "shard_id": "broad-distillation-experts-v1/formal-math/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 51,
+        "sha256": "c87e411fab685a9b205a60683ba86d8d7355ccf0b5fa1b9d412ce542952afb6f",
+        "shard_id": "broad-distillation-experts-v1/formal-math/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "cc89342fcf16aa6f3f54fa2fe8fecffa94c3c94e83a06830e92433981587b982",
+        "shard_id": "broad-distillation-experts-v1/formal-math/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 119,
+        "sha256": "6fe95a412df61f3554744d09e60ba7b69d23da36b142f9629a2723d7341164a6",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2331,
+        "sha256": "25b331d2b68fed15acbcd955dc99cfaa7b3c2d2ef9c3e5d215ae97b1340be62b",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 117,
+        "sha256": "fd82b52569ce31df3611e70ef03399a67f1947efba200e153ce3382c88337827",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 3,
+        "sha256": "61f267ca6dc5cc754d2e3e6ac34990d17ef9fd2b18f0b536880987d26e692130",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "4fb96c1099b79787e6db222e5a3cff1d130c01afbf0315c0869408620e292bda",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/4k-to-8k/validation/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 102,
+        "sha256": "1982e534111f2e691edbf14b8f2acbd7def93e483ba8bfebcbba8b6eadf81ad7",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1610,
+        "sha256": "34bbbb3ddaad5de9a65c79b40ac2e74b13655434d91c715aaefd1ec1c818c04b",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 93,
+        "sha256": "95a12e6ba8bac0b480a6644886355652cf5f92eb26f00a36e909b9eedcb6e124",
+        "shard_id": "broad-distillation-experts-v1/formal-math/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 11,
+        "sha256": "bcae97786acbdeae84490d3d7cee72ad0012876e283d5e7accaa1fea3b540d83",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 315,
+        "sha256": "6031ae743f83ac451118b68842d7b1204e5bdb7f5de3e2bc895a6d032a39a21e",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 5552,
+        "sha256": "ae32cea905c243d77299aa03f44fcbfd00968cdeb2098d3774df5ee7a9223262",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 325,
+        "sha256": "fae277b7b1dca18b94c273a330faefa6fc051ced915267bae11a4b662018ff54",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 101,
+        "sha256": "38dc8c862b7850909f5a294a07b9466ea12e467732560c9f43c3f104bee60495",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/4k-to-8k/test/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1534,
+        "sha256": "db22c1d42b5529bc5af34de29ce90c28ef4032b625d1483849a6bb6192785492",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 67,
+        "sha256": "23ca347a2bb71ef65c23f4f70435753c242f7e8b661333895e3ec0bade6e8e4e",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/4k-to-8k/validation/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 28,
+        "sha256": "c3ce898e78c3638f520880607afba8f68d71fbddb1abf92f667fd6fc0bc7a835",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 503,
+        "sha256": "f3209fa5e3e2468aa26fb344389b43afd2031018da3496d9c70cae09d9b67f63",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 32,
+        "sha256": "8aa2c60153a0cf8963d8d5a4887456bde1f21c94217cf1f3cd9085c31879abe4",
+        "shard_id": "broad-distillation-experts-v1/frontend-visual-computing/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 16,
+        "sha256": "c2caaafa3f7fe0531843bed09ecc08e63c43511d4f0295e36aada894463bcff6",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 240,
+        "sha256": "5174f3e6f42882710661c3a28eb042eed1e3bd1226b37ef9b4d8c23a793bdd29",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10,
+        "sha256": "c58316e1cbc8b1e35296b1aa8644bff6f4fe21bc1ae30a8b6c3b126aea866437",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 467,
+        "sha256": "da321aed4564acb4de2fa48f26477f5194586975715a533c7d3ef1ec8808cc3c",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 7804,
+        "sha256": "6fc4674cd05070bf7a3afcff29da53327c2eb9cc3b7ed1aab990d7b1d374f8c5",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 486,
+        "sha256": "48b35806b18248334cf484e4409d4bc102e2e8bca485cffe849af6844cc74e56",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "d575dc2cc2d1a17cfbf7a6a1119cf50a5e1216a3f754cd216f9241a557de2256",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/4k-to-8k/test/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 28,
+        "sha256": "2675224fb0372f128a4af689100429c547f8ff649120d56769011096637d33d4",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "e99a527e955e6e29a37f8931b7935ccc26bb785e362a22d272536ccad01742a2",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/4k-to-8k/validation/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 39,
+        "sha256": "869aedee5b5b07f0a9566ca49bfdc44795867ea2a08d7343bec6ed01dfb0de93",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 706,
+        "sha256": "8c5090f4ffabb44fbdda22ffebfe7b2033cf3a7219b172b329d0791f26822224",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 49,
+        "sha256": "4d231588c38fd74c9a47f7404ad5a84f59a349c1f7b8e878b937a0f1ba986471",
+        "shard_id": "broad-distillation-experts-v1/general-code-generation/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 578,
+        "sha256": "32e6ae74927e6982d2d6226b4f878f8feacb155c36343908482311cef45a4840",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/1k-to-4k/test/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10161,
+        "sha256": "bb61cee78cb6050293bf8a3b288c44623746bc823464f70d2a468d8bf4c4b774",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/1k-to-4k/train/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 552,
+        "sha256": "3a804ab37f855c60a8b522cf17fca97bcd8f84f77ffe57ea90410fc9f5d0b97b",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/1k-to-4k/validation/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 4,
+        "sha256": "b21f6b954be082dc6feecc20429d8ae52dc1302dafbaa3829569340ffbede921",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/4k-to-8k/test/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 43,
+        "sha256": "fd14da3f527713a1b46879d51bb7fe9519bd914535878b833ad904fdfdd512f5",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/4k-to-8k/train/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "ad8c7b04f068fb3084192919ce595b1712a57eba7c3dced163598db4a6e0da0d",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/4k-to-8k/validation/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "25ad34520600e3b3dc49b49adf14a46133f9d2785fd98f31e80426129e05272b",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/8k-to-32k/validation/direct-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 240,
+        "sha256": "69696826e66522a01fa428ed2986434da2744d54833852226a9f11f93178db63",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 4261,
+        "sha256": "9904d10b02a62c30d9216d61a84acd220a7ff6686ebc6e473d30db5288ed2aaa",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 222,
+        "sha256": "cb961a1676cf6051c5422cbcac9635e05858842bec5209cdd0f34895558e4ff3",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 808,
+        "sha256": "01ade3611abb9737dfc0359ba80e3a9c7e35cf9759cccf8a0d6c08e2ec3cd28d",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 14268,
+        "sha256": "9c654805683053032693f78e9674c452f764280480acc399ffa1774cd9c01411",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 772,
+        "sha256": "09a8b3d6650edb6aa9981b2fd582fe06741d61bdbb6d1744f9bb4be9b05db830",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 19,
+        "sha256": "eec17b973658c5ff77273748ef95d6968139ca4384e0ce068dcee4f6dcb7f19b",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/4k-to-8k/test/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 284,
+        "sha256": "c994cac5c50543f2a90afbdbfca97009081ed08f69f820454ec21b5d18695c61",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 12,
+        "sha256": "65ea850d6d52050bc8c6e68edb13b6c9d2eb02125c9b6593c373c0540063387d",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/4k-to-8k/validation/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "1959f0ddc75594344850f59ca4fa08f92447d9599762fdec00cbbf813b12d225",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/8k-to-32k/test/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 66,
+        "sha256": "da29649577f6a8a1a1a74bdfd85901d7a7828e0373dc9c189d27279fc17904eb",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/8k-to-32k/train/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 7,
+        "sha256": "455447a8b62ff85ebcb6644d068767c52f1253273e53e8580a065daa425c547b",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/8k-to-32k/validation/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 215,
+        "sha256": "bb1bf5ae94bae42828b6adb8400461859263e7f61eccce1782b90cb95dcb429b",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 4093,
+        "sha256": "14becc8dc6cddd510b46e49ad40688dd1cd6f91daa256e5b97d06d558f39f5ba",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 200,
+        "sha256": "bb2e8b7bcb1baca7b0bc2de021553df92bd5df60b580f12dd7a4c8d1028ab34a",
+        "shard_id": "broad-distillation-experts-v1/general-expert-reasoning/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "26feed4b1b7004a6d9b773da4569112750c9a5f28165f7851c1d52fde52be326",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 48,
+        "sha256": "3ed48465e46db89fc2d8b0e5ed3a4bf124cb91910a461b0dfaa38b192b0e5e2b",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 79,
+        "sha256": "615229c758d62d8005b07247f01f412ba76198e4864b95bdd663057524536a3e",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1257,
+        "sha256": "e9dca8f033fb2eebfc5f52a0ffff50f3de27e615024dc89cd97cc5fe9c843c5f",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 64,
+        "sha256": "81a6e2bf09fd65d4c88ea26101300ee29a19574c8beb684d3932bf007a1726a5",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "27729cc4f544a5a784cbae1e0aab0d9e49f9a171431b82c68c94abfe4ee2420e",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 41,
+        "sha256": "43ba6ea19814a450b13b98d7699f45bec34dd8c62c3ab219690421f4feb09323",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 854,
+        "sha256": "f2efef97d0967778b876e0f5cbf07e467d1a69c525de2ba66c14401989aa0c72",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 45,
+        "sha256": "962fbc8f6e3eb8ada849f48456a79a485c3d2e52f4686a46d31e564421a11dc3",
+        "shard_id": "broad-distillation-experts-v1/ml-data-reasoning/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 76,
+        "sha256": "aaf2b550a303cdc9131d144a60c99ca6983498ab51939a2846fed5f9a8537dda",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1301,
+        "sha256": "19fb6233be2af9c3d988650a5757e30e1883501cf04245f346fbfba59eb8c31a",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 67,
+        "sha256": "0324814693659d73b7d2ffb3838e52f855582b4d23557fe51633b0431dc1c184",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 311,
+        "sha256": "fa164ca5d8372331cc7f2e3536ba036d69afc61396ca5f29de2c7f30841cc716",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 5860,
+        "sha256": "fc42904966bd492f36762bf55344e7aa6dbc62994335a1a319c50349b04abec2",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 315,
+        "sha256": "bb45f99a99942f79d5629ba46ba1473c5e2b6e87f93f75ba00616c267430c9a6",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 7,
+        "sha256": "a8d1a75f9610d50646eab106a8a1851b348496b69caea89d8af548219edbdc0b",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 856,
+        "sha256": "5ce91e03286472c96f275a1f83ba07bbeaadbecc04f7a4c9de9a3c7df501d800",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 16969,
+        "sha256": "93044407a8d1161787c14daffa2fb22cf07f6f2ff5632b0b1915e05f5a1552d7",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 937,
+        "sha256": "29b514b34d48b96ba8758526d8b28d98bf969516b03ff82f165708d2698e980e",
+        "shard_id": "broad-distillation-experts-v1/quantitative-math/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 58,
+        "sha256": "706ed9f6fb55bdfbed1218e04dc2f861059b6e68ca1f28b673ac04c1c9f4f8b4",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/1k-to-4k/test/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1120,
+        "sha256": "11c55b80393ae3c69f32f9b6335f89dd85feefa8e92431f4f4d354230508d07b",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/1k-to-4k/train/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 53,
+        "sha256": "680cb478815a2b585b7254fc23fec425883e5b092951ce55e8637bef2179ec57",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/1k-to-4k/validation/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "18e0bb3223c635542e744c46a422c5629a3d1015bc47154cb8dd995b8d26367d",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/4k-to-8k/test/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "f0ca6222f32dd5d4292012c26227a9985324c288a506e31fdbd84ec5bd1ed5b8",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/4k-to-8k/train/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 22,
+        "sha256": "2040a524253128ac0148c0166ca7552bd4be6d1c8f52ce6f8ca3241322c018b4",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 295,
+        "sha256": "4eb3c71943c438ea4a8c404353ae0bbd25e4543e8f82a2f460238e11c68f41af",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 23,
+        "sha256": "43bb5751e7db596b1d95bd7a9ee0bfaaf2efca486fb21e6e2d40513415e89708",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 164,
+        "sha256": "a1a4a5fdccefa31879a7a31f4dd7ec4697cf2acd57e534ee06e6a36532da9a5b",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2838,
+        "sha256": "8cf2ac34e754931f53644aab92080bcf06312b53432e2193eaf0a0380daf1d0d",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 156,
+        "sha256": "61b629595115dddb60baa2113e893b5505e4f0ba44c084dbb1643aefeadbd282",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "4c0af363ec49c9352d996651aaf460033516b280e71a0691574e7d9fbf982b8f",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/4k-to-8k/test/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 9,
+        "sha256": "43cc1a0c9740a882fb07ff4483c8ecf81f3a0fdea502df00c58285dc6d83ca95",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 133,
+        "sha256": "23be4b1e2ec1ae1cc983060d845bee69fd8f9c7795596ee66678b39fa7e6023a",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2537,
+        "sha256": "2e103a44ead1677db70b310017d39f362abd77ca23da922e960210af24fe43d5",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 131,
+        "sha256": "095853b9e3eed8e5e19483cb6c4379e7171b958b155444c82938df26a05901d5",
+        "shard_id": "broad-distillation-experts-v1/science-reasoning/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 9,
+        "sha256": "b4ea8e3d3c10e43c583848f187b93677a2d2575c4dfed1cfb424a0f8b3fdd04c",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 72,
+        "sha256": "eb2fc6681a317053ce9d3ef78076c0dc7af27f5c6ea9e82d3528eb37294d9559",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1323,
+        "sha256": "31b6b34b972bf6f0f7b79ca9501f986e39cf497756b56fbff41f453090e7c057",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 76,
+        "sha256": "5e187ca77dc86d67301b892d92365496a712a95728580e6c9b7c9a3630618c5d",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "433e83a61ac2cee5ffe0412d66d460e9008acdd4196993131d59fa40a1a63a2c",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 94,
+        "sha256": "ccd9b54d650319ed207264fe47992d7760e614f77239c49d0d6a538a66608a65",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1423,
+        "sha256": "9dc543b0a46c024f205783664671934433ef1eaeba2e5e0746ac326f0d7ca63c",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 88,
+        "sha256": "6bb4810bc24e350aaa051a81a63045702667235ad5d5e09d61e28d580b36bb33",
+        "shard_id": "broad-distillation-experts-v1/scientific-engineering-reasoning/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "e368a604259ab7f4b69cc803ec0698ed3b85c37311080d2b86826859bf88868c",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 8,
+        "sha256": "aadc3b2fbc389ed6545716fbbcd05cdff625505206824f921cb5aed6751449d7",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "ddd3d2784ba4f44f6204f9abf748a5e1ffabf190c9afa391e25c83c153b161e2",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 18,
+        "sha256": "9a28ee8c49744b7ce17c779a8276d4d0052c6d92e717f9c43fb1471d07783371",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 286,
+        "sha256": "a20f1996ad3a67702d96aeeae58d490b13235bceb869c38b720cbe4ec70656d2",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 11,
+        "sha256": "d0349b3531e9063353dea25d1a599efe739ecb90fec33166e4a9903085b29526",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10,
+        "sha256": "2f207881cc6b4e2989026dbe916b0b3b0ea86dfdb91d0541a3ceb15675799971",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 365,
+        "sha256": "84718f747efd5f351bd1dd912c01a11865b6170d0981c919dd2eca763789f82e",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 16,
+        "sha256": "d1a0bbdf7dd54e4bfa0a7a458d262f631527505e528a8118b42639f539c21f1c",
+        "shard_id": "broad-distillation-experts-v1/software-architecture-design/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 16,
+        "sha256": "ce320708dbae51348bb3458f679818e5ffd15207ee657c4d53262dfd49c75bb7",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/direct/1k-to-4k/train/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 35,
+        "sha256": "dc1fd048b45746d5f695ce1c2c8c9ce2205b38748df616062776ac95bf417c80",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 842,
+        "sha256": "870c03460b40d513c6d25ff4fca4a3e09897506b8ac9422c42076a2e7da2a6f7",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 45,
+        "sha256": "91f63314a5db9108bb7c10e5e2b0447c5a259fb64d5e4f6d7039cc58fadb2408",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 480,
+        "sha256": "b0f410e3e61af467ea77b84e1f33b485c2dc70fa5257814c907cdd7b76b9a83a",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 8419,
+        "sha256": "d874a708c6769ffe78676c941af8ada9be352fc57e27f9f2dd90cca152a7b477",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 487,
+        "sha256": "3fc3f2c7a5cee0089107e605a1254c4c4149ed6b473158490b41ca776bd6cb6d",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 19,
+        "sha256": "59be370b5b6d3dc1e8eedad6161b9601a4690cdfaaa7749acd16f4a3fc4e1768",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "c0d6adce4e18af333502228fd4112eff1cfb898b914e2764889309117cd86e7b",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/8k-to-32k/train/trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2091,
+        "sha256": "41ea4fc086263e7c64ba184f1993128a1ba86ccc95bef1a0b7a5c76465870054",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 37954,
+        "sha256": "b7b45708e3bf4e13357f6717d2e372bc9fb92384dfb293139ee3bd5cadce6d50",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2058,
+        "sha256": "34feff73798fc3509732e4a353f919196af45e5cfdc4627a051d5291b61ff8ba",
+        "shard_id": "broad-distillation-experts-v1/strict-instruction-following/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "766fab102f96635cd8aefa1b09012e82063565c02ce1f416778dbd3d35233c4b",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 4,
+        "sha256": "903ba6e4494f82eb17ff4bdadd20ef2d228cb36f64b2c08fe3f84d020d0a8e1f",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 598,
+        "sha256": "a5baedadd5f29b7fb280a14f0be771f2be315a0dc3e7139c9cf4c9cf48f86dee",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/1k-to-4k/test/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10162,
+        "sha256": "0e9a7e31d15503903f3fe7b29f0fb083d154d2c0371c54f36ccda87983ccbf23",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 628,
+        "sha256": "0c4f7482a47d063c5f453d0462aeb2dda14df9c020bfa45f69e02bf0532ec7bc",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/1k-to-4k/validation/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1,
+        "sha256": "08ec2b6492239393e620aaec4822501b5ad701319cc2c4e4f2891da475dfc758",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/4k-to-8k/test/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 13,
+        "sha256": "ec287c406df1c6889f63a37b01da8562ace422edb8362a2c744d81ce736de573",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/4k-to-8k/train/trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 40,
+        "sha256": "05cae57987477d3a9937d8f220516faee63d0891d46bcd84dfb5d8a9de56c0cf",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/le1k/test/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 513,
+        "sha256": "86aafe7a6fbd3749d4374b0d68b3c95d28087631ebd7dfb0a3bd1b45a004836a",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 33,
+        "sha256": "04f205367acba08b8524490f266eff72681270b1be3ea7e49c39a5183a33ae03",
+        "shard_id": "broad-distillation-experts-v1/systems-distributed-engineering/trace/le1k/validation/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 29,
+        "sha256": "ef40546bff9eeaadeff0d272b84d1827691c0f75ffaf5d86aaf3378f040c0785",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/1k-to-4k/test/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 563,
+        "sha256": "378fc32e3acdc6a12a227c70be99d1512d63a4be4f3f73346ba72c49cfe1adc7",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/1k-to-4k/train/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 34,
+        "sha256": "f363f8f3714eeda4a38fb27193d78f8aa1a82b2d307378e489f9f977e787e40c",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/1k-to-4k/validation/direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 3,
+        "sha256": "7e4e2846c086de1012150d4d8a5c44f61dc65beb7383a25d405d2d05a50c858b",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/4k-to-8k/test/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 84,
+        "sha256": "0389409ecc156acaccedae601450471b4e4857e3a1376ad5f8b0cfc3299793e3",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/4k-to-8k/train/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "99d77d8de767ff8e5910170cc48dca413598553ee1389667eedbfd0f3ccc6dff",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/4k-to-8k/validation/direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 40,
+        "sha256": "7c8a5526301e2876dc451feca22cb452649dd1c138bdf6eae3b7c5172a00b289",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/8k-to-32k/train/direct-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "b7f38de1597034882a78a4993b681495623449450777e1143822550c17893326",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/8k-to-32k/validation/direct-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 216,
+        "sha256": "4361ccb19b025ad3a4413b63a99222f99f4b268db811af0d8b4e7f5f39e48d6f",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/le1k/test/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 3832,
+        "sha256": "4eaf6cf6d65b8235ac37232937fffbeb2691c9605c0fabbe8bff86f752de8fab",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/le1k/train/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 217,
+        "sha256": "d2419d99c698cd0cf920d5947e8e3e65800afd321bdf88978668436e9304dcf0",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/direct/le1k/validation/direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 156,
+        "sha256": "e9503edbb1b807acd757f68c1128f126ed113713fd804382edf8f412c97572c2",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/1k-to-4k/test/tool-direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 3458,
+        "sha256": "9da2301a0c8cdc519baf645cc419136ceae730ac3feb400ff0eba3a5d8a28c7f",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/1k-to-4k/train/tool-direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 127,
+        "sha256": "c29dfad3b0aa4a0165390f309b869ea4ff2d239a9598720dcd6c6f8a5c84602d",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/1k-to-4k/validation/tool-direct-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 27,
+        "sha256": "c6455598541de32259a210e55b9f81f0e47d86c697ff62b026c5ddb89699b2d4",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/4k-to-8k/test/tool-direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 994,
+        "sha256": "11412ad15350efe3ce37ac2a1c6bd9c546c9fa9f955f7e5c3533829ec7274680",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/4k-to-8k/train/tool-direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 29,
+        "sha256": "433bb2dd26cbb3f72ca3da98a70976431ee84202b1cc59f41d58f9f2d7cfad1a",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/4k-to-8k/validation/tool-direct-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 6,
+        "sha256": "ef27f054ed320381e4cb283e210d45f25eee30a83d0bbdbf5911cf50a1b2f665",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/8k-to-32k/test/tool-direct-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 507,
+        "sha256": "62afec637776618f7c287e3ba69ac89558dbf6d314637dcaa24bc6bd60ee84e7",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/8k-to-32k/train/tool-direct-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 5,
+        "sha256": "5286c8a2e87bf68a58dd796c5bcdbbac8adedacbc29e3afc6b7c10964229d357",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/8k-to-32k/validation/tool-direct-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 163,
+        "sha256": "9b875e95b86e3a2c81e43ffb6a989bda84c1aae65c64d72dc02b59d5c0003200",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/le1k/test/tool-direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2927,
+        "sha256": "74422e81e21279753d9c116c5923d5fa16fc43140ce11acfc7853793cb6b2a23",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/le1k/train/tool-direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 148,
+        "sha256": "2fa6d2b027f3fc099e94481fc7cf51eda42805a0119144d38a4a8b9fde9e5223",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-direct/le1k/validation/tool-direct-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 444,
+        "sha256": "262b38529f1f7b8073947b694e4bac4823ce2dba3872fc62ca496bd48307cb84",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/1k-to-4k/test/tool-trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 6799,
+        "sha256": "299a44fce9e148904891dfa90d805f1303733d7284cc58510d2562df2f7b1a37",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/1k-to-4k/train/tool-trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 404,
+        "sha256": "b97a799956d8cbc0952e6726741d0faefd24e852f787d6dd90a3d9b66b4af1ea",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/1k-to-4k/validation/tool-trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 42,
+        "sha256": "5a103f26f15afcea76f90cf9b53f6157b71fcc43204cd9252ca95b130340b7f3",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/4k-to-8k/test/tool-trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 562,
+        "sha256": "1a6277599da2ebcff9a4a80bb09e5d704b1cb88eab483520f54e06c5adf22ccd",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/4k-to-8k/train/tool-trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 30,
+        "sha256": "b349b0979884915cb92dc207cdfd41bb0f5fbfb9a0aceb0722da6efd872c9577",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/4k-to-8k/validation/tool-trace-4k-to-8k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 5,
+        "sha256": "06fae9fbd9377c30975586fef4e331e113111913e8d8ed22263dd7f215791f61",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/8k-to-32k/test/tool-trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 137,
+        "sha256": "46cc3ff81ba2a0f66e57b096069202524ffe2241be792442746aaa9d89976a48",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/8k-to-32k/train/tool-trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 3,
+        "sha256": "75398e66ccafe29205e2b55c7b749f845591ef10fbd9c019387bebdad9c143c3",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/8k-to-32k/validation/tool-trace-8k-to-32k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 75,
+        "sha256": "4842ccadb977b037b9542ed20f1fd4fcfc9b154a5c9655889f19a0d2b79cfb66",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/le1k/test/tool-trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 1662,
+        "sha256": "3db09e0e4825143ab8c26ab5d9f98e8d8a0b32f55622e42f5e09255483f6cff0",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/le1k/train/tool-trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 102,
+        "sha256": "dfdb736da30de425b71595d5dde2174deef19a4541c0ebc9dce1eae4533df6f5",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/tool-trace/le1k/validation/tool-trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 2,
+        "sha256": "283c9bb8422bb099ad9dfb84bbd0f0a28646b91cf9984a74e953c8fcc02fffb9",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/trace/1k-to-4k/train/trace-1k-to-4k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 10,
+        "sha256": "3633e60aa27a4cd849b3272c7ab55c3fe24d73b74d1d9df1da2546f1ae2e045a",
+        "shard_id": "broad-distillation-experts-v1/tool-use-execution/trace/le1k/train/trace-le1k",
+        "shard_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+      },
+      {
+        "records": 104,
+        "sha256": "acefa84b9404134327da21787b337709a72e14ac119ce33182416ca22e940763",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/direct/1025-4096/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 829,
+        "sha256": "d1f03064e4c7f05c8aa9e08dcec70a2c73d1ca7b90a9014a32ec8eeaae4401d0",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/direct/1025-4096/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 125,
+        "sha256": "217596d9a507ff4ebe3c57aba40af14c831b1a064ff07a62f023a2d4c09820c9",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/direct/1025-4096/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 2103,
+        "sha256": "487b5d2e6bc6561244e8b046e5c041fe235775609b54a17bb664c6e37034c586",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/direct/le-1024/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 14269,
+        "sha256": "fbf8ad6365584e707801eb20cbfe0a169495560d258e8676270a54ab8b3f85aa",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/direct/le-1024/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 1844,
+        "sha256": "bb8a7c42961e4ba9170badb65b3edfa94aadd9ef3e3f07e2f0f3c4adac947eff",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/direct/le-1024/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 55,
+        "sha256": "bae3188107b538d75390ee7e1b42ddb0f8ca8b727cc585ba8a8929e528bff779",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/trace/1025-4096/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 445,
+        "sha256": "d30963db6f52e10ecd5ea3e825f9f83a9b6b0b962bad7ee21154367530e5f2f7",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/trace/1025-4096/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 65,
+        "sha256": "b99298b7fa3b7c2f40f654c632003c50f11f7e0d6d7a4f40b3646268995fec15",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/trace/1025-4096/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 1552,
+        "sha256": "69bac4e0359ba1449e30dc88c6a77e18905af3fd2cd45f2bd59dbda3abf870e9",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/trace/le-1024/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 9900,
+        "sha256": "5bf9d5410fdf5b0b4167e28964a6c0ad776befc349018d1869338b6c470dcd2b",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/trace/le-1024/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 1302,
+        "sha256": "a98725b30f2a4b2a0975303e8c2f4452c7456a495bff96b9b5664ed4fe0c7bcd",
+        "shard_id": "business-finance-length-tiers-v1/business-finance/trace/le-1024/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 54,
+        "sha256": "d4b06978e600eac59af535439bee2dcb3bedae2a8dcc5425d009f49bd338078d",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/direct/1025-4096/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 462,
+        "sha256": "ef15f8e07a434d5b20c3ea47674ab7d981148c74ca4a84d67cde6720ca2b292a",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/direct/1025-4096/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 54,
+        "sha256": "8014e338723d9cd825d85723d5547ef9df1ed12081b71eb267456505b3afba60",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/direct/1025-4096/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 540,
+        "sha256": "11fab4b9e33e1367ca45873ac6b75dbf6ef8ced65251b55f71251840958e2971",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/direct/le-1024/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 3856,
+        "sha256": "0329c6576cb98218a303fd38d411ac27d12aa7fc24b4c586a1fa292b762904f1",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/direct/le-1024/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 520,
+        "sha256": "8c4aefe8f47ebbdb88b389491e0dac028ee1d0491c8812b24836ba81716a85e6",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/direct/le-1024/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 31,
+        "sha256": "14f5d12e0272786780d0b596504912de5405ec6b6c9aab1a9f14c2d4d33d265c",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/trace/1025-4096/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 229,
+        "sha256": "033c1839ac5c3300ee9a4a6b43b8df2e7189a516b8b1e7ad9dc778041b545388",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/trace/1025-4096/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 29,
+        "sha256": "2c4bc1e14fe936fca85694fb8528b942f520b94095a9cc7a4fbac5fae0b66ab0",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/trace/1025-4096/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 331,
+        "sha256": "df2106be80b8c649fc077aba767ca49f394036ce46113c8df961ac20c6d810b4",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/trace/le-1024/test",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 2230,
+        "sha256": "917e879f768afaca07926bafc54c3c934b8cefc0762c09d9d18155e803c9ca2e",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/trace/le-1024/train",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 313,
+        "sha256": "7caad9455387bfc384ece90e8ee86c1079dc6928bf0b6f947fa4296ad1c8d527",
+        "shard_id": "business-finance-length-tiers-v1/investing-markets/trace/le-1024/validation",
+        "shard_revision": "ee7ea66d2f0f53b6ca3d9840822311bf60cfe0358cdf837b51269c7efad73251"
+      },
+      {
+        "records": 79,
+        "sha256": "a7a5e9b15f02fc41043011185e6cc3a6bd23305330fe73765275561f13ea2b93",
+        "shard_id": "business-grounded-reconstruction-v1/business-core/direct/1025-4096/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 1503,
+        "sha256": "edffafe72808e3bfdd3c1730d03996a131e46d1ea68684c5c92d6ed6e0de66b4",
+        "shard_id": "business-grounded-reconstruction-v1/business-core/direct/1025-4096/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 97,
+        "sha256": "5cfb5197f017ac7059e730c010c7d94fa06a814dcc4d67c424053ff1006867f0",
+        "shard_id": "business-grounded-reconstruction-v1/business-core/direct/1025-4096/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 24,
+        "sha256": "766514c429d7a1dbbfde537610f366f86a70ec04585609373f2f08e0a8ad4a4a",
+        "shard_id": "business-grounded-reconstruction-v1/business-core/direct/le-1024/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 592,
+        "sha256": "128b3dc489a769c39c5d4fa614576278054aa481346e9e05f0350eb80e227b5b",
+        "shard_id": "business-grounded-reconstruction-v1/business-core/direct/le-1024/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 31,
+        "sha256": "24efcfc9bb2b2f7985870deddd35b7ec7a422bebb28bdc2bbb3a7c90cf297eee",
+        "shard_id": "business-grounded-reconstruction-v1/business-core/direct/le-1024/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 7,
+        "sha256": "6c17e609880a260899386a7d38532bcf6bcca4dff85423f3a3abd9c069903111",
+        "shard_id": "business-grounded-reconstruction-v1/business-finance/direct/1025-4096/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 212,
+        "sha256": "aeb718ca69a91068769b00b758495be7014c71cc4961299d242a4aa6a458456b",
+        "shard_id": "business-grounded-reconstruction-v1/business-finance/direct/1025-4096/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 10,
+        "sha256": "f6fb01f9de0e44842de9e020000d0ef0e49262335206147f8919d76c30b474bf",
+        "shard_id": "business-grounded-reconstruction-v1/business-finance/direct/1025-4096/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 8,
+        "sha256": "b4d8b4d93e14ee0bf98c68945b363a40fc0f4c9e395f36b309279c96e876866f",
+        "shard_id": "business-grounded-reconstruction-v1/business-finance/direct/le-1024/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 82,
+        "sha256": "b84063ef93a3196a30bbab879cb51c02ee136f21d6887aed89f193d86f3ebb65",
+        "shard_id": "business-grounded-reconstruction-v1/business-finance/direct/le-1024/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 4,
+        "sha256": "bc16a4066b318160acc38cebfbcc9c139be37ad848183ec3ae3931074bd03fc0",
+        "shard_id": "business-grounded-reconstruction-v1/business-finance/direct/le-1024/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 41,
+        "sha256": "7b01497dd396641fff3428a770b0e774f41b0963115b02298aeae05afc739686",
+        "shard_id": "business-grounded-reconstruction-v1/business-operations/direct/1025-4096/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 1040,
+        "sha256": "259cbcd817fbe7fc3804de9689c55ab340816e15266b2570dcb8d47bffc48074",
+        "shard_id": "business-grounded-reconstruction-v1/business-operations/direct/1025-4096/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 83,
+        "sha256": "b1ac40c50387d838eab521dd0e9794fad085b3584e5485833a9a0d9ef802bec3",
+        "shard_id": "business-grounded-reconstruction-v1/business-operations/direct/1025-4096/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 27,
+        "sha256": "0ef97276c4b4388f4ac0a600bfca59fe9fa0424caaeb65da2a0e98c4cc11dc09",
+        "shard_id": "business-grounded-reconstruction-v1/business-operations/direct/le-1024/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 587,
+        "sha256": "d1118adc7e7e978517c4fdcd2a982c7d7b8b6150282070ae2c28630644258428",
+        "shard_id": "business-grounded-reconstruction-v1/business-operations/direct/le-1024/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 32,
+        "sha256": "59e2ed1d58e0bf17b26ca9fe9463dd63bbc15133a0a6e38a658500ef6da42c0d",
+        "shard_id": "business-grounded-reconstruction-v1/business-operations/direct/le-1024/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 9,
+        "sha256": "cdb1d0902ec6851d24557cf4d12e279eda0d083dfc8cd319124f505c1d92f80b",
+        "shard_id": "business-grounded-reconstruction-v1/funding-capital/direct/1025-4096/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 191,
+        "sha256": "e8c13e088631775a8a342218b889ce504730677920a9fa647086d96fde9ff42e",
+        "shard_id": "business-grounded-reconstruction-v1/funding-capital/direct/1025-4096/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 13,
+        "sha256": "6d88aff651469389615b3f4fed372d9d4d83485bba29bda14689a6c208fa8447",
+        "shard_id": "business-grounded-reconstruction-v1/funding-capital/direct/1025-4096/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 4,
+        "sha256": "316b23ae538acd5719ef5789a76c4c12a2de418cf72f03dfe968db0022886980",
+        "shard_id": "business-grounded-reconstruction-v1/funding-capital/direct/le-1024/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 36,
+        "sha256": "4b622c86f937ec08c02a1e0cc5b2a835d5670fc327f6377f7ba55bae1f669998",
+        "shard_id": "business-grounded-reconstruction-v1/funding-capital/direct/le-1024/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 102,
+        "sha256": "729a76f42486fd4cdeff23e0fe8bdd1c7898040686d0ec60338b96609fbdf922",
+        "shard_id": "business-grounded-reconstruction-v1/growth-gtm/direct/1025-4096/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 1851,
+        "sha256": "514370dfd4ed7066a30752839b831580276a23c67506768665e541b1996139c0",
+        "shard_id": "business-grounded-reconstruction-v1/growth-gtm/direct/1025-4096/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 108,
+        "sha256": "397f5e0c902be637376fbca104e38ce444814547ab1c70ed6005783056224024",
+        "shard_id": "business-grounded-reconstruction-v1/growth-gtm/direct/1025-4096/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 58,
+        "sha256": "f3dd6ecf83f0c438e731343b3c4d036265a78d656affc2714bf79c810a83dfa6",
+        "shard_id": "business-grounded-reconstruction-v1/growth-gtm/direct/le-1024/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 990,
+        "sha256": "81f35aa27914a95dc20381292dce3f028daba43c353f9b8c63571f9cf10a44cb",
+        "shard_id": "business-grounded-reconstruction-v1/growth-gtm/direct/le-1024/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 55,
+        "sha256": "cbb16c9bca948a112476f1f0806e40f0a6dd96e588151ae1b800bccac34d06d1",
+        "shard_id": "business-grounded-reconstruction-v1/growth-gtm/direct/le-1024/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 3,
+        "sha256": "d5e84d9208b4510683c716f5dcdc1b5292a64addd81603fc2f8760fa64fa3bed",
+        "shard_id": "business-grounded-reconstruction-v1/investing-markets/direct/1025-4096/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 33,
+        "sha256": "c494b43f9260e6ff0926029d45aafde0fc641e8725305bf3a5abed3e82750f50",
+        "shard_id": "business-grounded-reconstruction-v1/investing-markets/direct/1025-4096/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 1,
+        "sha256": "00a8d951275d14bebc3c3d028bb9e46855f321dd42a8285e1b8069572d03ff74",
+        "shard_id": "business-grounded-reconstruction-v1/investing-markets/direct/1025-4096/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 2,
+        "sha256": "ebb1e7099a4524e63a50d0672d28d828c68351a1a868f17975f919710d7b1876",
+        "shard_id": "business-grounded-reconstruction-v1/investing-markets/direct/le-1024/test",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 15,
+        "sha256": "3f6aa8e56ef897c4a0b847d582182b57209924873e3839bf743eaac83f6cdd18",
+        "shard_id": "business-grounded-reconstruction-v1/investing-markets/direct/le-1024/train",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 1,
+        "sha256": "febcd6243e74401b16d68cb7b95dcfcf7cbddf4257b92daeeb2022c3aff271e8",
+        "shard_id": "business-grounded-reconstruction-v1/investing-markets/direct/le-1024/validation",
+        "shard_revision": "ac8266f6541ab2c413a4050a8243aca3bb072ff241db89dc71eb81e67ea379d4"
+      },
+      {
+        "records": 187,
+        "sha256": "6be353b0aa0eac13c8529ca27921954c4d6662ed724bfd157faf766537708469",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-code-generation/direct/1025-4096/test",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 1707,
+        "sha256": "0ea5d6a5a74bc186867657d0d672a745806a1625763d1569236a143d53661aba",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-code-generation/direct/1025-4096/train",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 141,
+        "sha256": "fefb1adafc4c6e96daef5b7bd69656eb74d101a29d144f0c8112ad90c172e9d9",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-code-generation/direct/1025-4096/validation",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 68,
+        "sha256": "9ddd8c54b4c28480c6bcec04e4dce63e0de5218f96561354146653e866c1402f",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-code-generation/direct/le-1024/test",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 1153,
+        "sha256": "600e6055967a0f87168bfee5f760d2ef2eef29be1aca4b4813ddbbfba50f2578",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-code-generation/direct/le-1024/train",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 51,
+        "sha256": "7dc7b8984ef55054e042bd7ea421ddda1588c2cb9fb2d96096878755726a1ef5",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-code-generation/direct/le-1024/validation",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 2,
+        "sha256": "9e02b6e5fe01d8758c4e28685cf9b861228f38a7c3995ed4c0a9dd15d657b615",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-knowledge/direct/1025-4096/test",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 330,
+        "sha256": "92d116345f0a4f0d12fab4096531d07970f7affa1936e21ce895d8b35c4ba620",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-knowledge/direct/1025-4096/train",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 45,
+        "sha256": "ad0ba5ae9dde0cbb65181389d89b9adec54e4e09a28bedae463a1fed732fcd98",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-knowledge/direct/1025-4096/validation",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 6,
+        "sha256": "d4868c8c8adf9fea835a7ac7f575edb71e3c6a880748ae640807d5d777ad240b",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-knowledge/direct/le-1024/test",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 232,
+        "sha256": "dffcd655187481c539e899c2d108d692ae7f7b2bd93100814ae53127143c3b89",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-knowledge/direct/le-1024/train",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 34,
+        "sha256": "7d04af48ba8fdb6992c3caf0ddf881614082cb7ec487a37bb676753a24bc806b",
+        "shard_id": "embedded-grounded-reconstruction-v1/embedded-knowledge/direct/le-1024/validation",
+        "shard_revision": "16ca2c4ccfb79c1f5a94baa47c684961d446c2de6ae95293f1ed80f2f520cb28"
+      },
+      {
+        "records": 1605,
+        "sha256": "fbee60575d68eecc2d26e136e9e4a04b496a6a5981a12f3724cb84867f317e53",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/definition-decode-le-1024/test/definition-decode",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 25077,
+        "sha256": "764bf4fbda5e1a7dbce03c3a1ec460300ac18ca0237be863aef036195493da19",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/definition-decode-le-1024/train/definition-decode",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 1496,
+        "sha256": "8fe7f4f1b140885e17cb106310947400ae3e1ea7d3c38d0527b58419efb088c7",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/definition-decode-le-1024/validation/definition-decode",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 1600,
+        "sha256": "acef31997d0d47ed447d316a26151c4ccb90868cb5631d73d8a19dddc0bbf1c0",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/encode-physical-100-le-1024/test/encode-physical-100",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 24955,
+        "sha256": "61381cf96ba1b9f624a66567510b5a2da9f2765b3481912048600d2442e7ace4",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/encode-physical-100-le-1024/train/encode-physical-100",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 1462,
+        "sha256": "69493b1bfbe1a1b3e13cbd8d5afa2092ba670902ea9a02522464b650023d34d6",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/encode-physical-100-le-1024/validation/encode-physical-100",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 1638,
+        "sha256": "444d4c7e7175330956c6899159dfab9c6f1500b324592b5e89aa84af6f68a31f",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/location-le-1024/test/location",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 25275,
+        "sha256": "bf154d5d247b77c6a8fb1f27414d09825ff555cc2492e7d2c65d0e0e93b31f35",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/location-le-1024/train/location",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 1487,
+        "sha256": "e937ac293e51d7da921887413281c26baeefb16302769ad6e8e6a66b6e07c6c9",
+        "shard_id": "embedded-source-experts-v1/embedded-can-diagnostics/direct/location-le-1024/validation/location",
+        "shard_revision": "dcaf520befa3b419d6ca556ebf15ff399bf71cad4f6594a20cc599ccebcde156"
+      },
+      {
+        "records": 246,
+        "sha256": "0fdded0a4162dbe32a34ee5fb5488a893c50c5a77f4562a3d020b3369b7cb2b9",
+        "shard_id": "qwen38-distillation-experts-v2/commonsense-logic/direct/short/test/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 4210,
+        "sha256": "2c58656fb8d42355e253a004821d33c2cc79781b4a4749d91c3cef8da007d7ed",
+        "shard_id": "qwen38-distillation-experts-v2/commonsense-logic/direct/short/train/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 250,
+        "sha256": "95bf4b4d41e8f62b140e5d264b2e7e83e014cd70324129b32bd60e6a83adc09d",
+        "shard_id": "qwen38-distillation-experts-v2/commonsense-logic/direct/short/validation/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 245,
+        "sha256": "663747e3cd5f137f48a64289036485316afe14ace8e735cab79233ec66f7caa3",
+        "shard_id": "qwen38-distillation-experts-v2/commonsense-logic/trace/short/test/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 4210,
+        "sha256": "0e791eb91a99b5af4ec5eed516baa066faae47f8ba78c28d031987055763be3e",
+        "shard_id": "qwen38-distillation-experts-v2/commonsense-logic/trace/short/train/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 250,
+        "sha256": "21b7773615622d8aaf1c9b070363e1b486c0e8d58c302333d0adf257499f093c",
+        "shard_id": "qwen38-distillation-experts-v2/commonsense-logic/trace/short/validation/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 14,
+        "sha256": "a1bfda72c6402a21670568e94a7ba7aee07e9bd02d6f32aff0617ad515b8ee50",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/direct/long/test/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 167,
+        "sha256": "4d12032101f18150657031093d1e0a6520298b3c3ff6d848278d619527d57b57",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/direct/long/train/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 10,
+        "sha256": "0c5224406ac3c157961881e14bd755f4b837ff32f3bbdb2e3020b7741a533b1e",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/direct/long/validation/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 302,
+        "sha256": "50bbf3454cd38eceb3d6382f3ffb06953ec09928dd6c150febab9503ab752d33",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/direct/short/test/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 5735,
+        "sha256": "e2150afd850aa292fa329fa8ee4fe011e58e469925a704b5e84ebf780e255dc7",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/direct/short/train/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 321,
+        "sha256": "b0278d7c752e31982a25d4d6148a1d663267f2cba3bf3bf3ca3ecec0662f9301",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/direct/short/validation/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 21,
+        "sha256": "45e2bc86e945657961c9a1643d0bd8a15f2e285deb1f22581ce9142b05a8cc31",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/trace/long/test/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 493,
+        "sha256": "6e8cbdfe40484b0bf96aaf5a4d4aa1409d5be7b7881c35e09e04b0eca52ac0c1",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/trace/long/train/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 24,
+        "sha256": "70ad783aef74c4514b2e6922a6e73d0ea5d951b27ec623e8fc158b51a0d870dc",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/trace/long/validation/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 246,
+        "sha256": "37453b5a73ea9be391e8929dcf60cd8d382a6d99a4f340ee60c6418a689fa32c",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/trace/short/test/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 4413,
+        "sha256": "908e105f984ff6ffed8a80c7266140b833a4144291a2d4c191402eb19680be1b",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/trace/short/train/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 247,
+        "sha256": "ae149743b28b6a7bc9b590b8e617bffe9e5e864902880e0564fed5e44e6fe00d",
+        "shard_id": "qwen38-distillation-experts-v2/formal-math/trace/short/validation/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 199,
+        "sha256": "8a790704d6f91c1abebfa6ddcfd7ccedde94e8115f14ce22b92b4b3fc8e4ee3a",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/direct/long/test/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 3448,
+        "sha256": "0e489fe29eacb17abc00395904061af45e738e6441428925caf2ceba92bc25fb",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/direct/long/train/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 199,
+        "sha256": "927f87779696d57dc2267b789325cad694fdcc1b7fc5edf5735b3b4a184fb9f7",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/direct/long/validation/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 485,
+        "sha256": "83733079e7440246f407c7c77e5230a858215ed3793bed0a7c0c753b357c08ba",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/direct/short/test/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 8697,
+        "sha256": "e603e028239d6c7686b3d8533702faea9470f76c06df8991c23c79e6cded6a74",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/direct/short/train/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 461,
+        "sha256": "e9b93ffbfc1cb1e99d951b959b8e80c7acca68b02aef3a413492c8b93a0df4bd",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/direct/short/validation/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 230,
+        "sha256": "79ea6f90ed0854f465a7c1f1e9e2bc2688398487e3c69aed68f3ce80244f407e",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/trace/long/test/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 4077,
+        "sha256": "da17b6178e679556e8528bee06f9367daf01fa0d4998ae7b18b047535de8b125",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/trace/long/train/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 235,
+        "sha256": "d15ef768133e94d42025257728c8324164335d7a86cc05d8681df70cac484a26",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/trace/long/validation/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 348,
+        "sha256": "5cf7ebb83c7289c9924f3a33a0efb0169b5ea27b5d7f005f2eb430e02feb9ea3",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/trace/short/test/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 5884,
+        "sha256": "5fb27e831c5e357f54bf79adfce59cd09fe65847dd511f8ff531d8d20cd8899e",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/trace/short/train/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 297,
+        "sha256": "19ca0ecea0a1281d9691fe808e98faa8339a2073ed191a3e33d0c9f9e129e9f8",
+        "shard_id": "qwen38-distillation-experts-v2/general-code-generation/trace/short/validation/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 6,
+        "sha256": "4fc22673b6615168a220d2bb489b9559e20c971362c3f06795b30d833c19c965",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/direct/long/train/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 512,
+        "sha256": "8b93c89e8993bcc4d962e90a2ce816b58913e85b36d29d51984f5fb27d55d197",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/direct/short/test/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 9039,
+        "sha256": "0b9a10ce65f6c63239ea656fac9b42dbc07cddf4a3e9e76963f22352d59e160c",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/direct/short/train/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 481,
+        "sha256": "949b88165b6959a610ede8319572f688daa8b28b0952a66fd58e000d785b7953",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/direct/short/validation/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 2,
+        "sha256": "a630268560340feb4bf969e8f2c65df2ef3cb284124698108cefcdcf7915eef2",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/trace/long/test/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 24,
+        "sha256": "54e1cc00c0d2c33f63829255521e7b56bbef83b2949220847cd64acd20f04680",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/trace/long/train/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 4,
+        "sha256": "f29c256f878b07698c287562c7046039053c898be37e7eea4ed88b683cf434b7",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/trace/long/validation/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 502,
+        "sha256": "559f336fde8f29d3832c6b138cdcf148e0c06805692c6ab5b890698f1c5053c7",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/trace/short/test/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 8870,
+        "sha256": "835eb4d28e645ffb38b5eeecaf00b388f3d1bad9ecf779cdaf80a9467c367d73",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/trace/short/train/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 473,
+        "sha256": "15136e58fc18e5b9681399cf27420731f7f1009cde0e94f1b3a3a46f53ce1446",
+        "shard_id": "qwen38-distillation-experts-v2/quantitative-math/trace/short/validation/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 369,
+        "sha256": "0f5cc90bc539cc8f8e94402b363d02875e96190c8a90edfb81b5f13536e7b3ad",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/direct/short/test/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 6259,
+        "sha256": "6d892984009d164f4c0f3ee0c610abf958b7860d83f4f2fdc140869440848134",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/direct/short/train/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 356,
+        "sha256": "1b30d65aee47fa48da9b3f61f9fff0be1fe10f7ff4a36fa6e1c0755ddd6099d9",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/direct/short/validation/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 4,
+        "sha256": "36e61fca5e58f6011e060c82aa914a28145939be03f1a3a0e7734ebe66e4c5b3",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/trace/long/train/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 369,
+        "sha256": "041870a0f99b288f7387717456ffa0e59a7f2ee98115e012a90b737de33e14bf",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/trace/short/test/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 6255,
+        "sha256": "8da215051938fe39528e05e1677294b6066a4a58e84c9d82991d604102314e56",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/trace/short/train/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 356,
+        "sha256": "03b7937c2150aecee0f065ae3da95ab1d462c47531a6c09f31c4e89915102ce6",
+        "shard_id": "qwen38-distillation-experts-v2/science-reasoning/trace/short/validation/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 32,
+        "sha256": "d988ca99377aeac496e6a2a56d2331f91eb809e63461ed0affac60ac80fc4ad3",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/direct/long/test/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 511,
+        "sha256": "8e21d89c4a1afdba7e731cdb59b094d11c3433e2f84cd012f11089163d36b434",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/direct/long/train/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 37,
+        "sha256": "1a0bfc011277e46ba073df00d152cb7ad364d37eb22505da8fdf8968725cb42c",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/direct/long/validation/direct-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 342,
+        "sha256": "3feaaf788af8dbcbe7c252e4c9b62d3816a6e79438dd459eba75f4c5c29c2169",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/direct/short/test/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 6024,
+        "sha256": "5f4443ee424b884fc380e6fbc839acccc614094f3b09a3bd40777c52b9e8a570",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/direct/short/train/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 335,
+        "sha256": "e93f761e6f392bc7d814d2969b21cc171af90a813fbe58492bcdeb0992cb775b",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/direct/short/validation/direct-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 11,
+        "sha256": "9c81845bdeeb4b2fdc5dcbaa87928d14dc9598e1bfade06b5fa5769c8cd08aa3",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/trace/long/test/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 156,
+        "sha256": "0d24335ef3e2863a6cfd8ee0612b4764181a9ba017a988a54414b5bdd82f25fc",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/trace/long/train/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 11,
+        "sha256": "62b4e5d70ed71a225b571e1288b692632aa5d52b228ff424dccfe43ab08f57c3",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/trace/long/validation/trace-long",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 111,
+        "sha256": "4ccd9974dd4d12eab82a3dc2cbed88141164bc8bcf5cf68aab6efe667bab6960",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/trace/short/test/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 1856,
+        "sha256": "410a8e6263a47ec81e409a73eaa532619b9ced920487e0d47db750ee3e020892",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/trace/short/train/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 93,
+        "sha256": "46e5f8bc3ba55cce3294c5f5a9d2e948da562ef0d00975904a01fcf141e686f9",
+        "shard_id": "qwen38-distillation-experts-v2/strict-instruction-following/trace/short/validation/trace-short",
+        "shard_revision": "4a754488ff91ae6fd1ee3adf872d878df109094aedad748feeaec0417b0ede7a"
+      },
+      {
+        "records": 36,
+        "sha256": "5df4251a0386b8b8d3c7955781bbeef19a2d1a74f123f3400b455e3114c01c3f",
+        "shard_id": "software-architecture-experts-v1/agentic-code-debugging/direct/le-1024/test",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 15864,
+        "sha256": "7d83459f5cb7f83e9ad03d787ef4a46d3339d732481f250924c99b90ff3dbd33",
+        "shard_id": "software-architecture-experts-v1/agentic-code-debugging/direct/le-1024/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 29,
+        "sha256": "bb9260b9eba11e6f8a6cb73fc7dab7cfea3a9c586acee2ff22af5819eead70ce",
+        "shard_id": "software-architecture-experts-v1/agentic-code-debugging/direct/le-1024/validation",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 1,
+        "sha256": "05836af28531e5050611c7c072ece635e7c2b70b4dccc8bd097d349ea6a0cf6e",
+        "shard_id": "software-architecture-experts-v1/frontend-visual-computing/direct/le-1024/test",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 1346,
+        "sha256": "d547f3920f6832bb8657e9d7790935f89929e5e2a30dcfbc953caa9b09ea4498",
+        "shard_id": "software-architecture-experts-v1/frontend-visual-computing/direct/le-1024/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 1,
+        "sha256": "ab324a013f51f7e70c2b4dddffcbffc042f39d4ec926193fd0aacf54a12a67bd",
+        "shard_id": "software-architecture-experts-v1/general-code-generation/direct/le-1024/test",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 275,
+        "sha256": "4a688e97dbd3619744414398687bd4c474ace4c7f390f66e54c03d90be4b6e39",
+        "shard_id": "software-architecture-experts-v1/general-code-generation/direct/le-1024/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 1,
+        "sha256": "ee88a1c3db969f323e777266d275e9026270f96613135aea6e4bc6d4bdf4e6bd",
+        "shard_id": "software-architecture-experts-v1/general-code-generation/direct/le-1024/validation",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 25,
+        "sha256": "bb89656be74ac761cb2fca85445750f6204f54135cdb0104c612541cf045978b",
+        "shard_id": "software-architecture-experts-v1/ml-data-reasoning/direct/le-1024/test",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 13205,
+        "sha256": "2003cf5359d3e48aa904659b4ad88cb6ba8833a52676209cf257013ca28294fa",
+        "shard_id": "software-architecture-experts-v1/ml-data-reasoning/direct/le-1024/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 32,
+        "sha256": "d4f07df095b5a33e80440a61c18a6a72931bee3a614fad4272f64b1623d59841",
+        "shard_id": "software-architecture-experts-v1/ml-data-reasoning/direct/le-1024/validation",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 729,
+        "sha256": "d10e98290e6d48845068495d6a8eb2e26a7c5ac6832e70064e76caf538241140",
+        "shard_id": "software-architecture-experts-v1/software-architecture-design/direct/le-1024/test",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 288355,
+        "sha256": "370de39496a14c1aa4e782adc677b55a84da1e09b9e9837fa06f0a89904134de",
+        "shard_id": "software-architecture-experts-v1/software-architecture-design/direct/le-1024/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 720,
+        "sha256": "ce6a06c433bddaea4b9173ee3932151ca3247b006b2dcf0e91f2678bb6bfa695",
+        "shard_id": "software-architecture-experts-v1/software-architecture-design/direct/le-1024/validation",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 2,
+        "sha256": "1fc775a7dd0c7bca288a97a059e03e80eb9aab603d6f6b6c2902be4c7a4b7ae8",
+        "shard_id": "software-architecture-experts-v1/systems-distributed-engineering/direct/1025-4096/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 309,
+        "sha256": "9d6320b0e94095eb77251259e52ea115a29f00dd5d697532a251f3200f1ffad6",
+        "shard_id": "software-architecture-experts-v1/systems-distributed-engineering/direct/le-1024/test",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 124570,
+        "sha256": "16cc971a153fb88103926bd003de552c20af99dd5a49db1d0cd036c8c1555e22",
+        "shard_id": "software-architecture-experts-v1/systems-distributed-engineering/direct/le-1024/train",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      },
+      {
+        "records": 323,
+        "sha256": "2024e89b32df6a5f7672ad434cec24ec2587191e44e4a6b8a020be5b39e15154",
+        "shard_id": "software-architecture-experts-v1/systems-distributed-engineering/direct/le-1024/validation",
+        "shard_revision": "0340bef7f4d25640eda0f1aabcbf84f130a27894b12e423ed8551eb8c60e0ab8"
+      }
+    ]
+  },
+  "split_precedence": [
+    "test",
+    "validation",
+    "train"
+  ]
+}

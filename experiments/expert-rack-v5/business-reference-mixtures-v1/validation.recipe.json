@@ -1,0 +1,207 @@
+{
+  "schema_version": "molor.business-reference-mixture-recipe.v1",
+  "recipe_id": "business-reference-validation-full-v1",
+  "revision": "1",
+  "usage": "evaluation",
+  "output_split": "validation",
+  "seed": "business-reference-validation-full-seed-v1",
+  "target_records": 435,
+  "shortfall_policy": "error",
+  "shards": [
+    {
+      "shard_id": "business-reference-business-core-validation-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-core",
+      "leaf_revision": "1",
+      "split": "validation",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-core\\validation.jsonl",
+      "sha256": "3ede2dc37e6d0bb393b2c47f5aba7c81f6636d7638718681796c31dc5ef8a249",
+      "record_count": 128,
+      "weight": 1.0,
+      "cap": null
+    },
+    {
+      "shard_id": "business-reference-business-finance-validation-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-finance",
+      "leaf_revision": "1",
+      "split": "validation",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-finance\\validation.jsonl",
+      "sha256": "498ad0d9428a6d5c1195e162cdb6807ffb78503c60aa4e1bfb346d021e302339",
+      "record_count": 14,
+      "weight": 1.0,
+      "cap": null
+    },
+    {
+      "shard_id": "business-reference-business-operations-validation-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-operations",
+      "leaf_revision": "1",
+      "split": "validation",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-operations\\validation.jsonl",
+      "sha256": "7f3b2d78cf689007a5d3a071691c9a50aabd74b3536e95f398fc9b0ac082ee72",
+      "record_count": 115,
+      "weight": 1.0,
+      "cap": null
+    },
+    {
+      "shard_id": "business-reference-funding-capital-validation-v1",
+      "shard_revision": "1",
+      "leaf_id": "funding-capital",
+      "leaf_revision": "1",
+      "split": "validation",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\funding-capital\\validation.jsonl",
+      "sha256": "ed603e3b4345f2fcb6976939e39d5be4892fcfb9a1e610f5f63be414d245202e",
+      "record_count": 13,
+      "weight": 1.0,
+      "cap": null
+    },
+    {
+      "shard_id": "business-reference-growth-gtm-validation-v1",
+      "shard_revision": "1",
+      "leaf_id": "growth-gtm",
+      "leaf_revision": "1",
+      "split": "validation",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\growth-gtm\\validation.jsonl",
+      "sha256": "37b864e74f5cd11c74c97f5136e864d8c7318de4db1b32cb0c182a47d63d5236",
+      "record_count": 163,
+      "weight": 1.0,
+      "cap": null
+    },
+    {
+      "shard_id": "business-reference-investing-markets-validation-v1",
+      "shard_revision": "1",
+      "leaf_id": "investing-markets",
+      "leaf_revision": "1",
+      "split": "validation",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\investing-markets\\validation.jsonl",
+      "sha256": "cc35e11fe6a2caa7f8e37b843f13e20373dcbbbc764a1030c892c5195d6044c0",
+      "record_count": 2,
+      "weight": 1.0,
+      "cap": null
+    }
+  ],
+  "leakage_guard_shards": [
+    {
+      "shard_id": "business-reference-business-core-test-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-core",
+      "leaf_revision": "1",
+      "split": "test",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-core\\test.jsonl",
+      "sha256": "69cda1fbb7e30f6595c50b23bfc1eceb674d2a3915886f50009391d30386d934",
+      "record_count": 103
+    },
+    {
+      "shard_id": "business-reference-business-core-train-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-core",
+      "leaf_revision": "1",
+      "split": "train",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-core\\train.jsonl",
+      "sha256": "f16f93554e01f5c044e39e08f903b56944992641a52632c44017f4b56c95e2a7",
+      "record_count": 2095
+    },
+    {
+      "shard_id": "business-reference-business-finance-test-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-finance",
+      "leaf_revision": "1",
+      "split": "test",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-finance\\test.jsonl",
+      "sha256": "675cf72a13bfed2208032672902b7e5e5f6ed790be98d0b60704010d7fa07b95",
+      "record_count": 15
+    },
+    {
+      "shard_id": "business-reference-business-finance-train-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-finance",
+      "leaf_revision": "1",
+      "split": "train",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-finance\\train.jsonl",
+      "sha256": "d0298112e2568aed0452202eedbcebc032470cc7115ff3aed17ff22963ed8ed7",
+      "record_count": 294
+    },
+    {
+      "shard_id": "business-reference-business-operations-test-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-operations",
+      "leaf_revision": "1",
+      "split": "test",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-operations\\test.jsonl",
+      "sha256": "d07841ed6f34916b3b0190af5b163e32768224ada6b6fd2146dc3c6d0bf801ab",
+      "record_count": 68
+    },
+    {
+      "shard_id": "business-reference-business-operations-train-v1",
+      "shard_revision": "1",
+      "leaf_id": "business-operations",
+      "leaf_revision": "1",
+      "split": "train",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\business-operations\\train.jsonl",
+      "sha256": "c478910f6cdc3dde0f5b5f91ee0c67ba050bab6871a401fc4807a91e531c57d9",
+      "record_count": 1627
+    },
+    {
+      "shard_id": "business-reference-funding-capital-test-v1",
+      "shard_revision": "1",
+      "leaf_id": "funding-capital",
+      "leaf_revision": "1",
+      "split": "test",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\funding-capital\\test.jsonl",
+      "sha256": "b76e62cec417a497de34e6143062da2c6c7700877f95f12b58c50b84b9a63cd3",
+      "record_count": 13
+    },
+    {
+      "shard_id": "business-reference-funding-capital-train-v1",
+      "shard_revision": "1",
+      "leaf_id": "funding-capital",
+      "leaf_revision": "1",
+      "split": "train",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\funding-capital\\train.jsonl",
+      "sha256": "950b692576e641838b51336b0507a28de86612efe8eddf04d9bc282c54a936bb",
+      "record_count": 227
+    },
+    {
+      "shard_id": "business-reference-growth-gtm-test-v1",
+      "shard_revision": "1",
+      "leaf_id": "growth-gtm",
+      "leaf_revision": "1",
+      "split": "test",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\growth-gtm\\test.jsonl",
+      "sha256": "130e0e403de489c7a74a6dcd364ae65f77da073a7dbc0015d85814873089c8d6",
+      "record_count": 160
+    },
+    {
+      "shard_id": "business-reference-growth-gtm-train-v1",
+      "shard_revision": "1",
+      "leaf_id": "growth-gtm",
+      "leaf_revision": "1",
+      "split": "train",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\growth-gtm\\train.jsonl",
+      "sha256": "e597591dfbf5711f107f1535d2e833289551e7a09eadc6fcb90cffb894f9ceef",
+      "record_count": 2841
+    },
+    {
+      "shard_id": "business-reference-investing-markets-test-v1",
+      "shard_revision": "1",
+      "leaf_id": "investing-markets",
+      "leaf_revision": "1",
+      "split": "test",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\investing-markets\\test.jsonl",
+      "sha256": "b6b289a29f4f3befb081542f5f0d299c64b14916a06901c08506761a2c276ac0",
+      "record_count": 5
+    },
+    {
+      "shard_id": "business-reference-investing-markets-train-v1",
+      "shard_revision": "1",
+      "leaf_id": "investing-markets",
+      "leaf_revision": "1",
+      "split": "train",
+      "path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-v1\\documents\\investing-markets\\train.jsonl",
+      "sha256": "70c0099132c419d28526b221851572ee40bce2e2d406709aebcf32b4cb220503",
+      "record_count": 48
+    }
+  ],
+  "content_sha256": "f192d9724ca8f30e2d4c3be8ce60d57b5d3b2bec0197a913a8e60a6d6e376f21"
+}

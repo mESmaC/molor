@@ -1,0 +1,96 @@
+{
+  "canonical_training_materialization_ids": [
+    "broad-distillation-experts-v1",
+    "business-finance-supervision-v1",
+    "business-grounded-reconstruction-v1",
+    "embedded-grounded-reconstruction-v1",
+    "embedded-knowledge-v1",
+    "embedded-source-experts-v1",
+    "local-embedded-code-v1",
+    "qwen38-distillation-experts-v2",
+    "software-architecture-experts-v1",
+    "taskmaster-coffee-api-v2",
+    "terminal-cli-v1",
+    "verified-embedded-code-v3"
+  ],
+  "contains_corpus_content": false,
+  "content_sha256": "3e0efd6b22d3217d6f53c0413ee46a63b1842cc4029e83eb5543ac6a10fa61d6",
+  "contracts": {
+    "external_assignment": {
+      "artifact_id": "molor-nonblocked-source-expert-matrix",
+      "artifact_name": "source-expert-assignment-v1.json",
+      "file_sha256": "947e8c1ea480aa1a2368db3af2abebee8b78014df4b9c72ddd9a52262981b7d8",
+      "revision": "1",
+      "semantic_sha256": "089ca9526bd3ac605359547d0cf1e7912ff91d1b5afb847cb5356518a30b1f75"
+    },
+    "external_coverage": {
+      "artifact_id": "molor-local-corpora",
+      "artifact_name": "corpus-coverage-v1.json",
+      "file_sha256": "0713a93d06d48354b9b087f59ef15636cec2c808d8afe23c559c8d6679f4854c",
+      "revision": "1",
+      "semantic_sha256": "757aee73abfb42ebf56678bfe79f223687985c6c657e41e088e76cbbae084d6d"
+    },
+    "repo_local_inventory": {
+      "artifact_id": "first-real-experts-repo-local-v1",
+      "artifact_name": "repo-local-corpus-inventory-v1.json",
+      "file_sha256": "575626ebb6626b641b663302d0c068a81aa948c42ea3397bcad5351d601ff559",
+      "revision": "1",
+      "semantic_sha256": "1479a4fb60a2386627fea8b6ccb13ae82ac826603fbd6b8e347d120a358e29ae"
+    },
+    "taxonomy": {
+      "artifact_id": "molor-inference-rack",
+      "artifact_name": "expert-taxonomy-v1.json",
+      "file_sha256": "ff1833a13d82b406dce7197fd6a9d9e54d1f76a13f9996e15bdf83db167a355f",
+      "revision": "1",
+      "semantic_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1"
+    }
+  },
+  "explicit_sft_gap_leaves": [],
+  "leaf_readiness": {
+    "sft-ready": 25
+  },
+  "sampling_contract": {
+    "alias_role_is_trainable": false,
+    "cross_source_dedup_required_before_mixture_sampling": true,
+    "derived_supervision_views": [
+      {
+        "independent_chat_sampling": false,
+        "raw_materialization_id": "embedded-source-experts-v1",
+        "raw_modality": "reference_cpt",
+        "reason": "raw references remain accounted while the single supervised view uses verbatim token-bounded reconstruction",
+        "supervised_materialization_id": "embedded-grounded-reconstruction-v1",
+        "target_leaves": [
+          "embedded-code-generation",
+          "embedded-knowledge"
+        ]
+      }
+    ],
+    "evaluation_role_is_trainable": false,
+    "quarantine_role_is_trainable": false,
+    "unit": "unique-canonical-materialization-id"
+  },
+  "schema_version": "molor.combined-data-plane-receipt.v1",
+  "source_accounting": {
+    "external_root_entries": 43,
+    "registration_roles": {
+      "alias": 22,
+      "eval": 22,
+      "quarantine": 8,
+      "reference": 4,
+      "sft": 16
+    },
+    "repo_local_data_artifacts": 128,
+    "repo_local_source_containers": 4,
+    "source_registrations": 53
+  },
+  "status": {
+    "file_sha256": "b405eec89c3850f453a7bfc94af7277e98042a24c8abaa331db33804a436a0cd",
+    "revision": "1",
+    "semantic_sha256": "d22e79130946b6cf294207acae9393906bde329e3570fc2a69694ba51458b5f2",
+    "status_id": "molor-expert-rack-combined-data-plane"
+  },
+  "taxonomy_leaves": 25,
+  "zero_double_counted_canonical_materializations": true,
+  "zero_double_counted_derived_chat_views": true,
+  "zero_silent_safe_source_omissions": true
+}

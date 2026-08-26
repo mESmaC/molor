@@ -1,0 +1,71 @@
+{
+  "schema_version": "molor.business-finance-length-tier-receipt.v1",
+  "policy": {
+    "leaf_isolation": true,
+    "split_isolation": true,
+    "template_mode_isolation": true,
+    "truncation": false,
+    "test_is_evaluation_only": true
+  },
+  "inputs": {
+    "supervision_manifest": {
+      "path": "../datasets/processed/molor-business-finance-supervision-v1-r2/manifest.json",
+      "sha256": "f1d7f1236e270819a725a70086bde4732e5f1c9434e0577be048a57552877b6e"
+    },
+    "supervision_sha256sums": {
+      "path": "../datasets/processed/molor-business-finance-supervision-v1-r2/sha256sums.txt",
+      "sha256": "f92e64573eff151261a9ce40bddcf5d1a9dd1ab3f29975a5d5b6817d3aa85d91"
+    },
+    "length_tier_builder": {
+      "path": "src/molor/experimental/length_tier_shards.py",
+      "sha256": "e0760b3770abfce5be6f8536b79cbe6b3a315d0e7df9e8363f833cd6353acfd9"
+    },
+    "tokenizer": {
+      "path": "models/Qwen3-0.6B",
+      "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+      "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+    },
+    "plans": [
+      {"path": "business-finance-length-plans/business-finance-test.json", "sha256": "5014c767097e858b86cbb052fdb2b541b4d142516937f4c1cd2341ea70d4798f"},
+      {"path": "business-finance-length-plans/business-finance-train.json", "sha256": "fa606957a1139f531dd61409df2b6187c5fd4770117347e87453a9fd5e8c9cde"},
+      {"path": "business-finance-length-plans/business-finance-validation.json", "sha256": "0f6d3b63e16543c2bcc7b451064c07b399429857eb61d2f8d2a826f2c3740a41"},
+      {"path": "business-finance-length-plans/investing-markets-test.json", "sha256": "46f3968ffb618038cd9333ce98e4597c222c6ed276883d369a06628e3b84d9e1"},
+      {"path": "business-finance-length-plans/investing-markets-train.json", "sha256": "e5694dc1859607de586506d90b7f412779d77fb18b4fa53739ad25da2a827e7c"},
+      {"path": "business-finance-length-plans/investing-markets-validation.json", "sha256": "5644e6125f8a4295fa98eeeb58c4142a59bc985c722a3cf1a6492ce05c09fb31"}
+    ]
+  },
+  "accounting": {
+    "source_canonical_records": 24760,
+    "direct_emissions": 24760,
+    "trace_emissions": 16482,
+    "input_emissions": 41242,
+    "accepted_emissions": 41242,
+    "quarantined_emissions": 0,
+    "by_split": {
+      "train": 32220,
+      "validation": 4252,
+      "test": 4770
+    },
+    "by_mode_and_tier": {
+      "direct": {"le-1024": 23132, "1025-4096": 1628, "4097-8192": 0, "8193-32768": 0, "deferred-gt32768": 0},
+      "trace": {"le-1024": 15628, "1025-4096": 854, "4097-8192": 0, "8193-32768": 0, "deferred-gt32768": 0},
+      "tool": {"le-1024": 0, "1025-4096": 0, "4097-8192": 0, "8193-32768": 0, "deferred-gt32768": 0}
+    },
+    "fully_reconciled": true,
+    "zero_silent_drops": true
+  },
+  "outputs": [
+    {"path": "business-finance/test/manifest.json", "sha256": "370923e831cdbdcb9996413014a25e2bc8b5c46251156b2e66d0020afe83cb00"},
+    {"path": "business-finance/train/manifest.json", "sha256": "f40ef54b461e86c7c7474eb9c2e6560d6626a755333655f92bfecfa9b180a5c8"},
+    {"path": "business-finance/validation/manifest.json", "sha256": "97f78d935a322c405e446756544e52a8d9d6e92f43814ad23e9fb2e0329b22c6"},
+    {"path": "investing-markets/test/manifest.json", "sha256": "c5bec5594ad5bddeb0942118328a7ef0cfff05efeab27be5e6bbc47f366d8277"},
+    {"path": "investing-markets/train/manifest.json", "sha256": "c99337579a83d03cf5f3722dad3656142c7607fa5db251a6fc97feefca1af23a"},
+    {"path": "investing-markets/validation/manifest.json", "sha256": "1c0d5268765060209210d2c811ac88b401a31a5dbac48d1eae6ba95465dc2262"}
+  ],
+  "reproducibility_check": {
+    "independent_rebuild_files": 102,
+    "byte_identical_files": 102,
+    "mismatches": 0,
+    "passed": true
+  }
+}

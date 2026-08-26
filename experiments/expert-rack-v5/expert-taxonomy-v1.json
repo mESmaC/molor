@@ -1,0 +1,276 @@
+{
+  "schema_version": "molor.expert-taxonomy.v1",
+  "taxonomy_id": "molor-inference-rack",
+  "revision": "1",
+  "base_contract": {
+    "model_id": "models/qwen3-0.6b",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "leaf_training_origin": "independent_untouched_base"
+  },
+  "routing_contract": {
+    "root_routes": [
+      "base/null",
+      "agentic-tools",
+      "business",
+      "embedded-systems",
+      "reasoning",
+      "software"
+    ],
+    "decision_path": "root_family_then_conditional_leaf",
+    "joint_probability": "p_family_times_p_leaf_given_family",
+    "posterior_order": "strict_descending_probability",
+    "blend_weight_semantics": "separate_normalized_adapter_contribution",
+    "maximum_active_adapters": 2,
+    "fallback_route": "base/null",
+    "calibration_metrics": [
+      "brier",
+      "ece",
+      "expert_quality_regret",
+      "selective_risk"
+    ]
+  },
+  "families": [
+    {
+      "family_id": "agentic-tools",
+      "description": "Instruction execution, planning, terminal work, and structured tool orchestration.",
+      "leaves": [
+        {
+          "leaf_id": "agentic-planning",
+          "description": "Multi-step planning, decomposition, state tracking, and execution recovery.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        },
+        {
+          "leaf_id": "strict-instruction-following",
+          "description": "Constraint-heavy response formatting and precise instruction satisfaction.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["qwen38-distillation-experts-v2"]
+        },
+        {
+          "leaf_id": "terminal-cli",
+          "description": "Repository-aware command-line and developer-agent workflows.",
+          "status": "candidate_existing",
+          "allowed_streams": ["direct", "tool"],
+          "source_labels": ["terminal-cli-v1"]
+        },
+        {
+          "leaf_id": "tool-use-execution",
+          "description": "Structured calls, observations, state transitions, and tool-result synthesis.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "tool", "trace"],
+          "source_labels": ["broad-corpus-v1", "taskmaster-coffee-api-v2"]
+        }
+      ]
+    },
+    {
+      "family_id": "business",
+      "description": "Startup building, operating, finance, growth, capital, and market analysis.",
+      "leaves": [
+        {
+          "leaf_id": "business-core",
+          "description": "Business models, startup formation, strategy, management, and administration.",
+          "status": "reference_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["business-reference-v1"]
+        },
+        {
+          "leaf_id": "business-finance",
+          "description": "Accounting, statements, cash flow, unit economics, budgeting, and planning.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["business-finance-supervision-v1", "financial-analysis-verified-v1"]
+        },
+        {
+          "leaf_id": "business-operations",
+          "description": "Process, staffing, capacity, procurement, supply chain, and operating controls.",
+          "status": "reference_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["business-reference-v1"]
+        },
+        {
+          "leaf_id": "funding-capital",
+          "description": "Bootstrapping, debt, grants, venture finance, cap tables, and transactions.",
+          "status": "reference_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["business-reference-v1"]
+        },
+        {
+          "leaf_id": "growth-gtm",
+          "description": "Discovery, positioning, pricing, marketing, sales, retention, and success.",
+          "status": "reference_ready",
+          "allowed_streams": ["direct", "tool", "trace"],
+          "source_labels": ["business-reference-v1", "customer-gtm-v1"]
+        },
+        {
+          "leaf_id": "investing-markets",
+          "description": "Financial-report analysis, valuation, securities, portfolios, markets, and risk.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["business-finance-supervision-v1"]
+        }
+      ]
+    },
+    {
+      "family_id": "embedded-systems",
+      "description": "Grounded embedded knowledge, CAN diagnosis, and firmware implementation.",
+      "leaves": [
+        {
+          "leaf_id": "embedded-can-diagnostics",
+          "description": "CAN signal interpretation, diagnostics, verified queries, and grounded procedures.",
+          "status": "candidate_existing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["ocb-can-verified-v1"]
+        },
+        {
+          "leaf_id": "embedded-code-generation",
+          "description": "Firmware implementation grounded in the local embedded repository family.",
+          "status": "candidate_existing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["verified-embedded-code-v1"]
+        },
+        {
+          "leaf_id": "embedded-knowledge",
+          "description": "Architecture, interfaces, hardware concepts, and repository-grounded recall.",
+          "status": "candidate_existing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["embedded-knowledge-v1"]
+        }
+      ]
+    },
+    {
+      "family_id": "reasoning",
+      "description": "Granular mathematical, scientific, commonsense, and general expert reasoning.",
+      "leaves": [
+        {
+          "leaf_id": "commonsense-logic",
+          "description": "Everyday causal, logical, and constraint reasoning.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["qwen38-distillation-experts-v2"]
+        },
+        {
+          "leaf_id": "formal-math",
+          "description": "Proof-like, symbolic, algebraic, and formal mathematical reasoning.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1", "qwen38-distillation-experts-v2"]
+        },
+        {
+          "leaf_id": "general-expert-reasoning",
+          "description": "Cross-domain analysis that does not belong to a narrower specialist.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        },
+        {
+          "leaf_id": "quantitative-math",
+          "description": "Numerical word problems, calculation, and applied quantitative reasoning.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1", "qwen38-distillation-experts-v2"]
+        },
+        {
+          "leaf_id": "science-reasoning",
+          "description": "Scientific knowledge and evidence-based problem solving.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["qwen38-distillation-experts-v2"]
+        },
+        {
+          "leaf_id": "scientific-engineering-reasoning",
+          "description": "Engineering calculations, mechanisms, tradeoffs, and technical synthesis.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        }
+      ]
+    },
+    {
+      "family_id": "software",
+      "description": "Implementation, debugging, architecture, systems, interface, and ML/data work.",
+      "leaves": [
+        {
+          "leaf_id": "agentic-code-debugging",
+          "description": "Repository-aware debugging, repair, verification, and iterative coding work.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "tool", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        },
+        {
+          "leaf_id": "frontend-visual-computing",
+          "description": "Frontend, interface, graphics, layout, and visual-computing implementation.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "tool", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        },
+        {
+          "leaf_id": "general-code-generation",
+          "description": "General programming implementation across languages and common libraries.",
+          "status": "supervised_ready",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1", "qwen38-distillation-experts-v2"]
+        },
+        {
+          "leaf_id": "ml-data-reasoning",
+          "description": "Machine learning, data analysis, data pipelines, and statistical implementation.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "tool", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        },
+        {
+          "leaf_id": "software-architecture-design",
+          "description": "Architecture, API boundaries, design tradeoffs, and maintainability.",
+          "status": "candidate_existing",
+          "allowed_streams": ["direct", "trace"],
+          "source_labels": ["broad-corpus-v1", "software-architecture-v1"]
+        },
+        {
+          "leaf_id": "systems-distributed-engineering",
+          "description": "Operating systems, networking, concurrency, storage, and distributed systems.",
+          "status": "materializing",
+          "allowed_streams": ["direct", "tool", "trace"],
+          "source_labels": ["broad-corpus-v1"]
+        }
+      ]
+    }
+  ],
+  "aliases": {
+    "agentic_code_debugging": "agentic-code-debugging",
+    "agentic_planning": "agentic-planning",
+    "business_finance": "business-finance",
+    "business_operations": "business-operations",
+    "commonsense_logic": "commonsense-logic",
+    "embedded-knowledge-v1": "embedded-knowledge",
+    "financial-analysis-verified": "business-finance",
+    "formal_math": "formal-math",
+    "frontend_visual_computing": "frontend-visual-computing",
+    "funding_capital": "funding-capital",
+    "general_code_generation": "general-code-generation",
+    "general_expert_reasoning": "general-expert-reasoning",
+    "growth_gtm": "growth-gtm",
+    "ml_data_reasoning": "ml-data-reasoning",
+    "ocb-can-verified-v1": "embedded-can-diagnostics",
+    "quantitative_math": "quantitative-math",
+    "science_reasoning": "science-reasoning",
+    "scientific_engineering_reasoning": "scientific-engineering-reasoning",
+    "software-architecture-v1": "software-architecture-design",
+    "software_architecture_design": "software-architecture-design",
+    "strict_instruction_following": "strict-instruction-following",
+    "systems_distributed_engineering": "systems-distributed-engineering",
+    "tool_use_execution": "tool-use-execution",
+    "verified-embedded-code-v1": "embedded-code-generation"
+  },
+  "superseded_composite_labels": {
+    "mathematical_formal_reasoning": ["formal-math", "quantitative-math"]
+  },
+  "external_opaque_import": {
+    "family_id": "external-private",
+    "registration_status": "pending_aggregate_validation",
+    "row_access": "prohibited",
+    "required_artifacts": ["aggregate-report", "leaf-manifest", "sha256sums"]
+  },
+  "content_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1"
+}

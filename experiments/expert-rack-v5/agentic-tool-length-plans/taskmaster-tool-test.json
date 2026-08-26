@@ -1,0 +1,16 @@
+{
+  "schema_version": "molor.length-tier-plan.v1",
+  "tokenizer": {
+    "path": "../../../models/Qwen3-0.6B",
+    "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+  },
+  "inputs": [
+    {
+      "path": "../../first-real-experts/data/taskmaster-coffee-api-v2.test.jsonl",
+      "sha256": "23812f280bff6eeb2495e655d0a15dc1887abae1be09cc03de5fdeeb3dfc7574",
+      "record_count": 1430,
+      "template_mode": "direct"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "code_corpus": {
+    "train": {
+      "bytes": 46524148,
+      "path": "C:\\Users\\engin\\Documents\\datasets\\prepared\\code-corpus\\train.jsonl",
+      "records": 3797,
+      "sha256": "32823198cbd2dd7b7bc1a91f6c1ebc5ca617fef370b1c3e571610ff901e1cfb4"
+    },
+    "validation": {
+      "bytes": 424517,
+      "path": "C:\\Users\\engin\\Documents\\datasets\\prepared\\code-corpus\\validation.jsonl",
+      "records": 44,
+      "sha256": "c2ac0b3e424b1b8fece176c3caa975e74644b1e811f79d6e5887f9339c4cc717"
+    }
+  },
+  "ocb_corpus": {
+    "train": {
+      "bytes": 101968819,
+      "path": "C:\\Users\\engin\\Documents\\datasets\\prepared\\ocb-can-signal-db\\train.jsonl",
+      "records": 187733,
+      "sha256": "7ab09fcd4428479c56f949b66a562e64e1952e16ee32f598bea48a2a79f209a6"
+    },
+    "validation": {
+      "bytes": 1029382,
+      "path": "C:\\Users\\engin\\Documents\\datasets\\prepared\\ocb-can-signal-db\\validation.jsonl",
+      "records": 1904,
+      "sha256": "75395c26664db3d382b745595f4d84e75ac7cabd888c279e0d64f74450dc8a28"
+    }
+  },
+  "ocb_database": {
+    "canonical_sha256": "3fedeff0af8017b98d9acd48720ce9c4f9a5e12372cd4d4c635d15981ab5329a",
+    "path": "C:\\Users\\engin\\Documents\\datasets\\ocb_ocb.db",
+    "rows": 105042,
+    "view": "training_corpus"
+  },
+  "prepared_manifest": {
+    "bytes": 11712,
+    "path": "C:\\Users\\engin\\Documents\\datasets\\prepared\\manifest.json",
+    "sha256": "9831e725cc56ee7aceb3b802029f217bdfd31865f837a053fc3a8740ac0d6e9b"
+  },
+  "prior_reports": [
+    {
+      "bytes": 21079,
+      "name": "terminal-cli.build-report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\terminal-cli.build-report.json",
+      "relationship": "complementary_prior_sft_for_terminal_cli",
+      "sha256": "786dd47605601da117b25926d24818eaa133615a30754730c8e3b94377e6dafc"
+    },
+    {
+      "bytes": 10881,
+      "name": "embedded-knowledge-v1.report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\embedded-knowledge-v1.report.json",
+      "relationship": "complementary_prior_grounded_sft",
+      "sha256": "fa4ee385724517678d22ad107e39aa9b5bb694bc4c844d9ed71dcdb0b942c7b7"
+    },
+    {
+      "bytes": 6290,
+      "name": "local-embedded-code.report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\local-embedded-code.report.json",
+      "relationship": "complementary_prior_code_completion_sft",
+      "sha256": "a487c394e37098f4ba492cedb628420ea8f669cac993036279e24d08ea5f0bc5"
+    },
+    {
+      "bytes": 6942,
+      "name": "trusted-can.report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\trusted-can.report.json",
+      "relationship": "complementary_prior_high_trust_can_sft",
+      "sha256": "04bb31d6b39487236e639578804367ed44b3397dc55388ac6287abce1d6cf53e"
+    },
+    {
+      "bytes": 14050,
+      "name": "grounded-can.report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\grounded-can.report.json",
+      "relationship": "complementary_prior_grounded_can_sft",
+      "sha256": "2215d0227184f13da1eef579798cf3828f87b6af79217bad87d52e3f4a97bdcf"
+    },
+    {
+      "bytes": 112272,
+      "name": "grounded-can-curriculum.report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\grounded-can-curriculum.report.json",
+      "relationship": "complementary_prior_can_curriculum",
+      "sha256": "f9e1798561470eb801dfc4cc3a6e75a495b6257e1adc9e836fd85a0d12d2e2ae"
+    },
+    {
+      "bytes": 6706,
+      "name": "ocb-can-verified.report.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\ocb-can-verified.report.json",
+      "relationship": "complementary_prior_verified_can_sft",
+      "sha256": "dc831696fb535bf686482b586c53a429d8a98c54bf12009af7ac8cf3404d0594"
+    },
+    {
+      "bytes": 1493,
+      "name": "verified-embedded-code-v1.manifest.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\verified-embedded-code-v1.manifest.json",
+      "relationship": "complementary_prior_verified_code_sft",
+      "sha256": "6a4277ede155e891b45b83b5642810c165f793df1c5e70dfc9158c1380fdbe89"
+    },
+    {
+      "bytes": 2202,
+      "name": "verified-embedded-code-v2.manifest.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\verified-embedded-code-v2.manifest.json",
+      "relationship": "complementary_prior_verified_code_sft",
+      "sha256": "33b5e17cde2c85fd28bc45182b3c09f8dd3147f6cea317fb5fcecf2840da8c89"
+    },
+    {
+      "bytes": 4274,
+      "name": "verified-embedded-code-v3.manifest.json",
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\first-real-experts\\data\\verified-embedded-code-v3.manifest.json",
+      "relationship": "complementary_prior_verified_code_sft",
+      "sha256": "8fd0dfcdc876ae405c30510ff967f1738300161e4b9fdc2497baf10ef1d586ce"
+    }
+  ],
+  "schema_version": "molor.embedded-source-plan.v1",
+  "split_policy": {
+    "evaluation_fraction": 0.05,
+    "max_eval_group_share": 0.5,
+    "seed": "molor.embedded-source.v1"
+  },
+  "tokenizer": {
+    "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "path": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-0.6B"
+  }
+}

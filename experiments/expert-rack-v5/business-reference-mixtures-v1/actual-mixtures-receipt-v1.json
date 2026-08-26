@@ -1,0 +1,40 @@
+{
+  "schema_version": "molor.business-reference-mixtures-actual-receipt.v1",
+  "output_root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-mixtures-v1",
+  "independent_verification_root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-reference-mixtures-v1-verify",
+  "independent_files_compared": 15,
+  "independent_mismatch_count": 0,
+  "splits": {
+    "test": {
+      "documents_jsonl_sha256": "88877d4bd668904dd3509abaa4e965804ed746a45f8bc73cb04eb0cf918bd223",
+      "emitted_records": 364,
+      "guard_records_scanned": 7567,
+      "recipe_content_sha256": "afd7594eda77ac608ac32399e84adba66a279332a19c99cdc34385f66dac4d85",
+      "report_sha256": "45d8e5d0638ff889324fffb981a1cf85af06b48bd9a5e3ad800f217b5562b314",
+      "semantic_run_sha256": "ad16ea254b0c0d8439070d273fc29ef2bbdc87c49e3e239cfa6f375f06dfbe56",
+      "sha256sums_sha256": "2ac687bf04d14e9c3edddad848476b49f53547dcf4a69ac1dba52951042eb9c6",
+      "zero_silent_drops": true
+    },
+    "train": {
+      "documents_jsonl_sha256": "0be54fedee942490ec5e26437fab89971878ee7c36d94d8f0deadf14ed39d061",
+      "emitted_records": 7132,
+      "guard_records_scanned": 799,
+      "recipe_content_sha256": "51bfc5e772430fedda179e430f22cffc831db1f5d8811d4a700c1c1d1f84399d",
+      "report_sha256": "bdf3ec1a2742749c2be2636fcecaa5c9887a5c4134db02301ec59f6d5bbad397",
+      "semantic_run_sha256": "18e5255594e8533b1d2e2c2eec53170559d264b1334d90d2fe49091ef8defde9",
+      "sha256sums_sha256": "c1f5852c456ba3af1ac936cf7861cc499855706267e95abf891f12fbf1e1f72e",
+      "zero_silent_drops": true
+    },
+    "validation": {
+      "documents_jsonl_sha256": "2033f473540f7eca4999a86fd480eddbb1beea1e1a3d638c73e6ce53f1485700",
+      "emitted_records": 435,
+      "guard_records_scanned": 7496,
+      "recipe_content_sha256": "f192d9724ca8f30e2d4c3be8ce60d57b5d3b2bec0197a913a8e60a6d6e376f21",
+      "report_sha256": "e204880f416a4c9faae3dc36c8436d09910105879000d6e37dacbe36b35eaf54",
+      "semantic_run_sha256": "e2e36705d37731950ae270430b6e76fcb827ba3c84ee6148f07393f760b77f89",
+      "sha256sums_sha256": "07896c3a64563e5e3a7f5b79d16e28d03c44db4a958401d2088c3f13758ae2c2",
+      "zero_silent_drops": true
+    }
+  },
+  "content_sha256": "296d5f16a162609c97380843f753a81a99eafd4052ffd9b0e76b95ddd773c36a"
+}

@@ -2,6 +2,17 @@
   "schema_version": "molor.training-source-manifest.v1",
   "generated_at": "2026-08-22",
   "purpose": "Large-scale source, generation, and evaluation plan for the model's dominant business family: business building and administration, marketing and revenue, investing and capital markets, funding and deal finance, accounting, and operations.",
+  "private_training_policy": {
+    "scope": "private_model_only",
+    "license_or_rights_metadata_is_an_admission_gate": false,
+    "policy": "Retain license, rights, attribution, and upstream provenance as record metadata, but do not exclude, downsample, or reassign technically usable material because of those fields.",
+    "still_excluded": [
+      "the designated cyber corpus, which is processed only through the user's opaque external workflow",
+      "benchmark test prompts and oracle answers reserved for reported evaluation",
+      "secrets, credentials, personal data, and private customer or employee material",
+      "malformed, empty, irreparably truncated, or technically incompatible records"
+    ]
+  },
   "architecture_decision": {
     "strategy": "shared business foundation with independently trainable specialist LoRA experts",
     "experts": [
@@ -97,8 +108,8 @@
   ],
   "acquisition_rules": [
     "Pin an immutable source revision or dated snapshot and retain URL, retrieval date, revision date, license, attribution, jurisdiction, and third-party-content status per record.",
-    "Partition permissive, ShareAlike, noncommercial, research-only, and unclear-rights material so licenses cannot be accidentally flattened into one dataset label.",
-    "Exclude photographs, logos, testimonials, embedded videos, customer names, and contributed case studies unless their rights are separately verified.",
+    "Record permissive, ShareAlike, noncommercial, research-only, restricted, and unclear-rights metadata without using it as an admission, sampling, or expert-routing criterion for this private model.",
+    "Extract usable text and structured fields from acquired material while excluding binary presentation assets that add no model-training value.",
     "Remove personal and confidential data from filings, contracts, dialogues, business plans, and transactional data; preserve only fields expressly released for reuse.",
     "Split longitudinal and company data by company, seller, campaign, geography, and time before producing derived examples.",
     "Hold benchmark test sets and oracle answers out of training.",
@@ -154,6 +165,30 @@
       "reuse_url": "https://www.sba.gov/about-sba/open-government/about-the-sba-gov-website/",
       "license_note": "SBA states that federal information on SBA.gov is public domain and may be copied and distributed. Exclude contributed or licensed materials, photographs, marks, and identified third-party assets.",
       "use": "Covers planning, startup costs, market research, structures, registration, finance, accounting, hiring, tax, compliance, marketing, federal contracting, exporting, cybersecurity, growth, sale, and closure."
+    },
+    {
+      "id": "yc-startup-library",
+      "priority": 1,
+      "posture": "ingest_public_startup_library_with_dated_page_snapshots_and_source_labels",
+      "target_experts": ["business-core", "growth-gtm", "funding-capital", "business-operations"],
+      "kind": "startup_operating_guidance_and_founder_lessons",
+      "url": "https://www.ycombinator.com/library",
+      "sitemap_url": "https://www.ycombinator.com/library/sitemap.xml",
+      "size_note": "The 2026-08-25 snapshot discovered 482 article URLs and acquired 480 pages; two stale sitemap URLs returned HTTP 404 and remain explicitly accounted for.",
+      "license_note": "Rights and terms are retained as provenance and are not used as an admission or sampling gate for this private model.",
+      "use": "Founder formation, customer discovery, product-market fit, pricing, growth, hiring, management, fundraising, cap tables, boards, and scaling. Separate durable operating principles from anecdotes and time-sensitive claims."
+    },
+    {
+      "id": "onet-business-work-activities",
+      "priority": 1,
+      "posture": "ingest_pinned_json_database_and_generate_role_task_process_cases",
+      "target_experts": ["business-core", "growth-gtm", "business-operations"],
+      "kind": "official_occupational_tasks_skills_and_work_activities_database",
+      "url": "https://www.onetcenter.org/database.html",
+      "download_url": "https://www.onetcenter.org/dl_files/database/db_31_0_json.zip",
+      "size_note": "O*NET 31.0 contains occupation, task, skill, work-activity, work-context, and relationship tables; the pinned JSON archive is 21,750,472 bytes.",
+      "license_note": "License metadata is retained as provenance and is not used as an admission or sampling gate for this private model.",
+      "use": "Ground staffing plans, role design, process ownership, competency maps, hiring requirements, operating procedures, and cross-functional workflow cases in real occupational task data."
     },
     {
       "id": "govuk-business-content-api",
@@ -494,11 +529,12 @@
     {
       "id": "finqa",
       "priority": 1,
-      "posture": "reuse_task_schema_and_annotations_after_remapping_context_to_official_sec_sources_preserve_tests",
+      "posture": "ingest_pinned_private_training_snapshot_and_preserve_upstream_dev_test_partitions",
       "target_experts": ["business-finance", "investing-markets"],
       "kind": "financial_numerical_reasoning_dataset",
       "url": "https://github.com/czyssrs/FinQA",
-      "license_note": "MIT repository release. Reacquire underlying filing contexts from official EDGAR using accession provenance instead of assuming a repository license independently clears every copied report artifact.",
+      "acquired_commit": "0f16e2867befa6840783e58be38c9efb9229d742",
+      "license_note": "Rights metadata is retained only as provenance and is not an admission or sampling gate for this private model.",
       "use": "Financial-report table and text questions with gold supporting facts, executable reasoning programs, and numerical answers. Keep public and private challenge tests out of training."
     },
     {
@@ -508,8 +544,9 @@
       "target_experts": ["business-finance", "investing-markets"],
       "kind": "financial_table_text_question_answering_dataset",
       "url": "https://github.com/NExTplusplus/TAT-QA",
+      "acquired_commit": "870accc41953dcde885aabeb963d94aabdc0fbc3",
       "size_note": "16,552 questions over 2,757 hybrid table-and-text contexts from financial reports.",
-      "license_note": "Dataset is CC BY 4.0; code repository also identifies an MIT license for code.",
+      "license_note": "Rights metadata is retained only as provenance and is not an admission or sampling gate for this private model.",
       "use": "Evidence extraction and arithmetic over financial reports; preserve document provenance and test holdouts."
     },
     {
@@ -1108,18 +1145,12 @@
     "held-out simulation demand regimes, recession or supply shocks, and constraint combinations"
   ],
   "do_not_ingest": [
-    "OpenStax business textbooks without written permission: current OpenStax terms prohibit generative-AI training even where older downloadable editions display Creative Commons notices",
-    "FASB Codification, IFRS standards, Harvard Business Review, Harvard case studies, commercial case libraries, paid textbooks, consulting reports, and proprietary frameworks without explicit training rights",
-    "YC, HubSpot, Shopify, SCORE, accelerator, founder, guru, side-hustle, and make-money content without a compatible license",
-    "Crunchbase, PitchBook, CB Insights, Gartner, paid market research, proprietary analyst reports, and scraped company databases",
-    "real CRM exports, sales calls, email histories, accounting exports, pitch decks, board materials, business plans, customer lists, applicant data, or employee documents without explicit rights and privacy clearance",
-    "Reddit, forums, Stack Exchange, blogs, reviews, testimonials, advertisements, earnings-call transcripts, and news as a blanket scrape",
-    "random Kaggle or Hugging Face reuploads whose dataset-card license does not establish upstream rights",
+    "the designated cyber corpus and its processed rows; only the user's opaque external workflow may inspect or transform it",
+    "real CRM exports, sales calls, email histories, accounting exports, pitch decks, board materials, business plans, customer lists, applicant data, or employee documents unless secrets and personal or confidential information have been removed",
+    "blanket web or forum scrapes without stable source identity, deduplication, privacy screening, and source-family split controls",
     "unfiltered third-party EDGAR mirrors or filing archives that discard accession, form, section, accepted-at timestamp, amendments, rights notices, or provenance; acquire from official SEC archives instead",
-    "FRED and ALFRED as bulk training sources: current service/API terms restrict AI/ML training and individual series carry heterogeneous third-party rights; fetch government-origin series directly from the Federal Reserve Board, BLS, BEA, Treasury, FDIC, Census, or other originating agency",
-    "World Bank firm-level microdata outside its research license or any dataset whose terms prohibit redistribution",
-    "noncommercial or ShareAlike material in a permissive-only output partition",
     "millions of raw transaction, click, advertising, or financial rows converted directly into language-model tokens without a task, calculation, outcome, or verifier",
+    "benchmark test prompts, private challenge sets, and oracle answers whose scores will be reported",
     "business advice that omits jurisdiction, date, assumptions, downside, or uncertainty when those facts materially affect the answer"
   ],
   "initial_acquisition_order": [

@@ -1,0 +1,203 @@
+{
+  "aggregate_validation": {
+    "accepted_argument_forms": {
+      "json_object_calls": 2045,
+      "strict_json_encoded_object_string_calls": 2467,
+      "total_calls": 4512
+    },
+    "dispositions": {
+      "accepted_pre_assistant_truncated_observation_window": 216,
+      "accepted_standard": 18596,
+      "quarantined": 0,
+      "rejected": 0
+    },
+    "failure_categories": {
+      "blank_record": 0,
+      "duplicate_orphan_tool_call_id": 0,
+      "duplicate_tool_call_id": 0,
+      "idless_call_result_mismatch": 0,
+      "invalid_chat_contract": 0,
+      "invalid_json": 0,
+      "missing_tool_call_id": 0,
+      "mixed_tool_call_id_mode": 0,
+      "orphan_observation_window_not_closed": 0,
+      "orphan_tool_result": 0,
+      "reused_tool_call_id": 0,
+      "tool_result_count_mismatch": 0,
+      "unknown_or_duplicate_tool_call_id": 0
+    },
+    "optional_field_forms_observed": {
+      "explicit_empty_tool_calls": 0,
+      "explicit_null_call_id": 0,
+      "explicit_null_tool_call_id": 0
+    },
+    "roundtrip_mismatches": 0,
+    "rows_declared": 18812,
+    "rows_scanned": 18812,
+    "rows_valid": 18812,
+    "shards": 24,
+    "zero_silent_drops": true
+  },
+  "audit_id": "molor-native-structured-tool-training-v1",
+  "audited_descriptor_set": {
+    "canonical_order": [
+      "shard_id"
+    ],
+    "descriptor_fields": [
+      "shard_id",
+      "path",
+      "sha256",
+      "record_count",
+      "semantic_stream",
+      "recipe_stream",
+      "template_mode"
+    ],
+    "descriptor_set_sha256": "3b4402d3f1b3bf67d7b963a28cb152dcffab3214ab0a24957dccc48c4f06bd41",
+    "fingerprint_algorithm": "molor.identity.fingerprint_json(list[projected_descriptor])",
+    "fingerprint_source": "shard-registry.json.chat_shards",
+    "rows": 18812,
+    "selector": "source_id equals broad-distillation-experts-v1 and semantic_stream equals tool",
+    "shards": 24,
+    "source_id": "broad-distillation-experts-v1",
+    "source_manifest_pins": [
+      {
+        "bytes": 68100,
+        "path": "C:/Users/engin/Documents/datasets/broad-distillation-experts-v1/mixture-manifest.json",
+        "sha256": "27c2d511e5877a9ba44e4b17ec001fa606530d66cbaf8ba142acabb093657eb3"
+      },
+      {
+        "bytes": 10469174,
+        "path": "C:/Users/engin/Documents/datasets/broad-distillation-experts-v1/quality-manifest.json",
+        "sha256": "ae545ae0095a519b8d7291a080565eaeccc762ec71209c43480a101c1e471ed2"
+      },
+      {
+        "bytes": 26366,
+        "path": "C:/Users/engin/Documents/datasets/broad-distillation-experts-v1/sha256sums.txt",
+        "sha256": "71f149cdba2fe425e4180de9034962680c8bb132d1f91801c2703668a43d2d7c"
+      }
+    ],
+    "source_revision": "fca91d1cfc4fb33390682e0fbfac4ed6c038bf6d1e53a09014882917f2adfa97"
+  },
+  "content_sha256": "3b3c493bb9518b05f84e8a02f6feb821665ee038549b149755c2ce6b2450378f",
+  "implementation": {
+    "files": [
+      {
+        "path": "src/molor/training/data.py",
+        "sha256": "e1a2cba24207e88beff515ad84e4255703bfc6d055cabea1e13ffcd7a493bbdd"
+      },
+      {
+        "path": "src/molor/experimental/corpus_mixtures.py",
+        "sha256": "1d4a8706058c26a96043427c6e2a2f9086fd720d601b1727e3ec5e0f724d30c4"
+      },
+      {
+        "path": "src/molor/training/__init__.py",
+        "sha256": "62966e192b1af9d90143e7237f188233e84f5c3cd1e3c36ca284564272fd67a2"
+      }
+    ],
+    "test_files": [
+      {
+        "path": "tests/test_training_data.py",
+        "sha256": "678b648df4bb1855c92aa8ea637e29703e1edd9717386328735ff1a77d0bacd9"
+      },
+      {
+        "path": "tests/test_corpus_mixtures.py",
+        "sha256": "cfd0bee589145a7d8edbcd550334062c80b7e8f67130e9e3132918f96f116278"
+      }
+    ]
+  },
+  "qwen3_prefix_validation": {
+    "direct_enable_thinking_false_rows": 8547,
+    "final_answer_targets": 17852,
+    "final_tool_call_targets": 960,
+    "maximum_full_tokens": 32509,
+    "minimum_target_tokens": 6,
+    "nonempty_final_targets": 18812,
+    "prefix_consistent_rows": 18812,
+    "prefix_mismatches": 0,
+    "template_errors": 0,
+    "tokenizer_files": [
+      {
+        "path": "models/Qwen3-0.6B/tokenizer_config.json",
+        "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      {
+        "path": "models/Qwen3-0.6B/tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      }
+    ],
+    "trace_enable_thinking_true_rows": 10265
+  },
+  "revision": "1",
+  "schema_version": "molor.structured-tool-audit-receipt.v1",
+  "registry_compatibility": {
+    "compatibility_key": "audited_descriptor_set.descriptor_set_sha256",
+    "final_registry_file_or_content_hash_pinned": false,
+    "final_registry_may_differ_outside_audited_descriptor_set": true
+  },
+  "scope": {
+    "out_of_scope_corpus_rows_accessed": 0,
+    "source_id": "broad-distillation-experts-v1",
+    "source_selection": "chat_shards where semantic_stream equals tool"
+  },
+  "streams": {
+    "tool_direct": {
+      "rows": 8547,
+      "shards": 12,
+      "template_mode": "tool-direct-v1"
+    },
+    "tool_trace": {
+      "rows": 10265,
+      "shards": 12,
+      "template_mode": "tool-trace-v1"
+    }
+  },
+  "strict_contract": {
+    "assistant_only_masking": {
+      "final_answer_or_tool_call_target_unmasked": true,
+      "generation_prefix_and_prior_tool_trace_masked": true
+    },
+    "call_result_linkage": {
+      "call_ids_unique_across_trace": true,
+      "id_bearing_results_match_one_pending_call": true,
+      "idless_calls_and_results_balance_positionally": true,
+      "intermediate_calls_fully_resolved": true
+    },
+    "json": {
+      "blank_records_rejected": true,
+      "duplicate_keys_rejected": true,
+      "non_finite_numbers_rejected": true,
+      "non_object_message_coercion": false,
+      "unicode_scalar_values_required": true
+    },
+    "pre_assistant_truncated_observation_window": {
+      "admitted": true,
+      "description": "one contiguous initial tool-result block before the first assistant message",
+      "duplicate_non_null_result_ids_rejected": true,
+      "must_close_with_assistant": true
+    },
+    "schema_preservation": {
+      "empty_array_presence": true,
+      "null_presence": true,
+      "object_versus_encoded_string_arguments": true
+    }
+  },
+  "training_performed": false,
+  "verification": {
+    "compileall": "pass",
+    "focused_pytest": {
+      "passed": 33,
+      "paths": [
+        "tests/test_training_data.py",
+        "tests/test_corpus_mixtures.py",
+        "tests/test_training_recipe.py"
+      ]
+    },
+    "registry_synthetic_pytest": {
+      "deselected": 1,
+      "passed": 3,
+      "path": "tests/test_expert_mixture_registry.py"
+    },
+    "ruff_check": "pass",
+    "ruff_format_check": "pass"
+  }
+}

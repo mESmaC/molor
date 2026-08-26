@@ -1,0 +1,135 @@
+{
+  "accounting": {
+    "admission_receipts": 2,
+    "chat_shards": 364,
+    "fully_reconciled": true,
+    "gap_leaves": 0,
+    "manifest_output_dispositions": 554,
+    "ready_leaves": 25,
+    "reference_shards": 33,
+    "source_manifests": 28,
+    "zero_silent_drops": true
+  },
+  "builders": [
+    {
+      "bytes": 1826,
+      "path": "C:\\Users\\engin\\Documents\\molor\\experiments\\expert-rack-v5\\build_expert_mixture_registry.py",
+      "sha256": "c65d74495c16b25640d6fd0df2555a1851940feb81ddb7dbdef1b4c2ec2661f2"
+    },
+    {
+      "bytes": 107037,
+      "path": "C:\\Users\\engin\\Documents\\molor\\src\\molor\\experimental\\expert_mixture_registry.py",
+      "sha256": "85a3606a4a9de408a180b1f7dcf2144f0a73059275c14eba98a4154b5900bb15"
+    }
+  ],
+  "bundle_id": "molor-expert-rack-v5-chat-mixtures-v1",
+  "content_sha256": "b7e51c68792e2de23d399894179a03b0379f6d5bae136a497864df56a7654b3f",
+  "recipes": {
+    "aggregate_sha256": "5920779d34403cff6c29f19b935a9ea0ac8376d3fa6719fc10504c6e2de36e96",
+    "count": 258
+  },
+  "registry": {
+    "content_sha256": "8aa8ab1d800598ae471cabd83611e856d3ed856a18cbe849fd4b31ec69da56f0",
+    "path": "shard-registry.json",
+    "sha256": "72632c9dc2a5cc33fccd5828b01c1ecbaa7d242eff6edd9e6930cb1a13583387"
+  },
+  "revision": "1",
+  "router_examples": {
+    "content_sha256": "45a7a78274955744711481adb6829172758e5e225a296208c5a7ff2000d0a3dc",
+    "dataset_root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-hierarchical-router-examples-v1",
+    "manifest_path": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-hierarchical-router-examples-v1\\router-examples-v1.manifest.json",
+    "manifest_sha256": "6de97a7cc291421bda8875e525f185e2848304e34a4722c7e515934d4adff02a",
+    "records": {
+      "test": 8120,
+      "train": 77079,
+      "validation": 8119
+    },
+    "registry_manifest_copy_path": "router-examples-v1.manifest.json",
+    "route_balance": {
+      "test": {
+        "agentic-code-debugging": 368,
+        "agentic-planning": 52,
+        "base/null": 130,
+        "business-core": 31,
+        "business-finance": 512,
+        "business-operations": 45,
+        "commonsense-logic": 246,
+        "embedded-can-diagnostics": 512,
+        "embedded-code-generation": 255,
+        "embedded-knowledge": 8,
+        "formal-math": 512,
+        "frontend-visual-computing": 444,
+        "funding-capital": 10,
+        "general-code-generation": 512,
+        "general-expert-reasoning": 512,
+        "growth-gtm": 81,
+        "investing-markets": 512,
+        "ml-data-reasoning": 145,
+        "quantitative-math": 512,
+        "science-reasoning": 512,
+        "scientific-engineering-reasoning": 161,
+        "software-architecture-design": 512,
+        "strict-instruction-following": 512,
+        "systems-distributed-engineering": 512,
+        "tool-use-execution": 512
+      },
+      "train": {
+        "agentic-code-debugging": 4096,
+        "agentic-planning": 837,
+        "base/null": 930,
+        "business-core": 705,
+        "business-finance": 4096,
+        "business-operations": 935,
+        "commonsense-logic": 4096,
+        "embedded-can-diagnostics": 4096,
+        "embedded-code-generation": 2860,
+        "embedded-knowledge": 562,
+        "formal-math": 4096,
+        "frontend-visual-computing": 4096,
+        "funding-capital": 117,
+        "general-code-generation": 4096,
+        "general-expert-reasoning": 4096,
+        "growth-gtm": 1343,
+        "investing-markets": 4096,
+        "ml-data-reasoning": 4096,
+        "quantitative-math": 4096,
+        "science-reasoning": 4096,
+        "scientific-engineering-reasoning": 2714,
+        "software-architecture-design": 4096,
+        "strict-instruction-following": 4096,
+        "systems-distributed-engineering": 4096,
+        "terminal-cli": 540,
+        "tool-use-execution": 4096
+      },
+      "validation": {
+        "agentic-code-debugging": 298,
+        "agentic-planning": 53,
+        "base/null": 130,
+        "business-core": 39,
+        "business-finance": 512,
+        "business-operations": 57,
+        "commonsense-logic": 250,
+        "embedded-can-diagnostics": 512,
+        "embedded-code-generation": 192,
+        "embedded-knowledge": 79,
+        "formal-math": 512,
+        "frontend-visual-computing": 422,
+        "funding-capital": 8,
+        "general-code-generation": 512,
+        "general-expert-reasoning": 512,
+        "growth-gtm": 88,
+        "investing-markets": 512,
+        "ml-data-reasoning": 139,
+        "quantitative-math": 512,
+        "science-reasoning": 512,
+        "scientific-engineering-reasoning": 160,
+        "software-architecture-design": 512,
+        "strict-instruction-following": 512,
+        "systems-distributed-engineering": 512,
+        "terminal-cli": 60,
+        "tool-use-execution": 512
+      }
+    }
+  },
+  "schema_version": "molor.expert-chat-recipe-receipt.v1"
+}

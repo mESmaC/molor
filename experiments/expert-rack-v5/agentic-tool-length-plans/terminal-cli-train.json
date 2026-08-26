@@ -1,0 +1,16 @@
+{
+  "schema_version": "molor.length-tier-plan.v1",
+  "tokenizer": {
+    "path": "../../../models/Qwen3-0.6B",
+    "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+  },
+  "inputs": [
+    {
+      "path": "../../first-real-experts/data/terminal-cli.jsonl",
+      "sha256": "25255afec88d5071501416099db3b74f67698769dd159123415a7c84e8c6ec39",
+      "record_count": 540,
+      "template_mode": "direct"
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+{
+  "schema_version": "molor.corpus-coverage-ledger.v1",
+  "ledger_id": "molor-local-corpora",
+  "revision": "1",
+  "dataset_root_label": "datasets",
+  "entries": [
+    {
+      "path": "aevit-base",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw local repository; canonical text lineage is the prepared code corpus."
+    },
+    {
+      "path": "AEVIT-Ecosystem-Programming-Documentation",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw local documentation repository assigned to embedded implementation and knowledge."
+    },
+    {
+      "path": "aevit-lcd-manifest",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw local display manifest repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit-m4-app",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw M4 firmware repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit2-app",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw embedded application repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit2-bsp-repo",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw board-support repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit2-can-fd-interceptor",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw CAN-FD repository assigned to embedded CAN, code, and architecture grounding."
+    },
+    {
+      "path": "aevit3-app",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw embedded application repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3-bsp",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw board-support repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3-bsp-repo",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Alternate raw board-support repository retained as lineage; exact duplicates resolve in preparation."
+    },
+    {
+      "path": "aevit3-bsp-scfw",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw system-controller firmware repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3-m4-app",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw M4 repository retained as lineage; cross-repository duplicates are explicitly accounted."
+    },
+    {
+      "path": "aevit3_arb",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw arbitration firmware repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3_can_tool",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw CAN tooling repository assigned to CAN diagnosis and embedded implementation."
+    },
+    {
+      "path": "aevit3_control",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw control firmware repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3_drive",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw drive firmware repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3_interceptor",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw interceptor repository represented by the prepared code corpus."
+    },
+    {
+      "path": "aevit3_lcd_common",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge", "frontend-visual-computing"],
+      "note": "Raw display code assigned to embedded and visual-computing grounding."
+    },
+    {
+      "path": "aevit3_vehicle",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw vehicle firmware repository represented by the prepared code corpus."
+    },
+    {
+      "path": "AIC",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw local implementation repository represented by the prepared code corpus."
+    },
+    {
+      "path": "broad-distillation-experts-v1",
+      "kind": "directory",
+      "disposition": "derived-container",
+      "canonical_dataset_id": "broad-distillation-experts-v1",
+      "target_leaves": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "formal-math",
+        "frontend-visual-computing",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "tool-use-execution"
+      ],
+      "note": "Canonical granular materialization of the three broad distillation source families."
+    },
+    {
+      "path": "business-sources-v1",
+      "kind": "directory",
+      "disposition": "reference-source",
+      "canonical_dataset_id": "business-sources-v1",
+      "target_leaves": ["business-core", "business-finance", "business-operations", "funding-capital", "growth-gtm", "investing-markets"],
+      "note": "Pinned business snapshot plus upstream-partitioned finance supervision sources."
+    },
+    {
+      "path": "claude_mythos_distilled_25k",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "broad-distillation-pool-v1",
+      "target_leaves": ["agentic-planning", "formal-math", "general-code-generation", "general-expert-reasoning", "ml-data-reasoning", "quantitative-math", "science-reasoning", "scientific-engineering-reasoning"],
+      "note": "Raw lineage; category-first prepared materialization guards excluded metadata categories before message access."
+    },
+    {
+      "path": "common",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw shared firmware code represented by the prepared code corpus."
+    },
+    {
+      "path": "Complete-FABLE.5-traces-2M",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "broad-distillation-pool-v1",
+      "target_leaves": ["agentic-code-debugging", "agentic-planning", "formal-math", "frontend-visual-computing", "general-code-generation", "general-expert-reasoning", "ml-data-reasoning", "quantitative-math", "science-reasoning", "scientific-engineering-reasoning", "software-architecture-design", "strict-instruction-following", "systems-distributed-engineering", "tool-use-execution"],
+      "note": "Raw multi-schema lineage canonicalized through the category-first broad materializer."
+    },
+    {
+      "path": "control",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw control repository represented by the prepared code corpus."
+    },
+    {
+      "path": "display_qt_app",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-code-generation", "embedded-knowledge", "frontend-visual-computing"],
+      "note": "Raw Qt display application assigned to embedded and frontend visual implementation."
+    },
+    {
+      "path": "drive",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw drive repository represented by the prepared code corpus."
+    },
+    {
+      "path": "Fable-5-Max-Reasoning-Filtered-250x",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "fable-max-long-trace-auxiliary-v1",
+      "target_leaves": ["formal-math", "general-expert-reasoning", "quantitative-math", "science-reasoning"],
+      "note": "Explicit long-trace auxiliary archive; withheld from inference SFT until final assistant answers exist."
+    },
+    {
+      "path": "fable-5-premium",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "broad-distillation-pool-v1",
+      "target_leaves": ["agentic-code-debugging", "general-expert-reasoning", "tool-use-execution"],
+      "note": "Canonical logical representation is openai_chat Parquet; alternate formats are lineage aliases."
+    },
+    {
+      "path": "obd-can-mod",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw OBD/CAN repository assigned to CAN diagnosis and embedded implementation."
+    },
+    {
+      "path": "ocb",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw OCB repository provides code lineage; structured signal data is tracked separately."
+    },
+    {
+      "path": "ocb_ocb.db",
+      "kind": "file",
+      "disposition": "source-database",
+      "canonical_dataset_id": "ocb-can-signal-db-v1",
+      "target_leaves": ["embedded-can-diagnostics"],
+      "note": "Canonical SQLite source for gold and silver CAN signal rows and verified questions."
+    },
+    {
+      "path": "ocb_ocb.db-shm",
+      "kind": "file",
+      "disposition": "source-sidecar",
+      "canonical_dataset_id": "ocb-can-signal-db-v1",
+      "target_leaves": ["embedded-can-diagnostics"],
+      "note": "SQLite shared-memory sidecar retained with the canonical database lineage."
+    },
+    {
+      "path": "ocb_ocb.db-wal",
+      "kind": "file",
+      "disposition": "source-sidecar",
+      "canonical_dataset_id": "ocb-can-signal-db-v1",
+      "target_leaves": ["embedded-can-diagnostics"],
+      "note": "SQLite write-ahead-log sidecar retained with the canonical database lineage."
+    },
+    {
+      "path": "prepare_code_and_db.py",
+      "kind": "file",
+      "disposition": "preparation-tooling",
+      "canonical_dataset_id": "dataset-preparation-tooling-v1",
+      "target_leaves": [],
+      "note": "Preparation implementation, not a training corpus."
+    },
+    {
+      "path": "prepare_datasets.py",
+      "kind": "file",
+      "disposition": "preparation-tooling",
+      "canonical_dataset_id": "dataset-preparation-tooling-v1",
+      "target_leaves": [],
+      "note": "Preparation implementation, not a training corpus."
+    },
+    {
+      "path": "prepare_repos.py",
+      "kind": "file",
+      "disposition": "preparation-tooling",
+      "canonical_dataset_id": "dataset-preparation-tooling-v1",
+      "target_leaves": [],
+      "note": "Preparation implementation, not a training corpus."
+    },
+    {
+      "path": "prepared",
+      "kind": "directory",
+      "disposition": "canonical-container",
+      "canonical_dataset_id": "prepared-canonical-container-v1",
+      "target_leaves": [],
+      "note": "Canonical prepared derivatives; child manifests provide row-level lineage and are not double-counted as raw sources."
+    },
+    {
+      "path": "processed",
+      "kind": "directory",
+      "disposition": "derived-container",
+      "canonical_dataset_id": "processed-derived-container-v1",
+      "target_leaves": [],
+      "note": "Versioned materialized outputs and opaque imports; not counted again as independent source corpora."
+    },
+    {
+      "path": "qwen3.8-max-distillation-50k",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "qwen38-distillation-experts-v2",
+      "target_leaves": ["commonsense-logic", "formal-math", "general-code-generation", "quantitative-math", "science-reasoning", "strict-instruction-following"],
+      "note": "Pinned teacher distillation source materialized into six direct/trace and short/long leaves."
+    },
+    {
+      "path": "relay",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "local-embedded-code-pool-v1",
+      "target_leaves": ["embedded-can-diagnostics", "embedded-code-generation", "embedded-knowledge"],
+      "note": "Raw relay repository represented by the prepared code corpus."
+    },
+    {
+      "path": "Software-Architecture",
+      "kind": "directory",
+      "disposition": "raw-source",
+      "canonical_dataset_id": "software-architecture-experts-v1",
+      "target_leaves": [
+        "agentic-code-debugging",
+        "frontend-visual-computing",
+        "general-code-generation",
+        "ml-data-reasoning",
+        "software-architecture-design",
+        "systems-distributed-engineering"
+      ],
+      "note": "The full prepared instruction source is leaf-stratified across six warranted software domains."
+    }
+  ],
+  "content_sha256": "757aee73abfb42ebf56678bfe79f223687985c6c657e41e088e76cbbae084d6d"
+}

@@ -1,0 +1,105 @@
+{
+  "accounting": {
+    "emitted_physical_records": 193478,
+    "non_emitted_physical_records": 0,
+    "physical_input_records": 193478,
+    "zero_silent_drops": true
+  },
+  "canonical_output": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-source-experts-v1",
+  "checksums": {
+    "manifest_sha256": "672d621eaf7c3ad74a2aefcae810c7ce5927714bd3d32835ac5f176ddc1fe389",
+    "sha256sums_sha256": "80c837ffc1c91b3a0e20b10d68aff3a5c61f2e7aa5d780c95e60ed1d833e5897"
+  },
+  "inputs": {
+    "builder_sha256": "512e8489da2b2bbc5140cabcd31523569130a2bb8c28e4215998067deeec3600",
+    "ocb_training_view_canonical_sha256": "3fedeff0af8017b98d9acd48720ce9c4f9a5e12372cd4d4c635d15981ab5329a",
+    "plan_sha256": "02c5ee1c9b9ec387f396bde6c378faa8ecfa2f1b7a3d28a1f9cb9a90bf91dba4",
+    "qwen_tokenizer_aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c"
+  },
+  "leakage": {
+    "code_repository_group_overlap": 0,
+    "contextual_prompt_family_overlap": 0,
+    "exact_normalized_prompt_overlap": 0,
+    "exact_reference_content_overlap": 0,
+    "exact_sft_message_overlap": 0,
+    "ocb_signal_id_overlap": 0,
+    "ocb_vehicle_family_group_overlap": 0
+  },
+  "reference_by_leaf_and_split": {
+    "embedded-can-diagnostics": {
+      "test": 5226,
+      "train": 95427,
+      "validation": 5073
+    },
+    "embedded-code-generation": {
+      "test": 135,
+      "train": 1993,
+      "validation": 129
+    },
+    "embedded-knowledge": {
+      "test": 8,
+      "train": 437,
+      "validation": 47
+    },
+    "frontend-visual-computing": {
+      "test": 47,
+      "train": 197,
+      "validation": 4
+    },
+    "terminal-cli": {
+      "test": 5,
+      "train": 145,
+      "validation": 10
+    }
+  },
+  "schema_version": "molor.embedded-source-build-receipt.v1",
+  "sft": {
+    "by_template_family_and_split": {
+      "definition_decode": {
+        "test": 1605,
+        "train": 25077,
+        "validation": 1496
+      },
+      "encode_physical_100": {
+        "test": 1600,
+        "train": 24955,
+        "validation": 1462
+      },
+      "location": {
+        "test": 1638,
+        "train": 25275,
+        "validation": 1487
+      }
+    },
+    "independently_weightable_template_family_shards": true,
+    "leaf": "embedded-can-diagnostics",
+    "mode": "direct",
+    "qwen_length_tiers": {
+      "test": {
+        "le-1024": 4843
+      },
+      "train": {
+        "le-1024": 75307
+      },
+      "validation": {
+        "le-1024": 4445
+      }
+    },
+    "records": 84595,
+    "template_families": {
+      "definition_decode": 28178,
+      "encode_physical_100": 28017,
+      "location": 28400
+    }
+  },
+  "superseded_recoverable_outputs": [
+    "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-source-experts-v1-hash-split-superseded",
+    "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-source-experts-v1-unsharded-sft-superseded"
+  ],
+  "verification": {
+    "checksum_entries_verified": 122,
+    "fully_verified": true,
+    "output_files_verified": 121,
+    "sft_rows_retokenized": 84595
+  }
+}

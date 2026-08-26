@@ -1,0 +1,31 @@
+{
+  "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "contract": {
+    "assistant_target": "contiguous verbatim source text",
+    "contains_synthetic_question_answering": false,
+    "maximum_rendered_tokens_inclusive": 4096,
+    "preserve_source_group_and_split": true,
+    "truncation": false,
+    "user_prompt_source_fields": [
+      "repo",
+      "file_path",
+      "leaf",
+      "chunk_index"
+    ]
+  },
+  "leaves": [
+    "embedded-code-generation",
+    "embedded-knowledge"
+  ],
+  "schema_version": "molor.embedded-grounded-reconstruction-plan.v1",
+  "source_manifest": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-embedded-source-experts-v1\\manifest.json",
+  "source_manifest_sha256": "672d621eaf7c3ad74a2aefcae810c7ce5927714bd3d32835ac5f176ddc1fe389",
+  "source_modality": "reference_cpt",
+  "splits": [
+    "train",
+    "validation",
+    "test"
+  ],
+  "tokenizer": "C:\\Users\\engin\\Documents\\molor\\models\\Qwen3-0.6B",
+  "tokenizer_aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c"
+}

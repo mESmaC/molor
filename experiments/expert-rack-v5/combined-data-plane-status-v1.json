@@ -1,0 +1,2395 @@
+{
+  "accounting": {
+    "canonical_training_materialization_ids": [
+      "broad-distillation-experts-v1",
+      "business-finance-supervision-v1",
+      "business-grounded-reconstruction-v1",
+      "embedded-grounded-reconstruction-v1",
+      "embedded-knowledge-v1",
+      "embedded-source-experts-v1",
+      "local-embedded-code-v1",
+      "qwen38-distillation-experts-v2",
+      "software-architecture-experts-v1",
+      "taskmaster-coffee-api-v2",
+      "terminal-cli-v1",
+      "verified-embedded-code-v3"
+    ],
+    "canonical_training_materializations": 12,
+    "contains_corpus_content": false,
+    "explicit_sft_gap_leaves": [],
+    "external_root_entries": 43,
+    "external_root_entries_accounted": 43,
+    "leaf_readiness": {
+      "sft-ready": 25
+    },
+    "registration_roles": {
+      "alias": 22,
+      "eval": 22,
+      "quarantine": 8,
+      "reference": 4,
+      "sft": 16
+    },
+    "repo_local_data_artifacts": 128,
+    "repo_local_data_artifacts_accounted": 128,
+    "repo_local_source_containers": 4,
+    "repo_local_source_containers_accounted": 4,
+    "source_registrations": 53,
+    "taxonomy_leaves": 25,
+    "zero_double_counted_canonical_materializations": true,
+    "zero_double_counted_derived_chat_views": true,
+    "zero_silent_safe_source_omissions": true
+  },
+  "content_sha256": "d22e79130946b6cf294207acae9393906bde329e3570fc2a69694ba51458b5f2",
+  "contracts": {
+    "external_assignment": {
+      "artifact_id": "molor-nonblocked-source-expert-matrix",
+      "artifact_name": "source-expert-assignment-v1.json",
+      "file_sha256": "947e8c1ea480aa1a2368db3af2abebee8b78014df4b9c72ddd9a52262981b7d8",
+      "revision": "1",
+      "semantic_sha256": "089ca9526bd3ac605359547d0cf1e7912ff91d1b5afb847cb5356518a30b1f75"
+    },
+    "external_coverage": {
+      "artifact_id": "molor-local-corpora",
+      "artifact_name": "corpus-coverage-v1.json",
+      "file_sha256": "0713a93d06d48354b9b087f59ef15636cec2c808d8afe23c559c8d6679f4854c",
+      "revision": "1",
+      "semantic_sha256": "757aee73abfb42ebf56678bfe79f223687985c6c657e41e088e76cbbae084d6d"
+    },
+    "repo_local_inventory": {
+      "artifact_id": "first-real-experts-repo-local-v1",
+      "artifact_name": "repo-local-corpus-inventory-v1.json",
+      "file_sha256": "575626ebb6626b641b663302d0c068a81aa948c42ea3397bcad5351d601ff559",
+      "revision": "1",
+      "semantic_sha256": "1479a4fb60a2386627fea8b6ccb13ae82ac826603fbd6b8e347d120a358e29ae"
+    },
+    "taxonomy": {
+      "artifact_id": "molor-inference-rack",
+      "artifact_name": "expert-taxonomy-v1.json",
+      "file_sha256": "ff1833a13d82b406dce7197fd6a9d9e54d1f76a13f9996e15bdf83db167a355f",
+      "revision": "1",
+      "semantic_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1"
+    }
+  },
+  "leaves": [
+    {
+      "explicit_gaps": [],
+      "family_id": "software",
+      "leaf_id": "agentic-code-debugging",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-premium/00",
+          "external/software-architecture/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-premium/00",
+          "external/software-architecture/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "agentic-tools",
+      "leaf_id": "agentic-planning",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "taskmaster-coffee-api-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "taskmaster-coffee-api-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00",
+          "repo-source/repo-taskmaster-source"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "repo-data/taskmaster-coffee-api-v2"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "repo-data/taskmaster-coffee-api-v2"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "business",
+      "leaf_id": "business-core",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00"
+        ],
+        "eval": [
+          "external/business-sources/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/business-sources/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "business",
+      "leaf_id": "business-finance",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "business-finance-supervision-v1",
+        "business-grounded-reconstruction-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "business-finance-supervision-v1",
+        "business-grounded-reconstruction-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "repo-data/legacy-financial-analysis-verified",
+          "repo-source/repo-finqa-source",
+          "repo-source/repo-tat-qa-source"
+        ],
+        "eval": [
+          "external/business-sources/01"
+        ],
+        "quarantine": [
+          "repo-data/legacy-financial-analysis"
+        ],
+        "reference": [],
+        "sft": [
+          "external/business-sources/01"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "business",
+      "leaf_id": "business-operations",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00"
+        ],
+        "eval": [
+          "external/business-sources/00"
+        ],
+        "quarantine": [
+          "repo-data/multidogo-customer-support",
+          "repo-source/repo-multidogo-source"
+        ],
+        "reference": [],
+        "sft": [
+          "external/business-sources/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "reasoning",
+      "leaf_id": "commonsense-logic",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "qwen38-distillation-experts-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "qwen38-distillation-experts-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00"
+        ],
+        "eval": [
+          "external/qwen-distillation/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/qwen-distillation/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "embedded-systems",
+      "leaf_id": "embedded-can-diagnostics",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "ready_sft_materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/ocb-sidecars/00",
+          "repo-data/grounded-can",
+          "repo-data/legacy-embedded-can",
+          "repo-data/ocb-can-verified"
+        ],
+        "eval": [
+          "external/embedded-can-code-reference/00",
+          "external/ocb-database/00"
+        ],
+        "quarantine": [
+          "repo-data/grounded-can-curriculum",
+          "repo-data/trusted-can"
+        ],
+        "reference": [
+          "external/embedded-can-code-reference/00"
+        ],
+        "sft": [
+          "external/ocb-database/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "embedded-systems",
+      "leaf_id": "embedded-code-generation",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "embedded-grounded-reconstruction-v1",
+        "embedded-source-experts-v1",
+        "local-embedded-code-v1",
+        "verified-embedded-code-v3"
+      ],
+      "ready_reference_materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "ready_sft_materialization_ids": [
+        "embedded-grounded-reconstruction-v1",
+        "local-embedded-code-v1",
+        "verified-embedded-code-v3"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "repo-data/verified-embedded-code-union",
+          "repo-data/verified-embedded-code-v1",
+          "repo-data/verified-embedded-code-v2"
+        ],
+        "eval": [
+          "external/embedded-can-code-reference/00",
+          "external/embedded-can-code-reference/01",
+          "external/embedded-code-reference/00",
+          "external/embedded-code-reference/01",
+          "external/embedded-visual-reference/00",
+          "external/embedded-visual-reference/01",
+          "repo-data/local-embedded-code",
+          "repo-data/verified-embedded-code-v3"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/embedded-can-code-reference/00",
+          "external/embedded-code-reference/00",
+          "external/embedded-visual-reference/00"
+        ],
+        "sft": [
+          "external/embedded-can-code-reference/01",
+          "external/embedded-code-reference/01",
+          "external/embedded-visual-reference/01",
+          "repo-data/local-embedded-code",
+          "repo-data/verified-embedded-code-v3"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "embedded-systems",
+      "leaf_id": "embedded-knowledge",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "embedded-grounded-reconstruction-v1",
+        "embedded-knowledge-seen-recall-probe-v1",
+        "embedded-knowledge-v1",
+        "embedded-source-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "ready_sft_materialization_ids": [
+        "embedded-grounded-reconstruction-v1",
+        "embedded-knowledge-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00"
+        ],
+        "eval": [
+          "external/embedded-can-code-reference/00",
+          "external/embedded-can-code-reference/01",
+          "external/embedded-code-reference/00",
+          "external/embedded-code-reference/01",
+          "external/embedded-visual-reference/00",
+          "external/embedded-visual-reference/01",
+          "repo-data/embedded-knowledge",
+          "repo-data/embedded-knowledge-seen-probe"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/embedded-can-code-reference/00",
+          "external/embedded-code-reference/00",
+          "external/embedded-visual-reference/00"
+        ],
+        "sft": [
+          "external/embedded-can-code-reference/01",
+          "external/embedded-code-reference/01",
+          "external/embedded-visual-reference/01",
+          "repo-data/embedded-knowledge"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "reasoning",
+      "leaf_id": "formal-math",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/fable-max-auxiliary/00"
+        ],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "software",
+      "leaf_id": "frontend-visual-computing",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "embedded-source-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/embedded-visual-reference/00",
+          "external/software-architecture/00"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/embedded-visual-reference/00"
+        ],
+        "sft": [
+          "external/broad-complete/00",
+          "external/software-architecture/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "business",
+      "leaf_id": "funding-capital",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00"
+        ],
+        "eval": [
+          "external/business-sources/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/business-sources/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "software",
+      "leaf_id": "general-code-generation",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2",
+        "software-architecture-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2",
+        "software-architecture-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00",
+          "external/software-architecture/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00",
+          "external/software-architecture/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "reasoning",
+      "leaf_id": "general-expert-reasoning",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/broad-premium/00"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/fable-max-auxiliary/00"
+        ],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/broad-premium/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "business",
+      "leaf_id": "growth-gtm",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00"
+        ],
+        "eval": [
+          "external/business-sources/00"
+        ],
+        "quarantine": [
+          "repo-data/multidogo-customer-support",
+          "repo-source/repo-multidogo-source"
+        ],
+        "reference": [],
+        "sft": [
+          "external/business-sources/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "business",
+      "leaf_id": "investing-markets",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "business-finance-supervision-v1",
+        "business-grounded-reconstruction-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "business-finance-supervision-v1",
+        "business-grounded-reconstruction-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "repo-data/legacy-financial-analysis-verified",
+          "repo-source/repo-finqa-source",
+          "repo-source/repo-tat-qa-source"
+        ],
+        "eval": [
+          "external/business-sources/01"
+        ],
+        "quarantine": [
+          "repo-data/legacy-financial-analysis"
+        ],
+        "reference": [],
+        "sft": [
+          "external/business-sources/01"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "software",
+      "leaf_id": "ml-data-reasoning",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/software-architecture/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/software-architecture/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "reasoning",
+      "leaf_id": "quantitative-math",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/fable-max-auxiliary/00"
+        ],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "reasoning",
+      "leaf_id": "science-reasoning",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00"
+        ],
+        "quarantine": [],
+        "reference": [
+          "external/fable-max-auxiliary/00"
+        ],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00",
+          "external/qwen-distillation/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "reasoning",
+      "leaf_id": "scientific-engineering-reasoning",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-mythos/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "software",
+      "leaf_id": "software-architecture-design",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00",
+          "repo-data/legacy-software-architecture",
+          "repo-data/legacy-software-architecture-v1"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/software-architecture/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/software-architecture/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "agentic-tools",
+      "leaf_id": "strict-instruction-following",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "qwen38-distillation-experts-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/qwen-distillation/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/qwen-distillation/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "software",
+      "leaf_id": "systems-distributed-engineering",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "software-architecture-experts-v1"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/software-architecture/00"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/software-architecture/00"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "agentic-tools",
+      "leaf_id": "terminal-cli",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "terminal-cli-v1"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "terminal-cli-v1"
+      ],
+      "roles": {
+        "alias": [],
+        "eval": [
+          "repo-data/terminal-cli"
+        ],
+        "quarantine": [],
+        "reference": [],
+        "sft": [
+          "repo-data/terminal-cli"
+        ]
+      }
+    },
+    {
+      "explicit_gaps": [],
+      "family_id": "agentic-tools",
+      "leaf_id": "tool-use-execution",
+      "readiness": "sft-ready",
+      "ready_evaluation_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "taskmaster-coffee-api-v2"
+      ],
+      "ready_reference_materialization_ids": [],
+      "ready_sft_materialization_ids": [
+        "broad-distillation-experts-v1",
+        "taskmaster-coffee-api-v2"
+      ],
+      "roles": {
+        "alias": [
+          "external/administrative-aliases/00",
+          "external/broad-materialized/00",
+          "repo-source/repo-taskmaster-source"
+        ],
+        "eval": [
+          "external/broad-complete/00",
+          "external/broad-premium/00",
+          "repo-data/taskmaster-coffee-api-v2"
+        ],
+        "quarantine": [
+          "repo-data/taskmaster-coffee-api-v1"
+        ],
+        "reference": [],
+        "sft": [
+          "external/broad-complete/00",
+          "external/broad-premium/00",
+          "repo-data/taskmaster-coffee-api-v2"
+        ]
+      }
+    }
+  ],
+  "materializations": [
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "quality-manifest.json",
+      "bytes": 10469174,
+      "declared_content_sha256": null,
+      "file_sha256": "ae545ae0095a519b8d7291a080565eaeccc762ec71209c43480a101c1e471ed2",
+      "materialization_id": "broad-distillation-experts-v1",
+      "schema_version": "molor.broad-distillation-experts.v1"
+    },
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "manifest.json",
+      "bytes": 9238,
+      "declared_content_sha256": null,
+      "file_sha256": "f1d7f1236e270819a725a70086bde4732e5f1c9434e0577be048a57552877b6e",
+      "materialization_id": "business-finance-supervision-v1",
+      "schema_version": "molor.business-finance-supervision.v1"
+    },
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "manifest.json",
+      "bytes": 58549,
+      "declared_content_sha256": "c06feb780ce01fd385db7b6db903443e8f82a7982a3e7cd2c9a707b226411590",
+      "file_sha256": "b6e24058732bc72c825698aff5fb966d628234961ee0c5d3984670b895d100b0",
+      "materialization_id": "business-grounded-reconstruction-v1",
+      "schema_version": "molor.business-grounded-reconstruction.v1",
+      "supervision_contract": {
+        "assistant_target": "verbatim canonical source passage",
+        "assistant_target_is_verbatim_source_passage": true,
+        "business_leaves": [
+          "business-core",
+          "business-finance",
+          "business-operations",
+          "funding-capital",
+          "growth-gtm",
+          "investing-markets"
+        ],
+        "contains_synthetic_question_answering": false,
+        "deferred_rows": 0,
+        "emitted_records": 7931,
+        "fully_reconciled": true,
+        "input_records": 7931,
+        "proves_answer_quality": false,
+        "splits": [
+          "test",
+          "train",
+          "validation"
+        ],
+        "task_type": "grounded_reference_reconstruction",
+        "truncated_rows": 0,
+        "zero_silent_omissions": true
+      }
+    },
+    {
+      "artifact_kind": "receipt",
+      "artifact_name": "build-receipt.json",
+      "bytes": 4263,
+      "declared_content_sha256": null,
+      "file_sha256": "a845938ce08026e10a46847dcf9c8ef592521e3830e1662186db1ea8b88d1175",
+      "materialization_id": "embedded-grounded-reconstruction-v1",
+      "schema_version": "molor.embedded-grounded-reconstruction-build-receipt.v1",
+      "supervision_contract": {
+        "assistant_target": "contiguous verbatim source-text chunk",
+        "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+        "concatenated_targets_exactly_reproduce_each_source": true,
+        "contains_synthetic_question_answering": false,
+        "deferred_rows_permitted": false,
+        "embedded_leaves": [
+          "embedded-code-generation",
+          "embedded-knowledge"
+        ],
+        "emitted_characters": 27228532,
+        "emitted_message_records": 3956,
+        "fully_reconciled": true,
+        "independent_rebuild_byte_identical": true,
+        "independent_rebuild_files": 28,
+        "manifest_content_sha256": "4e676208b5e26460367bd7b0badd6f798c007bc7fbe27c6dc44143637da8f348",
+        "manifest_file_sha256": "46c109be7a780a7cb0732f819d10a4ec1b013a0c17928622d3775f61c20936db",
+        "maximum_rendered_tokens_inclusive": 4096,
+        "proves_answer_quality": false,
+        "proves_source_correctness": false,
+        "source_characters": 27228532,
+        "source_rows": 2749,
+        "splits": [
+          "test",
+          "train",
+          "validation"
+        ],
+        "task_type": "grounded_reference_reconstruction",
+        "tokenizer_aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+        "truncation": false,
+        "zero_failure_dispositions": true,
+        "zero_silent_omissions": true
+      }
+    },
+    {
+      "artifact_kind": "report",
+      "artifact_name": "embedded-knowledge-v1.report.json",
+      "bytes": 10881,
+      "declared_content_sha256": null,
+      "file_sha256": "fa4ee385724517678d22ad107e39aa9b5bb694bc4c844d9ed71dcdb0b942c7b7",
+      "materialization_id": "embedded-knowledge-v1",
+      "schema_version": "unversioned-aggregate-json"
+    },
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "manifest.json",
+      "bytes": 79465,
+      "declared_content_sha256": null,
+      "file_sha256": "672d621eaf7c3ad74a2aefcae810c7ce5927714bd3d32835ac5f176ddc1fe389",
+      "materialization_id": "embedded-source-experts-v1",
+      "schema_version": "molor.embedded-source-experts.v1"
+    },
+    {
+      "artifact_kind": "report",
+      "artifact_name": "local-embedded-code.report.json",
+      "bytes": 6290,
+      "declared_content_sha256": null,
+      "file_sha256": "a487c394e37098f4ba492cedb628420ea8f669cac993036279e24d08ea5f0bc5",
+      "materialization_id": "local-embedded-code-v1",
+      "schema_version": "unversioned-aggregate-json"
+    },
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "quality-manifest.json",
+      "bytes": 64645,
+      "declared_content_sha256": null,
+      "file_sha256": "5d4dba5d1452ec1c05292b8f858adf4be797e94dbf92a5038b04fcb35ba5277f",
+      "materialization_id": "qwen38-distillation-experts-v2",
+      "schema_version": "molor.qwen38-distillation-experts.v2"
+    },
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "quality-manifest.json",
+      "bytes": 212483,
+      "declared_content_sha256": null,
+      "file_sha256": "15679dcc2ca0d2b49239907897ffafbcd86908079c5442ce9a620771374a4719",
+      "materialization_id": "software-architecture-experts-v1",
+      "schema_version": "molor.software-architecture-experts.v1"
+    },
+    {
+      "artifact_kind": "report",
+      "artifact_name": "taskmaster-coffee-api-v2.build-report.json",
+      "bytes": 10953,
+      "declared_content_sha256": null,
+      "file_sha256": "5de7ebe3fd1537b732271b8268ff5ed3b69ebb5922d13ea3953d5f28c4cc4f15",
+      "materialization_id": "taskmaster-coffee-api-v2",
+      "schema_version": "molor.taskmaster-coffee-api-build-report.v2"
+    },
+    {
+      "artifact_kind": "report",
+      "artifact_name": "terminal-cli.build-report.json",
+      "bytes": 21079,
+      "declared_content_sha256": null,
+      "file_sha256": "786dd47605601da117b25926d24818eaa133615a30754730c8e3b94377e6dafc",
+      "materialization_id": "terminal-cli-v1",
+      "schema_version": "unversioned-aggregate-json"
+    },
+    {
+      "artifact_kind": "manifest",
+      "artifact_name": "verified-embedded-code-v3.manifest.json",
+      "bytes": 4274,
+      "declared_content_sha256": null,
+      "file_sha256": "8fd0dfcdc876ae405c30510ff967f1738300161e4b9fdc2497baf10ef1d586ce",
+      "materialization_id": "verified-embedded-code-v3",
+      "schema_version": "molor.verified-code-curriculum.v3"
+    }
+  ],
+  "revision": "1",
+  "sampling_contract": {
+    "alias_role_is_trainable": false,
+    "cross_source_dedup_required_before_mixture_sampling": true,
+    "derived_supervision_views": [
+      {
+        "independent_chat_sampling": false,
+        "raw_materialization_id": "embedded-source-experts-v1",
+        "raw_modality": "reference_cpt",
+        "reason": "raw references remain accounted while the single supervised view uses verbatim token-bounded reconstruction",
+        "supervised_materialization_id": "embedded-grounded-reconstruction-v1",
+        "target_leaves": [
+          "embedded-code-generation",
+          "embedded-knowledge"
+        ]
+      }
+    ],
+    "evaluation_role_is_trainable": false,
+    "quarantine_role_is_trainable": false,
+    "unit": "unique-canonical-materialization-id"
+  },
+  "schema_version": "molor.combined-data-plane-status.v1",
+  "source_registrations": [
+    {
+      "disposition": "alias",
+      "materialization_ids": [],
+      "note": "Preparation programs and aggregate output containers are explicit non-training aliases scoped to every leaf already represented by corpus-bearing roots.",
+      "readiness": "not-applicable",
+      "registration_id": "external/administrative-aliases/00",
+      "roles": [
+        "alias"
+      ],
+      "scope": "external-root",
+      "source_id": "administrative-aliases",
+      "source_items": [
+        "prepare_code_and_db.py",
+        "prepare_datasets.py",
+        "prepare_repos.py",
+        "prepared",
+        "processed"
+      ],
+      "target_leaves": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "business-core",
+        "business-finance",
+        "business-operations",
+        "commonsense-logic",
+        "embedded-can-diagnostics",
+        "embedded-code-generation",
+        "embedded-knowledge",
+        "formal-math",
+        "frontend-visual-computing",
+        "funding-capital",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "growth-gtm",
+        "investing-markets",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "note": "Renderable broad supervision is split by granular leaf, mode, and length before mixture admission.",
+      "readiness": "ready",
+      "registration_id": "external/broad-complete/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "broad-complete",
+      "source_items": [
+        "Complete-FABLE.5-traces-2M"
+      ],
+      "target_leaves": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "formal-math",
+        "frontend-visual-computing",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "alias",
+      "materialization_ids": [],
+      "note": "Canonical output container for the three broad source groups; recorded as an alias to prevent source/output double counting.",
+      "readiness": "not-applicable",
+      "registration_id": "external/broad-materialized/00",
+      "roles": [
+        "alias"
+      ],
+      "scope": "external-root",
+      "source_id": "broad-materialized",
+      "source_items": [
+        "broad-distillation-experts-v1"
+      ],
+      "target_leaves": [
+        "agentic-code-debugging",
+        "agentic-planning",
+        "formal-math",
+        "frontend-visual-computing",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning",
+        "software-architecture-design",
+        "strict-instruction-following",
+        "systems-distributed-engineering",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "note": "Prepared non-guarded categories are routed into granular reasoning and software leaves.",
+      "readiness": "ready",
+      "registration_id": "external/broad-mythos/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "broad-mythos",
+      "source_items": [
+        "claude_mythos_distilled_25k"
+      ],
+      "target_leaves": [
+        "agentic-planning",
+        "formal-math",
+        "general-code-generation",
+        "general-expert-reasoning",
+        "ml-data-reasoning",
+        "quantitative-math",
+        "science-reasoning",
+        "scientific-engineering-reasoning"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "broad-distillation-experts-v1"
+      ],
+      "note": "Only the canonical logical representation is admitted; alternate serialized forms remain lineage aliases.",
+      "readiness": "ready",
+      "registration_id": "external/broad-premium/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "broad-premium",
+      "source_items": [
+        "fable-5-premium"
+      ],
+      "target_leaves": [
+        "agentic-code-debugging",
+        "general-expert-reasoning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "business-grounded-reconstruction-v1"
+      ],
+      "note": "All six leaves use title/topic-grounded verbatim source-passage reconstruction supervision; this is not synthetic QA and does not prove answer quality. Finance and investing additionally retain calculation supervision.",
+      "readiness": "ready",
+      "registration_id": "external/business-sources/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "business-sources",
+      "source_items": [
+        "business-sources-v1"
+      ],
+      "target_leaves": [
+        "business-core",
+        "business-operations",
+        "funding-capital",
+        "growth-gtm"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "business-finance-supervision-v1",
+        "business-grounded-reconstruction-v1"
+      ],
+      "note": "All six leaves use title/topic-grounded verbatim source-passage reconstruction supervision; this is not synthetic QA and does not prove answer quality. Finance and investing additionally retain calculation supervision.",
+      "readiness": "ready",
+      "registration_id": "external/business-sources/01",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "business-sources",
+      "source_items": [
+        "business-sources-v1"
+      ],
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "disposition": "reference-pretraining",
+      "materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "note": "CAN-oriented repository lineage remains accounted as split-safe reference material. Its embedded code-generation and knowledge rows also have honest verbatim-chunk reconstruction SFT; the raw reference_cpt rows are not independently chat-sampled, avoiding double count.",
+      "readiness": "ready",
+      "registration_id": "external/embedded-can-code-reference/00",
+      "roles": [
+        "eval",
+        "reference"
+      ],
+      "scope": "external-root",
+      "source_id": "embedded-can-code-reference",
+      "source_items": [
+        "aevit2-can-fd-interceptor",
+        "aevit3_arb",
+        "aevit3_can_tool",
+        "aevit3_control",
+        "aevit3_drive",
+        "aevit3_interceptor",
+        "aevit3_vehicle",
+        "control",
+        "drive",
+        "obd-can-mod",
+        "ocb",
+        "relay"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics",
+        "embedded-code-generation",
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "embedded-grounded-reconstruction-v1"
+      ],
+      "note": "CAN-oriented repository lineage remains accounted as split-safe reference material. Its embedded code-generation and knowledge rows also have honest verbatim-chunk reconstruction SFT; the raw reference_cpt rows are not independently chat-sampled, avoiding double count.",
+      "readiness": "ready",
+      "registration_id": "external/embedded-can-code-reference/01",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "embedded-can-code-reference",
+      "source_items": [
+        "aevit2-can-fd-interceptor",
+        "aevit3_arb",
+        "aevit3_can_tool",
+        "aevit3_control",
+        "aevit3_drive",
+        "aevit3_interceptor",
+        "aevit3_vehicle",
+        "control",
+        "drive",
+        "obd-can-mod",
+        "ocb",
+        "relay"
+      ],
+      "target_leaves": [
+        "embedded-code-generation",
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "reference-pretraining",
+      "materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "note": "General embedded repository lineage remains accounted in split-safe reference shards and is supervised through honest verbatim-chunk reconstruction. Raw reference_cpt rows are not independently chat-sampled, avoiding double count.",
+      "readiness": "ready",
+      "registration_id": "external/embedded-code-reference/00",
+      "roles": [
+        "eval",
+        "reference"
+      ],
+      "scope": "external-root",
+      "source_id": "embedded-code-reference",
+      "source_items": [
+        "aevit-base",
+        "AEVIT-Ecosystem-Programming-Documentation",
+        "aevit-lcd-manifest",
+        "aevit-m4-app",
+        "aevit2-app",
+        "aevit2-bsp-repo",
+        "aevit3-app",
+        "aevit3-bsp",
+        "aevit3-bsp-repo",
+        "aevit3-bsp-scfw",
+        "aevit3-m4-app",
+        "AIC",
+        "common"
+      ],
+      "target_leaves": [
+        "embedded-code-generation",
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "embedded-grounded-reconstruction-v1"
+      ],
+      "note": "General embedded repository lineage remains accounted in split-safe reference shards and is supervised through honest verbatim-chunk reconstruction. Raw reference_cpt rows are not independently chat-sampled, avoiding double count.",
+      "readiness": "ready",
+      "registration_id": "external/embedded-code-reference/01",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "embedded-code-reference",
+      "source_items": [
+        "aevit-base",
+        "AEVIT-Ecosystem-Programming-Documentation",
+        "aevit-lcd-manifest",
+        "aevit-m4-app",
+        "aevit2-app",
+        "aevit2-bsp-repo",
+        "aevit3-app",
+        "aevit3-bsp",
+        "aevit3-bsp-repo",
+        "aevit3-bsp-scfw",
+        "aevit3-m4-app",
+        "AIC",
+        "common"
+      ],
+      "target_leaves": [
+        "embedded-code-generation",
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "reference-pretraining",
+      "materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "note": "Display-oriented repository lineage remains accounted for embedded and visual reference use. Its embedded code-generation and knowledge rows use honest verbatim-chunk reconstruction SFT; raw reference_cpt rows are not independently chat-sampled.",
+      "readiness": "ready",
+      "registration_id": "external/embedded-visual-reference/00",
+      "roles": [
+        "eval",
+        "reference"
+      ],
+      "scope": "external-root",
+      "source_id": "embedded-visual-reference",
+      "source_items": [
+        "aevit3_lcd_common",
+        "display_qt_app"
+      ],
+      "target_leaves": [
+        "embedded-code-generation",
+        "embedded-knowledge",
+        "frontend-visual-computing"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "embedded-grounded-reconstruction-v1"
+      ],
+      "note": "Display-oriented repository lineage remains accounted for embedded and visual reference use. Its embedded code-generation and knowledge rows use honest verbatim-chunk reconstruction SFT; raw reference_cpt rows are not independently chat-sampled.",
+      "readiness": "ready",
+      "registration_id": "external/embedded-visual-reference/01",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "embedded-visual-reference",
+      "source_items": [
+        "aevit3_lcd_common",
+        "display_qt_app"
+      ],
+      "target_leaves": [
+        "embedded-code-generation",
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "auxiliary",
+      "materialization_ids": [
+        "fable-max-long-trace-auxiliary-v1"
+      ],
+      "note": "The source is explicitly accounted without admitting trace-only records to inference SFT.",
+      "readiness": "deferred",
+      "registration_id": "external/fable-max-auxiliary/00",
+      "roles": [
+        "reference"
+      ],
+      "scope": "external-root",
+      "source_id": "fable-max-auxiliary",
+      "source_items": [
+        "Fable-5-Max-Reasoning-Filtered-250x"
+      ],
+      "target_leaves": [
+        "formal-math",
+        "general-expert-reasoning",
+        "quantitative-math",
+        "science-reasoning"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "note": "The canonical database is materialized into split-safe structured CAN supervision in the unified embedded source build.",
+      "readiness": "ready",
+      "registration_id": "external/ocb-database/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "ocb-database",
+      "source_items": [
+        "ocb_ocb.db"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "alias",
+      "materialization_ids": [],
+      "note": "Database sidecars are explicit lineage aliases and never independent training sources.",
+      "readiness": "not-applicable",
+      "registration_id": "external/ocb-sidecars/00",
+      "roles": [
+        "alias"
+      ],
+      "scope": "external-root",
+      "source_id": "ocb-sidecars",
+      "source_items": [
+        "ocb_ocb.db-shm",
+        "ocb_ocb.db-wal"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "qwen38-distillation-experts-v2"
+      ],
+      "note": "Canonical direct and trace shards are separated by granular expert and token-length tier.",
+      "readiness": "ready",
+      "registration_id": "external/qwen-distillation/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "qwen-distillation",
+      "source_items": [
+        "qwen3.8-max-distillation-50k"
+      ],
+      "target_leaves": [
+        "commonsense-logic",
+        "formal-math",
+        "general-code-generation",
+        "quantitative-math",
+        "science-reasoning",
+        "strict-instruction-following"
+      ]
+    },
+    {
+      "disposition": "sft",
+      "materialization_ids": [
+        "software-architecture-experts-v1"
+      ],
+      "note": "The full prepared split is leaf-stratified across six warranted software domains; prior 12k/1k subsets are lineage aliases only.",
+      "readiness": "ready",
+      "registration_id": "external/software-architecture/00",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "external-root",
+      "source_id": "software-architecture",
+      "source_items": [
+        "Software-Architecture"
+      ],
+      "target_leaves": [
+        "agentic-code-debugging",
+        "frontend-visual-computing",
+        "general-code-generation",
+        "ml-data-reasoning",
+        "software-architecture-design",
+        "systems-distributed-engineering"
+      ]
+    },
+    {
+      "disposition": "supplemental",
+      "materialization_ids": [
+        "embedded-knowledge-v1"
+      ],
+      "note": "Existing file-held-out embedded knowledge SFT remains an admitted supplement.",
+      "readiness": "ready",
+      "registration_id": "repo-data/embedded-knowledge",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "embedded-knowledge",
+      "source_items": [
+        "embedded-knowledge-v1.jsonl",
+        "embedded-knowledge-v1.report.json",
+        "embedded-knowledge-v1.train.provenance.jsonl",
+        "embedded-knowledge-v1.validation.jsonl",
+        "embedded-knowledge-v1.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "evaluation-only",
+      "materialization_ids": [
+        "embedded-knowledge-seen-recall-probe-v1"
+      ],
+      "note": "Seen-recall diagnostic is explicitly not a held-out training source.",
+      "readiness": "ready",
+      "registration_id": "repo-data/embedded-knowledge-seen-probe",
+      "roles": [
+        "eval"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "embedded-knowledge-seen-probe",
+      "source_items": [
+        "embedded-knowledge-v1.seen-recall-probe.jsonl",
+        "embedded-knowledge-v1.seen-recall-probe.provenance.jsonl",
+        "embedded-knowledge-v1.seen-recall-probe.report.json"
+      ],
+      "target_leaves": [
+        "embedded-knowledge"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "grounded-can-v1"
+      ],
+      "note": "Narrow grounded predecessor superseded by the verified OCB/CAN build.",
+      "readiness": "alias",
+      "registration_id": "repo-data/grounded-can",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "grounded-can",
+      "source_items": [
+        "grounded-can.report.json",
+        "grounded-can.train.jsonl",
+        "grounded-can.train.provenance.jsonl",
+        "grounded-can.validation.jsonl",
+        "grounded-can.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "historical-negative",
+      "materialization_ids": [
+        "grounded-can-curriculum-v1"
+      ],
+      "note": "Recorded negative curriculum result; excluded from new mixtures.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/grounded-can-curriculum",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "grounded-can-curriculum",
+      "source_items": [
+        "grounded-can-curriculum.report.json",
+        "grounded-can-curriculum.train.jsonl",
+        "grounded-can-curriculum.train.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "legacy-embedded-can-v1"
+      ],
+      "note": "Superseded by verified OCB/CAN materializations.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-embedded-can",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-embedded-can",
+      "source_items": [
+        "embedded-can.jsonl",
+        "embedded-can.provenance.jsonl",
+        "embedded-can.validation.jsonl",
+        "embedded-can.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "historical-negative",
+      "materialization_ids": [
+        "financial-analysis-v1"
+      ],
+      "note": "Unverified predecessor retained only for comparison.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/legacy-financial-analysis",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-financial-analysis",
+      "source_items": [
+        "financial-analysis.jsonl",
+        "financial-analysis.provenance.jsonl",
+        "financial-analysis.validation.jsonl",
+        "financial-analysis.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "business-finance-supervision-v1"
+      ],
+      "note": "Subset of FinQA/TAT-QA superseded by the full split-preserving finance supervision build.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-financial-analysis-verified",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-financial-analysis-verified",
+      "source_items": [
+        "financial-analysis-verified.jsonl",
+        "financial-analysis-verified.provenance.jsonl",
+        "financial-analysis-verified.report.json",
+        "financial-analysis-verified.validation.jsonl",
+        "financial-analysis-verified.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "disposition": "lineage-only",
+      "materialization_ids": [
+        "legacy-first-real-experts-build-v1"
+      ],
+      "note": "Aggregate receipt for an older multi-domain build; it is not a trainable shard.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-multidomain-build",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-multidomain-build",
+      "source_items": [
+        "build_report.json"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "router-bootstrap-v1"
+      ],
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-router-v1",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v1",
+      "source_items": [
+        "router-bootstrap-v1.report.json",
+        "router-bootstrap-v1.test.jsonl",
+        "router-bootstrap-v1.train.jsonl",
+        "router-bootstrap-v1.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "router-bootstrap-v2"
+      ],
+      "note": "Legacy flat-router bootstrap superseded by later router curricula and the new taxonomy.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-router-v2",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v2",
+      "source_items": [
+        "router-bootstrap-v2.report.json",
+        "router-bootstrap-v2.test.jsonl",
+        "router-bootstrap-v2.train.jsonl",
+        "router-bootstrap-v2.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "router-bootstrap-v3-contrastive"
+      ],
+      "note": "Legacy flat-router contrastive data does not match the granular hierarchy.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-router-v3",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v3",
+      "source_items": [
+        "router-bootstrap-v3-contrastive.report.json",
+        "router-bootstrap-v3-contrastive.test.jsonl",
+        "router-bootstrap-v3-contrastive.train.jsonl",
+        "router-bootstrap-v3-contrastive.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "router-bootstrap-v4-hard-negative"
+      ],
+      "note": "Non-selected legacy flat-router dataset.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-router-v4",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v4",
+      "source_items": [
+        "router-bootstrap-v4-hard-negative.report.json",
+        "router-bootstrap-v4-hard-negative.test.jsonl",
+        "router-bootstrap-v4-hard-negative.train.jsonl",
+        "router-bootstrap-v4-hard-negative.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "router-bootstrap-v4-hard-negative-s307"
+      ],
+      "note": "Selected legacy flat-router dataset; labels do not match the granular hierarchy.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-router-v4-s307",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v4-s307",
+      "source_items": [
+        "router-bootstrap-v4-hard-negative-s307.report.json",
+        "router-bootstrap-v4-hard-negative-s307.test.jsonl",
+        "router-bootstrap-v4-hard-negative-s307.train.jsonl",
+        "router-bootstrap-v4-hard-negative-s307.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "router-bootstrap-v5-verified-code-contrastive"
+      ],
+      "note": "Legacy flat-router curriculum; source prompts may be rematerialized only under the new labels.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-router-v5",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v5",
+      "source_items": [
+        "router-bootstrap-v5-verified-code-contrastive.report.json",
+        "router-bootstrap-v5-verified-code-contrastive.test.jsonl",
+        "router-bootstrap-v5-verified-code-contrastive.train.jsonl",
+        "router-bootstrap-v5-verified-code-contrastive.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "historical-negative",
+      "materialization_ids": [
+        "router-bootstrap-v6-taskmaster"
+      ],
+      "note": "Taskmaster flat-router registration failed its declared gates.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/legacy-router-v6",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v6",
+      "source_items": [
+        "router-bootstrap-v6-taskmaster.report.json",
+        "router-bootstrap-v6-taskmaster.test.jsonl",
+        "router-bootstrap-v6-taskmaster.train.jsonl",
+        "router-bootstrap-v6-taskmaster.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "historical-negative",
+      "materialization_ids": [
+        "router-bootstrap-v7-taskmaster-gate"
+      ],
+      "note": "Taskmaster admission gate failed its declared one-shot gates.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/legacy-router-v7",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-router-v7",
+      "source_items": [
+        "router-bootstrap-v7-taskmaster-gate.report.json",
+        "router-bootstrap-v7-taskmaster-gate.train.jsonl",
+        "router-bootstrap-v7-taskmaster-gate.validation.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "software-architecture-experts-v1"
+      ],
+      "note": "Older architecture subset superseded by the repaired and full granular builds.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-software-architecture",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-software-architecture",
+      "source_items": [
+        "software-architecture.jsonl",
+        "software-architecture.provenance.jsonl",
+        "software-architecture.validation.jsonl",
+        "software-architecture.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "software-architecture-experts-v1"
+      ],
+      "note": "Balanced subset superseded by the full granular software materialization.",
+      "readiness": "alias",
+      "registration_id": "repo-data/legacy-software-architecture-v1",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "legacy-software-architecture-v1",
+      "source_items": [
+        "software-architecture-v1.jsonl",
+        "software-architecture-v1.provenance.jsonl",
+        "software-architecture-v1.report.json",
+        "software-architecture-v1.token-lengths.json",
+        "software-architecture-v1.validation.jsonl",
+        "software-architecture-v1.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "software-architecture-design"
+      ]
+    },
+    {
+      "disposition": "supplemental",
+      "materialization_ids": [
+        "local-embedded-code-v1"
+      ],
+      "note": "File-separated local code continuation data remains an admitted supplement.",
+      "readiness": "ready",
+      "registration_id": "repo-data/local-embedded-code",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "local-embedded-code",
+      "source_items": [
+        "local-embedded-code.jsonl",
+        "local-embedded-code.report.json",
+        "local-embedded-code.train.provenance.jsonl",
+        "local-embedded-code.validation.jsonl",
+        "local-embedded-code.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "disposition": "quarantined",
+      "materialization_ids": [
+        "multidogo-customer-support-quarantine-v1"
+      ],
+      "note": "Customer-support dialogs are not GTM expertise and remain excluded pending a privacy and duplication rebuild.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/multidogo-customer-support",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "multidogo-customer-support",
+      "source_items": [
+        "customer-gtm.jsonl",
+        "customer-gtm.provenance.jsonl",
+        "customer-gtm.validation.jsonl",
+        "customer-gtm.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "disposition": "canonical",
+      "materialization_ids": [
+        "embedded-source-experts-v1"
+      ],
+      "note": "Verified and message-group-separated OCB/CAN supervision.",
+      "readiness": "alias",
+      "registration_id": "repo-data/ocb-can-verified",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "ocb-can-verified",
+      "source_items": [
+        "ocb-can-verified.report.json",
+        "ocb-can-verified.train.jsonl",
+        "ocb-can-verified.train.provenance.jsonl",
+        "ocb-can-verified.validation.jsonl",
+        "ocb-can-verified.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "evaluation-only",
+      "materialization_ids": [
+        "router-intent-probe-v1"
+      ],
+      "note": "Previously used router probe; permanently excluded from training and tuning.",
+      "readiness": "ready",
+      "registration_id": "repo-data/router-intent-probe-v1",
+      "roles": [
+        "eval"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "router-intent-probe-v1",
+      "source_items": [
+        "router-intent-probe-v1.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "evaluation-only",
+      "materialization_ids": [
+        "router-intent-probe-v2"
+      ],
+      "note": "Previously used router probe; permanently excluded from training and tuning.",
+      "readiness": "ready",
+      "registration_id": "repo-data/router-intent-probe-v2",
+      "roles": [
+        "eval"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "router-intent-probe-v2",
+      "source_items": [
+        "router-intent-probe-v2.jsonl"
+      ],
+      "target_leaves": []
+    },
+    {
+      "disposition": "historical-negative",
+      "materialization_ids": [
+        "taskmaster-coffee-api-v1"
+      ],
+      "note": "First narrow candidate missed promotion gates and is superseded by v2.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/taskmaster-coffee-api-v1",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "taskmaster-coffee-api-v1",
+      "source_items": [
+        "taskmaster-coffee-api-v1.build-report.json",
+        "taskmaster-coffee-api-v1.quarantine.jsonl",
+        "taskmaster-coffee-api-v1.test.evaluation.jsonl",
+        "taskmaster-coffee-api-v1.test.jsonl",
+        "taskmaster-coffee-api-v1.test.provenance.jsonl",
+        "taskmaster-coffee-api-v1.train.jsonl",
+        "taskmaster-coffee-api-v1.train.provenance.jsonl",
+        "taskmaster-coffee-api-v1.validation.evaluation.jsonl",
+        "taskmaster-coffee-api-v1.validation.jsonl",
+        "taskmaster-coffee-api-v1.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "canonical",
+      "materialization_ids": [
+        "taskmaster-coffee-api-v2"
+      ],
+      "note": "Component-disjoint full-dialog tool-use corpus; held-out splits remain evaluation-only.",
+      "readiness": "ready",
+      "registration_id": "repo-data/taskmaster-coffee-api-v2",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "taskmaster-coffee-api-v2",
+      "source_items": [
+        "taskmaster-coffee-api-v2.build-report.json",
+        "taskmaster-coffee-api-v2.quarantine.jsonl",
+        "taskmaster-coffee-api-v2.test.evaluation.jsonl",
+        "taskmaster-coffee-api-v2.test.jsonl",
+        "taskmaster-coffee-api-v2.test.provenance.jsonl",
+        "taskmaster-coffee-api-v2.tool-catalog.json",
+        "taskmaster-coffee-api-v2.train.jsonl",
+        "taskmaster-coffee-api-v2.train.provenance.jsonl",
+        "taskmaster-coffee-api-v2.validation.evaluation.jsonl",
+        "taskmaster-coffee-api-v2.validation.jsonl",
+        "taskmaster-coffee-api-v2.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "canonical",
+      "materialization_ids": [
+        "terminal-cli-v1"
+      ],
+      "note": "Task-family-separated terminal execution traces.",
+      "readiness": "ready",
+      "registration_id": "repo-data/terminal-cli",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "terminal-cli",
+      "source_items": [
+        "terminal-cli.build-report.json",
+        "terminal-cli.jsonl",
+        "terminal-cli.provenance.jsonl",
+        "terminal-cli.validation.jsonl",
+        "terminal-cli.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "terminal-cli"
+      ]
+    },
+    {
+      "disposition": "historical-negative",
+      "materialization_ids": [
+        "trusted-can-v1"
+      ],
+      "note": "Invalid lookup/memorization experiment retained only for historical accounting.",
+      "readiness": "quarantined",
+      "registration_id": "repo-data/trusted-can",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "trusted-can",
+      "source_items": [
+        "trusted-can.report.json",
+        "trusted-can.train.jsonl",
+        "trusted-can.train.provenance.jsonl",
+        "trusted-can.validation.jsonl",
+        "trusted-can.validation.provenance.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-can-diagnostics"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "verified-embedded-code-v3"
+      ],
+      "note": "Materialized union is an alias of versioned constituents and must not be double counted.",
+      "readiness": "alias",
+      "registration_id": "repo-data/verified-embedded-code-union",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "verified-embedded-code-union",
+      "source_items": [
+        "verified-embedded-code-v1-plus-v3.train.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "verified-embedded-code-v3"
+      ],
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "readiness": "alias",
+      "registration_id": "repo-data/verified-embedded-code-v1",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "verified-embedded-code-v1",
+      "source_items": [
+        "verified-embedded-code-v1.manifest.json",
+        "verified-embedded-code-v1.train.jsonl",
+        "verified-embedded-code-v1.validation.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "verified-embedded-code-v3"
+      ],
+      "note": "Compiler-verified predecessor retained as lineage for v3.",
+      "readiness": "alias",
+      "registration_id": "repo-data/verified-embedded-code-v2",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "verified-embedded-code-v2",
+      "source_items": [
+        "verified-embedded-code-v2.manifest.json",
+        "verified-embedded-code-v2.train.jsonl",
+        "verified-embedded-code-v2.validation.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "disposition": "supplemental",
+      "materialization_ids": [
+        "verified-embedded-code-v3"
+      ],
+      "note": "Newest compiler-verified embedded-code curriculum remains an admitted supplement.",
+      "readiness": "ready",
+      "registration_id": "repo-data/verified-embedded-code-v3",
+      "roles": [
+        "eval",
+        "sft"
+      ],
+      "scope": "repo-local-data",
+      "source_id": "verified-embedded-code-v3",
+      "source_items": [
+        "verified-embedded-code-v3.manifest.json",
+        "verified-embedded-code-v3.train.jsonl",
+        "verified-embedded-code-v3.validation.jsonl"
+      ],
+      "target_leaves": [
+        "embedded-code-generation"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "business-finance-supervision-v1"
+      ],
+      "note": "Repo-local source clone aliases the pinned acquisition snapshot used by the full finance build.",
+      "readiness": "alias",
+      "registration_id": "repo-source/repo-finqa-source",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-source-container",
+      "source_id": "repo-finqa-source",
+      "source_items": [
+        "finqa"
+      ],
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    },
+    {
+      "disposition": "quarantined",
+      "materialization_ids": [
+        "multidogo-upstream-source"
+      ],
+      "note": "Support transcripts are excluded pending a privacy-safe task-appropriate rebuild.",
+      "readiness": "quarantined",
+      "registration_id": "repo-source/repo-multidogo-source",
+      "roles": [
+        "quarantine"
+      ],
+      "scope": "repo-local-source-container",
+      "source_id": "repo-multidogo-source",
+      "source_items": [
+        "multidogo"
+      ],
+      "target_leaves": [
+        "business-operations",
+        "growth-gtm"
+      ]
+    },
+    {
+      "disposition": "canonical",
+      "materialization_ids": [
+        "taskmaster-coffee-api-v2"
+      ],
+      "note": "Pinned upstream source for the component-disjoint Taskmaster v2 materialization.",
+      "readiness": "alias",
+      "registration_id": "repo-source/repo-taskmaster-source",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-source-container",
+      "source_id": "repo-taskmaster-source",
+      "source_items": [
+        "taskmaster"
+      ],
+      "target_leaves": [
+        "agentic-planning",
+        "tool-use-execution"
+      ]
+    },
+    {
+      "disposition": "superseded",
+      "materialization_ids": [
+        "business-finance-supervision-v1"
+      ],
+      "note": "Repo-local source clone aliases the pinned acquisition snapshot used by the full finance build.",
+      "readiness": "alias",
+      "registration_id": "repo-source/repo-tat-qa-source",
+      "roles": [
+        "alias"
+      ],
+      "scope": "repo-local-source-container",
+      "source_id": "repo-tat-qa-source",
+      "source_items": [
+        "tat-qa"
+      ],
+      "target_leaves": [
+        "business-finance",
+        "investing-markets"
+      ]
+    }
+  ],
+  "status_id": "molor-expert-rack-combined-data-plane"
+}

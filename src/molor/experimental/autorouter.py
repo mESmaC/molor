@@ -217,8 +217,7 @@ def base_fallback_decision(
         mode=mode,
         applied_route=((BASE_ROUTE, 1.0),),
         probabilities=tuple(
-            (route_name, 1.0 if route_name == BASE_ROUTE else 0.0)
-            for route_name in route_names
+            (route_name, 1.0 if route_name == BASE_ROUTE else 0.0) for route_name in route_names
         ),
         selected_routes=(BASE_ROUTE,),
         confidence=1.0,
@@ -466,10 +465,7 @@ class PromptAutoRouter:
             null_index = self.route_ids.index(NULL_ROUTE_ID)
             logits[null_index] += policy.null_bias
             allowed = torch.tensor(
-                [
-                    route_id == NULL_ROUTE_ID or route_id in enabled
-                    for route_id in self.route_ids
-                ],
+                [route_id == NULL_ROUTE_ID or route_id in enabled for route_id in self.route_ids],
                 device=logits.device,
                 dtype=torch.bool,
             )
@@ -512,12 +508,13 @@ class PromptAutoRouter:
             _runtime_route_id(self.route_ids[index]): float(weight.item())
             for index, weight in zip(selected_indices, selected_weights, strict=True)
         }
-        applied = tuple(
-            (route_name, selected_by_name[route_name])
-            for route_name in route_names
-            if route_name in selected_by_name
+        # Preserve posterior rank.  Resident rack order is an execution identity, not a
+        # confidence order; reporting it here made the benchmark's first selected route
+        # disagree with the actual top-1 posterior whenever a later resident won.
+        selected_names = tuple(
+            _runtime_route_id(self.route_ids[index]) for index in selected_indices
         )
-        selected_names = tuple(name for name, _weight in applied)
+        applied = tuple((name, selected_by_name[name]) for name in selected_names)
         return AutoRouteDecision(
             mode="auto",
             applied_route=applied,

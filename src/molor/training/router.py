@@ -175,6 +175,7 @@ def load_router_jsonl(
     *,
     route_ids: Sequence[str] = DEFAULT_ROUTE_IDS,
     limit_per_route: int | None = None,
+    require_all_routes: bool = True,
 ) -> list[RouterExample]:
     """Load strict ``prompt`` + ``route_id`` JSONL in stable file order."""
 
@@ -188,6 +189,8 @@ def load_router_jsonl(
         or limit_per_route < 1
     ):
         raise ValueError("limit_per_route must be a positive integer or None")
+    if not isinstance(require_all_routes, bool):
+        raise TypeError("require_all_routes must be boolean")
     counts = {route_id: 0 for route_id in allowed}
     examples: list[RouterExample] = []
     with source.open("r", encoding="utf-8") as stream:
@@ -210,7 +213,7 @@ def load_router_jsonl(
     if not examples:
         raise ValueError(f"{source} contains no router examples")
     missing = [route_id for route_id, count in counts.items() if count == 0]
-    if missing:
+    if require_all_routes and missing:
         raise ValueError(f"{source} has no examples for routes: {missing!r}")
     return examples
 

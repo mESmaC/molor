@@ -1,0 +1,76 @@
+{
+  "schema_version": "molor.business-grounded-reconstruction-build-receipt.v1",
+  "task_contract": {
+    "assistant_target": "verbatim_canonical_source_passage",
+    "contains_synthetic_question_answering": false,
+    "proves_answer_quality": false,
+    "task_type": "grounded_reference_reconstruction",
+    "training_executed": false
+  },
+  "inputs": {
+    "reference_manifest_sha256": "294a4306c1bacddba7cf24556396e89d55aa5592129cf7d01d1d86106e1c16bb",
+    "reference_manifest_content_sha256": "ae8a5b710de5e280862c0d7e0e328b2eac3380f1787285733229d36eb61db4e3",
+    "source_document_provenance_sha256": "b75337e08e2142c201a9b73138e629a133f815fc34fedeb0fe41f93923cbf374",
+    "tokenizer_aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "builder_sha256": "d4d3e1a9dd229f40c1ad201b58683783a81a843a482cd6867ae829bbd10aa0bf"
+  },
+  "outputs": {
+    "root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-grounded-reconstruction-v1",
+    "manifest_sha256": "b6e24058732bc72c825698aff5fb966d628234961ee0c5d3984670b895d100b0",
+    "manifest_content_sha256": "c06feb780ce01fd385db7b6db903443e8f82a7982a3e7cd2c9a707b226411590",
+    "sha256sums_sha256": "f5f8a3bbb9766f0d064554a90f4d1647f925c70bcedc60e400e0bf1100224ec1",
+    "accounting_sha256": "c1981b58a4cbc4d9f4dbad14e3f3cf03d1a0130dc214ff59a70be2affecb40b8",
+    "accounting_records": 7931,
+    "tier_artifact_receipts": 72,
+    "filesystem_artifacts": 147
+  },
+  "accounting": {
+    "input_records": 7931,
+    "emitted": 7931,
+    "duplicate": 0,
+    "quarantined": 0,
+    "rejected": 0,
+    "deferred": 0,
+    "truncated": 0,
+    "unmatched_source_provenance_ids": 0,
+    "by_rendered_token_tier": {
+      "le-1024": 2548,
+      "1025-4096": 5383,
+      "4097-8192": 0,
+      "8193-32768": 0
+    },
+    "by_split": {
+      "train": 7132,
+      "validation": 435,
+      "test": 364
+    },
+    "by_leaf": {
+      "business-core": 2326,
+      "business-finance": 323,
+      "business-operations": 1810,
+      "funding-capital": 253,
+      "growth-gtm": 3164,
+      "investing-markets": 55
+    },
+    "zero_silent_omissions": true,
+    "fully_reconciled": true
+  },
+  "independent_rebuild": {
+    "root": "C:\\Users\\engin\\Documents\\datasets\\processed\\molor-business-grounded-reconstruction-v1-verify",
+    "files_compared": 147,
+    "byte_identical_files": 147,
+    "mismatches": 0,
+    "extra_files": 0,
+    "passed": true
+  },
+  "post_build_readback": {
+    "rows_checked": 7931,
+    "unique_document_ids": 7931,
+    "message_provenance_contract_failures": 0,
+    "checksum_entries_checked": 146,
+    "checksum_failures": 0,
+    "passed": true
+  },
+  "content_sha256": "17831012d2c957610b248246e489df211061fc8db3a975c61f8e85b946761a9f"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "molor.length-tier-plan.v1",
+  "tokenizer": {
+    "path": "../../../models/Qwen3-0.6B",
+    "aggregate_sha256": "4c6d93851307c525ca8fa64bb5f0dcaf61b4b854a4d4123a1b83aedde94d973c",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8"
+  },
+  "inputs": [
+    {
+      "path": "../../../../datasets/processed/molor-business-finance-supervision-v1-r2/business-finance/direct/validation.jsonl",
+      "sha256": "7d1a924bfb9fc5e0d19875ffa51bc8f6cb5c8c054b65571c1ad9fafbc2e9e281",
+      "record_count": 1969,
+      "template_mode": "direct"
+    },
+    {
+      "path": "../../../../datasets/processed/molor-business-finance-supervision-v1-r2/business-finance/trace/validation.jsonl",
+      "sha256": "9fb63944f8b5f0d79622a400ad231537c158cffc385a3430418c5f60e5ce9cbe",
+      "record_count": 1367,
+      "template_mode": "trace"
+    }
+  ]
+}

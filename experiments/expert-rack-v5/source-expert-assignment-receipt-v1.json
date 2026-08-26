@@ -1,0 +1,70 @@
+{
+  "administrative_or_lineage_alias_entries": 8,
+  "assigned_but_not_ready_leaves": 0,
+  "assignment_rows": 306,
+  "canonical_taxonomy_leaves": 25,
+  "contains_corpus_content": false,
+  "coverage": {
+    "ledger_id": "molor-local-corpora",
+    "revision": "1",
+    "semantic_sha256": "757aee73abfb42ebf56678bfe79f223687985c6c657e41e088e76cbbae084d6d"
+  },
+  "covered_root_entries": 43,
+  "effective_assignment_rows": 170,
+  "effective_source_entries": 35,
+  "effectively_assigned_leaves": 24,
+  "materialization_gap_canonical_datasets": [],
+  "materialization_gap_source_entries": 0,
+  "materialization_ids": {
+    "broad-distillation-experts-v1": 25,
+    "business-finance-supervision-v1": 2,
+    "business-grounded-reconstruction-v1": 6,
+    "embedded-grounded-reconstruction-v1": 54,
+    "embedded-source-experts-v1": 69,
+    "fable-max-long-trace-auxiliary-v1": 4,
+    "qwen38-distillation-experts-v2": 6,
+    "software-architecture-experts-v1": 6
+  },
+  "materialization_status_rows": {
+    "deferred": 4,
+    "not-applicable": 136,
+    "ready": 166
+  },
+  "materialization_status_source_entries": {
+    "deferred": 1,
+    "not-applicable": 8,
+    "ready": 34
+  },
+  "materializing_canonical_datasets": [],
+  "materializing_source_entries": 0,
+  "matrix": {
+    "matrix_id": "molor-nonblocked-source-expert-matrix",
+    "revision": "1",
+    "semantic_sha256": "089ca9526bd3ac605359547d0cf1e7912ff91d1b5afb847cb5356518a30b1f75",
+    "sha256": "947e8c1ea480aa1a2368db3af2abebee8b78014df4b9c72ddd9a52262981b7d8"
+  },
+  "ready_leaves": 24,
+  "role_assignment_rows": {
+    "alias": 136,
+    "auxiliary": 4,
+    "reference/pretraining": 68,
+    "sft": 98
+  },
+  "role_source_entries": {
+    "alias": 8,
+    "auxiliary": 1,
+    "reference/pretraining": 27,
+    "sft": 34
+  },
+  "schema_version": "molor.source-expert-assignment-receipt.v1",
+  "source_groups": 14,
+  "taxonomy": {
+    "revision": "1",
+    "semantic_sha256": "278748ac0cc029963d640460d36bb27b2cb1b8893b14e9e29d549b17c0d36dd1",
+    "taxonomy_id": "molor-inference-rack"
+  },
+  "unassigned_leaf_gaps": [
+    "terminal-cli"
+  ],
+  "zero_silent_root_omissions": true
+}
