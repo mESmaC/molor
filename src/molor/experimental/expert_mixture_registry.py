@@ -1468,14 +1468,19 @@ def _normalize_prompt(value: str) -> str:
 
 
 def _router_prompt(example: ChatExample) -> tuple[str, bool]:
-    prompt_messages = example.messages[:-1]
-    if len(prompt_messages) == 1 and prompt_messages[0].role == "user":
-        prompt = prompt_messages[0].content.strip()
-    else:
-        prompt = "\n\n".join(
-            json.dumps(message.to_dict(), ensure_ascii=False, separators=(",", ":"), sort_keys=True)
-            for message in prompt_messages
-        )
+    # Serving routes only the latest non-empty user turn.  Router supervision must use
+    # that exact scope as well; serializing system/tool/history messages teaches the
+    # classifier source-template shortcuts that do not exist at request time.
+    prompt = next(
+        (
+            message.content.strip()
+            for message in reversed(example.messages[:-1])
+            if message.role == "user" and message.content.strip()
+        ),
+        "",
+    )
+    if not prompt:
+        raise ValueError("router chat row has no non-empty user prompt before the answer")
     if len(prompt) <= ROUTER_MAX_PROMPT_CHARACTERS:
         return prompt, False
     retained = ROUTER_MAX_PROMPT_CHARACTERS - len(ROUTER_ELISION_MARKER)

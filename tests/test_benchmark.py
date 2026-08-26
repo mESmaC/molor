@@ -10,7 +10,10 @@ from molor.benchmark import cli as benchmark_cli
 from molor.benchmark import matrix as benchmark_matrix
 from molor.benchmark.backends import GenerationResponse
 from molor.benchmark.models import canonical_json, load_suite
-from molor.benchmark.routing import load_route_evaluation_contract
+from molor.benchmark.routing import (
+    evaluate_route_probabilities,
+    load_route_evaluation_contract,
+)
 from molor.benchmark.runner import (
     BenchmarkRunner,
     RESULT_SCHEMA,
@@ -27,9 +30,7 @@ from molor.experimental.expert_taxonomy import load_expert_taxonomy
 
 SUITE = Path("benchmarks/suites/molor-core-v1.json")
 TAXONOMY = Path("experiments/expert-rack-v5/expert-taxonomy-v1.json")
-ROUTE_CONTRACT = Path(
-    "experiments/expert-rack-v5/molor-core-v1-rack-v5-route-contract-v1.json"
-)
+ROUTE_CONTRACT = Path("experiments/expert-rack-v5/molor-core-v1-rack-v5-route-contract-v1.json")
 
 
 def _run_fixture(
@@ -223,14 +224,76 @@ def test_route_contract_fails_closed_on_unresolved_non_base_route(tmp_path: Path
     payload = json.loads(ROUTE_CONTRACT.read_text(encoding="utf-8"))
     payload["case_routes"]["G01"] = ["unresolved-specialist"]
     semantic = {key: value for key, value in payload.items() if key != "content_sha256"}
-    payload["content_sha256"] = hashlib.sha256(
-        canonical_json(semantic).encode("utf-8")
-    ).hexdigest()
+    payload["content_sha256"] = hashlib.sha256(canonical_json(semantic).encode("utf-8")).hexdigest()
     path = tmp_path / "invalid-route-contract.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
 
     with pytest.raises(ValueError, match="unresolved non-base route"):
         load_route_evaluation_contract(path, suite=suite, taxonomy=taxonomy)
+
+
+def test_route_probability_audit_scores_specialists_before_generation() -> None:
+    suite = load_suite(SUITE)
+    taxonomy = load_expert_taxonomy(TAXONOMY)
+    route_contract = load_route_evaluation_contract(
+        ROUTE_CONTRACT,
+        suite=suite,
+        taxonomy=taxonomy,
+    )
+    route_order = ("base/null", *taxonomy.leaf_ids)
+    rows = {}
+    for case in suite.cases:
+        selected = route_contract.acceptable_routes(case.case_id)[0]
+        rows[case.case_id] = {route_id: float(route_id == selected) for route_id in route_order}
+
+    audit = evaluate_route_probabilities(
+        suite,
+        route_contract,
+        rows,
+        route_order=route_order,
+    )
+
+    assert audit["acceptable_top1"] == 64
+    assert audit["specialist_cases"] == 59
+    assert audit["specialist_acceptable_top1"] == 59
+    assert audit["base_contract_cases"] == 5
+    assert audit["base_selected"] == 5
+    assert len(audit["predictions"]) == 64
+    assert all("prompt" not in prediction for prediction in audit["predictions"])
+
+
+def test_route_probability_audit_rejects_incomplete_or_unnormalized_rows() -> None:
+    suite = load_suite(SUITE)
+    taxonomy = load_expert_taxonomy(TAXONOMY)
+    route_contract = load_route_evaluation_contract(
+        ROUTE_CONTRACT,
+        suite=suite,
+        taxonomy=taxonomy,
+    )
+    route_order = ("base/null", *taxonomy.leaf_ids)
+    rows = {
+        case.case_id: {route_id: float(route_id == "base/null") for route_id in route_order}
+        for case in suite.cases
+    }
+
+    missing = dict(rows)
+    missing.pop(suite.cases[0].case_id)
+    with pytest.raises(ValueError, match="cover the frozen suite exactly"):
+        evaluate_route_probabilities(
+            suite,
+            route_contract,
+            missing,
+            route_order=route_order,
+        )
+
+    rows[suite.cases[0].case_id] = {route_id: 0.5 for route_id in route_order}
+    with pytest.raises(ValueError, match="sum to one"):
+        evaluate_route_probabilities(
+            suite,
+            route_contract,
+            rows,
+            route_order=route_order,
+        )
 
 
 def test_compare_reports_paired_delta(tmp_path: Path) -> None:

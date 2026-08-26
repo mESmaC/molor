@@ -5,10 +5,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 from types import MappingProxyType
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 from molor.benchmark.models import BenchmarkSuite, canonical_json
 from molor.experimental.expert_taxonomy import ExpertTaxonomy
@@ -16,6 +17,7 @@ from molor.experimental.expert_taxonomy import ExpertTaxonomy
 
 ROUTE_CONTRACT_SCHEMA = "molor.benchmark-route-contract.v1"
 ROUTING_EVALUATION_SCHEMA = "molor.benchmark-routing-evaluation.v1"
+ROUTE_PROBABILITY_AUDIT_SCHEMA = "molor.benchmark-route-probability-audit.v1"
 BASE_ROUTE = "base/null"
 _IDENTIFIER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
@@ -114,9 +116,7 @@ class RouteEvaluationContract:
             return value
         target = self.aliases.get(value)
         if target is None:
-            raise ValueError(
-                f"selected route {value!r} is absent from the pinned routing taxonomy"
-            )
+            raise ValueError(f"selected route {value!r} is absent from the pinned routing taxonomy")
         return target
 
     def acceptable_routes(self, case_id: str) -> tuple[str, ...]:
@@ -208,9 +208,7 @@ def load_route_evaluation_contract(
     )
     taxonomy_id = _identifier(raw_taxonomy["taxonomy_id"], "taxonomy.taxonomy_id")
     taxonomy_revision = _identifier(raw_taxonomy["revision"], "taxonomy.revision")
-    taxonomy_fingerprint = _sha256(
-        raw_taxonomy["content_sha256"], "taxonomy.content_sha256"
-    )
+    taxonomy_fingerprint = _sha256(raw_taxonomy["content_sha256"], "taxonomy.content_sha256")
     if (
         taxonomy_id != taxonomy.taxonomy_id
         or taxonomy_revision != taxonomy.revision
@@ -275,10 +273,144 @@ def load_route_evaluation_contract(
     )
 
 
+def evaluate_route_probabilities(
+    suite: BenchmarkSuite,
+    contract: RouteEvaluationContract,
+    probability_rows: Mapping[str, Mapping[str, float]],
+    *,
+    route_order: Sequence[str],
+) -> dict[str, object]:
+    """Score an exact per-case probability table without running model generation.
+
+    This is deliberately a top-1 routing audit, not an answer-quality metric.  It lets a
+    checkpoint fail a frozen route contract before an expensive generation matrix starts.
+    Prompts are never copied into the returned receipt.
+    """
+
+    contract.validate_suite(suite)
+    if isinstance(route_order, (str, bytes)):
+        raise TypeError("route_order must be a sequence of canonical route IDs")
+    routes = tuple(route_order)
+    expected_routes = {BASE_ROUTE, *contract.canonical_leaf_ids}
+    if (
+        not routes
+        or routes[0] != BASE_ROUTE
+        or len(routes) != len(set(routes))
+        or set(routes) != expected_routes
+    ):
+        raise ValueError("route_order must be base/null followed by every canonical leaf exactly")
+    if not isinstance(probability_rows, Mapping):
+        raise TypeError("probability_rows must map case IDs to route probabilities")
+    case_ids = tuple(case.case_id for case in suite.cases)
+    missing = set(case_ids).difference(probability_rows)
+    unknown = set(probability_rows).difference(case_ids)
+    if missing or unknown:
+        raise ValueError(
+            "probability rows must cover the frozen suite exactly "
+            f"(missing={sorted(missing)}, unknown={sorted(unknown)})"
+        )
+
+    route_counts = {route_id: 0 for route_id in routes}
+    category_rows: dict[str, list[bool]] = {category: [] for category in suite.category_weights}
+    predictions: list[dict[str, object]] = []
+    acceptable_count = 0
+    base_selected_count = 0
+    specialist_count = 0
+    specialist_acceptable_count = 0
+    base_contract_count = 0
+    base_contract_acceptable_count = 0
+    for case in suite.cases:
+        raw_row = probability_rows[case.case_id]
+        if not isinstance(raw_row, Mapping) or set(raw_row) != expected_routes:
+            raise ValueError(
+                f"probabilities for {case.case_id!r} must cover every canonical route exactly"
+            )
+        values: dict[str, float] = {}
+        for route_id in routes:
+            raw_probability = raw_row[route_id]
+            if isinstance(raw_probability, bool) or not isinstance(raw_probability, (int, float)):
+                raise ValueError(f"probabilities[{case.case_id!r}][{route_id!r}] must be finite")
+            probability = float(raw_probability)
+            if not math.isfinite(probability) or not 0.0 <= probability <= 1.0:
+                raise ValueError(f"probabilities[{case.case_id!r}][{route_id!r}] must be in [0, 1]")
+            values[route_id] = probability
+        total = math.fsum(values.values())
+        if not math.isclose(total, 1.0, rel_tol=0.0, abs_tol=1e-5):
+            raise ValueError(f"probabilities for {case.case_id!r} must sum to one")
+
+        ranked = sorted(
+            enumerate(routes),
+            key=lambda item: (-values[item[1]], item[0]),
+        )
+        selected = ranked[0][1]
+        confidence = values[selected]
+        acceptable_routes = contract.acceptable_routes(case.case_id)
+        acceptable = selected in acceptable_routes
+        base_contract = acceptable_routes == (BASE_ROUTE,)
+        acceptable_count += int(acceptable)
+        base_selected_count += int(selected == BASE_ROUTE)
+        route_counts[selected] += 1
+        category_rows[case.category].append(acceptable)
+        if base_contract:
+            base_contract_count += 1
+            base_contract_acceptable_count += int(acceptable)
+        else:
+            specialist_count += 1
+            specialist_acceptable_count += int(acceptable)
+        predictions.append(
+            {
+                "case_id": case.case_id,
+                "category": case.category,
+                "selected_route": selected,
+                "confidence": confidence,
+                "acceptable_routes": list(acceptable_routes),
+                "acceptable": acceptable,
+                "top_routes": [
+                    {"route_id": route_id, "probability": values[route_id]}
+                    for _index, route_id in ranked[:3]
+                ],
+            }
+        )
+
+    case_count = len(suite.cases)
+    categories = {
+        category: {
+            "cases": len(outcomes),
+            "acceptable_top1": sum(outcomes),
+            "acceptable_top1_rate": sum(outcomes) / len(outcomes),
+        }
+        for category, outcomes in category_rows.items()
+        if outcomes
+    }
+    return {
+        "schema_version": ROUTE_PROBABILITY_AUDIT_SCHEMA,
+        "case_count": case_count,
+        "acceptable_top1": acceptable_count,
+        "acceptable_top1_rate": acceptable_count / case_count,
+        "specialist_cases": specialist_count,
+        "specialist_acceptable_top1": specialist_acceptable_count,
+        "specialist_acceptable_top1_rate": (
+            specialist_acceptable_count / specialist_count if specialist_count else None
+        ),
+        "base_contract_cases": base_contract_count,
+        "base_contract_acceptable_top1": base_contract_acceptable_count,
+        "base_contract_acceptable_top1_rate": (
+            base_contract_acceptable_count / base_contract_count if base_contract_count else None
+        ),
+        "base_selected": base_selected_count,
+        "base_selection_rate": base_selected_count / case_count,
+        "route_selection_counts": route_counts,
+        "categories": categories,
+        "predictions": predictions,
+    }
+
+
 __all__ = [
     "BASE_ROUTE",
+    "ROUTE_PROBABILITY_AUDIT_SCHEMA",
     "ROUTE_CONTRACT_SCHEMA",
     "ROUTING_EVALUATION_SCHEMA",
     "RouteEvaluationContract",
+    "evaluate_route_probabilities",
     "load_route_evaluation_contract",
 ]

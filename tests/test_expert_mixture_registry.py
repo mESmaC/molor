@@ -15,11 +15,13 @@ from molor.experimental.expert_mixture_registry import (
     ROUTER_EXAMPLES_MANIFEST_SCHEMA,
     CollectedExpertData,
     RegisteredChatShard,
+    _router_prompt,
     _resolve_router_owners,
     build_canonical_recipes,
     write_expert_mixture_bundle,
 )
 from molor.identity import canonical_json_bytes, fingerprint_json
+from molor.training.data import ChatExample
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -141,6 +143,25 @@ def _write_router_base(root: Path) -> Path:
     report_path = root / "router-base.report.json"
     report_path.write_text(json.dumps(report), encoding="utf-8")
     return report_path
+
+
+def test_router_prompt_matches_latest_user_serving_scope() -> None:
+    example = ChatExample.from_dict(
+        {
+            "messages": [
+                {"role": "system", "content": "long source-specific system template"},
+                {"role": "user", "content": "first request"},
+                {"role": "assistant", "content": "intermediate answer"},
+                {"role": "user", "content": "  current request only  "},
+                {"role": "assistant", "content": "final training answer"},
+            ]
+        }
+    )
+
+    prompt, truncated = _router_prompt(example)
+
+    assert prompt == "current request only"
+    assert truncated is False
 
 
 def test_recipes_are_per_leaf_adjustable_and_globally_guarded(tmp_path: Path) -> None:
