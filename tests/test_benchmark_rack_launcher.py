@@ -97,6 +97,8 @@ def test_launch_plan_separates_all_expert_smoke_from_six_full_policies() -> None
 
     teacher_args = teacher_parser().parse_args(list(steps[0].argv[3:]))
     assert len(teacher_args.expert) == 25
+    assert teacher_args.expert_a == ""
+    assert teacher_args.expert_b == ""
     for step in steps[1:]:
         parsed = benchmark_parser().parse_args(list(step.argv[3:]))
         assert parsed.command in {"matrix", "run"}
