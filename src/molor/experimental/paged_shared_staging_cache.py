@@ -370,6 +370,7 @@ class _PagedWorkspace:
         self._stream_identity: int | None = None
         self._poison_reason: str | None = None
         self._poison_events = 0
+        self._poison_events_by_reason: dict[str, int] = {}
 
     @property
     def is_poisoned(self) -> bool:
@@ -379,6 +380,7 @@ class _PagedWorkspace:
         if not self.is_poisoned:
             self._poison_reason = reason
             self._poison_events += 1
+            self._poison_events_by_reason[reason] = self._poison_events_by_reason.get(reason, 0) + 1
 
     def require_healthy(self) -> None:
         if self.is_poisoned:
@@ -522,6 +524,10 @@ class _PagedWorkspace:
             "poisoned": self.is_poisoned,
             "active_poison_reason": self._poison_reason,
             "poison_events": self._poison_events,
+            "poison_events_by_reason": {
+                reason: self._poison_events_by_reason[reason]
+                for reason in sorted(self._poison_events_by_reason)
+            },
             "cuda_stream_contract": "one_stable_current_stream",
             "cuda_stream_bound": self._stream_identity is not None,
         }
