@@ -48,3 +48,44 @@ approximations, and 241 all-page exact selections.
 The next phase is an exact CPU-owned cache with reusable bounded GPU staging. Only after byte-exact
 round trips, storage bounds, stream ownership, token parity, and memory telemetry pass should these
 page primitives be connected to a Qwen attention path.
+
+## Paged-backing allocation probe
+
+`validate_paged_backing.py` is the dry-run-first validation boundary for the v4 physical layout.
+Its default mode allocates no backing pages. It verifies the hash-pinned local Qwen3-0.6B config
+and paged-cache source, projects five 8,192-token pages per K/V role and layer, and publishes an
+atomic non-overwriting JSON receipt. The frozen projection is 280 pinned 16-MiB blocks: 4.375 GiB
+of logical backing with zero `PowerOf2Ceil` waste, compared with the prior 7-GiB unpaged pinned
+allocation projection.
+
+The real allocation path requires the explicit `--allocate-pinned` flag. It refuses to begin
+unless Windows exposes both current RSS and `PROCESS_MEMORY_COUNTERS_EX.PrivateUsage`, the projected
+backing fits the configured gate, and that gate is at most 6 GiB. It allocates and verifies one
+layer at a time, populating every page from one reusable unpinned K/V input pair. It does not load a
+model, initialize a GPU tensor, or allocate the shared 160-MiB stage. Portable platforms may emit
+dry-run RSS diagnostics, but real allocation fails closed because equivalent private-commit
+measurement is unavailable.
+
+Safe projection-only command:
+
+```powershell
+.\.venv\Scripts\python.exe experiments\atxy-staged-kv-v1\validate_paged_backing.py `
+  --output runs\atxy-staged-kv-v1\qwen3-0.6b-paged-backing-projection-v1.json
+```
+
+Future pinned-allocation command (deliberately not run during implementation):
+
+```powershell
+.\.venv\Scripts\python.exe experiments\atxy-staged-kv-v1\validate_paged_backing.py `
+  --allocate-pinned `
+  --max-incremental-gib 6 `
+  --output runs\atxy-staged-kv-v1\qwen3-0.6b-paged-backing-allocation-v1.json
+```
+
+Focused tests use only tiny unpinned CPU tensors and mocked process counters:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests\test_paged_backing_allocation_probe.py -q
+.\.venv\Scripts\ruff.exe check experiments\atxy-staged-kv-v1\validate_paged_backing.py `
+  tests\test_paged_backing_allocation_probe.py
+```
