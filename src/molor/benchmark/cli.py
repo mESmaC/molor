@@ -115,6 +115,20 @@ def _parser() -> argparse.ArgumentParser:
     matrix.add_argument("--label", required=True)
     matrix.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT)
     matrix.add_argument("--matrix-directory", type=Path)
+    matrix_thinking = matrix.add_mutually_exclusive_group()
+    matrix_thinking.add_argument(
+        "--thinking",
+        dest="enable_thinking",
+        action="store_true",
+        help="enable provider reasoning for every policy in this matrix",
+    )
+    matrix_thinking.add_argument(
+        "--no-thinking",
+        dest="enable_thinking",
+        action="store_false",
+        help="disable provider reasoning for every policy in this matrix",
+    )
+    matrix.set_defaults(enable_thinking=None)
     matrix.add_argument("--endpoint", default="http://127.0.0.1:8765")
     matrix.add_argument("--expert", action="append", default=[])
     matrix.add_argument("--no-top2", action="store_true")
@@ -310,6 +324,7 @@ def main(argv: list[str] | None = None) -> int:
                 null_bias=args.null_bias,
                 timeout=args.timeout,
                 matrix_directory=args.matrix_directory,
+                enable_thinking_override=args.enable_thinking,
             )
             return 0
         if args.command == "standard":

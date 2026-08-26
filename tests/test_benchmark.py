@@ -6,8 +6,12 @@ from pathlib import Path
 
 import pytest
 
+from molor.benchmark import cli as benchmark_cli
+from molor.benchmark import matrix as benchmark_matrix
+from molor.benchmark.backends import GenerationResponse
 from molor.benchmark.models import load_suite
 from molor.benchmark.runner import (
+    BenchmarkRunner,
     RESULT_SCHEMA,
     RunOptions,
     _build_workload_contract,
@@ -167,3 +171,166 @@ def test_compare_reports_paired_delta(tmp_path: Path) -> None:
     comparison = compare_runs(paths[0], paths[1])
     assert comparison["quality_index_delta"] == 1000
     assert comparison["paired"]["wins"] == 1
+
+
+def test_matrix_cli_thinking_override_is_explicit_and_tristate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed: list[bool | None] = []
+
+    def capture_matrix(*_args, **kwargs) -> None:
+        observed.append(kwargs["enable_thinking_override"])
+
+    monkeypatch.setattr(benchmark_cli, "run_matrix", capture_matrix)
+    for flag in ((), ("--thinking",), ("--no-thinking",)):
+        assert benchmark_cli.main(["matrix", "--label", "fixture", *flag]) == 0
+
+    assert observed == [None, True, False]
+
+
+def test_thinking_on_has_a_distinct_workload_fingerprint_without_moving_frozen_off() -> None:
+    suite = load_suite(SUITE)
+    cases = suite.select(profile="full")
+    frozen_off = _build_workload_contract(
+        suite,
+        cases,
+        RunOptions(label="ignored", profile="full"),
+    )
+    thinking_on = _build_workload_contract(
+        suite,
+        cases,
+        RunOptions(label="ignored", profile="full", enable_thinking_override=True),
+    )
+
+    assert frozen_off["enable_thinking_override"] is None
+    assert all(cell["request"]["enable_thinking"] is False for cell in frozen_off["cells"])
+    assert _fingerprint_workload(frozen_off) == (
+        "1184f848aa22c77f52c57b7017909d7605d4e74cc7eaaa004eb75ca87244a929"
+    )
+    assert all(cell["request"]["enable_thinking"] is True for cell in thinking_on["cells"])
+    assert _fingerprint_workload(thinking_on) != _fingerprint_workload(frozen_off)
+
+
+def test_matrix_propagates_thinking_override_to_every_policy(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    suite = load_suite(SUITE)
+    observed_options: list[RunOptions] = []
+
+    class FakeTeacherBackend:
+        def __init__(self, _endpoint: str, **_kwargs) -> None:
+            pass
+
+        def identity(self) -> dict[str, object]:
+            return {"backend": "fixture", "experts": []}
+
+    class FakeRunner:
+        def __init__(
+            self,
+            runner_suite,
+            _backend,
+            *,
+            output_root: Path,
+            options: RunOptions,
+            run_directory: Path,
+        ) -> None:
+            del output_root
+            self.suite = runner_suite
+            self.options = options
+            self.summary_path = run_directory / "summary.json"
+            observed_options.append(options)
+
+        def run(self, *, baseline_summary: Path | None = None) -> dict[str, object]:
+            del baseline_summary
+            cases = self.suite.select(
+                profile=self.options.profile,
+                categories=self.options.categories,
+                limit=self.options.limit,
+            )
+            workload = _build_workload_contract(self.suite, cases, self.options)
+            summary = {
+                "quality_index": 0.0,
+                "categories": {},
+                "evaluation_fingerprint": "fixture-evaluator",
+                "workload_fingerprint": _fingerprint_workload(workload),
+                "performance": {},
+                "routing": {},
+                "result_cells": [],
+            }
+            self.summary_path.parent.mkdir(parents=True, exist_ok=True)
+            self.summary_path.write_text(json.dumps(summary), encoding="utf-8")
+            return summary
+
+    monkeypatch.setattr(benchmark_matrix, "TeacherApiBackend", FakeTeacherBackend)
+    monkeypatch.setattr(benchmark_matrix, "BenchmarkRunner", FakeRunner)
+    matrix_root = tmp_path / "matrix"
+    summary_path = benchmark_matrix.run_matrix(
+        suite,
+        endpoint="http://127.0.0.1:8765",
+        label="thinking-fixture",
+        output_root=tmp_path,
+        profile="smoke",
+        categories=(),
+        limit=1,
+        repetitions=1,
+        experts=(),
+        include_top2=False,
+        route_temperature=1.0,
+        confidence_threshold=0.0,
+        null_bias=0.0,
+        timeout=1.0,
+        matrix_directory=matrix_root,
+        enable_thinking_override=True,
+    )
+
+    assert [options.enable_thinking_override for options in observed_options] == [True, True]
+    manifest = json.loads((matrix_root / "matrix.json").read_text(encoding="utf-8"))
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    assert manifest["enable_thinking_override"] is True
+    assert manifest["effective_enable_thinking"] is True
+    assert summary["enable_thinking_override"] is True
+    assert summary["effective_enable_thinking"] is True
+
+
+def test_runner_sends_effective_thinking_mode_to_generation(tmp_path: Path) -> None:
+    suite = load_suite(SUITE)
+    case = suite.select(profile="smoke", limit=1)[0]
+
+    class CaptureBackend:
+        request = None
+
+        def identity(self) -> dict[str, object]:
+            return {"backend": "fixture"}
+
+        def generate(self, request):
+            self.request = request
+            return GenerationResponse(
+                text="fixture response",
+                elapsed_seconds=0.01,
+                time_to_first_token_seconds=None,
+                prompt_tokens=None,
+                completion_tokens=None,
+                tokens_per_second=None,
+                finish_reason="stop",
+                routing_decision=None,
+                generation_id=None,
+                provider_metadata={},
+            )
+
+    backend = CaptureBackend()
+    options = RunOptions(
+        label="thinking-fixture",
+        profile="smoke",
+        warmup=False,
+        enable_thinking_override=True,
+    )
+    runner = BenchmarkRunner(suite, backend, output_root=tmp_path, options=options)
+    runner.workload_fingerprint = _fingerprint_workload(
+        _build_workload_contract(suite, [case], options)
+    )
+    result = runner._run_case(case, 0)
+
+    assert backend.request is not None
+    assert backend.request.enable_thinking is True
+    assert result["request"]["enable_thinking"] is True

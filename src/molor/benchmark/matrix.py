@@ -102,7 +102,15 @@ def run_matrix(
     null_bias: float,
     timeout: float,
     matrix_directory: Path | None = None,
+    enable_thinking_override: bool | None = None,
 ) -> Path:
+    if enable_thinking_override is not None and not isinstance(enable_thinking_override, bool):
+        raise ValueError("enable_thinking_override must be boolean or None")
+    effective_enable_thinking = (
+        enable_thinking_override
+        if enable_thinking_override is not None
+        else bool(suite.generation["enable_thinking"])
+    )
     discovery = TeacherApiBackend(
         endpoint,
         route_temperature=route_temperature,
@@ -143,6 +151,8 @@ def run_matrix(
         "categories": list(categories),
         "limit": limit,
         "repetitions": repetitions,
+        "enable_thinking_override": enable_thinking_override,
+        "effective_enable_thinking": effective_enable_thinking,
         "router_policy": {
             "temperature": route_temperature,
             "confidence_threshold": confidence_threshold,
@@ -183,6 +193,7 @@ def run_matrix(
                 categories=tuple(categories),
                 limit=limit,
                 repetitions=repetitions,
+                enable_thinking_override=enable_thinking_override,
             ),
             run_directory=run_directory,
         )
@@ -224,6 +235,8 @@ def run_matrix(
         "suite_fingerprint": suite.fingerprint,
         "evaluation_fingerprint": summaries["base"].get("evaluation_fingerprint"),
         "workload_fingerprint": summaries["base"].get("workload_fingerprint"),
+        "enable_thinking_override": enable_thinking_override,
+        "effective_enable_thinking": effective_enable_thinking,
         "policies": policy_table,
         "forced_route_oracle": oracle,
         "auto_top1_oracle_regret": float(oracle["quality_index"]) - auto_index,
@@ -233,7 +246,8 @@ def run_matrix(
         f"# {label} — route benchmark matrix",
         "",
         f"Evaluator: `{matrix_summary['evaluation_fingerprint']}`  ",
-        f"Workload: `{matrix_summary['workload_fingerprint']}`",
+        f"Workload: `{matrix_summary['workload_fingerprint']}`  ",
+        "Thinking: `" + ("on" if effective_enable_thinking else "off") + "`",
         "",
         "| Policy | Quality index | Delta vs base | Route accuracy | Median tok/s |",
         "|---|---:|---:|---:|---:|",
